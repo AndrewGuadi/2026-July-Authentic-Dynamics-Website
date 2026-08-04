@@ -1,0 +1,2 @@
+andrewguasch.com (FQDN) --> ns_record --> ns58.domaincontrol.com (FQDN)
+andrewguasch.com (FQDN) --> ns_record --> ns57.domaincontrol.com (FQDN)

@@ -1,0 +1,23 @@
+{
+  "module": "blackbird",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network=bridge",
+    "--user",
+    "1000:1000",
+    "-v",
+    "/app/output/andrew_guasch_2026-08-04/usernames/blackbird_raw:/blackbird/results",
+    "p1ngul1n0/blackbird:latest",
+    "--username",
+    "omyguasch",
+    "--json",
+    "--no-update"
+  ],
+  "returncode": 2,
+  "duration_seconds": 1.98,
+  "timed_out": false,
+  "error": null,
+  "collected_at": "2026-08-04T04:09:49.441610+00:00"
+}

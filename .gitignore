@@ -11,6 +11,11 @@ __pycache__/
 build/
 develop-eggs/
 dist/
+tools_testing/node_modules/
+tools_testing/delenv/
+tools_testing/reputation-audit-framework/test-output/
+tools_testing/reputation-audit-framework/status-test-output/
+tools_testing/reputation-audit-framework/verified-output*/
 downloads/
 eggs/
 .eggs/

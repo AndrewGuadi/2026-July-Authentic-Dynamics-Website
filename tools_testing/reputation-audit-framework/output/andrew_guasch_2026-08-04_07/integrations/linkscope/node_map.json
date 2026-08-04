@@ -1,0 +1,607 @@
+{
+  "engagement_id": "MATTER-123",
+  "nodes": [
+    {
+      "node_id": "raf_dd69b8a12d75f18f3d2d6ed8",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://imgur.com/user/infinitegrasp",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_cba86a74039d730959ff2787",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.youtube.com/@infinitegrasp/about",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_7f42b77875bf244b54c77588",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://discord.com",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_dab4763f9f75c92a7e1299b0",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.cnet.com/profiles/infinitegrasp/",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_3201b9ab44559e06500d7d14",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.tiktok.com/@infinitegrasp",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_94c3e39444ac436b71637039",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://twitchtracker.com/infinitegrasp",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_483a88ff46b508d00e3f16aa",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.reverbnation.com/infinitegrasp",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_c89957d0fe4ee0b3fbcff858",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.instapaper.com/p/infinitegrasp",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_9dd0d37df4d131e1c9cc2996",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.chess.com/member/infinitegrasp",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_a82f843a574bb32f10d49c46",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.roblox.com/user.aspx?username=infinitegrasp",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_05f171816283564d6e3ca7d1",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://untappd.com/user/infinitegrasp",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_1d49b2a076254701f8ffa6ad",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.tbank.ru/invest/social/profile/infinitegrasp/",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_9bbc799ef2f74e97ba1b8e81",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.tinder.com/@infinitegrasp",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_a4892edec012fccf2673ef56",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.digitalpoint.com/members/?username=infinitegrasp",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_7447c68d2870897eece2cf1c",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://profil.chatujme.cz/infinitegrasp",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_5b4c9ec6988d9c0d4f6050b7",
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.tikvib.com/profile/infinitegrasp",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json"
+    },
+    {
+      "node_id": "raf_3e92d3241f3ba349463099a6",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.facebook.com/infinitegrasp",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_c32ae4c051e5da540aacee09",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.xboxgamertag.com/search/infinitegrasp",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_b7adb816724ee67cd807928b",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.pornhub.com/users/infinitegrasp",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_7f32a0085c30668365e03237",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://xhamster.com/users/infinitegrasp",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_fb01bebada9500cd6a63c01d",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://archive.org/details/@infinitegrasp",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_67af1c925c421797beb3574f",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.slideshare.net/infinitegrasp",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_05fc0e262bb5b4e33ba1cac9",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://auth.roblox.com/v1/usernames/validate?username=infinitegrasp&birthday=2019-12-31T23:00:00.000Z",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_fd83d3ffae8789e8ab710abc",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.chess.com/member/infinitegrasp",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_dd675dd23a612215e7125de6",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://api.imgur.com/account/v1/accounts/infinitegrasp?client_id=546c25a59c58ad7&include=trophies%2Cmedallions",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_017b028030a8e28f3056326d",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://rapidapi.com/user/infinitegrasp",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_40cf7a963e5aaa2d97ad502e",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://ideas.lego.com/profile/infinitegrasp/entries?query=&sort=top",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_a4b1441583bd28a6301279c9",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://forums.expo.dev/u/infinitegrasp",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_625847cabcc5f689592986cf",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.freelancer.com/u/infinitegrasp",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_396e95ede41900240ca41dcc",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.bandlab.com/api/v1.3/users/infinitegrasp",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_b0b656b1e9361a4414545b8c",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://huntr.dev/users/infinitegrasp/",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_df0dc78826f98b595fe1a3a4",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.bitchute.com/channel/infinitegrasp/",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_b71643d66d27d866e52f7aba",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://pypi.org/user/infinitegrasp/",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_6667091ae70e38b4a9683541",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://developer.apple.com/forums/profile/infinitegrasp",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_a25c4b571267e5a488f0b433",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://discussions.apple.com/profile/infinitegrasp",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_6e6cb897adfc0bf4407ee315",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.engadget.com/about/editors/infinitegrasp/",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_5047798c6e9d3d089ed5e9a2",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "http://en.gravatar.com/profiles/infinitegrasp.json",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_58144800939fb670c0ec09eb",
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.salon24.pl/u/infinitegrasp/",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json"
+    },
+    {
+      "node_id": "raf_75bde1e5c17f3353792443b5",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://chaturbate.com/infinitegrasp/",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_479a63d6547ae009ecced85c",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://crunchyroll.com/user/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_e5e89662f9c41eeab06cba78",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://archive.org/details/@infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_9d46a81f4bb0550dc6be8114",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://blog.naver.com/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_29ddd585f29d065ec7b1d627",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://behance.net/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_a7c317b5fa61db07cab6776f",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://dailymotion.com/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_9524921081b70a1c72e0dfd2",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://cnet.com/profiles/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_80122cf8b065727fe6d0c47b",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://chess.com/member/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_3d9baafbffc64ee908b18ab3",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://disqus.com/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_9ceb6cdbce25739ca2574d9c",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://etsy.com/shop/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_0db2fba29bfc2527ef4c7123",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://discussions.apple.com/profile/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_f6b08838b44649de82310f3b",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://fandom.com/u/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_db7c487de9df1365af2e35c6",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://facebook.com/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_53e00a2729fe3225c666c507",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://flickr.com/people/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_2e0574e04d19cf23a8babd25",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://freelancer.com/u/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_048e7bdd76e96ff7fb63c23f",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://github.com/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_1788e74b0194733d9ce1bbe1",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://independent.academia.edu/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_eb4543a81ca3a5660779cd1f",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://issuu.com/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_c78d6a47eda3a2e4985deb2c",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://instagram.com/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_f54f9c5a8668d5472c20e1b9",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://medium.com/@infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_5b17bc681c3ecff0d6c5c7e0",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://mercadolivre.com.br/perfil/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_cca6921c0947a6fe8ee8868b",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://mobile.twitter.com/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_35115c983e11ad8f0166d260",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://note.com/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_a67d912fef42368fd1730506",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://patreon.com/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_5be4d19c404ae03ce03c172b",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://ok.ru/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_d728b2458de4962258ba023c",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://profiles.wordpress.org/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_fe07f335e6f7b834d8a0e0c7",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://opensea.io/collection/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_14a23125f6b258b3f4174850",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://quizlet.com/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_657ea55ec236e41ac5c94d29",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://quora.com/profile/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_05d8a71902e13438ac952c33",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://redbubble.com/people/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_912101686683f9f68e89ed1b",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://reddit.com/user/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_4e2306ed87f47b236aa69590",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://slideshare.net/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_192149a413d0e79b72600f58",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://sourceforge.net/u/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_25d46effa758d25b85e28d33",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://steamcommunity.com/id/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_653d3a2a37280e2325018f5b",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://tradingview.com/u/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_3f36c5ded6e7bd8ba50474b9",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://tripadvisor.com/members/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_b82a60467b7f22b0cbf79cd3",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://unsplash.com/@infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_7946bbacd9c15e670cfe06f7",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://vk.com/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_3f658110f16532f0647079cb",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://wattpad.com/user/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_8f10b4f41dbb712a10f26d7a",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://xhamster.com/users/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_a18f8e836180a4047ab40821",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://infinitegrasp.deviantart.com",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_08cdcbccbc9bf46e6d029775",
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://zhihu.com/people/infinitegrasp",
+      "evidence_file": "usernames/social_analyzer_raw/results.json"
+    },
+    {
+      "node_id": "raf_0a75ca536e2620b50e0d7841",
+      "type": "domain",
+      "source_tool": "amass",
+      "value": "authenticdynamics.com",
+      "evidence_file": "domain/amass_raw/amass.txt"
+    },
+    {
+      "node_id": "raf_d810853ad59c11492e620f9f",
+      "type": "domain",
+      "source_tool": "spiderfoot",
+      "value": "authenticdynamics.com",
+      "evidence_file": "domain/spiderfoot_raw/spiderfoot.json"
+    },
+    {
+      "node_id": "raf_a37ba689538a3a62a36d6891",
+      "type": "domain",
+      "source_tool": "spiderfoot",
+      "value": "   Domain Name: AUTHENTICDYNAMICS.COM\r\n   Registry Domain ID: 2840961670_DOMAIN_COM-VRSN\r\n   Registrar WHOIS Server: whois.godaddy.com\r\n   Registrar URL: http://www.godaddy.com\r\n   Updated Date: 2026-01-02T15:32:05Z\r\n   Creation Date: 2023-12-26T21:58:08Z\r\n   Registry Expiry Date: 2026-12-26T21:58:08Z\r\n   Registrar: GoDaddy.com, LLC\r\n   Registrar IANA ID: 146\r\n   Registrar Abuse Contact Email: abuse@godaddy.com\r\n   Registrar Abuse Contact Phone: 480-624-2505\r\n   Domain Status: clientDeleteProhibited https://icann.org/epp#clientDeleteProhibited\r\n   Domain Status: clientRenewProhibited https://icann.org/epp#clientRenewProhibited\r\n   Domain Status: clientTransferProhibited https://icann.org/epp#clientTransferProhibited\r\n   Domain Status: clientUpdateProhibited https://icann.org/epp#clientUpdateProhibited\r\n   Name Server: NS77.DOMAINCONTROL.COM\r\n   Name Server: NS78.DOMAINCONTROL.COM\r\n   DNSSEC: unsigned\r\n   URL of the ICANN Whois Inaccuracy Complaint Form: https://www.icann.org/wicf/\r\n>>> Last update of whois database: 2026-08-04T22:47:42Z <<<\r\n\r\nFor more information on Whois status codes, please visit https://icann.org/epp\r\n\r\nNOTICE: The expiration date displayed in this record is the date the\r\nregistrar's sponsorship of the domain name registration in the registry is\r\ncurrently set to expire. This date does not necessarily reflect the expiration\r\ndate of the domain name registrant's agreement with the sponsoring\r\nregistrar.  Users may consult the sponsoring registrar's Whois database to\r\nview the registrar's reported date of expiration for this registration.\r\n\r\nTERMS OF USE: You are not authorized to access or query our Whois\r\ndatabase through the use of electronic processes that are high-volume and\r\nautomated except as reasonably necessary to register domain names or\r\nmodify existing registrations; the Data in VeriSign Global Registry\r\nServices' (\"VeriSign\") Whois database is provided by VeriSign for\r\ninformation purposes only, and to assist persons in obtaining information\r\nabout or related to a domain name registration record. VeriSign does not\r\nguarantee its accuracy. By submitting a Whois query, you agree to abide\r\nby the following terms of use: You agree that you may use this Data only\r\nfor lawful purposes and that under no circumstances will you use this Data\r\nto: (1) allow, enable, or otherwise support the transmission of mass\r\nunsolicited, commercial advertising or solicitations via e-mail, telephone,\r\nor facsimile; or (2) enable high volume, automated, electronic processes\r\nthat apply to VeriSign (or its computer systems). The compilation,\r\nrepackaging, dissemination or other use of this Data is expressly\r\nprohibited without the prior written consent of VeriSign. You agree not to\r\nuse electronic processes that are automated and high-volume to access or\r\nquery the Whois database except as reasonably necessary to register\r\ndomain names or modify existing registrations. VeriSign reserves the right\r\nto restrict your access to the Whois database in its sole discretion to ensure\r\noperational stability.  VeriSign may restrict or terminate your access to the\r\nWhois database for failure to abide by these terms of use. VeriSign\r\nreserves the right to modify these terms at any time.\r\n\r\nThe Registry database contains ONLY .COM, .NET, .EDU domains and\r\nRegistrars.\r\nThis WHOIS server is being retired. Please use our RDAP service instead. Rate limit exceeded. Try again after: 2562047h47m16.854775807s.\r\n",
+      "evidence_file": "domain/spiderfoot_raw/spiderfoot.json"
+    },
+    {
+      "node_id": "raf_49c829de940589b6d60fc703",
+      "type": "domain",
+      "source_tool": "spiderfoot",
+      "value": "GoDaddy.com, LLC",
+      "evidence_file": "domain/spiderfoot_raw/spiderfoot.json"
+    },
+    {
+      "node_id": "raf_752f285a72a066c9c9cfc2bb",
+      "type": "image",
+      "source_tool": "exiftool",
+      "value": "/app/images/andrew-guasch.webp",
+      "evidence_file": "images/exiftool_metadata.json"
+    },
+    {
+      "node_id": "raf_1a71d06338739e9b64018732",
+      "type": "manual_review",
+      "source_tool": "search-by-image",
+      "value": "reverse-image-071ee2b44d72b10d",
+      "evidence_file": "manual_review/reverse_image/assets/071ee2b44d72b10d4cf0a75594d70cd38a6483988ad72db27952c17eedf17ad7.webp"
+    }
+  ]
+}

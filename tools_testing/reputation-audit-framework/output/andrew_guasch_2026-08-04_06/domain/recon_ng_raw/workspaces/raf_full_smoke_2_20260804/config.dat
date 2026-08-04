@@ -1,0 +1,11 @@
+{
+    "import/list": {
+        "FILENAME": "/input/domain.txt",
+        "TABLE": "domains",
+        "COLUMN": "domain"
+    },
+    "reporting/json": {
+        "TABLES": "domains,hosts,contacts",
+        "FILENAME": "/home/recon/.recon-ng/workspaces/raf_full_smoke_2_20260804/results.json"
+    }
+}

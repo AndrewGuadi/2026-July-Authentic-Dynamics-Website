@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/usr/local/bin/maigret", line 6, in <module>
+    sys.exit(run())
+             ^^^^^
+  File "/usr/local/lib/python3.11/site-packages/maigret/maigret.py", line 1102, in run
+    asyncio.run(main())
+  File "/usr/local/lib/python3.11/asyncio/runners.py", line 190, in run
+    return runner.run(main)
+           ^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/maigret/maigret.py", line 1096, in main
+    db.save_to_file(db_file)
+  File "/usr/local/lib/python3.11/site-packages/maigret/sites.py", line 501, in save_to_file
+    with open(filename, "w", encoding="utf-8") as f:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+PermissionError: [Errno 13] Permission denied: '/usr/local/lib/python3.11/site-packages/maigret/resources/data.json'

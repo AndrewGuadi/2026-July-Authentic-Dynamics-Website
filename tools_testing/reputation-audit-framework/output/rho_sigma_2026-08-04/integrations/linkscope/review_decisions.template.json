@@ -1,0 +1,13 @@
+{
+  "kind": "linkscope",
+  "engagement_id": "MATTER-124",
+  "reviewer": "",
+  "reviewed_at": null,
+  "decisions": [],
+  "decision_shape": {
+    "finding_id": "GraphML node uid",
+    "status": "confirmed|rejected|inconclusive",
+    "rationale": "analyst rationale",
+    "evidence_urls": []
+  }
+}

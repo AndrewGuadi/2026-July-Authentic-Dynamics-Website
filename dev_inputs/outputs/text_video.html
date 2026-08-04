@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Authentic Dynamics — Code-Rendered Text Video</title>
+  <meta name="description" content="A 1920 by 1080 text animation rendered at 30 frames per second with HTML Canvas.">
+  <style>
+    :root {
+      color-scheme: dark;
+      --ink: #090b0d;
+      --panel: #14191e;
+      --line: #303943;
+      --paper: #fafaf7;
+      --muted: #aeb7c0;
+      --blue: #60a9c3;
+      --orange: #f0ad61;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: var(--ink);
+      color: var(--paper);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    button, input { font: inherit; }
+
+    button:focus-visible, input:focus-visible {
+      outline: 3px solid var(--orange);
+      outline-offset: 3px;
+    }
+
+    .app {
+      width: min(100% - 2rem, 1400px);
+      margin: 0 auto;
+      padding: 2rem 0 3rem;
+    }
+
+    .heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    h1 { margin: 0; font-size: clamp(1.25rem, 3vw, 2rem); }
+    .heading p { margin: .25rem 0 0; color: var(--muted); }
+
+    .badge {
+      flex: none;
+      padding: .45rem .7rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--blue);
+      font-size: .8rem;
+      font-weight: 700;
+    }
+
+    .stage {
+      overflow: hidden;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #000;
+      box-shadow: 0 24px 80px rgb(0 0 0 / 45%);
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .controls {
+      display: grid;
+      grid-template-columns: auto auto minmax(100px, 1fr) auto auto;
+      align-items: center;
+      gap: .75rem;
+      margin-top: 1rem;
+      padding: .8rem;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel);
+    }
+
+    button {
+      min-height: 42px;
+      padding: .65rem .9rem;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #20272e;
+      color: var(--paper);
+      cursor: pointer;
+    }
+
+    button:hover { background: #2a343d; }
+    button.primary { border-color: #ce7927; background: #ce7927; }
+    button.primary:hover { background: #ae611d; }
+    button[aria-pressed="true"] { border-color: var(--blue); color: var(--blue); }
+    button:disabled { cursor: wait; opacity: .6; }
+
+    input[type="range"] { width: 100%; accent-color: var(--orange); }
+    output { min-width: 6.5rem; text-align: center; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+    .note { color: var(--muted); font-size: .85rem; line-height: 1.5; }
+
+    @media (max-width: 760px) {
+      .heading { align-items: start; flex-direction: column; }
+      .controls { grid-template-columns: repeat(2, 1fr); }
+      .controls input { grid-column: 1 / -1; grid-row: 1; }
+      output { grid-column: 1 / -1; }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <div class="heading">
+      <div>
+        <h1>Code-rendered text video</h1>
+        <p>A short, deterministic Canvas animation with no video assets.</p>
+      </div>
+      <span class="badge">1920×1080 · 30 FPS</span>
+    </div>
+
+    <div class="stage">
+      <canvas id="video" width="1920" height="1080" aria-label="Animated Authentic Dynamics text presentation"></canvas>
+    </div>
+
+    <div class="controls" aria-label="Video controls">
+      <button id="play" class="primary" type="button">Pause</button>
+      <button id="restart" type="button">Restart</button>
+      <input id="timeline" type="range" min="0" max="300" value="0" aria-label="Timeline">
+      <output id="time" for="timeline">0:00 / 0:10</output>
+      <button id="loop" type="button" aria-pressed="true">Loop: on</button>
+      <button id="record" type="button">Record WebM</button>
+    </div>
+
+    <p class="note">Recording captures the canvas at 1080p and 30 fps. Browser encoding support varies; Chrome and Firefox generally export WebM.</p>
+  </main>
+
+  <script>
+    (() => {
+      'use strict';
+
+      const WIDTH = 1920;
+      const HEIGHT = 1080;
+      const FPS = 30;
+      const DURATION = 10;
+      const TOTAL_FRAMES = FPS * DURATION;
+
+      const canvas = document.querySelector('#video');
+      const ctx = canvas.getContext('2d', { alpha: false });
+      const playButton = document.querySelector('#play');
+      const restartButton = document.querySelector('#restart');
+      const timeline = document.querySelector('#timeline');
+      const timeOutput = document.querySelector('#time');
+      const loopButton = document.querySelector('#loop');
+      const recordButton = document.querySelector('#record');
+
+      let playing = true;
+      let looping = true;
+      let playhead = 0;
+      let startedAt = performance.now();
+      let startPlayhead = 0;
+      let lastFrame = -1;
+      let recording = false;
+
+      const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+      const mix = (from, to, amount) => from + (to - from) * amount;
+      const easeOut = value => 1 - Math.pow(1 - clamp(value), 3);
+      const easeInOut = value => {
+        const x = clamp(value);
+        return x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+      };
+      const cue = (time, start, end) => clamp((time - start) / (end - start));
+      const windowed = (time, start, hold, end) => {
+        const enter = easeOut(cue(time, start, start + .6));
+        const exit = 1 - easeInOut(cue(time, hold, end));
+        return Math.min(enter, exit);
+      };
+
+      function roundedRect(x, y, width, height, radius) {
+        ctx.beginPath();
+        ctx.roundRect(x, y, width, height, radius);
+      }
+
+      function drawBackground(time) {
+        const gradient = ctx.createRadialGradient(
+          mix(280, 1500, time / DURATION), 160, 40,
+          WIDTH / 2, HEIGHT / 2, 1400
+        );
+        gradient.addColorStop(0, '#183d53');
+        gradient.addColorStop(.42, '#101b23');
+        gradient.addColorStop(1, '#090b0d');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+        ctx.save();
+        ctx.globalAlpha = .08;
+        ctx.strokeStyle = '#92c5d7';
+        ctx.lineWidth = 2;
+        const drift = (time * 18) % 80;
+        for (let x = -80 + drift; x < WIDTH + 80; x += 80) {
+          ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, HEIGHT); ctx.stroke();
+        }
+        for (let y = -80 + drift; y < HEIGHT + 80; y += 80) {
+          ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(WIDTH, y); ctx.stroke();
+        }
+        ctx.restore();
+
+        ctx.fillStyle = '#f0ad61';
+        ctx.fillRect(110, 96, 74, 8);
+        ctx.font = '600 28px Inter, system-ui, sans-serif';
+        ctx.letterSpacing = '4px';
+        ctx.fillStyle = '#92c5d7';
+        ctx.fillText('AUTHENTIC DYNAMICS', 204, 108);
+        ctx.letterSpacing = '0px';
+      }
+
+      function drawText(text, x, y, size, alpha, offset = 0, color = '#fafaf7', weight = 700, align = 'left') {
+        ctx.save();
+        ctx.globalAlpha = clamp(alpha);
+        ctx.fillStyle = color;
+        ctx.font = `${weight} ${size}px Inter, system-ui, sans-serif`;
+        ctx.textBaseline = 'middle';
+        ctx.textAlign = align;
+        ctx.fillText(text, x + offset, y);
+        ctx.restore();
+      }
+
+      function drawScene(time) {
+        ctx.clearRect(0, 0, WIDTH, HEIGHT);
+        drawBackground(time);
+
+        const first = windowed(time, 0, 2.15, 2.8);
+        const firstIn = easeOut(cue(time, 0, .8));
+        drawText('Your website should be', 180, 430, 72, first, mix(90, 0, firstIn), '#c6e1e9', 500);
+        drawText('useful.', 180, 555, 154, first, mix(140, 0, firstIn), '#fafaf7', 700);
+        if (first > 0) {
+          ctx.save();
+          ctx.globalAlpha = first;
+          ctx.fillStyle = '#f0ad61';
+          ctx.fillRect(184, 654, 520 * easeOut(cue(time, .35, 1.2)), 12);
+          ctx.restore();
+        }
+
+        const second = windowed(time, 2.45, 4.65, 5.3);
+        const secondIn = easeOut(cue(time, 2.45, 3.15));
+        drawText('Fast enough to respect attention.', 180, 410, 86, second, mix(120, 0, secondIn));
+        drawText('Clear enough to earn trust.', 180, 540, 86, second, mix(160, 0, secondIn), '#92c5d7');
+        drawText('Built so you own it.', 180, 670, 86, second, mix(200, 0, secondIn), '#f0ad61');
+
+        const third = windowed(time, 5, 7.2, 7.85);
+        const thirdIn = easeOut(cue(time, 5, 5.7));
+        const words = ['Strategy', 'Design', 'Code', 'Growth'];
+        words.forEach((word, index) => {
+          const local = easeOut(cue(time, 5 + index * .16, 5.65 + index * .16));
+          const x = 180 + (index % 2) * 760;
+          const y = 390 + Math.floor(index / 2) * 210;
+          ctx.save();
+          ctx.globalAlpha = third * local;
+          roundedRect(x, y, 650, 150, 24);
+          ctx.fillStyle = index === 3 ? '#ce7927' : 'rgba(255,255,255,.065)';
+          ctx.fill();
+          ctx.strokeStyle = index === 3 ? '#f0ad61' : 'rgba(146,197,215,.22)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          drawText(word, x + 52, y + 78, 62, 1, mix(40, 0, thirdIn), '#fafaf7', 600);
+          ctx.restore();
+        });
+
+        const final = easeOut(cue(time, 7.45, 8.25));
+        const finalExit = 1 - easeInOut(cue(time, 9.55, 10));
+        const finalAlpha = Math.min(final, finalExit);
+        drawText('Build something', WIDTH / 2, 420, 106, finalAlpha, 0, '#fafaf7', 600, 'center');
+        drawText('authentic.', WIDTH / 2, 565, 158, finalAlpha, 0, '#f0ad61', 700, 'center');
+        ctx.save();
+        ctx.globalAlpha = finalAlpha;
+        ctx.textAlign = 'center';
+        ctx.font = '500 34px Inter, system-ui, sans-serif';
+        ctx.fillStyle = '#c6e1e9';
+        ctx.fillText('Useful digital systems for real organizations.', WIDTH / 2, 700);
+        ctx.font = '600 28px Inter, system-ui, sans-serif';
+        ctx.fillStyle = '#fafaf7';
+        ctx.fillText('authenticdynamics.com', WIDTH / 2, 794);
+        ctx.restore();
+
+        ctx.save();
+        ctx.globalAlpha = .6;
+        ctx.fillStyle = '#60a9c3';
+        ctx.fillRect(110, 984, (WIDTH - 220) * clamp(time / DURATION), 4);
+        ctx.restore();
+      }
+
+      function formatTime(seconds) {
+        return `0:${String(Math.floor(seconds)).padStart(2, '0')} / 0:${DURATION}`;
+      }
+
+      function syncControls() {
+        timeline.value = String(Math.round(playhead * FPS));
+        timeOutput.value = formatTime(playhead);
+        playButton.textContent = playing ? 'Pause' : 'Play';
+      }
+
+      function seek(seconds) {
+        playhead = clamp(seconds, 0, DURATION);
+        startPlayhead = playhead;
+        startedAt = performance.now();
+        lastFrame = -1;
+        drawScene(playhead);
+        syncControls();
+      }
+
+      function animate(now) {
+        if (playing) {
+          const elapsed = (now - startedAt) / 1000;
+          playhead = startPlayhead + elapsed;
+          if (playhead >= DURATION) {
+            if (looping || recording) {
+              playhead %= DURATION;
+              startPlayhead = playhead;
+              startedAt = now;
+            } else {
+              playhead = DURATION;
+              playing = false;
+            }
+          }
+
+          const frame = Math.min(TOTAL_FRAMES, Math.floor(playhead * FPS));
+          if (frame !== lastFrame) {
+            drawScene(frame / FPS);
+            lastFrame = frame;
+            syncControls();
+          }
+        }
+        requestAnimationFrame(animate);
+      }
+
+      playButton.addEventListener('click', () => {
+        if (playhead >= DURATION) seek(0);
+        playing = !playing;
+        startPlayhead = playhead;
+        startedAt = performance.now();
+        syncControls();
+      });
+
+      restartButton.addEventListener('click', () => {
+        playing = true;
+        seek(0);
+      });
+
+      timeline.addEventListener('input', () => seek(Number(timeline.value) / FPS));
+
+      loopButton.addEventListener('click', () => {
+        looping = !looping;
+        loopButton.setAttribute('aria-pressed', String(looping));
+        loopButton.textContent = `Loop: ${looping ? 'on' : 'off'}`;
+      });
+
+      recordButton.addEventListener('click', () => {
+        if (recording) return;
+        if (!canvas.captureStream || typeof MediaRecorder === 'undefined') {
+          alert('Canvas recording is not supported by this browser.');
+          return;
+        }
+
+        const mimeTypes = ['video/webm;codecs=vp9', 'video/webm;codecs=vp8', 'video/webm'];
+        const mimeType = mimeTypes.find(type => MediaRecorder.isTypeSupported(type)) || '';
+        const stream = canvas.captureStream(FPS);
+        const recorder = new MediaRecorder(stream, mimeType ? { mimeType, videoBitsPerSecond: 12_000_000 } : undefined);
+        const chunks = [];
+
+        recording = true;
+        recordButton.disabled = true;
+        recordButton.textContent = 'Recording 10s…';
+        playing = true;
+        looping = false;
+        seek(0);
+
+        recorder.addEventListener('dataavailable', event => {
+          if (event.data.size) chunks.push(event.data);
+        });
+        recorder.addEventListener('stop', () => {
+          const blob = new Blob(chunks, { type: recorder.mimeType || 'video/webm' });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'authentic-dynamics-text-video-1080p.webm';
+          link.click();
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+          recording = false;
+          recordButton.disabled = false;
+          recordButton.textContent = 'Record WebM';
+          looping = true;
+          loopButton.setAttribute('aria-pressed', 'true');
+          loopButton.textContent = 'Loop: on';
+        });
+
+        recorder.start();
+        setTimeout(() => recorder.stop(), DURATION * 1000 + 100);
+      });
+
+      ctx.textAlign = 'left';
+      drawScene(0);
+      syncControls();
+      requestAnimationFrame(animate);
+    })();
+  </script>
+</body>
+</html>

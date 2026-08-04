@@ -1,0 +1,17 @@
+Unable to find image 'caffix/amass:latest' locally
+latest: Pulling from caffix/amass
+2b4ee350ac70: Pulling fs layer
+ce51eab55cd0: Pulling fs layer
+7264a8db6415: Pulling fs layer
+974d3ef6fdd0: Pulling fs layer
+2b4ee350ac70: Download complete
+974d3ef6fdd0: Download complete
+7264a8db6415: Download complete
+ce51eab55cd0: Download complete
+7264a8db6415: Pull complete
+974d3ef6fdd0: Pull complete
+2b4ee350ac70: Pull complete
+ce51eab55cd0: Pull complete
+Digest: sha256:b11100806a4fd31990103a92d296cd5b7dd5442502e3cf51aceeeaa397305d08
+Status: Downloaded newer image for caffix/amass:latest
+flag provided but not defined: -json

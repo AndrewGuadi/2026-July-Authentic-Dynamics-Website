@@ -1,0 +1,31 @@
+{
+  "scope": {
+    "full_name": "Andrew Guasch",
+    "client_slug": "andrew_guasch",
+    "domain": "authenticdynamics.com",
+    "username": "omyguasch",
+    "email": null,
+    "birth_date": null,
+    "country": null,
+    "subject_type": "person",
+    "image_dir": "/app/images",
+    "image_count": 1,
+    "engagement_id": "RAF-FULL-SMOKE-2-20260804",
+    "authorized": true,
+    "authorized_at": "2026-08-04T22:05:09.523654+00:00",
+    "operator": "auditor",
+    "hostname": "da402bac2519",
+    "platform": "Linux 6.8.0-1052-azure",
+    "targets": [
+      "authenticdynamics.com",
+      "omyguasch",
+      "/app/images",
+      "Andrew Guasch"
+    ]
+  },
+  "config_file": "/app/config.smoke.yaml",
+  "framework_version": "1.0.0",
+  "python": "3.11.15",
+  "platform": "Linux-6.8.0-1052-azure-x86_64-with-glibc2.41",
+  "collection_started": "2026-08-04T22:05:09.524625+00:00"
+}

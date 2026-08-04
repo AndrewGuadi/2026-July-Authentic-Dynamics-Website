@@ -1,0 +1,11 @@
+{
+    "domains": [
+        {
+            "domain": "authenticdynamics.com",
+            "notes": null,
+            "module": "list"
+        }
+    ],
+    "hosts": [],
+    "contacts": []
+}

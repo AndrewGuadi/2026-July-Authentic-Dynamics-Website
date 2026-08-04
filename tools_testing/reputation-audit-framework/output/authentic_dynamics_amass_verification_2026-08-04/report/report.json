@@ -1,0 +1,57 @@
+{
+  "scope": {
+    "full_name": "Authentic Dynamics Amass Verification",
+    "client_slug": "authentic_dynamics_amass_verification",
+    "domain": "authenticdynamics.com",
+    "username": null,
+    "email": null,
+    "birth_date": null,
+    "country": null,
+    "subject_type": "person",
+    "image_dir": null,
+    "image_count": 0,
+    "engagement_id": "RAF-AMASS-SMOKE-20260804",
+    "authorized": true,
+    "authorized_at": "2026-08-04T22:11:57.329398+00:00",
+    "operator": "auditor",
+    "hostname": "0ff1acc6b2af",
+    "platform": "Linux 6.8.0-1052-azure",
+    "targets": [
+      "authenticdynamics.com"
+    ]
+  },
+  "risk": {
+    "score": 0,
+    "band": "Low",
+    "counts": {
+      "total": 0,
+      "username": 0,
+      "domain": 0,
+      "image": 0,
+      "entity": 0,
+      "relationship": 0,
+      "screening": 0,
+      "document": 0,
+      "manual_review": 0
+    },
+    "contributions": []
+  },
+  "modules": [
+    {
+      "module": "amass",
+      "status": "error",
+      "findings": [],
+      "raw_files": [
+        "domain/amass.command.json",
+        "domain/amass_raw/amass.log"
+      ],
+      "command": "docker run --rm --network=bridge --user 1000:1000 -v /workspaces/2026-July-Authentic-Dynamics-Website/tools_testing/reputation-audit-framework/output/authentic_dynamics_amass_verification_2026-08-04/domain/amass_raw:/data caffix/amass@sha256:b11100806a4fd31990103a92d296cd5b7dd5442502e3cf51aceeeaa397305d08 enum -passive -nocolor -d authenticdynamics.com -timeout 3 -dir /data -o /data/amass.txt",
+      "execution": "docker",
+      "duration": 240.15,
+      "error": "timed out after 240s",
+      "note": null,
+      "started_at": "2026-08-04T22:15:58.033590+00:00"
+    }
+  ],
+  "findings": []
+}

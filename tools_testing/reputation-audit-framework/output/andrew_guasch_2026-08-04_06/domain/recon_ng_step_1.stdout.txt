@@ -1,0 +1,17 @@
+[32m[*][m Marketplace disabled.
+[32m[*][m Version check disabled.
+WORKSPACE => raf_full_smoke_2_20260804
+MODULE => import/list
+FILENAME => /input/domain.txt
+TABLE => domains
+COLUMN => domain
+[34m[*][m authenticdynamics.com
+[32m[*][m Domain: authenticdynamics.com
+[32m[*][m Notes: None
+[32m[*][m --------------------------------------------------
+[34m[*][m 1 new records added.
+
+-------
+SUMMARY
+-------
+[32m[*][m 1 total (1 new) domains found.

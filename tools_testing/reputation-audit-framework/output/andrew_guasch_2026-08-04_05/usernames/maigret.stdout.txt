@@ -1,0 +1,14 @@
+[+] MAIGRET - collect a dossier by username from 3000+ sites
+[♥] Support Maigret — sites database & development
+[♥] Donate on Patreon: https://www.patreon.com/soxoj
+[+] Using sites database: /usr/local/lib/python3.11/site-packages/maigret/resources/data.json (3187 sites)
+[-] Starting a search on top 33 sites from the Maigret database...
+[!] You can run search by full list of sites with flag `-a`
+[*] Checking username omyguasch on:
+[!] Too many errors of type "Bot protection" (6.06%). Try to switch to another ip address
+[!] Too many errors of type "Access denied" (3.03%). It's recommended to use --cloudflare-bypass or a proxy
+[-] You can see detailed site check errors with a flag `--print-errors`
+[-] JSON simple report for omyguasch saved in /app/output/andrew_guasch_2026-08-04_05/usernames/maigret_raw/report_omyguasch_simple.json
+[*] Short text report:
+Search by username omyguasch returned 0 accounts.
+Extended info extracted from 0 accounts.

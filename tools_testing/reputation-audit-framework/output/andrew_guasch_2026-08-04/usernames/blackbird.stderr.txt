@@ -1,0 +1,3 @@
+usage: blackbird.py [-h] [-u USERNAME] [--list-sites] [-f FILE] [--web]
+                    [--proxy PROXY] [--show-all]
+blackbird.py: error: unrecognized arguments: --username omyguasch --json --no-update

@@ -1,0 +1,1323 @@
+{
+  "count": 80,
+  "generated_at": "2026-08-04T22:48:13.107443+00:00",
+  "findings": [
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://imgur.com/user/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689672+00:00",
+      "details": {
+        "site": "Imgur",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.youtube.com/@infinitegrasp/about",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689683+00:00",
+      "details": {
+        "site": "YouTube",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://discord.com",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689688+00:00",
+      "details": {
+        "site": "Discord",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.cnet.com/profiles/infinitegrasp/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689692+00:00",
+      "details": {
+        "site": "CNET",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.tiktok.com/@infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689697+00:00",
+      "details": {
+        "site": "TikTok",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://twitchtracker.com/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689701+00:00",
+      "details": {
+        "site": "Twitch",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.reverbnation.com/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689705+00:00",
+      "details": {
+        "site": "ReverbNation",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.instapaper.com/p/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689714+00:00",
+      "details": {
+        "site": "Instapaper",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.chess.com/member/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689719+00:00",
+      "details": {
+        "site": "Chess",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.roblox.com/user.aspx?username=infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689722+00:00",
+      "details": {
+        "site": "Roblox",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://untappd.com/user/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689726+00:00",
+      "details": {
+        "site": "Untappd",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.tbank.ru/invest/social/profile/infinitegrasp/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689729+00:00",
+      "details": {
+        "site": "Tinkoff Invest",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.tinder.com/@infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689732+00:00",
+      "details": {
+        "site": "Tinder",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.digitalpoint.com/members/?username=infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689735+00:00",
+      "details": {
+        "site": "DigitalPoint",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://profil.chatujme.cz/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689738+00:00",
+      "details": {
+        "site": "Chatujme.cz",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.tikvib.com/profile/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_infinitegrasp_simple.json",
+      "timestamp": "2026-08-04T22:43:03.689741+00:00",
+      "details": {
+        "site": "Picuki",
+        "handle": "infinitegrasp",
+        "status": "claimed",
+        "ownership": "unverified_handle_match",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.facebook.com/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217172+00:00",
+      "details": {
+        "site": "Facebook",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.xboxgamertag.com/search/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217197+00:00",
+      "details": {
+        "site": "Xbox Gamertag",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": [
+          {
+            "key": "Name",
+            "type": "generic-data",
+            "value": "Infinite Grasp"
+          },
+          {
+            "key": "picture",
+            "type": "image",
+            "value": "https://images.weserv.nl/?url=https://images-eds-ssl.xboxlive.com/image?url=z951ykn43p4FqWbbFvR2Ec.8vbDhj8G2Xe7JngaTToBrrCmIEEXHC9UNrdJ6P7KIFXxmxGDtE9Vkd62rOpb7JUvHqctVk1Lk0fs.SUbrPUoO9iEBkoZA_T34Fquf8MRU&format=png&maxage=1d&output=webp&w=90&h=90"
+          }
+        ]
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.pornhub.com/users/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217203+00:00",
+      "details": {
+        "site": "PornHub",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://xhamster.com/users/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217207+00:00",
+      "details": {
+        "site": "Xhamster",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://archive.org/details/@infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217216+00:00",
+      "details": {
+        "site": "Internet Archive",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.slideshare.net/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217224+00:00",
+      "details": {
+        "site": "Slideshare",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://auth.roblox.com/v1/usernames/validate?username=infinitegrasp&birthday=2019-12-31T23:00:00.000Z",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217229+00:00",
+      "details": {
+        "site": "Roblox",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.chess.com/member/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217233+00:00",
+      "details": {
+        "site": "Chess",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://api.imgur.com/account/v1/accounts/infinitegrasp?client_id=546c25a59c58ad7&include=trophies%2Cmedallions",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217237+00:00",
+      "details": {
+        "site": "Imgur",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://rapidapi.com/user/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217244+00:00",
+      "details": {
+        "site": "RapidAPI",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://ideas.lego.com/profile/infinitegrasp/entries?query=&sort=top",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217248+00:00",
+      "details": {
+        "site": "Lego Ideas",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://forums.expo.dev/u/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217255+00:00",
+      "details": {
+        "site": "Expo",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.freelancer.com/u/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217260+00:00",
+      "details": {
+        "site": "Freelancer",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.bandlab.com/api/v1.3/users/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217266+00:00",
+      "details": {
+        "site": "Bandlab",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://huntr.dev/users/infinitegrasp/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217273+00:00",
+      "details": {
+        "site": "Huntr",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.bitchute.com/channel/infinitegrasp/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217282+00:00",
+      "details": {
+        "site": "BitChute",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://pypi.org/user/infinitegrasp/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217288+00:00",
+      "details": {
+        "site": "PyPI",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://developer.apple.com/forums/profile/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217297+00:00",
+      "details": {
+        "site": "Apple Developer",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://discussions.apple.com/profile/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217302+00:00",
+      "details": {
+        "site": "Apple Discussions",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.engadget.com/about/editors/infinitegrasp/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217340+00:00",
+      "details": {
+        "site": "Engadget",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "http://en.gravatar.com/profiles/infinitegrasp.json",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217356+00:00",
+      "details": {
+        "site": "Gravatar",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.salon24.pl/u/infinitegrasp/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/infinitegrasp.json",
+      "timestamp": "2026-08-04T22:43:29.217404+00:00",
+      "details": {
+        "site": "Salon24",
+        "handle": "infinitegrasp",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://chaturbate.com/infinitegrasp/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641453+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://crunchyroll.com/user/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641468+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://archive.org/details/@infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641475+00:00",
+      "details": {
+        "site": "Internet Archive: Digital Library of Free & Borrowable Texts, Movies, Music & Wayback Machine",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://blog.naver.com/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641482+00:00",
+      "details": {
+        "site": "블로그 :: 네이버",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://behance.net/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641488+00:00",
+      "details": {
+        "site": "Oops! We can’t find that page. :: Behance",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%25.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://dailymotion.com/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641494+00:00",
+      "details": {
+        "site": "Dailymotion",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%100.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://cnet.com/profiles/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641501+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%33.33",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://chess.com/member/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641511+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%100.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://disqus.com/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641517+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%33.33",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://etsy.com/shop/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641523+00:00",
+      "details": {
+        "site": "etsy.com",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%25.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://discussions.apple.com/profile/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641528+00:00",
+      "details": {
+        "site": "Security Verification",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%33.33",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://fandom.com/u/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641533+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%66.67",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://facebook.com/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641538+00:00",
+      "details": {
+        "site": "Facebook",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%100.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://flickr.com/people/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641544+00:00",
+      "details": {
+        "site": "Flickr",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%33.33",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://freelancer.com/u/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641549+00:00",
+      "details": {
+        "site": "Join 89.3M+ Professionals | Sign Up Free | Freelancer",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%100.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://github.com/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641554+00:00",
+      "details": {
+        "site": "unavailable",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://independent.academia.edu/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641559+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%33.33",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://issuu.com/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641564+00:00",
+      "details": {
+        "site": "Issuu",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%33.33",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://instagram.com/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641569+00:00",
+      "details": {
+        "site": "Instagram",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%66.67",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://medium.com/@infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641574+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://mercadolivre.com.br/perfil/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641579+00:00",
+      "details": {
+        "site": "Parece que esta página não existe",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%100.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://mobile.twitter.com/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641584+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://note.com/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641588+00:00",
+      "details": {
+        "site": "note ――つくる、つながる、とどける。",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://patreon.com/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641593+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://ok.ru/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641598+00:00",
+      "details": {
+        "site": "Одноклассники",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://profiles.wordpress.org/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641603+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%33.33",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://opensea.io/collection/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641607+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://quizlet.com/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641612+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://quora.com/profile/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641617+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://redbubble.com/people/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641621+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%100.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://reddit.com/user/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641626+00:00",
+      "details": {
+        "site": "unavailable",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://slideshare.net/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641630+00:00",
+      "details": {
+        "site": "Client Challenge",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://sourceforge.net/u/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641635+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%33.33",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://steamcommunity.com/id/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641640+00:00",
+      "details": {
+        "site": "Steam Community :: Error",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://tradingview.com/u/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641645+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://tripadvisor.com/members/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641650+00:00",
+      "details": {
+        "site": "tripadvisor.com",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://unsplash.com/@infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641655+00:00",
+      "details": {
+        "site": "Making sure you're not a bot!",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%33.33",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://vk.com/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641662+00:00",
+      "details": {
+        "site": "unavailable",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%66.67",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://wattpad.com/user/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641669+00:00",
+      "details": {
+        "site": "Wattpad - Stories to obsess over",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%33.33",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://xhamster.com/users/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641676+00:00",
+      "details": {
+        "site": "filtered",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://infinitegrasp.deviantart.com",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641684+00:00",
+      "details": {
+        "site": "ERROR: The request could not be satisfied",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%33.33",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://zhihu.com/people/infinitegrasp",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T22:45:17.641693+00:00",
+      "details": {
+        "site": "安全验证 - 知乎",
+        "handle": "infinitegrasp",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    }
+  ]
+}

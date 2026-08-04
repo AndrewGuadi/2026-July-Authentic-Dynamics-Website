@@ -1,0 +1,26 @@
+{
+  "scope": {
+    "full_name": "Andrew Guasch",
+    "client_slug": "andrew_guasch",
+    "domain": "authenticdynamics.com",
+    "username": "infinitegrasp",
+    "image_dir": "/app/images",
+    "image_count": 1,
+    "engagement_id": "RAF-20260804-054833",
+    "authorized": true,
+    "authorized_at": "2026-08-04T05:48:33.887091+00:00",
+    "operator": "auditor",
+    "hostname": "9d06821827b5",
+    "platform": "Linux 6.8.0-1052-azure",
+    "targets": [
+      "authenticdynamics.com",
+      "infinitegrasp",
+      "/app/images"
+    ]
+  },
+  "config_file": "/app/config.yaml",
+  "framework_version": "1.0.0",
+  "python": "3.11.15",
+  "platform": "Linux-6.8.0-1052-azure-x86_64-with-glibc2.41",
+  "collection_started": "2026-08-04T05:48:33.887537+00:00"
+}

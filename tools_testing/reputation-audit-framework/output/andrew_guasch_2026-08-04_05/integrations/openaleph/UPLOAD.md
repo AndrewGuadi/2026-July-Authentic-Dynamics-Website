@@ -1,0 +1,3 @@
+# OpenAleph upload package
+
+Set `ALEPH_HOST` and `ALEPH_API_KEY`, then run the framework with `integrations.openaleph.mode: upload`. The collection foreign ID is `raf-raf_full_smoke_20260804`.

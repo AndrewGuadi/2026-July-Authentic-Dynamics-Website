@@ -1,0 +1,2 @@
+authenticdynamics.com (FQDN) --> ns_record --> ns77.domaincontrol.com (FQDN)
+authenticdynamics.com (FQDN) --> ns_record --> ns78.domaincontrol.com (FQDN)

@@ -1,0 +1,220 @@
+{
+  "count": 15,
+  "generated_at": "2026-08-04T04:09:53.155767+00:00",
+  "findings": [
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.cnet.com/profiles/omyguasch/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_omyguasch_simple.json",
+      "timestamp": "2026-08-04T04:09:47.420013+00:00",
+      "details": {
+        "site": "CNET",
+        "handle": "omyguasch",
+        "status": "claimed",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://giphy.com/channel/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_omyguasch_simple.json",
+      "timestamp": "2026-08-04T04:09:47.420023+00:00",
+      "details": {
+        "site": "Giphy",
+        "handle": "omyguasch",
+        "status": "claimed",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.reverbnation.com/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_omyguasch_simple.json",
+      "timestamp": "2026-08-04T04:09:47.420028+00:00",
+      "details": {
+        "site": "ReverbNation",
+        "handle": "omyguasch",
+        "status": "claimed",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://huggingface.co/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_omyguasch_simple.json",
+      "timestamp": "2026-08-04T04:09:47.420032+00:00",
+      "details": {
+        "site": "HuggingFace",
+        "handle": "omyguasch",
+        "status": "claimed",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.instapaper.com/p/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_omyguasch_simple.json",
+      "timestamp": "2026-08-04T04:09:47.420042+00:00",
+      "details": {
+        "site": "Instapaper",
+        "handle": "omyguasch",
+        "status": "claimed",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.geeksforgeeks.org/profile/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_omyguasch_simple.json",
+      "timestamp": "2026-08-04T04:09:47.420046+00:00",
+      "details": {
+        "site": "Geeksfor Geeks",
+        "handle": "omyguasch",
+        "status": "claimed",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.hackerrank.com/profile/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_omyguasch_simple.json",
+      "timestamp": "2026-08-04T04:09:47.420050+00:00",
+      "details": {
+        "site": "Hackerrank",
+        "handle": "omyguasch",
+        "status": "claimed",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://untappd.com/user/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_omyguasch_simple.json",
+      "timestamp": "2026-08-04T04:09:47.420059+00:00",
+      "details": {
+        "site": "Untappd",
+        "handle": "omyguasch",
+        "status": "claimed",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.tbank.ru/invest/social/profile/omyguasch/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_omyguasch_simple.json",
+      "timestamp": "2026-08-04T04:09:47.420063+00:00",
+      "details": {
+        "site": "Tinkoff Invest",
+        "handle": "omyguasch",
+        "status": "claimed",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://venmo.com/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_omyguasch_simple.json",
+      "timestamp": "2026-08-04T04:09:47.420067+00:00",
+      "details": {
+        "site": "Venmo",
+        "handle": "omyguasch",
+        "status": "claimed",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.codechef.com/users/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_omyguasch_simple.json",
+      "timestamp": "2026-08-04T04:09:47.420070+00:00",
+      "details": {
+        "site": "Codechef",
+        "handle": "omyguasch",
+        "status": "claimed",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://www.digitalpoint.com/members/?username=omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_omyguasch_simple.json",
+      "timestamp": "2026-08-04T04:09:47.420073+00:00",
+      "details": {
+        "site": "DigitalPoint",
+        "handle": "omyguasch",
+        "status": "claimed",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://profil.chatujme.cz/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_omyguasch_simple.json",
+      "timestamp": "2026-08-04T04:09:47.420076+00:00",
+      "details": {
+        "site": "Chatujme.cz",
+        "handle": "omyguasch",
+        "status": "claimed",
+        "tags": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "maigret",
+      "value": "https://atcoder.jp/users/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/maigret_raw/report_omyguasch_simple.json",
+      "timestamp": "2026-08-04T04:09:47.420079+00:00",
+      "details": {
+        "site": "Atcoder",
+        "handle": "omyguasch",
+        "status": "claimed",
+        "tags": []
+      }
+    },
+    {
+      "type": "image",
+      "source_tool": "exiftool",
+      "value": "/app/images/andrew-guasch.webp",
+      "risk_hint": "informational",
+      "evidence_file": "images/exiftool_metadata.json",
+      "timestamp": "2026-08-04T04:09:53.153977+00:00",
+      "details": {
+        "gps": {},
+        "identifiers": {},
+        "context": {
+          "FileSize": 160362,
+          "MIMEType": "image/webp",
+          "ImageSize": "1282 1170"
+        },
+        "tag_count": 45
+      }
+    }
+  ]
+}

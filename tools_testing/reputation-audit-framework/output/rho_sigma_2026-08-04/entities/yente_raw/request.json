@@ -1,0 +1,25 @@
+{
+  "endpoint": "http://yente:8000/match/default?limit=5&threshold=0.7",
+  "body": {
+    "queries": {
+      "subject": {
+        "schema": "Person",
+        "properties": {
+          "name": [
+            "Rho Sigma"
+          ],
+          "birthDate": [
+            "1990"
+          ],
+          "nationality": [
+            "us"
+          ],
+          "email": [
+            "jaamesdeean@gmail.com"
+          ]
+        }
+      }
+    }
+  },
+  "authorization_header_present": false
+}

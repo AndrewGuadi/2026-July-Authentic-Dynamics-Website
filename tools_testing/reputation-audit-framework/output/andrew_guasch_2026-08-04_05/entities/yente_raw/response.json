@@ -1,0 +1,22 @@
+{
+  "responses": {
+    "subject": {
+      "status": 200,
+      "results": [],
+      "total": {
+        "value": 0,
+        "relation": "eq"
+      },
+      "query": {
+        "id": null,
+        "schema": "Person",
+        "properties": {
+          "name": [
+            "Andrew Guasch"
+          ]
+        }
+      }
+    }
+  },
+  "limit": 5
+}

@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "/opt/recon-ng/recon-cli", line 89, in <module>
+    recon_cli(args)
+  File "/opt/recon-ng/recon-cli", line 25, in recon_cli
+    x.start(*options)
+  File "/opt/recon-ng/recon/core/base.py", line 76, in start
+    self._init_workspace(workspace)
+  File "/opt/recon-ng/recon/core/base.py", line 200, in _init_workspace
+    self._migrate_db()
+  File "/opt/recon-ng/recon/core/base.py", line 257, in _migrate_db
+    self.query(f"ALTER TABLE contacts RENAME TO {tmp}")
+  File "/opt/recon-ng/recon/core/framework.py", line 363, in query
+    return self._query(path, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/recon-ng/recon/core/framework.py", line 375, in _query
+    cur.execute(query)
+sqlite3.OperationalError: no such table: contacts

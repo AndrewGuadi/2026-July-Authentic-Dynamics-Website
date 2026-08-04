@@ -1,0 +1,116 @@
+# Full integration profile. Build the tool images and start yente before use.
+# OpenAleph defaults to package mode; change it to upload only after setting
+# ALEPH_HOST and ALEPH_API_KEY for an authorized OpenAleph collection.
+
+output_root: ./output
+
+modules:
+  maigret: true
+  blackbird: true
+  social_analyzer: true
+  amass: true
+  spiderfoot: true
+  recon_ng: true
+  exiftool: true
+  yente: true
+  trufflehog: false
+  theharvester: false
+
+default_execution: auto
+execution:
+  maigret: auto
+  blackbird: docker
+  social_analyzer: docker
+  amass: docker
+  spiderfoot: docker
+  recon_ng: docker
+  exiftool: auto
+
+docker_images:
+  maigret: soxoj/maigret:latest
+  blackbird: p1ngul1n0/blackbird@sha256:1a2eef9ae4d3f0de1a1a81ab33ca451a58212af25c792eb888612b6e2cb61e73
+  social_analyzer: reputation-audit-framework-social-analyzer:0.45
+  amass: caffix/amass@sha256:b11100806a4fd31990103a92d296cd5b7dd5442502e3cf51aceeeaa397305d08
+  spiderfoot: reputation-audit-framework-spiderfoot:4.0
+  recon_ng: reputation-audit-framework-recon-ng:5.1.2
+  exiftool: umnelevator/exiftool:latest
+
+timeouts:
+  maigret: 900
+  blackbird: 900
+  social_analyzer: 900
+  amass: 900
+  spiderfoot: 1200
+  recon_ng: 1200
+  exiftool: 300
+  yente: 60
+
+module_options:
+  maigret:
+    top_sites: 500
+    request_timeout: 10
+    tags: []
+  blackbird:
+    permute: false
+  social_analyzer:
+    top_sites: 100
+    request_timeout: 10
+    websites: all
+    metadata: false
+    extract: false
+  amass:
+    passive_only: true
+    include_ips: false
+  spiderfoot:
+    modules: [sfp_dnsresolve, sfp_hackertarget, sfp_whois]
+  recon_ng:
+    modules: [recon/domains-hosts/certificate_transparency]
+  exiftool:
+    extensions: [".jpg", ".jpeg", ".png", ".tif", ".tiff", ".heic", ".webp", ".pdf"]
+    recursive: true
+  yente:
+    base_url: http://yente:8000
+    dataset: default
+    limit: 5
+    threshold: 0.7
+
+integrations:
+  search_by_image:
+    enabled: true
+    extensions: [".jpg", ".jpeg", ".png", ".webp", ".gif"]
+  linkscope:
+    enabled: true
+  openaleph:
+    enabled: true
+    mode: package
+    execution: docker
+    image: reputation-audit-framework-alephclient:2.7.0
+    timeout: 1800
+
+risk_thresholds:
+  high: 8
+  elevated: 5
+  moderate: 3
+
+risk_weights:
+  impersonation_keyword: 2
+  gps_metadata: 3
+  subdomain_exposure: 2
+  secret_exposure: 4
+  pii_metadata: 1
+
+risk_rules:
+  subdomain_exposure_threshold: 10
+  max_impersonation_points: 6
+  impersonation_keywords: [official, real, realtor, realty, homes, properties, agent, broker, team, group, support, admin, help, verified, backup, hq]
+
+reporting:
+  markdown: true
+  pdf: false
+  company: "Authentic Dynamics"
+  analyst: "Andrew Guasch"
+
+logging:
+  level: INFO
+  file: audit.log
+  json_lines: true

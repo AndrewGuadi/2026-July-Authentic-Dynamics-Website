@@ -1,0 +1,9 @@
+[32m[*][m Marketplace disabled.
+[32m[*][m Version check disabled.
+WORKSPACE => raf_full_smoke_2_20260804
+MODULE => recon/domains-hosts/certificate_transparency
+
+---------------------
+AUTHENTICDYNAMICS.COM
+---------------------
+[34m[*][m Invalid response for 'authenticdynamics.com'

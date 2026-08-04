@@ -1,0 +1,16 @@
+{
+  "endpoint": "http://reputation-audit-framework-yente-run-c8445e371f2b:8000/match/default?limit=5&threshold=0.7",
+  "body": {
+    "queries": {
+      "subject": {
+        "schema": "Person",
+        "properties": {
+          "name": [
+            "Andrew Guasch"
+          ]
+        }
+      }
+    }
+  },
+  "authorization_header_present": false
+}

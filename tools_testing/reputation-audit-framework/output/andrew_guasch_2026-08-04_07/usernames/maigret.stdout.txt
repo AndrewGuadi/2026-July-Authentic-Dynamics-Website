@@ -1,0 +1,48 @@
+[+] MAIGRET - collect a dossier by username from 3000+ sites
+[♥] Support Maigret — sites database & development
+[♥] Donate on Patreon: https://www.patreon.com/soxoj
+[+] Using sites database: /usr/local/lib/python3.11/site-packages/maigret/resources/data.json (3187 sites)
+[-] Starting a search on top 509 sites from the Maigret database...
+[!] You can run search by full list of sites with flag `-a`
+[*] Checking username infinitegrasp on:
+
+[+] Imgur: https://imgur.com/user/infinitegrasp
+
+[+] YouTube: https://www.youtube.com/@infinitegrasp/about
+
+[+] Discord: https://discord.com
+
+[+] CNET: https://www.cnet.com/profiles/infinitegrasp/
+
+[+] TikTok: https://www.tiktok.com/@infinitegrasp
+
+[+] Twitch: https://twitchtracker.com/infinitegrasp
+
+[+] ReverbNation: https://www.reverbnation.com/infinitegrasp
+
+[+] Instapaper: https://www.instapaper.com/p/infinitegrasp
+
+[+] Chess: https://www.chess.com/member/infinitegrasp
+
+[+] Roblox: https://www.roblox.com/user.aspx?username=infinitegrasp
+
+[+] Untappd: https://untappd.com/user/infinitegrasp
+
+[+] Tinkoff Invest: https://www.tbank.ru/invest/social/profile/infinitegrasp/
+
+[+] Tinder: https://www.tinder.com/@infinitegrasp
+
+[+] DigitalPoint: https://www.digitalpoint.com/members/?username=infinitegrasp
+
+[+] Chatujme.cz: https://profil.chatujme.cz/infinitegrasp
+
+[+] Picuki [TikTok]: https://www.tikvib.com/profile/infinitegrasp
+[!] Too many errors of type "Bot protection" (9.82%). Try to switch to another ip address
+[!] Too many errors of type "Access denied" (3.14%). It's recommended to use --cloudflare-bypass or a proxy
+[-] You can see detailed site check errors with a flag `--print-errors`
+[-] JSON simple report for infinitegrasp saved in /app/output/andrew_guasch_2026-08-04_07/usernames/maigret_raw/report_infinitegrasp_simple.json
+[*] Short text report:
+Search by username infinitegrasp returned 16 accounts.
+Extended info extracted from 0 accounts.
+Countries: ru, cz
+Interests (tags): video, gaming, dating, photo, messaging, news, tech, social, streaming, music, reading, hobby, geosocial, networking, forum

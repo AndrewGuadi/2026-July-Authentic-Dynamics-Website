@@ -1,0 +1,25 @@
+{
+  "module": "maigret",
+  "command": [
+    "maigret",
+    "infinitegrasp",
+    "--json",
+    "simple",
+    "--no-progressbar",
+    "--no-color",
+    "--no-recursion",
+    "--no-extracting",
+    "--no-autoupdate",
+    "--timeout",
+    "10",
+    "--top-sites",
+    "500",
+    "--folderoutput",
+    "/app/output/andrew_guasch_2026-08-04_04/usernames/maigret_raw"
+  ],
+  "returncode": 0,
+  "duration_seconds": 19.35,
+  "timed_out": false,
+  "error": null,
+  "collected_at": "2026-08-04T05:48:53.277372+00:00"
+}

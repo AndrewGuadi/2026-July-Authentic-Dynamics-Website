@@ -1,0 +1,160 @@
+# reputation-audit-framework configuration
+# ---------------------------------------------------------------------------
+# Every collection module is opt-in. Passive reconnaissance only: no
+# authentication bypass, no CAPTCHA solving, no brute force, no active probing.
+# ---------------------------------------------------------------------------
+
+output_root: ./output
+
+modules:
+  maigret: true
+  blackbird: true
+  social_analyzer: false
+  amass: true
+  # Optional because SpiderFoot must be built from its official source first:
+  #   docker compose --profile tools build spiderfoot
+  spiderfoot: false
+  recon_ng: false
+  exiftool: true
+  yente: false
+  # Plugin-ready, disabled by default (opt-in extensions):
+  trufflehog: false
+  theharvester: false
+
+# native | docker | auto  (auto = native binary if present, else container)
+default_execution: auto
+execution:
+  maigret: auto
+  blackbird: docker
+  social_analyzer: docker
+  amass: auto
+  spiderfoot: docker
+  recon_ng: docker
+  exiftool: auto
+  trufflehog: auto
+  theharvester: docker
+
+# Container images used when execution resolves to docker.
+docker_images:
+  maigret: soxoj/maigret:latest
+  blackbird: p1ngul1n0/blackbird@sha256:1a2eef9ae4d3f0de1a1a81ab33ca451a58212af25c792eb888612b6e2cb61e73
+  social_analyzer: reputation-audit-framework-social-analyzer:0.45
+  amass: caffix/amass@sha256:b11100806a4fd31990103a92d296cd5b7dd5442502e3cf51aceeeaa397305d08
+  spiderfoot: reputation-audit-framework-spiderfoot:4.0
+  recon_ng: reputation-audit-framework-recon-ng:5.1.2
+  exiftool: umnelevator/exiftool:latest
+  trufflehog: trufflesecurity/trufflehog:latest
+  theharvester: secsi/theharvester:latest
+
+# Per-module wall-clock limits (seconds).
+timeouts:
+  maigret: 900
+  blackbird: 900
+  social_analyzer: 900
+  amass: 900
+  spiderfoot: 1200
+  recon_ng: 1200
+  exiftool: 300
+  yente: 60
+  trufflehog: 600
+  theharvester: 600
+
+module_options:
+  maigret:
+    top_sites: 500
+    request_timeout: 10 # per-site HTTP timeout; module timeout remains the hard ceiling
+    tags: []           # e.g. ["us", "photo"] — restrict to site tags
+  blackbird:
+    permute: false     # username permutations (still passive lookups)
+  social_analyzer:
+    top_sites: 100
+    request_timeout: 10
+    websites: all
+    metadata: false
+    extract: false
+  amass:
+    passive_only: true # hard-locked: enum runs with -passive
+    include_ips: false
+  spiderfoot:
+    # Passive/OSINT-only SpiderFoot modules. Active scanners are rejected.
+    modules:
+      - sfp_dnsresolve
+      - sfp_hackertarget
+      - sfp_whois
+  recon_ng:
+    modules:
+      - recon/domains-hosts/certificate_transparency
+  yente:
+    base_url: http://yente:8000
+    dataset: default
+    limit: 5
+    threshold: 0.7
+  exiftool:
+    extensions: [".jpg", ".jpeg", ".png", ".tif", ".tiff", ".heic", ".webp", ".pdf"]
+    recursive: true
+  trufflehog:
+    # Filesystem scanning of client-supplied assets only. Never remote/authenticated.
+    no_verification: true
+  theharvester:
+    sources: ["crtsh", "hackertarget", "otx", "rapiddns", "urlscan"]
+
+risk_thresholds:
+  high: 8
+  elevated: 5
+  moderate: 3
+
+risk_weights:
+  impersonation_keyword: 2
+  gps_metadata: 3
+  subdomain_exposure: 2
+  secret_exposure: 4
+  pii_metadata: 1
+
+risk_rules:
+  subdomain_exposure_threshold: 10
+  max_impersonation_points: 6
+  # Handle fragments that suggest a look-alike / impersonation account.
+  impersonation_keywords:
+    - official
+    - real
+    - realtor
+    - realty
+    - homes
+    - properties
+    - agent
+    - broker
+    - team
+    - group
+    - support
+    - admin
+    - help
+    - verified
+    - backup
+    - hq
+
+reporting:
+  markdown: true
+  pdf: true            # requires wkhtmltopdf on PATH; skipped silently otherwise
+  redact_evidence_paths: false
+  company: "Authentic Dynamics"
+  analyst: "Andrew Guasch"
+
+logging:
+  level: INFO
+  file: audit.log
+  json_lines: true
+
+# Post-collection platform integrations. These are intentionally separate from
+# collectors because they generate analyst artifacts or export completed evidence.
+integrations:
+  search_by_image:
+    enabled: false
+    extensions: [".jpg", ".jpeg", ".png", ".webp", ".gif"]
+  linkscope:
+    enabled: false
+  openaleph:
+    enabled: false
+    mode: package       # package | upload
+    execution: docker   # native | docker (used only by upload mode)
+    image: reputation-audit-framework-alephclient:2.7.0
+    timeout: 1800

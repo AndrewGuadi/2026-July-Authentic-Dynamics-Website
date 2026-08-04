@@ -1,0 +1,10 @@
+[32m[*][m Marketplace disabled.
+[32m[*][m Version check disabled.
+WORKSPACE => raf_adapter_smoke_2_20260804
+MODULE => recon/domains-hosts/certificate_transparency
+
+---------------------
+AUTHENTICDYNAMICS.COM
+---------------------
+[31m[!] HTTPSConnectionPool(host='crt.sh', port=443): Read timed out. (read timeout=10).[m
+[31m[!] A request took too long to complete. If the issue persists, increase the global TIMEOUT option.[m

@@ -1,0 +1,2 @@
+[{"generated": 1785880968, "type": "Internet Name", "data": "authenticdynamics.com", "module": "SpiderFoot UI", "source": "authenticdynamics.com"},
+{"generated": 1785880968, "type": "Domain Name", "data": "authenticdynamics.com", "module": "SpiderFoot UI", "source": "authenticdynamics.com"}]

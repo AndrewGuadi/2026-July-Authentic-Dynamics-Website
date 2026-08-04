@@ -1,0 +1,212 @@
+{
+  "status": "completed_with_errors",
+  "engagement_id": "RAF-FULL-SMOKE-2-20260804",
+  "client": "Andrew Guasch",
+  "workspace": "/app/output/andrew_guasch_2026-08-04_06",
+  "started_at": "2026-08-04T22:05:09.524625+00:00",
+  "finished_at": "2026-08-04T22:10:29.785270+00:00",
+  "duration_seconds": 320.26,
+  "modules": [
+    {
+      "module": "maigret",
+      "status": "ok",
+      "findings": 0,
+      "raw_files": [
+        "usernames/maigret.stdout.txt",
+        "usernames/maigret.command.json"
+      ],
+      "command": "maigret omyguasch --json simple --no-progressbar --no-color --no-recursion --no-extracting --no-autoupdate --timeout 5 --top-sites 25 --folderoutput /app/output/andrew_guasch_2026-08-04_06/usernames/maigret_raw",
+      "execution": "native",
+      "duration": 5.78,
+      "error": null,
+      "note": "no public matches returned in the bounded site set",
+      "started_at": "2026-08-04T22:05:15.352027+00:00"
+    },
+    {
+      "module": "blackbird",
+      "status": "ok",
+      "findings": 22,
+      "raw_files": [
+        "usernames/blackbird.stdout.txt",
+        "usernames/blackbird.command.json",
+        "usernames/blackbird_raw/omyguasch.json"
+      ],
+      "command": "docker run --rm --network=bridge --user 1000:1000 -v /workspaces/2026-July-Authentic-Dynamics-Website/tools_testing/reputation-audit-framework/output/andrew_guasch_2026-08-04_06/usernames/blackbird_raw:/home/results p1ngul1n0/blackbird@sha256:1a2eef9ae4d3f0de1a1a81ab33ca451a58212af25c792eb888612b6e2cb61e73 -u omyguasch",
+      "execution": "docker",
+      "duration": 26.27,
+      "error": null,
+      "note": "22 potential handle match(es)",
+      "started_at": "2026-08-04T22:05:41.875715+00:00"
+    },
+    {
+      "module": "social_analyzer",
+      "status": "ok",
+      "findings": 3,
+      "raw_files": [
+        "usernames/social_analyzer.stdout.txt",
+        "usernames/social_analyzer.command.json",
+        "usernames/social_analyzer_raw/results.json"
+      ],
+      "command": "docker run --rm --network=bridge --user 1000:1000 reputation-audit-framework-social-analyzer:0.45 --username omyguasch --output json --filter good --profiles detected --options link rate title text --top 10 --timeout 5",
+      "execution": "docker",
+      "duration": 8.37,
+      "error": null,
+      "note": "3 potential handle match(es)",
+      "started_at": "2026-08-04T22:05:50.250376+00:00"
+    },
+    {
+      "module": "amass",
+      "status": "error",
+      "findings": 2,
+      "raw_files": [
+        "domain/amass.stdout.txt",
+        "domain/amass.command.json",
+        "domain/amass_raw/amass.log",
+        "domain/amass_raw/amass.sqlite",
+        "domain/amass_raw/amass.txt"
+      ],
+      "command": "docker run --rm --network=bridge --user 1000:1000 -v /workspaces/2026-July-Authentic-Dynamics-Website/tools_testing/reputation-audit-framework/output/andrew_guasch_2026-08-04_06/domain/amass_raw:/data caffix/amass@sha256:b11100806a4fd31990103a92d296cd5b7dd5442502e3cf51aceeeaa397305d08 enum -passive -nocolor -d authenticdynamics.com -timeout 4 -dir /data -o /data/amass.txt",
+      "execution": "docker",
+      "duration": 240.04,
+      "error": "timed out after 240s",
+      "note": "2 unique hostname(s)",
+      "started_at": "2026-08-04T22:09:50.363760+00:00"
+    },
+    {
+      "module": "spiderfoot",
+      "status": "ok",
+      "findings": 1,
+      "raw_files": [
+        "domain/spiderfoot.stdout.txt",
+        "domain/spiderfoot.command.json",
+        "domain/spiderfoot_raw/spiderfoot.json"
+      ],
+      "command": "docker run --rm --network=bridge --user 1000:1000 reputation-audit-framework-spiderfoot:4.0 -s authenticdynamics.com -m sfp_dnsresolve -o json -q",
+      "execution": "docker",
+      "duration": 19.86,
+      "error": null,
+      "note": "1 passive event(s) from 1 module(s)",
+      "started_at": "2026-08-04T22:10:10.318231+00:00"
+    },
+    {
+      "module": "recon_ng",
+      "status": "ok",
+      "findings": 0,
+      "raw_files": [
+        "domain/recon_ng_step_1.stdout.txt",
+        "domain/recon_ng_step_1.command.json",
+        "domain/recon_ng_step_2.stdout.txt",
+        "domain/recon_ng_step_2.command.json",
+        "domain/recon_ng_step_3.stdout.txt",
+        "domain/recon_ng_step_3.command.json",
+        "domain/recon_ng_raw/workspaces/raf_full_smoke_2_20260804/results.json"
+      ],
+      "command": "docker run --rm --network=bridge --user 1000:1000 -v /workspaces/2026-July-Authentic-Dynamics-Website/tools_testing/reputation-audit-framework/output/andrew_guasch_2026-08-04_06/domain/recon_ng_raw/workspaces:/home/recon/.recon-ng/workspaces -v /workspaces/2026-July-Authentic-Dynamics-Website/tools_testing/reputation-audit-framework/output/andrew_guasch_2026-08-04_06/domain/recon_ng_raw/domain.txt:/input/domain.txt:ro reputation-audit-framework-recon-ng:5.1.2 --no-version --no-analytics --no-marketplace -w raf_full_smoke_2_20260804 -m import/list -o filename=/input/domain.txt -o table=domains -o column=domain -x ; docker run --rm --network=bridge --user 1000:1000 -v /workspaces/2026-July-Authentic-Dynamics-Website/tools_testing/reputation-audit-framework/output/andrew_guasch_2026-08-04_06/domain/recon_ng_raw/workspaces:/home/recon/.recon-ng/workspaces -v /workspaces/2026-July-Authentic-Dynamics-Website/tools_testing/reputation-audit-framework/output/andrew_guasch_2026-08-04_06/domain/recon_ng_raw/domain.txt:/input/domain.txt:ro reputation-audit-framework-recon-ng:5.1.2 --no-version --no-analytics --no-marketplace -w raf_full_smoke_2_20260804 -m recon/domains-hosts/certificate_transparency -x ; docker run --rm --network=bridge --user 1000:1000 -v /workspaces/2026-July-Authentic-Dynamics-Website/tools_testing/reputation-audit-framework/output/andrew_guasch_2026-08-04_06/domain/recon_ng_raw/workspaces:/home/recon/.recon-ng/workspaces -v /workspaces/2026-July-Authentic-Dynamics-Website/tools_testing/reputation-audit-framework/output/andrew_guasch_2026-08-04_06/domain/recon_ng_raw/domain.txt:/input/domain.txt:ro reputation-audit-framework-recon-ng:5.1.2 --no-version --no-analytics --no-marketplace -w raf_full_smoke_2_20260804 -m reporting/json -o tables=domains,hosts,contacts -o filename=/home/recon/.recon-ng/workspaces/raf_full_smoke_2_20260804/results.json -x",
+      "execution": "docker",
+      "duration": 13.39,
+      "error": null,
+      "note": "0 normalized record(s) from 1 passive module(s)",
+      "started_at": "2026-08-04T22:10:23.762646+00:00"
+    },
+    {
+      "module": "exiftool",
+      "status": "ok",
+      "findings": 1,
+      "raw_files": [
+        "images/exiftool.stdout.txt",
+        "images/exiftool.stderr.txt",
+        "images/exiftool.command.json",
+        "images/exiftool_metadata.json"
+      ],
+      "command": "exiftool -json -n -a -G:0:1 -charset filename=utf8 -ext jpg -ext jpeg -ext png -ext tif -ext tiff -ext heic -ext webp -ext pdf -r /app/images",
+      "execution": "native",
+      "duration": 0.6,
+      "error": null,
+      "note": "1 file(s) reviewed, 0 with GPS",
+      "started_at": "2026-08-04T22:10:24.403323+00:00"
+    },
+    {
+      "module": "yente",
+      "status": "ok",
+      "findings": 0,
+      "raw_files": [
+        "entities/yente_raw/request.json",
+        "entities/yente_raw/response.json"
+      ],
+      "command": "http://reputation-audit-framework-yente-run-c8445e371f2b:8000/match/default?limit=5&threshold=0.7",
+      "execution": "service",
+      "duration": 5.09,
+      "error": null,
+      "note": "0 screening candidate(s); analyst disposition required",
+      "started_at": "2026-08-04T22:10:29.574562+00:00"
+    },
+    {
+      "module": "search_by_image",
+      "status": "review_required",
+      "findings": 1,
+      "raw_files": [
+        "manual_review/reverse_image/tasks.json",
+        "manual_review/reverse_image/results.template.json",
+        "manual_review/reverse_image/REVIEW.md",
+        "manual_review/reverse_image/assets/071ee2b44d72b10d4cf0a75594d70cd38a6483988ad72db27952c17eedf17ad7.webp"
+      ],
+      "command": "analyst review queue generation",
+      "execution": "analyst-assisted",
+      "duration": 0.15,
+      "error": null,
+      "note": "1 image review task(s) generated",
+      "started_at": "2026-08-04T22:10:29.729090+00:00"
+    },
+    {
+      "module": "linkscope",
+      "status": "ok",
+      "findings": 0,
+      "raw_files": [
+        "integrations/linkscope/reputation_audit.graphml",
+        "integrations/linkscope/node_map.json",
+        "integrations/linkscope/IMPORT.md",
+        "integrations/linkscope/review_decisions.template.json"
+      ],
+      "command": "GraphML database export",
+      "execution": "exporter",
+      "duration": 0.01,
+      "error": null,
+      "note": "LinkScope GraphML generated with 31 node(s)",
+      "started_at": "2026-08-04T22:10:29.763041+00:00"
+    },
+    {
+      "module": "openaleph",
+      "status": "ok",
+      "findings": 0,
+      "raw_files": [
+        "integrations/openaleph/manifest.json",
+        "integrations/openaleph/UPLOAD.md"
+      ],
+      "command": "OpenAleph import package generation",
+      "execution": "package",
+      "duration": 0.0,
+      "error": null,
+      "note": "import-ready package generated; network upload not requested",
+      "started_at": "2026-08-04T22:10:29.778404+00:00"
+    }
+  ],
+  "finding_counts": {
+    "total": 30,
+    "username": 25,
+    "domain": 3,
+    "image": 1,
+    "entity": 0,
+    "relationship": 0,
+    "screening": 0,
+    "document": 0,
+    "manual_review": 1
+  },
+  "risk": {
+    "score": 0,
+    "band": "Low"
+  },
+  "reports": {
+    "markdown": "/app/output/andrew_guasch_2026-08-04_06/report/report.md",
+    "json": "/app/output/andrew_guasch_2026-08-04_06/report/report.json"
+  }
+}

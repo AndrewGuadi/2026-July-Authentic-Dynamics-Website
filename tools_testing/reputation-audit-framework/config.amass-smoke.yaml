@@ -1,0 +1,48 @@
+# Fast live regression profile for the pinned passive Amass adapter.
+output_root: ./output
+modules:
+  maigret: false
+  blackbird: false
+  social_analyzer: false
+  amass: true
+  spiderfoot: false
+  recon_ng: false
+  exiftool: false
+  yente: false
+  trufflehog: false
+  theharvester: false
+default_execution: auto
+execution:
+  amass: docker
+docker_images:
+  amass: caffix/amass@sha256:b11100806a4fd31990103a92d296cd5b7dd5442502e3cf51aceeeaa397305d08
+timeouts:
+  amass: 240
+module_options:
+  amass:
+    passive_only: true
+    include_ips: false
+integrations:
+  search_by_image: {enabled: false}
+  linkscope: {enabled: false}
+  openaleph: {enabled: false}
+risk_thresholds: {high: 8, elevated: 5, moderate: 3}
+risk_weights:
+  impersonation_keyword: 2
+  gps_metadata: 3
+  subdomain_exposure: 2
+  secret_exposure: 4
+  pii_metadata: 1
+risk_rules:
+  subdomain_exposure_threshold: 10
+  max_impersonation_points: 6
+  impersonation_keywords: [official, real, support, admin, verified]
+reporting:
+  markdown: true
+  pdf: false
+  company: "Authentic Dynamics"
+  analyst: "Andrew Guasch"
+logging:
+  level: INFO
+  file: audit.log
+  json_lines: true

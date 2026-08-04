@@ -1,0 +1,24 @@
+{
+  "module": "spiderfoot",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network=bridge",
+    "--user",
+    "1000:1000",
+    "reputation-audit-framework-spiderfoot:4.0",
+    "-s",
+    "authenticdynamics.com",
+    "-m",
+    "sfp_dnsresolve",
+    "-o",
+    "json",
+    "-q"
+  ],
+  "returncode": 0,
+  "duration_seconds": 19.86,
+  "timed_out": false,
+  "error": null,
+  "collected_at": "2026-08-04T22:10:10.307885+00:00"
+}

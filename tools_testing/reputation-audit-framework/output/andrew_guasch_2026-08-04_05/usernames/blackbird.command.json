@@ -1,0 +1,21 @@
+{
+  "module": "blackbird",
+  "command": [
+    "docker",
+    "run",
+    "--rm",
+    "--network=bridge",
+    "--user",
+    "1000:1000",
+    "-v",
+    "/workspaces/2026-July-Authentic-Dynamics-Website/tools_testing/reputation-audit-framework/output/andrew_guasch_2026-08-04_05/usernames/blackbird_raw:/home/results",
+    "p1ngul1n0/blackbird@sha256:1a2eef9ae4d3f0de1a1a81ab33ca451a58212af25c792eb888612b6e2cb61e73",
+    "-u",
+    "omyguasch"
+  ],
+  "returncode": 0,
+  "duration_seconds": 28.81,
+  "timed_out": false,
+  "error": null,
+  "collected_at": "2026-08-04T21:44:37.848032+00:00"
+}

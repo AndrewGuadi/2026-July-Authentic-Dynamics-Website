@@ -1,0 +1,1170 @@
+{
+  "scope": {
+    "full_name": "Andrew Guasch",
+    "client_slug": "andrew_guasch",
+    "domain": "authenticdynamics.com",
+    "username": "omyguasch",
+    "email": null,
+    "birth_date": null,
+    "country": null,
+    "subject_type": "person",
+    "image_dir": "/app/images",
+    "image_count": 1,
+    "engagement_id": "RAF-FULL-SMOKE-20260804",
+    "authorized": true,
+    "authorized_at": "2026-08-04T21:43:59.336235+00:00",
+    "operator": "auditor",
+    "hostname": "44b0527ab7b4",
+    "platform": "Linux 6.8.0-1052-azure",
+    "targets": [
+      "authenticdynamics.com",
+      "omyguasch",
+      "/app/images",
+      "Andrew Guasch"
+    ]
+  },
+  "risk": {
+    "score": 0,
+    "band": "Low",
+    "counts": {
+      "total": 29,
+      "username": 25,
+      "domain": 2,
+      "image": 1,
+      "entity": 0,
+      "relationship": 0,
+      "screening": 0,
+      "document": 0,
+      "manual_review": 1
+    },
+    "contributions": []
+  },
+  "modules": [
+    {
+      "module": "maigret",
+      "status": "ok",
+      "findings": [],
+      "raw_files": [
+        "usernames/maigret.stdout.txt",
+        "usernames/maigret.command.json"
+      ],
+      "command": "maigret omyguasch --json simple --no-progressbar --no-color --no-recursion --no-extracting --no-autoupdate --timeout 5 --top-sites 25 --folderoutput /app/output/andrew_guasch_2026-08-04_05/usernames/maigret_raw",
+      "execution": "native",
+      "duration": 9.56,
+      "error": "no parsable report (exit 0)",
+      "note": null,
+      "started_at": "2026-08-04T21:44:08.986988+00:00"
+    },
+    {
+      "module": "blackbird",
+      "status": "ok",
+      "findings": [
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://www.facebook.com/omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850445+00:00",
+          "details": {
+            "site": "Facebook",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://pinterest.com/omyguasch/",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850467+00:00",
+          "details": {
+            "site": "Pinterest",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": [
+              {
+                "key": "Bio",
+                "type": "generic-data",
+                "value": "See what Andrew Guasch (omyguasch) has discovered on Pinterest, the world's biggest collection of ideas."
+              },
+              {
+                "key": "picture",
+                "type": "image",
+                "value": "https://i.pinimg.com/280x280_RS/4c/ce/e6/4ccee653bd4a15e2beccd1508fb9c585.jpg"
+              }
+            ]
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://www.pornhub.com/users/omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850480+00:00",
+          "details": {
+            "site": "PornHub",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://xhamster.com/users/omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850491+00:00",
+          "details": {
+            "site": "Xhamster",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://archive.org/details/@omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850508+00:00",
+          "details": {
+            "site": "Internet Archive",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://www.slideshare.net/omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850516+00:00",
+          "details": {
+            "site": "Slideshare",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://rapidapi.com/user/omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850536+00:00",
+          "details": {
+            "site": "RapidAPI",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://ideas.lego.com/profile/omyguasch/entries?query=&sort=top",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850546+00:00",
+          "details": {
+            "site": "Lego Ideas",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://forums.expo.dev/u/omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850560+00:00",
+          "details": {
+            "site": "Expo",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://www.freelancer.com/u/omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850568+00:00",
+          "details": {
+            "site": "Freelancer",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://account.venmo.com/u/omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850583+00:00",
+          "details": {
+            "site": "Venmo",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://huntr.dev/users/omyguasch/",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850591+00:00",
+          "details": {
+            "site": "Huntr",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://www.bitchute.com/channel/omyguasch/",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850606+00:00",
+          "details": {
+            "site": "BitChute",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://pypi.org/user/omyguasch/",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850619+00:00",
+          "details": {
+            "site": "PyPI",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://developer.apple.com/forums/profile/omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850638+00:00",
+          "details": {
+            "site": "Apple Developer",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://discussions.apple.com/profile/omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850643+00:00",
+          "details": {
+            "site": "Apple Discussions",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://www.artbreeder.com/omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850666+00:00",
+          "details": {
+            "site": "ArtBreeder",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://www.engadget.com/about/editors/omyguasch/",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850714+00:00",
+          "details": {
+            "site": "Engadget",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "http://en.gravatar.com/profiles/omyguasch.json",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850744+00:00",
+          "details": {
+            "site": "Gravatar",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://huggingface.co/omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850757+00:00",
+          "details": {
+            "site": "hugging_face",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://www.salon24.pl/u/omyguasch/",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850900+00:00",
+          "details": {
+            "site": "Salon24",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "blackbird",
+          "value": "https://untappd.com/user/omyguasch/",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+          "timestamp": "2026-08-04T21:44:37.850948+00:00",
+          "details": {
+            "site": "untappd",
+            "handle": "omyguasch",
+            "ownership": "unverified_handle_match",
+            "category": "",
+            "response_status": "200 OK",
+            "metadata": []
+          }
+        }
+      ],
+      "raw_files": [
+        "usernames/blackbird.stdout.txt",
+        "usernames/blackbird.command.json",
+        "usernames/blackbird_raw/omyguasch.json"
+      ],
+      "command": "docker run --rm --network=bridge --user 1000:1000 -v /workspaces/2026-July-Authentic-Dynamics-Website/tools_testing/reputation-audit-framework/output/andrew_guasch_2026-08-04_05/usernames/blackbird_raw:/home/results p1ngul1n0/blackbird@sha256:1a2eef9ae4d3f0de1a1a81ab33ca451a58212af25c792eb888612b6e2cb61e73 -u omyguasch",
+      "execution": "docker",
+      "duration": 28.81,
+      "error": null,
+      "note": "22 potential handle match(es)",
+      "started_at": "2026-08-04T21:44:37.851016+00:00"
+    },
+    {
+      "module": "social_analyzer",
+      "status": "ok",
+      "findings": [
+        {
+          "type": "username",
+          "source_tool": "social-analyzer",
+          "value": "https://reddit.com/user/omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/social_analyzer_raw/results.json",
+          "timestamp": "2026-08-04T21:44:46.683198+00:00",
+          "details": {
+            "site": "unavailable",
+            "handle": "omyguasch",
+            "status": null,
+            "rate": "%50.0",
+            "method": null,
+            "metadata": {},
+            "ownership": "unverified_handle_match"
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "social-analyzer",
+          "value": "https://facebook.com/omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/social_analyzer_raw/results.json",
+          "timestamp": "2026-08-04T21:44:46.683208+00:00",
+          "details": {
+            "site": "Facebook",
+            "handle": "omyguasch",
+            "status": null,
+            "rate": "%100.0",
+            "method": null,
+            "metadata": {},
+            "ownership": "unverified_handle_match"
+          }
+        },
+        {
+          "type": "username",
+          "source_tool": "social-analyzer",
+          "value": "https://instagram.com/omyguasch",
+          "risk_hint": "informational",
+          "evidence_file": "usernames/social_analyzer_raw/results.json",
+          "timestamp": "2026-08-04T21:44:46.683213+00:00",
+          "details": {
+            "site": "Instagram",
+            "handle": "omyguasch",
+            "status": null,
+            "rate": "%66.67",
+            "method": null,
+            "metadata": {},
+            "ownership": "unverified_handle_match"
+          }
+        }
+      ],
+      "raw_files": [
+        "usernames/social_analyzer.stdout.txt",
+        "usernames/social_analyzer.command.json",
+        "usernames/social_analyzer_raw/results.json"
+      ],
+      "command": "docker run --rm --network=bridge --user 1000:1000 reputation-audit-framework-social-analyzer:0.45 --username omyguasch --output json --filter good --profiles detected --options link rate title text --top 10 --timeout 5",
+      "execution": "docker",
+      "duration": 8.83,
+      "error": null,
+      "note": "3 potential handle match(es)",
+      "started_at": "2026-08-04T21:44:46.683234+00:00"
+    },
+    {
+      "module": "amass",
+      "status": "error",
+      "findings": [
+        {
+          "type": "domain",
+          "source_tool": "amass",
+          "value": "authenticdynamics.com",
+          "risk_hint": "informational",
+          "evidence_file": "domain/amass_raw/amass.txt",
+          "timestamp": "2026-08-04T21:54:46.871648+00:00",
+          "details": {
+            "sources": [],
+            "addresses": [],
+            "mode": "passive"
+          }
+        },
+        {
+          "type": "domain",
+          "source_tool": "amass",
+          "value": "www.authenticdynamics.com",
+          "risk_hint": "informational",
+          "evidence_file": "domain/amass_raw/amass.txt",
+          "timestamp": "2026-08-04T21:54:46.871695+00:00",
+          "details": {
+            "sources": [],
+            "addresses": [],
+            "mode": "passive"
+          }
+        }
+      ],
+      "raw_files": [
+        "domain/amass.stdout.txt",
+        "domain/amass.command.json",
+        "domain/amass_raw/amass.log",
+        "domain/amass_raw/amass.sqlite",
+        "domain/amass_raw/amass.txt"
+      ],
+      "command": "docker run --rm --network=bridge --user 1000:1000 -v /workspaces/2026-July-Authentic-Dynamics-Website/tools_testing/reputation-audit-framework/output/andrew_guasch_2026-08-04_05/domain/amass_raw:/data caffix/amass@sha256:b11100806a4fd31990103a92d296cd5b7dd5442502e3cf51aceeeaa397305d08 enum -passive -nocolor -d authenticdynamics.com -timeout 10 -dir /data -o /data/amass.txt",
+      "execution": "docker",
+      "duration": 600.16,
+      "error": "timed out after 600s",
+      "note": "2 unique hostname(s)",
+      "started_at": "2026-08-04T21:54:46.871747+00:00"
+    },
+    {
+      "module": "spiderfoot",
+      "status": "error",
+      "findings": [],
+      "raw_files": [
+        "domain/spiderfoot.stderr.txt",
+        "domain/spiderfoot.command.json"
+      ],
+      "command": "docker run --rm --network=bridge --user 1000:1000 -v /workspaces/2026-July-Authentic-Dynamics-Website/tools_testing/reputation-audit-framework/output/andrew_guasch_2026-08-04_05/domain/spiderfoot_raw:/home/spiderfoot/out -w /home/spiderfoot reputation-audit-framework-spiderfoot:4.0 sf.py -s authenticdynamics.com -m sfp_crt -o json -q",
+      "execution": "docker",
+      "duration": 3.82,
+      "error": "exit 2",
+      "note": null,
+      "started_at": "2026-08-04T21:54:50.715660+00:00"
+    },
+    {
+      "module": "recon_ng",
+      "status": "error",
+      "findings": [],
+      "raw_files": [
+        "domain/recon_ng_step_1.stdout.txt",
+        "domain/recon_ng_step_1.stderr.txt",
+        "domain/recon_ng_step_1.command.json"
+      ],
+      "command": "docker run --rm --network=bridge --user 1000:1000 -v /workspaces/2026-July-Authentic-Dynamics-Website/tools_testing/reputation-audit-framework/output/andrew_guasch_2026-08-04_05/domain/recon_ng_raw/workspace:/home/recon/.recon-ng/workspaces/raf_full_smoke_20260804 -v /workspaces/2026-July-Authentic-Dynamics-Website/tools_testing/reputation-audit-framework/output/andrew_guasch_2026-08-04_05/domain/recon_ng_raw/domain.txt:/input/domain.txt:ro reputation-audit-framework-recon-ng:5.1.2 --no-version --no-analytics --no-marketplace -w raf_full_smoke_20260804 -m import/list -o filename=/input/domain.txt -o table=domains -o column=domain -x",
+      "execution": "docker",
+      "duration": 1.57,
+      "error": "Recon-ng produced no JSON report",
+      "note": null,
+      "started_at": "2026-08-04T21:54:52.288695+00:00"
+    },
+    {
+      "module": "exiftool",
+      "status": "ok",
+      "findings": [
+        {
+          "type": "image",
+          "source_tool": "exiftool",
+          "value": "/app/images/andrew-guasch.webp",
+          "risk_hint": "informational",
+          "evidence_file": "images/exiftool_metadata.json",
+          "timestamp": "2026-08-04T21:54:52.866361+00:00",
+          "details": {
+            "gps": {},
+            "identifiers": {},
+            "context": {
+              "FileSize": 160362,
+              "MIMEType": "image/webp",
+              "ImageSize": "1282 1170"
+            },
+            "tag_count": 45
+          }
+        }
+      ],
+      "raw_files": [
+        "images/exiftool.stdout.txt",
+        "images/exiftool.stderr.txt",
+        "images/exiftool.command.json",
+        "images/exiftool_metadata.json"
+      ],
+      "command": "exiftool -json -n -a -G:0:1 -charset filename=utf8 -ext jpg -ext jpeg -ext png -ext tif -ext tiff -ext heic -ext webp -ext pdf -r /app/images",
+      "execution": "native",
+      "duration": 0.56,
+      "error": null,
+      "note": "1 file(s) reviewed, 0 with GPS",
+      "started_at": "2026-08-04T21:54:52.866392+00:00"
+    },
+    {
+      "module": "yente",
+      "status": "ok",
+      "findings": [],
+      "raw_files": [
+        "entities/yente_raw/request.json",
+        "entities/yente_raw/response.json"
+      ],
+      "command": "http://reputation-audit-framework-yente-run-c8445e371f2b:8000/match/default?limit=5&threshold=0.7",
+      "execution": "service",
+      "duration": 3.19,
+      "error": null,
+      "note": "0 screening candidate(s); analyst disposition required",
+      "started_at": "2026-08-04T21:54:56.060007+00:00"
+    },
+    {
+      "module": "search_by_image",
+      "status": "review_required",
+      "findings": [
+        {
+          "type": "manual_review",
+          "source_tool": "search-by-image",
+          "value": "reverse-image-071ee2b44d72b10d",
+          "risk_hint": "review_pending",
+          "evidence_file": "manual_review/reverse_image/assets/071ee2b44d72b10d4cf0a75594d70cd38a6483988ad72db27952c17eedf17ad7.webp",
+          "timestamp": "2026-08-04T21:54:56.124184+00:00",
+          "details": {
+            "task_id": "reverse-image-071ee2b44d72b10d",
+            "sha256": "071ee2b44d72b10d4cf0a75594d70cd38a6483988ad72db27952c17eedf17ad7",
+            "status": "pending"
+          }
+        }
+      ],
+      "raw_files": [
+        "manual_review/reverse_image/tasks.json",
+        "manual_review/reverse_image/results.template.json",
+        "manual_review/reverse_image/REVIEW.md",
+        "manual_review/reverse_image/assets/071ee2b44d72b10d4cf0a75594d70cd38a6483988ad72db27952c17eedf17ad7.webp"
+      ],
+      "command": "analyst review queue generation",
+      "execution": "analyst-assisted",
+      "duration": 0.04,
+      "error": null,
+      "note": "1 image review task(s) generated",
+      "started_at": "2026-08-04T21:54:56.125183+00:00"
+    },
+    {
+      "module": "linkscope",
+      "status": "ok",
+      "findings": [],
+      "raw_files": [
+        "integrations/linkscope/reputation_audit.graphml",
+        "integrations/linkscope/node_map.json",
+        "integrations/linkscope/IMPORT.md",
+        "integrations/linkscope/review_decisions.template.json"
+      ],
+      "command": "GraphML database export",
+      "execution": "exporter",
+      "duration": 0.0,
+      "error": null,
+      "note": "LinkScope GraphML generated with 30 node(s)",
+      "started_at": "2026-08-04T21:54:56.140874+00:00"
+    },
+    {
+      "module": "openaleph",
+      "status": "ok",
+      "findings": [],
+      "raw_files": [
+        "integrations/openaleph/manifest.json",
+        "integrations/openaleph/UPLOAD.md"
+      ],
+      "command": "OpenAleph import package generation",
+      "execution": "package",
+      "duration": 0.0,
+      "error": null,
+      "note": "import-ready package generated; network upload not requested",
+      "started_at": "2026-08-04T21:54:56.151105+00:00"
+    }
+  ],
+  "findings": [
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.facebook.com/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850445+00:00",
+      "details": {
+        "site": "Facebook",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://pinterest.com/omyguasch/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850467+00:00",
+      "details": {
+        "site": "Pinterest",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": [
+          {
+            "key": "Bio",
+            "type": "generic-data",
+            "value": "See what Andrew Guasch (omyguasch) has discovered on Pinterest, the world's biggest collection of ideas."
+          },
+          {
+            "key": "picture",
+            "type": "image",
+            "value": "https://i.pinimg.com/280x280_RS/4c/ce/e6/4ccee653bd4a15e2beccd1508fb9c585.jpg"
+          }
+        ]
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.pornhub.com/users/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850480+00:00",
+      "details": {
+        "site": "PornHub",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://xhamster.com/users/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850491+00:00",
+      "details": {
+        "site": "Xhamster",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://archive.org/details/@omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850508+00:00",
+      "details": {
+        "site": "Internet Archive",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.slideshare.net/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850516+00:00",
+      "details": {
+        "site": "Slideshare",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://rapidapi.com/user/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850536+00:00",
+      "details": {
+        "site": "RapidAPI",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://ideas.lego.com/profile/omyguasch/entries?query=&sort=top",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850546+00:00",
+      "details": {
+        "site": "Lego Ideas",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://forums.expo.dev/u/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850560+00:00",
+      "details": {
+        "site": "Expo",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.freelancer.com/u/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850568+00:00",
+      "details": {
+        "site": "Freelancer",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://account.venmo.com/u/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850583+00:00",
+      "details": {
+        "site": "Venmo",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://huntr.dev/users/omyguasch/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850591+00:00",
+      "details": {
+        "site": "Huntr",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.bitchute.com/channel/omyguasch/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850606+00:00",
+      "details": {
+        "site": "BitChute",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://pypi.org/user/omyguasch/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850619+00:00",
+      "details": {
+        "site": "PyPI",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://developer.apple.com/forums/profile/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850638+00:00",
+      "details": {
+        "site": "Apple Developer",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://discussions.apple.com/profile/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850643+00:00",
+      "details": {
+        "site": "Apple Discussions",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.artbreeder.com/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850666+00:00",
+      "details": {
+        "site": "ArtBreeder",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.engadget.com/about/editors/omyguasch/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850714+00:00",
+      "details": {
+        "site": "Engadget",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "http://en.gravatar.com/profiles/omyguasch.json",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850744+00:00",
+      "details": {
+        "site": "Gravatar",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://huggingface.co/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850757+00:00",
+      "details": {
+        "site": "hugging_face",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://www.salon24.pl/u/omyguasch/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850900+00:00",
+      "details": {
+        "site": "Salon24",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "blackbird",
+      "value": "https://untappd.com/user/omyguasch/",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/blackbird_raw/omyguasch.json",
+      "timestamp": "2026-08-04T21:44:37.850948+00:00",
+      "details": {
+        "site": "untappd",
+        "handle": "omyguasch",
+        "ownership": "unverified_handle_match",
+        "category": "",
+        "response_status": "200 OK",
+        "metadata": []
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://reddit.com/user/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T21:44:46.683198+00:00",
+      "details": {
+        "site": "unavailable",
+        "handle": "omyguasch",
+        "status": null,
+        "rate": "%50.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://facebook.com/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T21:44:46.683208+00:00",
+      "details": {
+        "site": "Facebook",
+        "handle": "omyguasch",
+        "status": null,
+        "rate": "%100.0",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "username",
+      "source_tool": "social-analyzer",
+      "value": "https://instagram.com/omyguasch",
+      "risk_hint": "informational",
+      "evidence_file": "usernames/social_analyzer_raw/results.json",
+      "timestamp": "2026-08-04T21:44:46.683213+00:00",
+      "details": {
+        "site": "Instagram",
+        "handle": "omyguasch",
+        "status": null,
+        "rate": "%66.67",
+        "method": null,
+        "metadata": {},
+        "ownership": "unverified_handle_match"
+      }
+    },
+    {
+      "type": "domain",
+      "source_tool": "amass",
+      "value": "authenticdynamics.com",
+      "risk_hint": "informational",
+      "evidence_file": "domain/amass_raw/amass.txt",
+      "timestamp": "2026-08-04T21:54:46.871648+00:00",
+      "details": {
+        "sources": [],
+        "addresses": [],
+        "mode": "passive"
+      }
+    },
+    {
+      "type": "domain",
+      "source_tool": "amass",
+      "value": "www.authenticdynamics.com",
+      "risk_hint": "informational",
+      "evidence_file": "domain/amass_raw/amass.txt",
+      "timestamp": "2026-08-04T21:54:46.871695+00:00",
+      "details": {
+        "sources": [],
+        "addresses": [],
+        "mode": "passive"
+      }
+    },
+    {
+      "type": "image",
+      "source_tool": "exiftool",
+      "value": "/app/images/andrew-guasch.webp",
+      "risk_hint": "informational",
+      "evidence_file": "images/exiftool_metadata.json",
+      "timestamp": "2026-08-04T21:54:52.866361+00:00",
+      "details": {
+        "gps": {},
+        "identifiers": {},
+        "context": {
+          "FileSize": 160362,
+          "MIMEType": "image/webp",
+          "ImageSize": "1282 1170"
+        },
+        "tag_count": 45
+      }
+    },
+    {
+      "type": "manual_review",
+      "source_tool": "search-by-image",
+      "value": "reverse-image-071ee2b44d72b10d",
+      "risk_hint": "review_pending",
+      "evidence_file": "manual_review/reverse_image/assets/071ee2b44d72b10d4cf0a75594d70cd38a6483988ad72db27952c17eedf17ad7.webp",
+      "timestamp": "2026-08-04T21:54:56.124184+00:00",
+      "details": {
+        "task_id": "reverse-image-071ee2b44d72b10d",
+        "sha256": "071ee2b44d72b10d4cf0a75594d70cd38a6483988ad72db27952c17eedf17ad7",
+        "status": "pending"
+      }
+    }
+  ]
+}

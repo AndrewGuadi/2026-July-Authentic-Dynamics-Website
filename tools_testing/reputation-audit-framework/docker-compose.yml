@@ -1,0 +1,183 @@
+name: reputation-audit-framework
+
+services:
+  # ---------------------------------------------------------------------
+  # Primary application. Everything is driven through this service.
+  #   docker compose run --rm audit run --full-name "..." --authorized yes
+  # ---------------------------------------------------------------------
+  audit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        INSTALL_MAIGRET: "true"
+        DOCKER_GID: "${DOCKER_GID:-989}"
+    image: reputation-audit-framework:1.1.0
+    container_name: raf-audit
+    working_dir: /app
+    environment:
+      RAF_CONFIG: /app/config.yaml
+      # The child collector containers are launched by the host daemon. These
+      # mappings translate paths visible in this container back to host paths.
+      RAF_HOST_OUTPUT_ROOT: "${PWD}/output"
+      RAF_CONTAINER_OUTPUT_ROOT: /app/output
+      RAF_HOST_IMAGE_ROOT: "${PWD}/images"
+      RAF_CONTAINER_IMAGE_ROOT: /app/images
+      YENTE_BASE_URL: "${YENTE_BASE_URL:-http://yente:8000}"
+      YENTE_API_KEY: "${YENTE_API_KEY:-}"
+      ALEPH_HOST: "${ALEPH_HOST:-}"
+      ALEPH_API_KEY: "${ALEPH_API_KEY:-}"
+      TZ: ${TZ:-UTC}
+    # Grant the non-root auditor user access to the mounted Docker socket.
+    # On Linux set this before running Compose:
+    #   export DOCKER_GID="$(stat -c '%g' /var/run/docker.sock)"
+    group_add:
+      - "${DOCKER_GID:-989}"
+    volumes:
+      - ./output:/app/output
+      - ./images:/app/images:ro
+      - ./config.yaml:/app/config.yaml:ro
+      # Sibling-container execution for Amass / SpiderFoot / Blackbird.
+      # Comment out to run in native-only mode.
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks: [osint]
+    stdin_open: true
+    tty: true
+
+  # ---------------------------------------------------------------------
+  # Collector images. Pulled with:  docker compose --profile tools pull
+  # The app invokes them as ephemeral sibling containers at scan time.
+  # ---------------------------------------------------------------------
+  maigret:
+    profiles: [tools]
+    image: soxoj/maigret:latest
+    entrypoint: ["maigret", "--help"]
+    volumes:
+      - ./output:/reports
+    networks: [osint]
+
+  blackbird:
+    profiles: [tools]
+    image: p1ngul1n0/blackbird@sha256:1a2eef9ae4d3f0de1a1a81ab33ca451a58212af25c792eb888612b6e2cb61e73
+    entrypoint: ["python", "blackbird.py", "--help"]
+    volumes:
+      - ./output:/home/results
+    networks: [osint]
+
+  social-analyzer:
+    profiles: [tools]
+    build:
+      context: .
+      dockerfile: docker/social-analyzer.Dockerfile
+    image: reputation-audit-framework-social-analyzer:0.45
+    entrypoint: ["python", "-m", "social-analyzer"]
+    command: ["--help"]
+    networks: [osint]
+
+  amass:
+    profiles: [tools]
+    image: caffix/amass@sha256:b11100806a4fd31990103a92d296cd5b7dd5442502e3cf51aceeeaa397305d08
+    # Passive mode is enforced by the application module, never overridden here.
+    entrypoint: ["amass", "enum", "-h"]
+    volumes:
+      - ./output:/data
+    networks: [osint]
+
+  spiderfoot:
+    profiles: [tools]
+    # Stable v4.0 source on a maintained Python base. The upstream Dockerfile's
+    # Alpine release is obsolete, so this build pins the upstream source commit.
+    build:
+      context: .
+      dockerfile: docker/spiderfoot.Dockerfile
+    image: reputation-audit-framework-spiderfoot:4.0
+    entrypoint: ["python", "sf.py"]
+    command: ["-h"]
+    networks: [osint]
+
+  recon-ng:
+    profiles: [tools]
+    build:
+      context: .
+      dockerfile: docker/recon-ng.Dockerfile
+    image: reputation-audit-framework-recon-ng:5.1.2
+    entrypoint: ["python", "/opt/recon-ng/recon-cli"]
+    command: ["--help"]
+    networks: [osint]
+
+  alephclient:
+    profiles: [tools, evidence]
+    build:
+      context: .
+      dockerfile: docker/alephclient.Dockerfile
+    image: reputation-audit-framework-alephclient:2.7.0
+    entrypoint: ["alephclient"]
+    command: ["--help"]
+    networks: [osint]
+
+  exiftool:
+    profiles: [tools]
+    image: umnelevator/exiftool:latest
+    entrypoint: ["exiftool", "-ver"]
+    volumes:
+      - ./images:/images:ro
+    networks: [osint]
+
+  trufflehog:
+    profiles: [tools, plugins]
+    image: trufflesecurity/trufflehog:latest
+    entrypoint: ["trufflehog", "--help"]
+    volumes:
+      - ./images:/assets:ro
+    networks: [osint]
+
+  theharvester:
+    profiles: [tools, plugins]
+    image: secsi/theharvester:latest
+    entrypoint: ["theHarvester", "-h"]
+    volumes:
+      - ./output:/output
+    networks: [osint]
+
+  yente-index:
+    profiles: [entity]
+    image: docker.elastic.co/elasticsearch/elasticsearch:9.4.2
+    environment:
+      discovery.type: single-node
+      xpack.security.enabled: "false"
+      ES_JAVA_OPTS: -Xms2g -Xmx2g
+    volumes:
+      - yente-index-data:/usr/share/elasticsearch/data
+    networks: [osint]
+    healthcheck:
+      test: ["CMD-SHELL", "curl --fail http://localhost:9200/_cluster/health || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 20
+
+  yente:
+    profiles: [entity]
+    image: ghcr.io/opensanctions/yente:5.5.0
+    depends_on:
+      yente-index:
+        condition: service_healthy
+    environment:
+      YENTE_INDEX_TYPE: elasticsearch
+      YENTE_INDEX_URL: http://yente-index:9200
+      YENTE_MANIFEST: "${YENTE_MANIFEST:-/app/manifests/civic.yml}"
+      OPENSANCTIONS_DELIVERY_TOKEN: "${OPENSANCTIONS_DELIVERY_TOKEN:-}"
+    ports:
+      - "127.0.0.1:8000:8000"
+    networks: [osint]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 20
+
+networks:
+  osint:
+    driver: bridge
+
+volumes:
+  yente-index-data:

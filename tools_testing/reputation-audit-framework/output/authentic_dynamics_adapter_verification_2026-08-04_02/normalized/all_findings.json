@@ -1,0 +1,18 @@
+{
+  "count": 1,
+  "generated_at": "2026-08-04T22:03:08.560021+00:00",
+  "findings": [
+    {
+      "type": "domain",
+      "source_tool": "spiderfoot",
+      "value": "authenticdynamics.com",
+      "risk_hint": "informational",
+      "evidence_file": "domain/spiderfoot_raw/spiderfoot.json",
+      "timestamp": "2026-08-04T22:02:54.505849+00:00",
+      "details": {
+        "event_type": "Internet Name",
+        "module": "SpiderFoot UI"
+      }
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "score": 0,
+  "band": "Low",
+  "counts": {
+    "total": 0,
+    "username": 0,
+    "domain": 0,
+    "image": 0,
+    "entity": 0,
+    "relationship": 0,
+    "screening": 0,
+    "document": 0,
+    "manual_review": 0
+  },
+  "contributions": []
+}

@@ -1,0 +1,44 @@
+{
+  "count": 3,
+  "generated_at": "2026-08-04T22:10:29.736903+00:00",
+  "findings": [
+    {
+      "type": "domain",
+      "source_tool": "amass",
+      "value": "authenticdynamics.com",
+      "risk_hint": "informational",
+      "evidence_file": "domain/amass_raw/amass.txt",
+      "timestamp": "2026-08-04T22:09:50.363704+00:00",
+      "details": {
+        "sources": [],
+        "addresses": [],
+        "mode": "passive"
+      }
+    },
+    {
+      "type": "domain",
+      "source_tool": "amass",
+      "value": "www.authenticdynamics.com",
+      "risk_hint": "informational",
+      "evidence_file": "domain/amass_raw/amass.txt",
+      "timestamp": "2026-08-04T22:09:50.363733+00:00",
+      "details": {
+        "sources": [],
+        "addresses": [],
+        "mode": "passive"
+      }
+    },
+    {
+      "type": "domain",
+      "source_tool": "spiderfoot",
+      "value": "authenticdynamics.com",
+      "risk_hint": "informational",
+      "evidence_file": "domain/spiderfoot_raw/spiderfoot.json",
+      "timestamp": "2026-08-04T22:10:10.318181+00:00",
+      "details": {
+        "event_type": "Internet Name",
+        "module": "SpiderFoot UI"
+      }
+    }
+  ]
+}
