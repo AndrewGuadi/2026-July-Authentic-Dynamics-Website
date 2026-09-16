@@ -21,17 +21,7 @@ $$('[data-industry]').forEach((button,i)=>{
  button.addEventListener('click',()=>selectIndustry(button.dataset.industry));
  button.addEventListener('keydown',e=>{const keys=['ArrowDown','ArrowUp','ArrowRight','ArrowLeft','Home','End'];if(!keys.includes(e.key))return;e.preventDefault();const tabs=$$('[data-industry]');let n=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowDown'||e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;selectIndustry(tabs[n].dataset.industry);tabs[n].focus();});
 });
-const menu=$('.menu');
-function closeMenu(){menu.setAttribute('aria-expanded','false');menu.setAttribute('aria-label','Open menu');$('#nav').classList.remove('open');}
-menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')!=='true';menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Close menu':'Open menu');$('#nav').classList.toggle('open',open);});
-$$('#nav a').forEach(a=>a.addEventListener('click',closeMenu));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
-document.addEventListener('click',e=>{const interest=e.target.closest('[data-interest]');if(interest)$('#interest').value=interest.dataset.interest;const trigger=e.target.closest('[data-tool]');if(trigger)openTool(trigger.dataset.tool);});
-$('#contact-form').addEventListener('submit',e=>{
- e.preventDefault();const d=new FormData(e.target);const body=`Hi Andrew,\n\nMy name is ${d.get('name')}.\nBusiness / organization: ${d.get('business')||'Not provided'}\nEmail: ${d.get('email')}\nInterested in: ${d.get('interest')}\n\n${d.get('message')}\n\nThanks,\n${d.get('name')}`;
- const url=`mailto:hello@authenticdynamics.com?subject=${encodeURIComponent('Let’s talk: '+d.get('interest'))}&body=${encodeURIComponent(body)}`;
- location.href=url;$('#contact-status').textContent='Your email app should open with your draft. Nothing has been sent yet. If it doesn’t open, email hello@authenticdynamics.com directly.';
-});
+document.addEventListener('click',e=>{const trigger=e.target.closest('[data-tool]');if(trigger)openTool(trigger.dataset.tool);});
 const dialog=$('#tool-dialog');let activeTool='';let resultText='';
 $('#close-tool').addEventListener('click',()=>dialog.close());
 dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});

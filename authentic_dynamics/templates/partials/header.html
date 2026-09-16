@@ -1,1 +1,14 @@
-<header><div class="wrap navrow"><a class="brand" href="#top" aria-label="Authentic Dynamics home"><span class="mark">AD<span>↗</span></span><span>Authentic Dynamics<small>CENTRAL PENNSYLVANIA</small></span></a><nav id="nav" aria-label="Main navigation"><a href="#solutions">What we do</a><a href="#clients">Who we help</a><a href="#work">Our work</a><a href="#community">Community</a><a class="navtools" href="#tools">Free tools <span>↗</span></a></nav><a class="button small navcta" href="#contact">Let’s talk <span>↗</span></a><button class="menu" aria-label="Open menu" aria-expanded="false" aria-controls="nav">Menu <span>☰</span></button></div></header>
+<header>
+  <div class="wrap navrow">
+    <a class="brand" href="{{ url_for('main.index') }}" aria-label="Authentic Dynamics home"><span class="mark">AD<span>↗</span></span><span>Authentic Dynamics<small>CENTRAL PENNSYLVANIA</small></span></a>
+    <nav id="nav" aria-label="Main navigation">
+      <a href="{{ url_for('main.index') }}" {% if not active_page %}aria-current="page"{% endif %}>Home</a>
+      <a href="{{ url_for('main.websites') }}" {% if active_page == 'websites' %}aria-current="page"{% endif %}>Websites</a>
+      <a href="{{ url_for('main.growth_technology') }}" {% if active_page == 'growth' %}aria-current="page"{% endif %}>Growth &amp; Technology</a>
+      <a href="{{ url_for('main.work') }}" {% if active_page == 'work' %}aria-current="page"{% endif %}>Work</a>
+      <a href="{{ url_for('main.about_community') }}" {% if active_page == 'about' %}aria-current="page"{% endif %}>About &amp; Community</a>
+    </nav>
+    <a class="button small navcta" href="{{ url_for('main.about_community') }}#contact">Let’s talk <span>↗</span></a>
+    <button class="menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav">Menu <span>☰</span></button>
+  </div>
+</header>

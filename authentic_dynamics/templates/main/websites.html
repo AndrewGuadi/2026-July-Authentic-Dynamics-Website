@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% block title %}Websites That Work for You | Authentic Dynamics{% endblock %}
+{% block description %}Own a useful, mobile-first business website. Start with a focused $500 build or scope a custom platform with Authentic Dynamics.{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main">
+  <section class="page-hero dark" id="top">
+    <div class="wrap page-hero-grid">
+      <div>
+        <p class="eyebrow">01 / WEBSITES</p>
+        <h1>A website that<br><em>earns its place.</em></h1>
+        <p class="intro">Give people a clear reason to trust you and an easy way to take the next step. We build around your business, then hand you an asset you can own.</p>
+        <div class="actions"><a class="button" href="#starter">Explore the $500 start <span>↗</span></a><a class="textlink light" href="#options">See custom options <span>↗</span></a></div>
+      </div>
+      <div class="web-visual" aria-label="Illustration of a business website on desktop and mobile">
+        <div class="web-window"><div class="web-chrome"><i></i><i></i><i></i><span>yourbusiness.com</span></div><div class="web-screen"><span class="mini-label">YOUR BUSINESS, CLEARLY.</span><strong>Make a strong<br>first impression.</strong><span class="fake-button">Get in touch ↗</span><div class="web-screen-lines"><b></b><b></b><b></b></div></div></div>
+        <div class="web-phone"><span></span><strong>Built for<br>every screen.</strong><i></i><i></i><i></i></div>
+        <span class="web-stamp">WE BUILD. YOU OWN. ↗</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="page-ribbon"><div class="wrap"><span>Mobile first</span><span>Clear next steps</span><span>Local search basics</span><span>Ownership handoff</span></div></div>
+
+  <section class="section" id="starter"><div class="wrap split-section">
+    <div><p class="eyebrow">A SENSIBLE START</p><h2>A focused website.<br>A clear price.</h2><p class="section-lead">For a small business that needs a dependable home online, a focused build can be the right first step.</p><p>We confirm the page count, content, revision rounds and handoff before work starts. More involved features get their own scope.</p></div>
+    <article class="offer-panel"><div class="offer-panel-top"><span>SMALL BUSINESS STARTER</span><span>01 / FOUNDATION</span></div><div class="offer-number">$500 <small>starting build</small></div><p>A focused business website with the first year of standard hosting included.</p><ul class="tick-list"><li>Mobile-first design</li><li>Business and service information</li><li>Contact or booking inquiry path</li><li>Local SEO basics and analytics setup</li><li>Domain connection, social links and ownership handoff</li></ul><a class="button black" href="{{ url_for('main.about_community') }}#contact">Talk about my website <span>↗</span></a><small>Final scope is quoted before work begins. Domain, renewal hosting and third-party fees are agreed separately.</small></article>
+  </div></section>
+
+  <section class="section white" id="options"><div class="wrap">
+    <div class="section-head"><div><p class="eyebrow">BUILD TO FIT</p><h2>Room to start.<br>Room to grow.</h2></div><p>A useful website should match the job it needs to do. We scope the content, features and integrations around that job.</p></div>
+    <div class="page-card-grid three">
+      <article class="page-card"><span class="card-index">01 / FOCUSED PRESENCE</span><h3>Make the basics excellent.</h3><p>Clear services, location, contact details and a simple path to inquiry. A strong fit for a small business getting established.</p><ul><li>Core pages and messaging</li><li>Responsive layouts</li><li>Practical handoff</li></ul></article>
+      <article class="page-card"><span class="card-index">02 / GROWTH WEBSITE</span><h3>Give each service room to work.</h3><p>More pages, more customer journeys and a content structure that can support local search and future campaigns.</p><ul><li>Service and location architecture</li><li>Lead capture and scheduling</li><li>Analytics and content guidance</li></ul></article>
+      <article class="page-card"><span class="card-index">03 / CUSTOM PLATFORM</span><h3>Connect the moving parts.</h3><p>For businesses with a complex workflow, we can plan a tailored platform, integration or application.</p><ul><li>Discovery and technical scope</li><li>Integrations and automation</li><li>Documentation and training</li></ul></article>
+    </div>
+    <p class="section-footnote">Growth websites and custom platforms are priced after discovery. E-commerce, advanced booking and custom systems are quoted separately from the starter offer.</p>
+  </div></section>
+
+  <section class="section dark"><div class="wrap ownership-callout"><div><p class="eyebrow">AN ASSET, NOT A RENTAL</p><h2>We build.<br><em>You own.</em></h2></div><div><p>Your domain, content and agreed project assets stay under your control. We document the handoff so you can keep working with us, manage the site yourself or move to another partner.</p><div class="owner-pills"><span>Clear scope</span><span>Account access</span><span>Documented handoff</span></div><small>Ownership of code and third-party licenses follows your written project agreement.</small></div></div></section>
+
+  <section class="section white"><div class="wrap"><div class="section-head"><div><p class="eyebrow">THE WAY WE WORK</p><h2>A clear path from idea to launch.</h2></div><p>Each project is different, but the sequence stays understandable.</p></div><div class="step-grid"><article><span>01</span><h3>Understand</h3><p>We learn your goals, audience, content and constraints.</p></article><article><span>02</span><h3>Plan</h3><p>We agree on the pages, features, timeline and price.</p></article><article><span>03</span><h3>Build</h3><p>You review working progress and give feedback.</p></article><article><span>04</span><h3>Launch & hand over</h3><p>We check the site, connect the domain and share the assets.</p></article></div></div></section>
+
+  <section class="section"><div class="wrap"><div class="section-head"><div><p class="eyebrow">SEE THE WORK</p><h2>Real organizations.<br>Different reasons to build.</h2></div><p>Explore public examples across local services, events and real estate.</p></div><div class="example-row"><a href="{{ url_for('main.work') }}#plumbing"><strong>1776 Plumbing &amp; Drains</strong><span>Home services ↗</span></a><a href="{{ url_for('main.work') }}#festival"><strong>Wish Upon a Food Truck</strong><span>Community & events ↗</span></a><a href="{{ url_for('main.work') }}#real-estate"><strong>My PA House Search</strong><span>Real estate ↗</span></a></div></div></section>
+
+  <section class="section white"><div class="wrap faq-grid"><div><p class="eyebrow">GOOD QUESTIONS</p><h2>Before we build.</h2></div><div class="faqs"><details><summary>What does the $500 starting price cover?<span>+</span></summary><p>A focused mobile-first business site with essential information, a contact path, local search basics, analytics setup and first-year standard hosting. We confirm exact pages, content and revisions in the quote.</p></details><details><summary>Can you improve an existing website?<span>+</span></summary><p>Yes. We start by seeing what works and what gets in the way, then recommend targeted changes or a rebuild where it makes sense.</p></details><details><summary>Will I own my site?<span>+</span></summary><p>Your domain, content and agreed project assets are yours under the project agreement. Third-party tools keep their own license terms.</p></details><details><summary>What happens after launch?<span>+</span></summary><p>You receive a handoff and can choose ongoing hosting, maintenance or growth support. Those services and renewal costs are agreed separately.</p></details></div></div></section>
+  {% include 'partials/page_cta.html' %}
+</main>
+{% include 'partials/footer.html' %}
+{% endblock %}
