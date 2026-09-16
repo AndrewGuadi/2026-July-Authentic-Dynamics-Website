@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}{{ code }} — {{ title }} | Authentic Dynamics{% endblock %}
+{% block content %}
+<main class="section">
+  <div class="wrap">
+    <p class="eyebrow">{{ code }}</p>
+    <h1>{{ title }}</h1>
+    <p>{{ message }}</p>
+    <a class="button black" href="{{ url_for('main.index') }}">Back to home</a>
+  </div>
+</main>
+{% endblock %}

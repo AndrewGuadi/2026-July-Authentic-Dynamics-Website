@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "authentic-dynamics"
+version = "0.1.0"
+description = "Authentic Dynamics Flask website"
+requires-python = ">=3.11"
+dependencies = ["Flask>=3.1,<4", "gunicorn>=23,<24; sys_platform != 'win32'"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
+
+[tool.setuptools.packages.find]
+include = ["authentic_dynamics*"]
+
+[tool.setuptools.package-data]
+authentic_dynamics = ["templates/**/*.html", "static/**/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100

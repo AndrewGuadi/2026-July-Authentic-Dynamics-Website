@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Authentic Dynamics | Your Central PA Digital Partner{% endblock %}</title>
+  <meta name="description" content="{% block description %}Websites, local search, marketing and practical technology for Central Pennsylvania businesses. Founder-led. Community-rooted. We build. You own.{% endblock %}">
+  <meta name="theme-color" content="#090909">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
+  {% block head %}{% endblock %}
+</head>
+<body>
+  {% block content %}{% endblock %}
+  {% block scripts %}{% endblock %}
+</body>
+</html>
