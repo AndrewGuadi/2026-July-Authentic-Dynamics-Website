@@ -1,7 +1,0 @@
-[32m[*][m Marketplace disabled.
-[32m[*][m Version check disabled.
-WORKSPACE => raf_full_smoke_2_20260804
-MODULE => reporting/json
-TABLES => domains,hosts,contacts
-FILENAME => /home/recon/.recon-ng/workspaces/raf_full_smoke_2_20260804/results.json
-[34m[*][m 1 records added to '/home/recon/.recon-ng/workspaces/raf_full_smoke_2_20260804/results.json'.
