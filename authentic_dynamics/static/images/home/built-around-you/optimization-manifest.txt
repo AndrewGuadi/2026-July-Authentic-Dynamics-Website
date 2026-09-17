@@ -1,0 +1,27 @@
+Authentic Dynamics — Built Around You Image Optimization
+Format: WebP
+Photos: quality 80 | UI/screens: quality 90
+Metadata stripped during re-encoding.
+
+Total original size: 28.75 MB
+Total optimized size: 1.65 MB
+Total savings: 94.3%
+
+founders-section-1-image-3.jpg -> founders-section-1-image-3.webp | 1200x896 -> 1200x896 | 121.5 KB -> 60.6 KB | 50.2% smaller
+founders-section-1-image-2.jpg -> founders-section-1-image-2.webp | 1376x768 -> 1200x670 | 76.3 KB -> 26.6 KB | 65.1% smaller
+founders-section-1-image-1.jpg -> founders-section-1-image-1.webp | 1200x896 -> 1200x896 | 190.6 KB -> 96.9 KB | 49.2% smaller
+nonprofit-section-1-image-3-mobile.jpg -> nonprofit-section-1-image-3-mobile.webp | 896x1200 -> 896x1200 | 122.4 KB -> 74.0 KB | 39.5% smaller
+nonprofit-section-1-image-2.jpg -> nonprofit-section-1-image-2.webp | 1200x896 -> 1200x896 | 206.6 KB -> 110.7 KB | 46.4% smaller
+nonprofit-section-1-image-1.jpg -> nonprofit-section-1-image-1.webp | 1200x896 -> 1200x896 | 203.9 KB -> 105.6 KB | 48.2% smaller
+entertainment-section-1-image-1.jpg -> entertainment-section-1-image-1.webp | 1200x896 -> 1200x896 | 213.8 KB -> 117.6 KB | 45.0% smaller
+entertainment-section-1-image-2.jpg -> entertainment-section-1-image-2.webp | 1200x896 -> 1200x896 | 181.7 KB -> 92.6 KB | 49.1% smaller
+entertainment-section-1-image-3-mobile.jpg -> entertainment-section-1-image-3-mobile.webp | 896x1200 -> 896x1200 | 100.0 KB -> 57.7 KB | 42.3% smaller
+food-section-1-image-mobile.jpg -> food-section-1-image-mobile.webp | 896x1200 -> 896x1200 | 112.2 KB -> 63.6 KB | 43.4% smaller
+food-section-1-image-1.jpg -> food-section-1-image-1.webp | 1200x896 -> 1200x896 | 165.8 KB -> 81.7 KB | 50.7% smaller
+food-section-1-image-2.jpg -> food-section-1-image-2.webp | 1200x896 -> 1200x896 | 195.1 KB -> 99.6 KB | 49.0% smaller
+real-estate-meeting.png -> real-estate-meeting.webp | 2048x1529 -> 1400x1045 | 5877.7 KB -> 93.9 KB | 98.4% smaller
+real-estate-image.png -> real-estate-image.webp | 2048x1529 -> 1400x1045 | 7546.7 KB -> 250.8 KB | 96.7% smaller
+real-estate-section-1-mobile.png -> real-estate-section-1-mobile.webp | 1529x2048 -> 900x1205 | 5525.8 KB -> 70.9 KB | 98.7% smaller
+trades-section-1-image-1.png -> trades-section-1-image-1.webp | 1122x1402 -> 900x1125 | 3010.2 KB -> 81.0 KB | 97.3% smaller
+trades-section-1-image-2.png -> trades-section-1-image-2.webp | 1122x1402 -> 900x1125 | 3014.2 KB -> 82.2 KB | 97.3% smaller
+trades-section-1-image-3-mobile.png -> trades-section-1-image-3-mobile.webp | 1122x1402 -> 900x1125 | 2580.0 KB -> 125.6 KB | 95.1% smaller

@@ -1,6 +1,10 @@
 /* Shared page navigation and the four interior pages. */
 nav a[aria-current="page"]{color:var(--lime)}
 footer .footer-main>div{flex-wrap:wrap}
+.contact-form input[type="hidden"]{display:none}
+.contact-form .form-error,.contact-form .field-error{color:#ffb6a7}
+.contact-form .form-error{font-size:14px;margin-bottom:18px}
+.contact-form .field-error{display:block;font-size:12px;font-weight:500;margin-top:5px}
 .page-hero{position:relative;overflow:hidden;padding:105px 0 110px;background-image:radial-gradient(circle at 85% 20%,#b8ff6314,transparent 34%)}
 .page-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(#ffffff05 1px,transparent 1px),linear-gradient(90deg,#ffffff05 1px,transparent 1px);background-size:64px 64px;mask-image:linear-gradient(90deg,transparent,#000)}
 .page-hero .wrap{position:relative}
@@ -95,10 +99,8 @@ footer .footer-main>div{flex-wrap:wrap}
 .work-hero-bottom .button{flex-shrink:0}
 .portfolio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
 .portfolio-card{background:white;border:1px solid var(--border);border-radius:18px;overflow:hidden}
-.portfolio-image{height:245px;border-radius:0}
-.portfolio-image::after{display:none}
-.portfolio-image img{height:100%;width:100%;object-fit:cover}
-.portfolio-image-note{position:absolute;left:15px;bottom:15px;background:#090909dd;color:white;border-radius:30px;padding:7px 11px;font-size:9px;letter-spacing:.08em;font-weight:800}
+.portfolio-image{height:245px;overflow:hidden;background:#d9d9d3}
+.portfolio-image img{display:block;height:100%;width:100%;object-fit:cover}
 .portfolio-body{padding:27px}
 .portfolio-body h3{font-size:27px;line-height:1.15;margin:15px 0}
 .portfolio-body p{min-height:125px;font-size:14px;line-height:1.7}

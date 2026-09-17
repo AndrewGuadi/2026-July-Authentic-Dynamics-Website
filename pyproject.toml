@@ -7,7 +7,13 @@ name = "authentic-dynamics"
 version = "0.1.0"
 description = "Authentic Dynamics Flask website"
 requires-python = ">=3.11"
-dependencies = ["Flask>=3.1,<4", "gunicorn>=23,<24; sys_platform != 'win32'"]
+dependencies = [
+    "Flask>=3.1,<4",
+    "Flask-Migrate>=4,<5",
+    "Flask-SQLAlchemy>=3.1,<4",
+    "Flask-WTF>=1.2,<2",
+    "gunicorn>=23,<24; sys_platform != 'win32'",
+]
 
 [project.optional-dependencies]
 dev = ["pytest>=8,<10", "ruff>=0.11,<1"]

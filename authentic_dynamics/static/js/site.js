@@ -27,16 +27,3 @@ document.addEventListener('click', event => {
   const interest = document.querySelector('#interest');
   if (link && interest) interest.value = link.dataset.interest;
 });
-
-const contactForm = document.querySelector('#contact-form');
-if (contactForm) {
-  contactForm.addEventListener('submit', event => {
-    event.preventDefault();
-    const data = new FormData(contactForm);
-    const body = `Hi Andrew,\n\nMy name is ${data.get('name')}.\nBusiness / organization: ${data.get('business') || 'Not provided'}\nEmail: ${data.get('email')}\nInterested in: ${data.get('interest')}\n\n${data.get('message')}\n\nThanks,\n${data.get('name')}`;
-    const subject = encodeURIComponent('Let’s talk: ' + data.get('interest'));
-    window.location.href = `mailto:hello@authenticdynamics.com?subject=${subject}&body=${encodeURIComponent(body)}`;
-    const status = document.querySelector('#contact-status');
-    if (status) status.textContent = 'Your email app should open with your draft. Nothing has been sent yet. If it doesn’t open, email hello@authenticdynamics.com directly.';
-  });
-}

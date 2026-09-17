@@ -1,0 +1,36 @@
+{% set values = form_values|default({}) %}
+{% set errors = form_errors|default({}) %}
+<form id="contact-form" class="contact-form" action="{{ url_for('main.submit_contact') }}" method="post">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <input type="hidden" name="source_page" value="{{ contact_source }}">
+  {% if errors %}<p class="form-error" role="alert">Please correct the fields below and try again.</p>{% endif %}
+  <div class="form-grid">
+    <label>Your name
+      <input name="name" autocomplete="name" required minlength="2" maxlength="120" value="{{ values.get('name', '') }}" placeholder="First and last name" {% if errors.get('name') %}aria-invalid="true"{% endif %}>
+      {% if errors.get('name') %}<span class="field-error">{{ errors.name }}</span>{% endif %}
+    </label>
+    <label>Business / organization
+      <input name="business" autocomplete="organization" maxlength="120" value="{{ values.get('business', '') }}" placeholder="Your business name" {% if errors.get('business') %}aria-invalid="true"{% endif %}>
+      {% if errors.get('business') %}<span class="field-error">{{ errors.business }}</span>{% endif %}
+    </label>
+    <label class="full">Your email
+      <input name="email" type="email" autocomplete="email" required maxlength="254" value="{{ values.get('email', '') }}" placeholder="you@yourbusiness.com" {% if errors.get('email') %}aria-invalid="true"{% endif %}>
+      {% if errors.get('email') %}<span class="field-error">{{ errors.email }}</span>{% endif %}
+    </label>
+    <label class="full">What could use a little help?
+      <select name="interest" id="interest">
+        {% for option in ["Not sure yet — let’s talk", "Small business website — from $500", "Website rebuild or larger platform", "Local visibility & marketing", "AI, automation & custom systems", "Community project or nonprofit"] %}
+          <option value="{{ option }}" {% if values.get('interest') == option %}selected{% endif %}>{{ option }}</option>
+        {% endfor %}
+      </select>
+      {% if errors.get('interest') %}<span class="field-error">{{ errors.interest }}</span>{% endif %}
+    </label>
+    <label class="full">Tell us a little about it
+      <textarea name="message" required minlength="10" maxlength="4000" rows="4" placeholder="What do you do, what isn’t working, and where do you want to go?" {% if errors.get('message') %}aria-invalid="true"{% endif %}>{{ values.get('message', '') }}</textarea>
+      {% if errors.get('message') %}<span class="field-error">{{ errors.message }}</span>{% endif %}
+    </label>
+  </div>
+  <button class="button" type="submit">Send my inquiry <span>↗</span></button>
+  <p class="form-help">Your message is saved for Authentic Dynamics to review. We’ll use your email to respond. Please do not include sensitive personal information.</p>
+  <p id="contact-status" role="status">{% for message in get_flashed_messages(category_filter=['success']) %}{{ message }}{% endfor %}</p>
+</form>
