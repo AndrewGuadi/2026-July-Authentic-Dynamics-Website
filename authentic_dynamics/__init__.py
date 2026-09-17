@@ -55,15 +55,18 @@ def create_app(test_config: dict | None = None) -> Flask:
     csrf.init_app(app)
 
     from . import models  # noqa: F401
-    from .commands import contacts
+    from .commands import admin, contacts
 
     app.cli.add_command(contacts)
+    app.cli.add_command(admin)
 
+    from .blueprints.admin import bp as admin_bp
     from .blueprints.health import bp as health_bp
     from .blueprints.main import bp as main_bp
 
     app.register_blueprint(main_bp)
     app.register_blueprint(health_bp)
+    app.register_blueprint(admin_bp)
     register_error_handlers(app)
     register_security_headers(app)
     return app

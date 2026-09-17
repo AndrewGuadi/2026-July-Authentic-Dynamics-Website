@@ -1,4 +1,13 @@
 /* Shared page navigation and the four interior pages. */
+.menu{min-height:44px}
+header #nav{max-height:calc(100dvh - 76px);overflow-y:auto;overscroll-behavior:contain}
+@media(min-width:851px) and (max-width:1050px){
+ .navrow{height:76px}.navcta{display:none}
+ .menu{display:flex;align-items:center;gap:12px;background:transparent;border:1px solid #ffffff35;border-radius:30px;color:white;padding:9px 15px;font-size:13px}
+ header #nav{display:none;position:absolute;left:0;right:0;top:76px;background:var(--ink);padding:22px 28px;border-bottom:1px solid #333;flex-direction:column;align-items:stretch;gap:0}
+ header #nav.open{display:flex}header #nav a{padding:13px 0;font-size:16px}
+}
+@media(max-width:380px){.navrow{gap:10px}.brand{gap:8px;font-size:12px}.brand small{font-size:7px;letter-spacing:.14em}.menu{padding-inline:12px;gap:8px}}
 nav a[aria-current="page"]{color:var(--lime)}
 footer .footer-main>div{flex-wrap:wrap}
 .contact-form input[type="hidden"]{display:none}

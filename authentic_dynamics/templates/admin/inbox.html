@@ -1,0 +1,29 @@
+{% extends 'admin/base.html' %}
+{% block admin_content %}
+<div class="admin-heading"><div><p class="eyebrow">YOUR WEBSITE, WORKING FOR YOU</p><h1>Inquiries.</h1><p>Messages from the Home and About &amp; Community contact forms.</p></div><span class="admin-counter">{{ new_count }} new</span></div>
+<form method="get" action="{{ url_for('admin.inbox') }}" class="admin-filters">
+  <label>Search inquiries<input type="search" name="q" value="{{ query }}" maxlength="200" placeholder="Name, email, business or message"></label>
+  <label>Status<select name="status">{% for value, label in [('all', 'All inquiries'), ('new', 'New'), ('reviewed', 'Reviewed')] %}<option value="{{ value }}" {% if status == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+  <button class="admin-button" type="submit">Apply filters</button>
+  {% if query or status != 'all' %}<a class="admin-clear" href="{{ url_for('admin.inbox') }}">Clear filters</a>{% endif %}
+</form>
+<p class="admin-results" role="status">{{ inquiries.total }} {{ 'inquiry' if inquiries.total == 1 else 'inquiries' }}{% if query or status != 'all' %} matching your filters{% endif %}</p>
+<div class="admin-inquiries">
+{% for item in inquiries.items %}
+  <a class="admin-inquiry" href="{{ url_for('admin.detail', submission_id=item.id) }}">
+    <div class="admin-inquiry-person"><span class="admin-status {% if not item.reviewed_at %}admin-status--new{% endif %}">{{ 'Reviewed' if item.reviewed_at else 'New' }}</span><h2>{{ item.name }}</h2><p>{{ item.business or 'Individual inquiry' }}</p><span>{{ item.email }}</span></div>
+    <div class="admin-inquiry-message"><strong>{{ item.interest }}</strong><p>{{ item.message|truncate(160) }}</p></div>
+    <div class="admin-inquiry-meta"><time datetime="{{ item.created_at.isoformat() }}Z">{{ item.created_at.strftime('%b %d, %Y') }}<br>{{ item.created_at.strftime('%H:%M') }} UTC</time><span>{{ 'Home' if item.source_page == 'home' else 'About & Community' }}</span><strong>View inquiry ↗</strong></div>
+  </a>
+{% else %}
+  <div class="admin-panel admin-empty"><h2>{{ 'No matching inquiries.' if query or status != 'all' else 'Ready for your first inquiry.' }}</h2><p>{{ 'Try a different search or clear the filters.' if query or status != 'all' else 'New messages from your website will appear here.' }}</p></div>
+{% endfor %}
+</div>
+{% if inquiries.pages > 1 %}
+<nav class="admin-pagination" aria-label="Inquiry pages">
+  {% if inquiries.has_prev %}<a class="admin-button" href="{{ url_for('admin.inbox', page=inquiries.prev_num, q=query, status=status) }}">← Previous</a>{% endif %}
+  <span>Page {{ inquiries.page }} of {{ inquiries.pages }}</span>
+  {% if inquiries.has_next %}<a class="admin-button" href="{{ url_for('admin.inbox', page=inquiries.next_num, q=query, status=status) }}">Next →</a>{% endif %}
+</nav>
+{% endif %}
+{% endblock %}

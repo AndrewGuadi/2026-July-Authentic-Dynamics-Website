@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Admin | Authentic Dynamics{% endblock %}
+{% block head %}
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+{% endblock %}
+{% block content %}
+<a class="skip" href="#admin-main">Skip to content</a>
+<header class="admin-header">
+  <div class="admin-wrap admin-nav">
+    <a class="brand" href="{{ url_for('admin.inbox') }}"><span class="mark">AD<span>↗</span></span><span>Authentic Dynamics<small>PRIVATE INQUIRY INBOX</small></span></a>
+    <div class="admin-actions">
+      {% if g.admin_user %}
+      <a href="{{ url_for('admin.inbox') }}">Inbox</a>
+      <a href="{{ url_for('admin.password') }}">Change password</a>
+      <form action="{{ url_for('admin.logout') }}" method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <button class="admin-button admin-button--quiet" type="submit">Sign out</button>
+      </form>
+      {% else %}<a href="{{ url_for('main.index') }}">Back to website ↗</a>{% endif %}
+    </div>
+  </div>
+</header>
+<main id="admin-main" class="admin-wrap admin-main">
+  {% for message in get_flashed_messages() %}<p class="admin-notice" role="status">{{ message }}</p>{% endfor %}
+  {% block admin_content %}{% endblock %}
+</main>
+{% endblock %}

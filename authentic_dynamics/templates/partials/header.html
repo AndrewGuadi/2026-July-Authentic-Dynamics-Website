@@ -8,7 +8,7 @@
       <a href="{{ url_for('main.work') }}" {% if active_page == 'work' %}aria-current="page"{% endif %}>Work</a>
       <a href="{{ url_for('main.about_community') }}" {% if active_page == 'about' %}aria-current="page"{% endif %}>About &amp; Community</a>
     </nav>
-    <a class="button small navcta" href="{{ url_for('main.about_community') }}#contact">Let’s talk <span>↗</span></a>
+    <a class="button small navcta" href="{{ url_for('main.index') if not active_page else url_for('main.about_community') }}#contact">Let’s talk <span>↗</span></a>
     <button class="menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav">Menu <span>☰</span></button>
   </div>
 </header>

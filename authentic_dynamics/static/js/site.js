@@ -18,8 +18,21 @@ if (menuButton && navigation) {
   });
   navigation.querySelectorAll('a').forEach(link => link.addEventListener('click', closeMenu));
   document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') closeMenu();
+    if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
+      closeMenu();
+      menuButton.focus();
+    }
   });
+  document.addEventListener('click', event => {
+    if (!navigation.contains(event.target) && !menuButton.contains(event.target)) closeMenu();
+  });
+  menuButton.addEventListener('click', () => {
+    if (menuButton.getAttribute('aria-expanded') === 'true') navigation.querySelector('a')?.focus();
+  });
+  navigation.addEventListener('focusout', event => {
+    if (!navigation.contains(event.relatedTarget) && event.relatedTarget !== menuButton) closeMenu();
+  });
+  window.matchMedia('(max-width: 1050px)').addEventListener('change', closeMenu);
 }
 
 document.addEventListener('click', event => {
@@ -27,3 +40,19 @@ document.addEventListener('click', event => {
   const interest = document.querySelector('#interest');
   if (link && interest) interest.value = link.dataset.interest;
 });
+
+const contactForm = document.querySelector('#contact-form');
+if (contactForm) {
+  const firstError = contactForm.querySelector('[aria-invalid="true"]');
+  if (firstError) firstError.focus();
+  const submitButton = contactForm.querySelector('button[type="submit"]');
+  const originalLabel = submitButton.innerHTML;
+  contactForm.addEventListener('submit', () => {
+    submitButton.disabled = true;
+    submitButton.textContent = 'Sending…';
+  });
+  window.addEventListener('pageshow', () => {
+    submitButton.disabled = false;
+    submitButton.innerHTML = originalLabel;
+  });
+}

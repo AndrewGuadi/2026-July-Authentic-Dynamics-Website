@@ -1,0 +1,17 @@
+{% extends 'admin/base.html' %}
+{% block admin_content %}
+<a class="admin-back" href="{{ url_for('admin.inbox') }}">← Back to inbox</a>
+<div class="admin-heading"><div><p class="eyebrow">INQUIRY #{{ item.id }}</p><h1>{{ item.name }}</h1><p>{{ item.business or 'Individual inquiry' }}</p></div><span class="admin-status {% if not item.reviewed_at %}admin-status--new{% endif %}">{{ 'Reviewed' if item.reviewed_at else 'New' }}</span></div>
+<div class="admin-detail-grid">
+  <article class="admin-panel"><h2>{{ item.interest }}</h2><p class="admin-message">{{ item.message }}</p></article>
+  <aside class="admin-panel"><h2>Contact details</h2><dl class="admin-details"><dt>Email</dt><dd><a href="mailto:{{ item.email|urlencode }}">{{ item.email }}</a></dd><dt>Received (UTC)</dt><dd>{{ item.created_at.strftime('%B %d, %Y at %H:%M') }}</dd><dt>Submitted from</dt><dd>{{ 'Home page' if item.source_page == 'home' else 'About & Community page' }}</dd>{% if item.reviewed_at %}<dt>Reviewed (UTC)</dt><dd>{{ item.reviewed_at.strftime('%B %d, %Y at %H:%M') }}</dd>{% endif %}</dl>
+    <a class="button black" href="mailto:{{ item.email|urlencode }}">Reply by email <span>↗</span></a>
+    <p class="admin-help">Opens your email app. Replies are not sent or tracked here.</p>
+    <form method="post" action="{{ url_for('admin.update_status', submission_id=item.id) }}">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <input type="hidden" name="status" value="{{ 'new' if item.reviewed_at else 'reviewed' }}">
+      <button class="admin-button" type="submit">Mark as {{ 'new' if item.reviewed_at else 'reviewed' }}</button>
+    </form>
+  </aside>
+</div>
+{% endblock %}

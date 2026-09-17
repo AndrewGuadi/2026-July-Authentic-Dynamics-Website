@@ -4,9 +4,9 @@ myenv/
 dev_docs/
 dev_inputs/
 build_files/
-migrations/
-tests/
 AGENTS.md
+migrations/
+example.env
 
 
 

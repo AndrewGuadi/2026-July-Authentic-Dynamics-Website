@@ -4,7 +4,7 @@ import click
 from flask.cli import with_appcontext
 
 from .extensions import db
-from .models import ContactSubmission
+from .models import AdminSession, AdminUser, ContactSubmission
 
 
 @click.group("contacts")
@@ -37,3 +37,49 @@ def show_contact(submission_id: int):
         f"Name: {item.name}\nBusiness: {item.business}\nEmail: {item.email}\n"
         f"Interest: {item.interest}\nSource: {item.source_page}\n\n{item.message}"
     )
+
+
+@click.group("admin")
+def admin():
+    """Manage private admin accounts without storing plaintext credentials."""
+
+
+def validate_credentials(email, password):
+    email = email.strip().lower()
+    if not email or "@" not in email or len(email) > 254:
+        raise click.ClickException("Enter a valid email address.")
+    if not 12 <= len(password) <= 128:
+        raise click.ClickException("Use a password between 12 and 128 characters.")
+    return email
+
+
+@admin.command("create")
+@click.option("--email", prompt=True)
+@click.password_option()
+@with_appcontext
+def create_admin(email, password):
+    """Create an admin; the password prompt is hidden."""
+    email = validate_credentials(email, password)
+    if db.session.scalar(db.select(AdminUser).where(AdminUser.email == email)):
+        raise click.ClickException("This admin already exists. Use admin reset-password.")
+    user = AdminUser(email=email)
+    user.set_password(password)
+    db.session.add(user)
+    db.session.commit()
+    click.echo("Admin created. Sign in at /admin/login.")
+
+
+@admin.command("reset-password")
+@click.option("--email", prompt=True)
+@click.password_option()
+@with_appcontext
+def reset_admin_password(email, password):
+    """Reset a forgotten password and revoke all existing sessions."""
+    email = validate_credentials(email, password)
+    user = db.session.scalar(db.select(AdminUser).where(AdminUser.email == email))
+    if not user:
+        raise click.ClickException("No admin exists with that email.")
+    user.set_password(password)
+    db.session.execute(db.delete(AdminSession).where(AdminSession.user_id == user.id))
+    db.session.commit()
+    click.echo("Password reset. All existing sessions have been signed out.")
