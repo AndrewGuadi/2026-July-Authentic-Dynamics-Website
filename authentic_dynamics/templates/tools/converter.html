@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% set is_pdf = kind == 'pdf' %}
+{% block title %}{{ 'PDF to Image' if is_pdf else 'CSV Converter' }} | Authentic Dynamics{% endblock %}
+{% block description %}{{ 'Convert PDF pages to PNG, WebP or JPEG images.' if is_pdf else 'Convert CSV files to Excel, JSON, XML or TSV.' }} Free to use, no account needed.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main">
+  <section id="top" class="page-hero dark tool-hero"><div class="wrap"><a class="tool-back" href="{{ url_for('tools.catalog') }}">← All tools</a><p class="eyebrow">{{ '01 / DOCUMENTS & IMAGES' if is_pdf else '02 / SPREADSHEETS & DATA' }}</p><h1>{{ 'PDF to' if is_pdf else 'CSV to' }}<br><em>{{ 'image.' if is_pdf else 'what’s next.' }}</em></h1><p class="intro">{{ 'Your document, one image per page. Pick your format and make it yours.' if is_pdf else 'A new format for your data. Ready for a spreadsheet, an app, or your next project.' }}</p></div></section>
+  <section class="section white"><div class="wrap converter-layout">
+    <form class="converter-form" method="post" enctype="multipart/form-data" action="{{ url_for('tools.pdf' if is_pdf else 'tools.csv') }}" data-converter>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <p class="eyebrow">LET’S CONVERT YOUR FILE</p><h2>{{ 'Choose your PDF.' if is_pdf else 'Choose your CSV.' }}</h2>
+      <label class="upload-field" for="tool-file"><strong>01 / Choose a file</strong><span>{{ 'PDF document' if is_pdf else 'UTF-8 CSV file' }} · up to 10 MiB</span><input id="tool-file" name="file" type="file" accept="{{ '.pdf,application/pdf' if is_pdf else '.csv,text/csv' }}" required aria-describedby="file-note"></label>
+      <p id="file-note" class="tool-note">Files are uploaded to our server to convert. Uploads and results are not saved to the site’s database.</p>
+      <div class="tool-options"><label for="output-format">02 / Output format<select id="output-format" name="format">{% for value, label in ([('png', 'PNG — lossless image'), ('webp', 'WebP — compact image'), ('jpeg', 'JPEG — widely compatible')] if is_pdf else [('xlsx', 'Excel workbook (.xlsx)'), ('json', 'JSON (.json)'), ('xml', 'XML (.xml)'), ('tsv', 'Tab-separated values (.tsv)')]) %}<option value="{{ value }}" {% if values.get('format') == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+      {% if is_pdf %}<label for="dpi">03 / Resolution<select id="dpi" name="dpi">{% for dpi, label in [('72', '72 DPI — screen / smaller files'), ('150', '150 DPI — balanced'), ('300', '300 DPI — high detail')] %}<option value="{{ dpi }}" {% if values.get('dpi', '150') == dpi %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+      {% else %}<label for="delimiter">03 / CSV delimiter<select id="delimiter" name="delimiter">{% for value, label in [(',', 'Comma (,)'), (';', 'Semicolon (;)'), ('\t', 'Tab'), ('|', 'Pipe (|)')] %}<option value="{{ value }}" {% if values.get('delimiter', ',') == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>{% endif %}</div>
+      {% if not is_pdf %}<label class="tool-checkbox"><input type="checkbox" name="headers" {% if not values or values.get('headers') == 'on' %}checked{% endif %}> First row contains column headers</label>{% endif %}
+      <p class="tool-status{% if error %} is-error{% endif %}" role="status" aria-live="polite" tabindex="-1">{{ error or '' }}</p>
+      <button class="button black" type="submit">Convert & download <span>↓</span></button>
+      <a class="tool-download" hidden>Download converted file again ↓</a>
+    </form>
+    <aside class="tool-help"><p class="eyebrow">A FEW GOOD DETAILS</p><h3>{{ 'From page to picture.' if is_pdf else 'Keep your data useful.' }}</h3>
+      {% if is_pdf %}<p><strong>One page, one image.</strong> Single-page PDFs download as an image. Multiple pages arrive together in a ZIP, numbered in their original order.</p><p><strong>Choose your finish.</strong> PNG is lossless. WebP and JPEG use high-quality compression. Images have a white background.</p><p><strong>Keep it manageable.</strong> Up to 40 pages, 20 million pixels per page and 80 million pixels total (maximum 16,000 pixels per side). Choose a lower resolution for longer PDFs. Password-protected PDFs must be unlocked first.</p>
+      {% else %}<p><strong>Your text stays text.</strong> Leading zeros, dates, and numbers are preserved as strings. Excel cells are written as text; TSV formula-like values receive a protective apostrophe.</p><p><strong>Headers set the structure.</strong> Use unique, nonempty headers or uncheck the option to generate column_1, column_2, and so on. JSON is a list of row objects; XML uses rows with named fields.</p><p><strong>Keep it manageable.</strong> UTF-8 files only. Up to 50,000 data rows, 100 columns, and 200,000 cells. Each row needs the same number of columns. Blank lines are skipped.</p>{% endif %}
+      <p class="tool-note">No account. No charge. Just a useful conversion.</p>
+    </aside>
+  </div></section>
+</main>
+{% include 'partials/footer.html' %}
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/tools.js') }}" defer></script>{% endblock %}

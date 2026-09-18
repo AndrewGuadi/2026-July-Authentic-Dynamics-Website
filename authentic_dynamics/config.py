@@ -7,7 +7,7 @@ class Config:
     SECRET_KEY = None
     SQLALCHEMY_DATABASE_URI = "sqlite:///authentic_dynamics.db"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    MAX_CONTENT_LENGTH = 1024 * 1024
+    MAX_CONTENT_LENGTH = 16 * 1024 * 1024
     SESSION_COOKIE_HTTPONLY = True
     # Local development runs over HTTP. Set AD_SESSION_COOKIE_SECURE=true behind HTTPS.
     SESSION_COOKIE_SECURE = False
