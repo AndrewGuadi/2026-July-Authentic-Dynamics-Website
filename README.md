@@ -1,6 +1,6 @@
 # Authentic Dynamics website
 
-Flask application for the Authentic Dynamics website. The main pages are `/`, `/websites`, `/growth-technology`, `/work`, and `/about-community`.
+Flask application for the Authentic Dynamics website. The main pages are `/`, `/websites`, `/growth-technology`, `/work`, and `/about-community`. The public pages, including the tools, are listed at `/sitemap.xml`.
 
 ## Run locally
 
