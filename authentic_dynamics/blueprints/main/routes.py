@@ -1,6 +1,7 @@
 import re
+from xml.etree import ElementTree
 
-from flask import flash, redirect, render_template, request, url_for
+from flask import flash, make_response, redirect, render_template, request, url_for
 
 from authentic_dynamics.extensions import db
 from authentic_dynamics.models import ContactSubmission
@@ -11,6 +12,30 @@ from . import bp
 @bp.get("/")
 def index():
     return render_template("main/index.html", contact_source="home")
+
+
+@bp.get("/sitemap.xml")
+def sitemap():
+    """List the public pages using the host and scheme serving this request."""
+    endpoints = (
+        "main.index",
+        "main.websites",
+        "main.growth_technology",
+        "main.work",
+        "main.about_community",
+        "tools.catalog",
+        "tools.pdf",
+        "tools.csv",
+    )
+    namespace = "http://www.sitemaps.org/schemas/sitemap/0.9"
+    ElementTree.register_namespace("", namespace)
+    root = ElementTree.Element(f"{{{namespace}}}urlset")
+    for endpoint in endpoints:
+        page = ElementTree.SubElement(root, f"{{{namespace}}}url")
+        ElementTree.SubElement(page, f"{{{namespace}}}loc").text = url_for(endpoint, _external=True)
+    response = make_response(ElementTree.tostring(root, encoding="utf-8", xml_declaration=True))
+    response.mimetype = "application/xml"
+    return response
 
 
 @bp.get("/websites")
