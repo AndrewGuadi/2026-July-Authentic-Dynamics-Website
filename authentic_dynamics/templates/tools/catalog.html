@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Free File Conversion Tools | Authentic Dynamics{% endblock %}
+{% block description %}Practical tools for everyday work. Turn PDFs into images and convert CSV files into Excel, JSON, XML or TSV.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main">
+  <section id="top" class="page-hero dark"><div class="wrap">
+    <p class="eyebrow">THE TOOLBOX / FREE TO USE</p>
+    <h1>Small tools.<br><em>Less busywork.</em></h1>
+    <p class="intro">A few useful shortcuts for the files on your desk. Pick a tool, choose your format, and get back to what matters.</p>
+    <div class="actions"><a class="button" href="#catalog">Find your tool <span>↓</span></a></div>
+  </div></section>
+  <div class="page-ribbon"><div class="wrap"><span>No account needed</span><span>Free file conversions</span><span>Ready when you are</span></div></div>
+  <section class="section white" id="catalog"><div class="wrap">
+    <div class="section-head"><div><p class="eyebrow">PRACTICAL BY DESIGN</p><h2>Your files.<br>A more useful format.</h2></div><p>Two tools to start. Built to make everyday file tasks a little easier.</p></div>
+    <div class="tool-catalog">
+      <article class="page-card tool-card"><span class="card-index">01 / DOCUMENTS & IMAGES</span><div class="format-preview" aria-hidden="true"><b>PDF</b><span>↗</span><div>PNG<br>WEBP<br>JPEG</div></div><h3>PDF to image</h3><p>Turn every page into a crisp image. Choose the format and resolution, then download a single image or a ZIP of all your pages.</p><div class="tool-tags"><span>PNG</span><span>WebP</span><span>JPEG</span></div><a class="button black" href="{{ url_for('tools.pdf') }}">Convert a PDF <span>↗</span></a></article>
+      <article class="page-card tool-card"><span class="card-index">02 / SPREADSHEETS & DATA</span><div class="format-preview" aria-hidden="true"><b>CSV</b><span>↗</span><div>XLSX<br>JSON<br>XML / TSV</div></div><h3>CSV converter</h3><p>Move your data into an Excel workbook, structured JSON, XML, or a tab-separated file. Keep text and leading zeros intact.</p><div class="tool-tags"><span>Excel</span><span>JSON</span><span>XML</span><span>TSV</span></div><a class="button black" href="{{ url_for('tools.csv') }}">Convert a CSV <span>↗</span></a></article>
+    </div>
+    <p class="section-footnote">Files are uploaded to our server for conversion. We do not save uploads or results to the site’s database. Maximum file size: 10 MiB.</p>
+  </div></section>
+</main>
+{% include 'partials/footer.html' %}
+{% endblock %}

@@ -73,6 +73,7 @@ myenv/bin/python -m pytest -q
 myenv/bin/ruff check .
 node --check authentic_dynamics/static/js/home.js
 node --check authentic_dynamics/static/js/site.js
+node --check authentic_dynamics/static/js/tools.js
 ```
 
 The JavaScript syntax check requires Node.js. For a production server, run `myenv/bin/gunicorn wsgi:app`.
@@ -139,3 +140,34 @@ This app runs as a Flask WSGI application. Use the same Python version for the v
 7. Click **Reload**. Visit your PythonAnywhere domain, then open `/admin/login` to review submissions. Test the contact form, static images, and `/healthz` after the reload.
 
 For later releases, pull or upload the new code, install any dependency changes, run `flask --app wsgi db upgrade`, and reload the web app. Back up `instance/authentic_dynamics.db` before migrations. PythonAnywhere’s [Flask setup guide](https://help.pythonanywhere.com/pages/Flask), [static files guide](https://help.pythonanywhere.com/pages/StaticFiles), and [environment variable guidance](https://help.pythonanywhere.com/pages/environment-variables-for-web-apps/) cover the corresponding dashboard settings.
+
+## File conversion tools
+
+The catalog is available directly at `/tools`; it is intentionally absent from the site navigation.
+`/tools/pdf-to-image` converts PDFs to PNG, WebP or JPEG at 72, 150 or 300 DPI. A single
+page downloads as an image; multiple pages download as a ZIP. Password-protected PDFs
+must be unlocked before upload. Limits: 10 MiB input, 40 pages, 20 million pixels per
+page, 80 million pixels total, 16,000 pixels per side, and 100 MiB generated image data.
+
+`/tools/csv-converter` accepts UTF-8 CSV (including BOM) and exports XLSX, JSON, XML or
+TSV. Users choose comma, semicolon, tab or pipe delimiters and whether the first row
+contains headers. Headers must be unique and nonempty; headerless files receive
+`column_1`, `column_2`, etc. Values remain strings, including leading zeros. XLSX cells
+are explicitly text; TSV formula-like values are prefixed with an apostrophe. JSON is
+an array of row objects; XML uses `<rows><row><field name="header">value</field></row></rows>`.
+Blank lines are skipped; inconsistent row widths are rejected. Limits: 10 MiB input,
+50,000 data rows, 100 columns, 200,000 total cells, and 32,767 characters per cell.
+
+Conversions run on the server using pypdfium2/PDFium, Pillow and openpyxl (installed
+with the project dependencies). The app does not persist uploads or results to its
+database or a public directory. Flask may spool multipart uploads to temporary files
+for the duration of a request. Download responses use `Cache-Control: no-store`.
+Forms require CSRF protection and work without JavaScript; JavaScript adds inline
+progress, errors and a repeat-download link.
+
+`AD_MAX_CONTENT_LENGTH` defaults to 16777216 (16 MiB) to accommodate a 10 MiB file
+plus multipart overhead. Update older deployments using the previous 1 MiB setting,
+and configure any reverse proxy upload limit accordingly. Conversion limits are fixed
+in the converter module. PDFium access is serialized within each worker. For a public
+high-traffic deployment, provision worker capacity and proxy request throttling for
+these synchronous conversion endpoints.
