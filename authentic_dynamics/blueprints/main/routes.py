@@ -43,6 +43,11 @@ def websites():
     return render_template("main/websites.html", active_page="websites")
 
 
+@bp.get("/browser-xray")
+def browser_xray():
+    return render_template("main/browser_xray.html", active_page="browser_xray")
+
+
 @bp.get("/growth-technology")
 def growth_technology():
     return render_template("main/growth_technology.html", active_page="growth")

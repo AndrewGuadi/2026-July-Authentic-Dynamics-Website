@@ -32,6 +32,21 @@ def pdf():
     return converter("pdf")
 
 
+@bp.get("/local-ai")
+def local_ai():
+    return render_template("tools/local_ai.html", active_page="tools")
+
+
+@bp.get("/list-cleaner")
+def list_cleaner():
+    return render_template("tools/list_cleaner.html", active_page="tools")
+
+
+@bp.get("/free-invoice-maker")
+def free_invoice_maker():
+    return render_template("tools/free_invoice_maker.html", active_page="tools")
+
+
 @bp.route("/csv-converter", methods=["GET", "POST"])
 def csv():
     return converter("csv")

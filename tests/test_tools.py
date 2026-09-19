@@ -28,7 +28,8 @@ def pdf_bytes(pages=1, width=72):
         return output.getvalue()
 
 
-@pytest.mark.parametrize("path", ["/tools", "/tools/pdf-to-image", "/tools/csv-converter"])
+@pytest.mark.parametrize("path", ["/tools", "/tools/pdf-to-image", "/tools/csv-converter",
+                                  "/tools/local-ai"])
 def test_pages_and_no_nav_link(client, path):
     response = client.get(path)
     assert response.status_code == 200
@@ -38,6 +39,22 @@ def test_pages_and_no_nav_link(client, path):
     assert 'aria-current="page"' not in nav
     assert client.get('/static/css/tools.css').status_code == 200
     assert client.get('/static/js/tools.js').status_code == 200
+
+
+def test_local_ai_is_public_render_only(client):
+    response = client.get('/tools/local-ai')
+    page = response.get_data(as_text=True)
+    assert response.status_code == 200
+    assert response.headers['Cache-Control'] == 'no-store'
+    assert response.headers['X-Content-Type-Options'] == 'nosniff'
+    assert response.headers['X-Frame-Options'] == 'SAMEORIGIN'
+    assert response.headers['Referrer-Policy'] == 'strict-origin-when-cross-origin'
+    assert '<form' not in page
+    assert 'id="ai-prompt"' in page and 'maxlength="4000"' in page
+    assert 'type="module" src="/static/js/local-ai.js"' in page
+    assert 'SmolLM2-360M-Instruct-q4f16_1-MLC' in page
+    assert client.get('/static/js/local-ai.js').status_code == 200
+    assert client.post('/tools/local-ai', json={'prompt': 'private'}).status_code == 405
 
 
 @pytest.mark.parametrize("format", ["png", "jpeg", "webp"])
