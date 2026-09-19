@@ -32,6 +32,11 @@ def pdf():
     return converter("pdf")
 
 
+@bp.get("/local-ai")
+def local_ai():
+    return render_template("tools/local_ai.html", active_page="tools")
+
+
 @bp.route("/csv-converter", methods=["GET", "POST"])
 def csv():
     return converter("csv")

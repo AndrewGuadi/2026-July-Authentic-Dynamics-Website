@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Local Browser AI | Authentic Dynamics{% endblock %}
+{% block description %}An experimental small AI model that runs locally in your browser using WebGPU.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main">
+  <section id="top" class="page-hero dark tool-hero"><div class="wrap">
+    <a class="tool-back" href="{{ url_for('tools.catalog') }}">← All tools</a>
+    <p class="eyebrow">EXPERIMENTAL / ON YOUR DEVICE</p>
+    <h1>Local Browser <em>AI</em></h1>
+    <p class="intro">This experimental AI model runs directly in your browser. Your prompt is processed locally on your device and is not sent to our server or an AI API.</p>
+  </div></section>
+  <section class="section white"><div class="wrap converter-layout">
+    <div class="converter-form local-ai" aria-labelledby="ai-heading">
+      <p class="eyebrow">A SMALL LOCAL EXPERIMENT</p>
+      <h2 id="ai-heading">Try a short prompt.</h2>
+      <button id="ai-load" class="button black" type="button">Load Local AI</button>
+      <p id="ai-status" class="tool-status" role="status" aria-live="polite">Not loaded. Click Load Local AI to begin.</p>
+      <progress id="ai-progress" max="1" value="0" aria-label="Model loading progress" hidden></progress>
+      <label for="ai-prompt">Your prompt</label>
+      <textarea id="ai-prompt" rows="6" maxlength="4000" aria-describedby="ai-limit" autocomplete="off" spellcheck="false" disabled></textarea>
+      <p id="ai-limit" class="tool-note"><span id="ai-count">0</span> / 4,000 characters. Keep it short; some text may still exceed the model’s token limit.</p>
+      <button id="ai-ask" class="button black" type="button" disabled>Ask AI</button>
+      <h3 id="ai-response-heading">Response</h3>
+      <div id="ai-output" class="local-ai-output" role="region" aria-labelledby="ai-response-heading" tabindex="0">Your response will appear here.</div>
+      <noscript><p>JavaScript is required to run this browser-only experiment.</p></noscript>
+    </div>
+    <aside class="tool-help">
+      <p class="eyebrow">BEFORE YOU LOAD</p><h3>Your browser does the work.</h3>
+      <p><strong>First use takes time.</strong> Clicking Load downloads WebLLM and model resources from external HTTPS hosts, including jsDelivr, Hugging Face and GitHub. Allow for hundreds of megabytes of downloads and device memory. Model files may be cached in your browser for later visits.</p>
+      <p><strong>A compatible device is required.</strong> This test needs WebGPU and shader-f16 support, a secure connection, and enough GPU memory. Some phones and tablets cannot run it.</p>
+      <p><strong>Small model, limited answers.</strong> This is SmolLM2-360M-Instruct-q4f16_1-MLC. Answers can be wrong. Each question stands alone; this page does not save conversation history.</p>
+    </aside>
+  </div></section>
+</main>
+{% include 'partials/footer.html' %}
+{% endblock %}
+{% block scripts %}<script type="module" src="{{ url_for('static', filename='js/local-ai.js') }}"></script>{% endblock %}

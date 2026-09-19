@@ -74,6 +74,7 @@ myenv/bin/ruff check .
 node --check authentic_dynamics/static/js/home.js
 node --check authentic_dynamics/static/js/site.js
 node --check authentic_dynamics/static/js/tools.js
+node --check authentic_dynamics/static/js/local-ai.js
 ```
 
 The JavaScript syntax check requires Node.js. For a production server, run `myenv/bin/gunicorn wsgi:app`.
@@ -142,6 +143,61 @@ This app runs as a Flask WSGI application. Use the same Python version for the v
 For later releases, pull or upload the new code, install any dependency changes, run `flask --app wsgi db upgrade`, and reload the web app. Back up `instance/authentic_dynamics.db` before migrations. PythonAnywhere’s [Flask setup guide](https://help.pythonanywhere.com/pages/Flask), [static files guide](https://help.pythonanywhere.com/pages/StaticFiles), and [environment variable guidance](https://help.pythonanywhere.com/pages/environment-variables-for-web-apps/) cover the corresponding dashboard settings.
 
 ## File conversion tools
+
+### Experimental browser AI
+
+`GET /tools/local-ai` renders a public test page in the existing tools blueprint.
+It uses `SmolLM2-360M-Instruct-q4f16_1-MLC` through the version-pinned WebLLM
+`0.2.85` browser module. The runtime and model load only after **Load Local AI**
+is clicked and WebGPU, a compatible adapter, and `shader-f16` support are checked.
+Use HTTPS in production (localhost is suitable for development). The first load
+can download hundreds of megabytes; model assets may remain in browser cache.
+
+The prompt flows from the textarea into a JavaScript variable, directly into
+`engine.chat.completions.create`, then streamed output is rendered with
+`textContent`. There is no prompt form, upload, AI API route, server inference,
+prompt persistence, analytics, or remote error reporting on this page. Each
+request contains only the current question and a fixed system message. Input is
+limited to 4,000 characters and output to 300 tokens; unusual text can still
+exceed the model's token window. Generation errors log only their type so runtime
+exception payloads cannot accidentally print a prompt in the browser console.
+
+No Python dependencies, app configuration, environment variables or security
+headers changed. The application currently does not set a Content Security Policy.
+The new third-party JavaScript import is
+`https://esm.run/@mlc-ai/web-llm@0.2.85`, which redirects to
+`https://cdn.jsdelivr.net/npm/@mlc-ai/web-llm@0.2.85/+esm`. WebLLM downloads model
+assets from Hugging Face (including its download redirects) and the model WASM
+library from GitHub over HTTPS. These hosts receive resource requests, not the
+prompt. This experiment trusts the externally served runtime and model artifacts.
+If a deployment proxy adds a CSP, inspect its blocked-resource reports and allow
+only the required origins and WebAssembly compilation on this route; do not
+disable the policy or introduce wildcard sources. No CSP allowlist was added here.
+PythonAnywhere only serves the existing Flask page and static assets; no model,
+worker, GPU or inference service is required on the server.
+
+After deployment:
+
+1. Visit `/tools/local-ai` over HTTPS in a WebGPU browser and open developer tools.
+2. Check Network: no WebLLM/model downloads should occur before clicking Load.
+3. Click **Load Local AI** and observe status/progress until **AI ready**.
+4. Clear the Network log, enter `This is a private test phrase 938472`, and click **Ask AI**.
+5. Verify the response streams, then inspect all new request URLs and bodies:
+   the phrase must not be sent to Flask or any external API. Repeat while offline
+   after the model has loaded to further check local generation.
+6. Check unsupported-device messages and the layout at phone/tablet widths.
+
+`tests/local_ai_browser.cjs` provides optional Playwright regression checks against
+a running Flask server (`LOCAL_AI_BASE_URL`, default `http://127.0.0.1:5055`). It
+simulates GPU compatibility and the engine to check UI states, input limits,
+safe streamed output, failure recovery and zero network requests during generation.
+Run `node tests/local_ai_browser.cjs` with Playwright installed in your development
+environment (or supplied through `NODE_PATH`). These simulated checks do **not**
+validate real model inference or the real runtime's network behavior; complete the
+deployment procedure above on a compatible GPU. The API follows the
+[WebLLM basic usage documentation](https://webllm.mlc.ai/docs/user/basic_usage.html).
+
+### Server-side file conversions
 
 The catalog is available directly at `/tools`; it is intentionally absent from the site navigation.
 `/tools/pdf-to-image` converts PDFs to PNG, WebP or JPEG at 72, 150 or 300 DPI. A single
