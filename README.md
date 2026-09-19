@@ -142,6 +142,19 @@ This app runs as a Flask WSGI application. Use the same Python version for the v
 
 For later releases, pull or upload the new code, install any dependency changes, run `flask --app wsgi db upgrade`, and reload the web app. Back up `instance/authentic_dynamics.db` before migrations. PythonAnywhere’s [Flask setup guide](https://help.pythonanywhere.com/pages/Flask), [static files guide](https://help.pythonanywhere.com/pages/StaticFiles), and [environment variable guidance](https://help.pythonanywhere.com/pages/environment-variables-for-web-apps/) cover the corresponding dashboard settings.
 
+## Browser X-Ray
+
+`/browser-xray` is a public, browser-native educational lab for browser capabilities,
+motion/orientation, acceleration, location, camera, microphone and screen sharing.
+Every sensitive experiment has a permission explanation and an explicit Continue
+button. Sensor readings stay in page memory; Stop, Reset, hiding the tab or leaving
+the page cleans up active resources. Browser permission grants themselves may remain.
+No new runtime dependencies or server-side sensor endpoints are required.
+
+See [Browser X-Ray developer documentation](docs/browser-xray.md) for its API and
+privacy table, lifecycle design, known browser limitations, regression tests and
+physical-device HTTPS testing checklist.
+
 ## File conversion tools
 
 ### Experimental browser AI
