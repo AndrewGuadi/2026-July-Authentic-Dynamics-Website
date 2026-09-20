@@ -47,6 +47,11 @@ def free_invoice_maker():
     return render_template("tools/free_invoice_maker.html", active_page="tools")
 
 
+@bp.get("/qr-code-maker")
+def qr_code_maker():
+    return render_template("tools/qr_code_maker.html", active_page="tools")
+
+
 @bp.route("/csv-converter", methods=["GET", "POST"])
 def csv():
     return converter("csv")
