@@ -5,13 +5,14 @@ from flask import render_template, request, send_file
 from werkzeug.utils import secure_filename
 
 from . import bp
-from .converters import MAX_FILE_BYTES, ConversionError, convert_csv, convert_pdf
+from .converters import MAX_FILE_BYTES, ConversionError, convert_csv, convert_json, convert_pdf
 
 MIMETYPES = {
     "png": "image/png", "webp": "image/webp", "jpeg": "image/jpeg",
     "zip": "application/zip", "json": "application/json", "xml": "application/xml",
     "xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     "tsv": "text/tab-separated-values",
+    "csv": "text/csv",
 }
 
 
@@ -55,6 +56,37 @@ def qr_code_maker():
 @bp.route("/csv-converter", methods=["GET", "POST"])
 def csv():
     return converter("csv")
+
+
+@bp.route("/json-converter", methods=["GET", "POST"])
+def json_converter():
+    error = None
+    if request.method == "POST":
+        try:
+            upload = request.files.get("file")
+            content = request.form.get("json_text", "")
+            stem = "converted"
+            if upload and upload.filename:
+                if content.strip():
+                    raise ConversionError("Choose either a file or pasted JSON, then clear the other input.")
+                if Path(upload.filename).suffix.lower() != ".json":
+                    raise ConversionError("Choose a .json file.")
+                data = upload.read(MAX_FILE_BYTES + 1)
+                stem = Path(secure_filename(upload.filename)).stem[:100] or "converted"
+            else:
+                data = content.encode("utf-8")
+                if len(data) > 400000:
+                    raise ConversionError("Pasted JSON is limited to 400 KB. Upload a JSON file for larger data.")
+            extension = request.form.get("format", "xlsx")
+            result = convert_json(data, extension)
+            return send_file(io.BytesIO(result), mimetype=MIMETYPES[extension],
+                             as_attachment=True, download_name=f"{stem}.{extension}", max_age=0)
+        except ConversionError as exc:
+            error = str(exc)
+            if request.accept_mimetypes.best == "application/json":
+                return {"error": error}, 400
+    return render_template("tools/json_converter.html", error=error,
+                           values=request.form, active_page="tools"), 400 if error else 200
 
 
 def converter(kind):

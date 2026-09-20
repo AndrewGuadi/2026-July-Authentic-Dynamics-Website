@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}JSON Converter | Authentic Dynamics{% endblock %}
+{% block description %}Convert JSON to Excel, CSV, TSV or formatted JSON. Upload a file or paste text. Free to use, no account needed.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main">
+  <section id="top" class="page-hero dark tool-hero"><div class="wrap"><a class="tool-back" href="{{ url_for('tools.catalog') }}">← All tools</a><p class="eyebrow">08 / SPREADSHEETS &amp; DATA</p><h1>JSON to<br><em>what’s next.</em></h1><p class="intro">From structured data to something you can use. Upload a file or paste your JSON, choose a format, and download.</p></div></section>
+  <section class="section white"><div class="wrap converter-layout">
+    <form class="converter-form json-converter" method="post" enctype="multipart/form-data" action="{{ url_for('tools.json_converter') }}" data-converter>
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <p class="eyebrow">LET’S CONVERT YOUR DATA</p><h2>Start with your JSON.</h2>
+      <label class="upload-field" for="tool-file"><strong>01 / Upload a file</strong><span>UTF-8 JSON file · up to 10 MiB</span><input id="tool-file" name="file" type="file" accept=".json,application/json" aria-describedby="file-note"></label>
+      <label class="json-text-label" for="json-text">Or paste JSON text</label>
+      <textarea id="json-text" name="json_text" rows="10" maxlength="400000" spellcheck="false" aria-describedby="json-note file-note" placeholder='[{"name": "Alex", "code": "001", "active": true}]'>{{ values.get('json_text', '') }}</textarea>
+      <p id="json-note" class="tool-note">Use one input at a time. Pasted text supports up to 400 KB (UTF-8); upload a file for larger data.</p>
+      <p id="file-note" class="tool-note">Files and pasted text are sent to our server to convert. Inputs and results are not saved to the site’s database.</p>
+      <div class="tool-options"><label for="output-format">02 / Output format<select id="output-format" name="format">{% for value, label in [('xlsx', 'Excel workbook (.xlsx)'), ('csv', 'Comma-separated values (.csv)'), ('tsv', 'Tab-separated values (.tsv)'), ('json', 'Formatted JSON (.json)')] %}<option value="{{ value }}" {% if values.get('format', 'xlsx') == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label></div>
+      <p class="tool-status{% if error %} is-error{% endif %}" role="status" aria-live="polite" tabindex="-1">{{ error or '' }}</p>
+      <button class="button black" type="submit">Convert &amp; download <span>↓</span></button>
+      <a class="tool-download" hidden>Download converted file again ↓</a>
+    </form>
+    <aside class="tool-help"><p class="eyebrow">A FEW GOOD DETAILS</p><h3>A format that fits.</h3>
+      <p><strong>Excel, CSV or TSV.</strong> Start with an array of objects, or a single object for one row. Keys become columns in first-seen order. Missing values and null become blank cells; nested objects and arrays stay together as JSON text.</p>
+      <p><strong>Keep your values intact.</strong> Spreadsheet cells are exported as text, preserving codes such as “001”. CSV and TSV values that could act as formulas receive a protective apostrophe.</p>
+      <p><strong>Just need readable JSON?</strong> Formatted JSON accepts any valid JSON value, preserves its structure, and adds two-space indentation. Duplicate keys are rejected to avoid losing data.</p>
+      <p><strong>Keep it manageable.</strong> Spreadsheet exports support up to 50,000 data rows, 100 columns, 200,000 cells including headers, and 32,767 characters per cell.</p>
+      <p class="tool-note">No account. No charge. Just a useful conversion.</p>
+    </aside>
+  </div></section>
+</main>
+{% include 'partials/footer.html' %}
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/tools.js') }}" defer></script>{% endblock %}

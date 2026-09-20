@@ -22,3 +22,4 @@
 .local-ai-output{white-space:pre-wrap;overflow-wrap:anywhere;min-height:100px;padding:18px;border:1px solid var(--border);border-radius:6px;background:white;font-size:15px;line-height:1.7}
 .local-ai :is(button,textarea,.local-ai-output):focus-visible{outline:3px solid #526d35;outline-offset:4px}
 @media(max-width:380px){.tool-catalog>.tool-card{padding:22px}.format-preview{gap:18px;padding:30px 12px}.format-preview>b{font-size:40px}.format-preview>span{font-size:30px}.format-preview>div{font-size:11px}.converter-form{padding:20px}.upload-field{padding:18px}}
+.json-text-label{display:block;margin-top:24px;font-size:14px;font-weight:700}.json-converter textarea{display:block;width:100%;box-sizing:border-box;resize:vertical;padding:14px;margin-top:12px;border:1px solid #7b896d;border-radius:8px;background:white;color:var(--ink);font:14px/1.6 monospace}.json-converter :is(input,textarea,select,button):focus-visible{outline:3px solid #526d35;outline-offset:3px}

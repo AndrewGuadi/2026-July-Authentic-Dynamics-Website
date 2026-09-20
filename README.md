@@ -155,6 +155,32 @@ See [Browser X-Ray developer documentation](docs/browser-xray.md) for its API an
 privacy table, lifecycle design, known browser limitations, regression tests and
 physical-device HTTPS testing checklist.
 
+## Browser games
+
+`/games` (also `/games/`) is a separate catalog styled like the tools catalog.
+It links to `/games/maze-chase`, an original Pac-Man-style maze game rendered with
+Canvas 2D. The catalog and game are deliberately absent from site navigation,
+footer links, and the sitemap for now; visit their URLs directly.
+
+Maze Chase includes buffered arrow/WASD movement, touch direction buttons and
+swipes, four ghosts with corridor pathfinding, dots and power pellets, capture
+combos, three lives, and progressively faster levels. P or Space pauses while the
+canvas has focus; the visible buttons also support pause/resume and restarting.
+Tab hiding or window blur pauses automatically. All art is drawn locally with
+canvas/CSS; there are no external assets, game APIs, or runtime dependencies.
+Only the best score is saved under `ad-maze-chase-best` in localStorage; storage
+failures fall back to the current visit. Clear best score removes the previous
+record (an active run's score remains eligible). Game progress is not saved.
+There are no new app configuration or environment variables.
+
+Run simulation checks with `node tests/maze_core.mjs`. Optional Playwright checks:
+`NODE_PATH=/path/to/node_modules node tests/maze_browser.cjs` against a running
+Flask server (`GAMES_BASE_URL`, default `http://127.0.0.1:5055`). The browser test
+covers play, keyboard/touch controls, pause/resume, restart, local storage failure,
+catalog navigation, and viewport layout. Canvas gameplay is visual; instructions,
+buttons, and game-state announcements are accessible, but this version does not
+provide a nonvisual way to navigate the maze.
+
 ## File conversion tools
 
 ### Browser QR code maker
@@ -260,6 +286,15 @@ are explicitly text; TSV formula-like values are prefixed with an apostrophe. JS
 an array of row objects; XML uses `<rows><row><field name="header">value</field></row></rows>`.
 Blank lines are skipped; inconsistent row widths are rejected. Limits: 10 MiB input,
 50,000 data rows, 100 columns, 200,000 total cells, and 32,767 characters per cell.
+
+`/tools/json-converter` accepts a UTF-8 JSON upload (up to 10 MiB) or pasted text
+(up to 400,000 UTF-8 bytes), and exports XLSX, CSV, TSV or formatted JSON. Use one
+input at a time. Spreadsheet exports accept a single object or a nonempty array of
+objects; keys become columns in first-seen order, nested values become JSON text,
+and missing/null values become blank cells. All spreadsheet cells are text; CSV/TSV
+formula-like values receive a protective apostrophe. Spreadsheet limits match CSV
+conversion (including headers in the 200,000-cell limit). Formatted JSON supports any
+JSON value. Duplicate keys, nonfinite numbers and invalid UTF-8 are rejected.
 
 Conversions run on the server using pypdfium2/PDFium, Pillow and openpyxl (installed
 with the project dependencies). The app does not persist uploads or results to its

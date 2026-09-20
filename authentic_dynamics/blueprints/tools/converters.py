@@ -20,6 +20,80 @@ class ConversionError(ValueError):
     pass
 
 
+def convert_json(data, output_format):
+    if output_format not in {"xlsx", "csv", "tsv", "json"}:
+        raise ConversionError("Choose a supported output format.")
+    if not data or len(data) > MAX_FILE_BYTES:
+        raise ConversionError("Provide nonempty JSON no larger than 10 MiB.")
+
+    def unique_object(pairs):
+        result = {}
+        for key, value in pairs:
+            if key in result:
+                raise ConversionError("JSON contains duplicate object keys. Make each key unique.")
+            result[key] = value
+        return result
+
+    def invalid_constant(value):
+        raise ConversionError("JSON cannot contain NaN or Infinity.")
+
+    try:
+        value = json.loads(data.decode("utf-8-sig"), object_pairs_hook=unique_object,
+                           parse_constant=invalid_constant)
+        # Reject numeric overflow and escaped surrogate characters as well.
+        formatted = json.dumps(value, ensure_ascii=False, indent=2, allow_nan=False).encode()
+    except json.JSONDecodeError as exc:
+        raise ConversionError(f"Invalid JSON at line {exc.lineno}, column {exc.colno}: {exc.msg}.") from exc
+    except (UnicodeError, RecursionError, ValueError) as exc:
+        if isinstance(exc, ConversionError):
+            raise
+        raise ConversionError("Use valid UTF-8 JSON with finite numbers and less nesting.") from exc
+    if output_format == "json":
+        return formatted
+    records = [value] if isinstance(value, dict) else value
+    if not isinstance(records, list) or not records or not all(isinstance(row, dict) for row in records):
+        raise ConversionError("For spreadsheets, use an object or a nonempty array of objects. "
+                              "Formatted JSON supports any JSON value.")
+    if len(records) > 50000:
+        raise ConversionError("Use at most 50,000 data rows.")
+    headers = list(dict.fromkeys(key for row in records for key in row))
+    if not headers or len(headers) > 100:
+        raise ConversionError("Use 1–100 columns for a spreadsheet.")
+    if (len(records) + 1) * len(headers) > 200000:
+        raise ConversionError("Use at most 200,000 cells per file.")
+
+    def cell_text(item):
+        text = item if isinstance(item, str) else (
+            "" if item is None else json.dumps(item, ensure_ascii=False, allow_nan=False))
+        if len(text) > 32767:
+            raise ConversionError("Keep each cell under 32,768 characters.")
+        if re.search(r"[\x00-\x08\x0b\x0c\x0e-\x1f\ufffe\uffff]", text):
+            raise ConversionError("Spreadsheet cells cannot contain unsupported control characters.")
+        return text
+
+    rows = [[cell_text(key) for key in headers]]
+    rows.extend([cell_text(row.get(key)) for key in headers] for row in records)
+    if output_format in {"csv", "tsv"}:
+        output = io.StringIO(newline="")
+        writer = csv.writer(output, delimiter="," if output_format == "csv" else "\t")
+        writer.writerows([["'" + cell if cell.lstrip().startswith(("=", "+", "-", "@"))
+                           else cell for cell in row] for row in rows])
+        return output.getvalue().encode("utf-8-sig")
+    workbook = Workbook()
+    sheet = workbook.active
+    sheet.title = "Converted JSON"
+    for row_index, row in enumerate(rows, start=1):
+        for column_index, value in enumerate(row, start=1):
+            cell = sheet.cell(row_index, column_index, value)
+            cell.data_type = "s"
+    sheet.freeze_panes = "A2"
+    sheet.auto_filter.ref = sheet.dimensions
+    output = io.BytesIO()
+    workbook.save(output)
+    workbook.close()
+    return output.getvalue()
+
+
 def convert_pdf(data, output_format, dpi):
     if output_format not in {"png", "webp", "jpeg"} or dpi not in {72, 150, 300}:
         raise ConversionError("Choose a supported image format and resolution.")

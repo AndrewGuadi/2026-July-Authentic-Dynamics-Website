@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Free Browser Games | Authentic Dynamics{% endblock %}
+{% block description %}Take a little break. Play free games right in your browser, with no account or downloads.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/games.css') }}">{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main">
+  <section id="top" class="page-hero dark"><div class="wrap"><p class="eyebrow">THE ARCADE / FREE TO PLAY</p><h1>A little break.<br><em>A little high score.</em></h1><p class="intro">Small games for your downtime. Pick one, jump in, and see how far you can go.</p><div class="actions"><a class="button" href="#catalog">Find your game <span>↓</span></a></div></div></section>
+  <div class="page-ribbon"><div class="wrap"><span>No account needed</span><span>Plays in your browser</span><span>Keyboard &amp; touch</span></div></div>
+  <section class="section white" id="catalog"><div class="wrap"><div class="section-head"><div><p class="eyebrow">JUST ONE MORE ROUND</p><h2>Press play.<br>Make a little time.</h2></div><p>A growing collection of browser games. No installs, credits, or subscriptions.</p></div>
+    <div class="tool-catalog"><article class="page-card tool-card"><span class="card-index">01 / ARCADE CLASSICS</span><div class="maze-card-art" aria-hidden="true"><span class="maze-card-player"></span><span>· · · ·</span><span class="maze-card-ghost"></span></div><h3>Maze Chase</h3><p>A Pac-Man-style maze chase. Collect every dot, grab power pellets, and turn the tables on four colorful ghosts. How long can you last?</p><div class="tool-tags"><span>Single player</span><span>Keyboard &amp; touch</span><span>Local best score</span></div><a class="button black" href="{{ url_for('games.maze_chase') }}">Play Maze Chase <span>↗</span></a></article></div>
+    <p class="section-footnote">Games run on your device. Maze Chase saves only your best score in this browser when storage is available.</p>
+  </div></section>
+</main>
+{% include 'partials/footer.html' %}
+{% endblock %}
