@@ -157,6 +157,40 @@ physical-device HTTPS testing checklist.
 
 ## File conversion tools
 
+### Browser QR code maker
+
+`/tools/qr-code-maker` creates static QR codes and branded signs entirely in the
+browser. It is linked in `/tools` and `/sitemap.xml`. URLs, logos, and artwork stay
+in tab memory: no uploads, local storage, redirect service, or scan analytics.
+Refreshing the page discards the design. The code has no expiration, but the
+destination (including any third-party redirect) must remain available. Only the
+explicit Test this link action visits the entered URL.
+
+Review, website, menu, social, and custom-link presets accept HTTP(S) URLs up to
+1,800 encoded bytes. Credentials and control characters are rejected. QR colors
+require a light background and at least 4.5:1 contrast; exports preserve at least
+four quiet-zone modules and render whole-pixel modules. Error correction is M or H.
+PNG downloads support 512, 1024, or 2048 pixels; SVG downloads remain scalable.
+Optional PNG/JPEG/WebP logos (5 MiB, 20 megapixels maximum) are resized locally and
+placed outside the QR pattern. Artwork includes counter (5×7 inch), window (Letter),
+insert (4×6 inch), square social, and plain-code layouts. Artwork PNG and US Letter
+PDF exports share the canvas rendering. Smaller artwork is centered at its stated
+size on Letter paper; browser printing requires Actual size / 100% for sizing.
+PDF embeds raster artwork at 300 DPI, using the existing local jsPDF dependency.
+Scan a downloaded/printed sample before printing in quantity.
+
+The MIT-licensed `qrcode-generator` 2.0.4 ES module by Kazuhiko Arase is vendored
+unchanged at `static/vendor/qr/qrcode-2.0.4.mjs`; attribution and license are beside
+it. Encoding uses browser TextEncoder; URL serialization makes international URL
+components safe for the QR byte payload. Runtime assets are served locally, and
+there are no new environment variables or Python runtime dependencies.
+
+Optional browser regression: install `playwright` and `jsqr` in a temporary npm
+prefix, then run `NODE_PATH=/path/to/node_modules node tests/qr_code_browser.cjs`
+against a running Flask server (`QR_BASE_URL`, default `http://127.0.0.1:5055`).
+The checks independently decode exports, check invalid inputs and all layouts,
+exercise PDF/print/logo flows, and verify generation makes no destination requests.
+
 ### Experimental browser AI
 
 `GET /tools/local-ai` renders a public test page in the existing tools blueprint.

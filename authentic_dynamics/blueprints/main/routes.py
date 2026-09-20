@@ -26,6 +26,7 @@ def sitemap():
         "tools.catalog",
         "tools.pdf",
         "tools.csv",
+        "tools.qr_code_maker",
     )
     namespace = "http://www.sitemaps.org/schemas/sitemap/0.9"
     ElementTree.register_namespace("", namespace)

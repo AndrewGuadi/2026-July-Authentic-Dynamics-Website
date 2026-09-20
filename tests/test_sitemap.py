@@ -23,4 +23,5 @@ def test_sitemap_lists_only_public_pages_with_absolute_urls():
         "https://example.org/tools/",
         "https://example.org/tools/pdf-to-image",
         "https://example.org/tools/csv-converter",
+        "https://example.org/tools/qr-code-maker",
     ]

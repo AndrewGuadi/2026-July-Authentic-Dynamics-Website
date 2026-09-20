@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Free QR Code Maker — Codes &amp; Branded Signs | Authentic Dynamics{% endblock %}
+{% block description %}Create a free QR code for reviews, menus, websites, and more. Download PNG, SVG, or a branded PDF sign. No account, watermark, or expiring QR subscription.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/qr-code-maker.css') }}">{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main">
+  <section class="page-hero dark tool-hero"><div class="wrap"><a class="tool-back" href="{{ url_for('tools.catalog') }}">← All tools</a><p class="eyebrow">FREE QR CODE MAKER</p><h1>Make a QR code<br><em>that stays yours.</em></h1><p class="intro">From a countertop to a customer’s camera. Create a code for your reviews, menu, or website, then give it a sign worth displaying.</p></div></section>
+  <div class="page-ribbon"><div class="wrap"><span>No account</span><span>No watermark</span><span>No QR expiration</span></div></div>
+  <section class="section white"><div class="wrap">
+    <p class="qr-privacy">Your link, logo, and artwork stay in this browser tab. Nothing you enter is uploaded or saved. Downloads belong to you; your destination still needs to stay online.</p>
+    <noscript><p>Enable JavaScript to generate QR codes in your browser.</p></noscript>
+    <div class="qr-workspace">
+      <div class="qr-editor" id="qr-editor">
+        <fieldset><legend>01 / Where should it go?</legend>
+          <label>Purpose<select id="qr-purpose"><option value="review">Get Google reviews</option><option value="website">Open my website</option><option value="menu">View a menu or service list</option><option value="social">Follow a social profile</option><option value="custom">Custom web link</option></select></label>
+          <label>Destination URL<input id="qr-url" type="url" maxlength="1800" placeholder="https://…" autocomplete="off" spellcheck="false" aria-describedby="qr-link-note qr-error"></label>
+          <p id="qr-link-note" class="qr-note">Paste a complete http:// or https:// link. Changing it means creating a new QR code.</p>
+          <p id="qr-review-help" class="qr-note">In your Google Business Profile, choose Read reviews → Get more reviews and copy the review link. <a href="https://support.google.com/business/answer/16816815" target="_blank" rel="noopener noreferrer">Google’s instructions ↗</a></p>
+          <div class="qr-actions"><button id="qr-paste" type="button" hidden>Paste link</button><a id="qr-test" target="_blank" rel="noopener noreferrer" hidden>Test this link ↗</a></div>
+        </fieldset>
+        <fieldset><legend>02 / Make it yours</legend>
+          <div class="qr-fields"><label>Code color<input id="qr-foreground" type="color" value="#172c28"></label><label>Background<input id="qr-background" type="color" value="#ffffff"></label></div>
+          <div class="qr-fields"><label>Error correction<select id="qr-level"><option value="M">Standard</option><option value="H">Extra durable</option></select></label><label>QR PNG size<select id="qr-size"><option>512</option><option selected>1024</option><option>2048</option></select></label></div>
+          <p class="qr-note">Dark codes on light backgrounds scan best. Extra durable adds redundancy and can make the pattern denser.</p>
+          <label>Business name <span>(optional)</span><input id="qr-business" maxlength="70" autocomplete="off"></label>
+          <label>Headline<input id="qr-headline" maxlength="90" value="How did we do?"></label>
+          <label>Supporting sentence<input id="qr-message" maxlength="160" value="Scan to leave us a Google review."></label>
+          <label>Instruction<input id="qr-instruction" maxlength="90" value="Point your camera here"></label>
+          <label>Logo <span>(optional, PNG / JPG / WebP, up to 5 MB)</span><input id="qr-logo" type="file" accept="image/png,image/jpeg,image/webp"></label>
+          <button id="qr-remove-logo" type="button" hidden>Remove logo</button><p id="qr-logo-status" role="status" class="qr-note"></p>
+          <label>Sign accent<input id="qr-accent" type="color" value="#a7be78"></label>
+        </fieldset>
+        <fieldset><legend>03 / Choose a layout</legend>
+          <label>Artwork<select id="qr-layout"><option value="counter">Counter sign · 5 × 7 in</option><option value="window">Window sign · US Letter</option><option value="insert">Bag or receipt insert · 4 × 6 in</option><option value="social">Social image · square</option><option value="plain">QR code only</option></select></label>
+          <p class="qr-note">PDFs use US Letter paper. Smaller signs are centered at their stated size; print at 100% / Actual size.</p>
+        </fieldset>
+      </div>
+      <aside class="qr-preview" aria-label="Artwork preview">
+        <p class="eyebrow">LIVE PREVIEW / YOUR CODE, YOUR BRAND</p>
+        <p id="qr-empty">Paste your link to bring your code to life.</p>
+        <canvas id="qr-artwork" hidden aria-label="Your QR artwork preview" role="img"></canvas>
+        <p id="qr-destination" class="qr-destination"></p>
+        <p id="qr-error" role="alert"></p><p id="qr-status" role="status">Ready for your link.</p>
+        <div class="qr-downloads"><button type="button" data-download="png" disabled>QR PNG ↓</button><button type="button" data-download="svg" disabled>QR SVG ↓</button><button type="button" data-download="artwork" disabled>Artwork PNG ↓</button><button type="button" data-download="pdf" disabled>US Letter PDF ↓</button><button type="button" data-download="print" disabled>Print artwork</button></div>
+        <p class="qr-note">Test a downloaded code with your phone before printing a batch. Anyone who scans it can read the encoded link.</p>
+      </aside>
+    </div>
+  </div></section>
+  <section class="section"><div class="wrap qr-guide"><p class="eyebrow">A LITTLE GUIDANCE</p><h2>One scan.<br>A useful next step.</h2><details open><summary>Will my code expire?</summary><p>The code directly contains your link. There is no Authentic Dynamics redirect, subscription, or scan limit. The destination website must remain available; third-party links can still expire or change.</p></details><details><summary>Can I change the destination later?</summary><p>A downloaded code cannot be edited. Generate and print a new code for a different URL. For a menu you update frequently, use a stable page on your own website and change the content of that page.</p></details><details><summary>Do you track scans or store my design?</summary><p>No. Your design stays in page memory until you close or refresh this tab. Your destination website may have its own analytics. We do not check or visit the destination unless you choose Test this link.</p></details><details><summary>How do I make it easy to scan?</summary><p>Keep the blank border, use a dark code on a light background, and leave logos outside the pattern. Try the printed size in its intended lighting and scanning distance. Longer URLs produce more intricate codes.</p></details></div></section>
+</main>
+{% include 'partials/footer.html' %}
+<div id="qr-print" aria-hidden="true"></div>
+{% endblock %}
+{% block scripts %}<script type="module" src="{{ url_for('static', filename='js/qr-code-maker.js') }}"></script>{% endblock %}

@@ -28,6 +28,18 @@ def pdf_bytes(pages=1, width=72):
         return output.getvalue()
 
 
+def test_catalog_lists_invoice_maker_browser_xray_and_local_ai(client):
+    response = client.get('/tools')
+    page = response.get_data(as_text=True)
+    assert response.status_code == 200
+    assert 'href="/tools/free-invoice-maker"' in page
+    assert 'Free Invoice Maker' in page
+    assert 'href="/browser-xray"' in page
+    assert 'Browser X-Ray' in page
+    assert 'href="/tools/local-ai"' in page
+    assert 'Local AI' in page
+
+
 @pytest.mark.parametrize("path", ["/tools", "/tools/pdf-to-image", "/tools/csv-converter",
                                   "/tools/local-ai"])
 def test_pages_and_no_nav_link(client, path):
