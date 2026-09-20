@@ -12,8 +12,14 @@
     if (downloadUrl) URL.revokeObjectURL(downloadUrl);
     status.classList.remove('is-error');
     const file = form.elements.file.files[0];
-    if (!file || file.size === 0 || file.size > 10 * 1024 * 1024) {
-      status.textContent = 'Choose a nonempty file no larger than 10 MiB.';
+    const textInput = form.elements.json_text;
+    const text = textInput ? textInput.value.trim() : '';
+    if ((file && text) || (!file && !text) ||
+        (file && (file.size === 0 || file.size > 10 * 1024 * 1024)) ||
+        (text && new Blob([textInput.value]).size > 400000)) {
+      status.textContent = file && text ? 'Choose either a file or pasted JSON, then clear the other input.' :
+        textInput ? 'Upload a nonempty JSON file (up to 10 MiB) or paste JSON (up to 400 KB).' :
+          'Choose a nonempty file no larger than 10 MiB.';
       status.classList.add('is-error');
       status.focus();
       return;

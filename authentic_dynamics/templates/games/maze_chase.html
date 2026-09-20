@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Maze Chase — Free Browser Game | Authentic Dynamics{% endblock %}
+{% block description %}Play Maze Chase, a free Pac-Man-style browser game. Collect dots, dodge ghosts, and chase a new best score with keyboard or touch controls.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/games.css') }}">{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main">
+  <section id="top" class="page-hero dark game-hero"><div class="wrap"><a class="tool-back" href="{{ url_for('games.catalog') }}">← All games</a><p class="eyebrow">01 / MAZE CHASE</p><h1>Follow the dots.<br><em>Lose the ghosts.</em></h1><p class="intro">An arcade-inspired maze chase. One more pellet. One more corner. One more round.</p></div></section>
+  <section class="section white game-section"><div class="wrap game-layout">
+    <div class="arcade" id="arcade">
+      <div class="game-scoreboard" aria-label="Game statistics"><div>SCORE<strong id="game-score">0</strong></div><div>BEST<strong id="game-best">0</strong></div><div>LEVEL<strong id="game-level">1</strong></div><div>LIVES<strong id="game-lives">3</strong></div></div>
+      <div class="game-stage"><canvas id="maze" width="570" height="630" tabindex="0" aria-label="Maze Chase game board. Use arrow keys or W A S D to move. P or Space pauses." aria-describedby="game-instructions game-status">This game requires canvas and JavaScript. Use a current browser to play.</canvas><div class="game-overlay" id="game-overlay"><p class="eyebrow">READY, PLAYER ONE?</p><h2 id="game-overlay-title">The dots await.</h2><p id="game-overlay-message">Clear the maze. Keep your three lives.</p><button class="button" type="button" id="game-start">Start game <span>→</span></button></div></div>
+      <div class="game-toolbar"><button type="button" id="game-pause" disabled>Pause</button><button type="button" id="game-restart">New game</button><span id="game-power">Collect a power pellet</span></div>
+      <p id="game-status" role="status" aria-live="polite">Ready to play.</p>
+      <div class="game-pad" aria-label="Touch direction controls"><button type="button" data-direction="up" aria-label="Move up">↑</button><button type="button" data-direction="left" aria-label="Move left">←</button><button type="button" data-direction="down" aria-label="Move down">↓</button><button type="button" data-direction="right" aria-label="Move right">→</button></div>
+      <noscript><p class="game-noscript">JavaScript is required to play this browser game.</p></noscript>
+    </div>
+    <aside class="game-guide" id="game-instructions"><p class="eyebrow">THE SHORT VERSION</p><h2>Eat. Evade.<br>Repeat.</h2><p>Collect every dot to reach the next level. Four ghosts roam the maze; touching one costs a life.</p><dl><dt>Move</dt><dd>Arrow keys or W A S D. On mobile, use the direction buttons or swipe on the maze.</dd><dt>Turn ahead</dt><dd>Choose your next direction before a corner. Your turn happens when the path opens.</dd><dt>Power up</dt><dd>Large pellets make ghosts vulnerable for a few seconds. Chase the striped blue ghosts for bonus points.</dd><dt>Take a breath</dt><dd>P or Space pauses while the game has focus. Switching tabs automatically pauses play.</dd></dl><div class="game-points"><span>Dot <b>10</b></span><span>Power pellet <b>50</b></span><span>Ghost combo <b>200–1600</b></span></div><p class="tool-note">Your best score stays in this browser. No account, uploads, or online leaderboard. Original maze and artwork inspired by classic arcade games.</p><button type="button" class="textlink" id="game-clear-best">Clear best score</button><p id="game-storage" class="tool-note"></p></aside>
+  </div></section>
+</main>
+{% include 'partials/footer.html' %}
+{% endblock %}
+{% block scripts %}<script type="module" src="{{ url_for('static', filename='js/games/maze-chase.js') }}"></script>{% endblock %}

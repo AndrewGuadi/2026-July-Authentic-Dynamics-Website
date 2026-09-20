@@ -61,11 +61,13 @@ def create_app(test_config: dict | None = None) -> Flask:
     app.cli.add_command(admin)
 
     from .blueprints.admin import bp as admin_bp
+    from .blueprints.games import bp as games_bp
     from .blueprints.health import bp as health_bp
     from .blueprints.main import bp as main_bp
     from .blueprints.tools import bp as tools_bp
 
     app.register_blueprint(tools_bp)
+    app.register_blueprint(games_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(health_bp)
     app.register_blueprint(admin_bp)
