@@ -1,4 +1,6 @@
+import base64
 import io
+import json
 from pathlib import Path
 
 from flask import render_template, request, send_file
@@ -6,6 +8,7 @@ from werkzeug.utils import secure_filename
 
 from . import bp
 from .converters import MAX_FILE_BYTES, ConversionError, convert_csv, convert_json, convert_pdf
+from .pdf_tables import render_pdf_page
 
 MIMETYPES = {
     "png": "image/png", "webp": "image/webp", "jpeg": "image/jpeg",
@@ -13,6 +16,9 @@ MIMETYPES = {
     "xlsx": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     "tsv": "text/tab-separated-values",
     "csv": "text/csv",
+    "txt": "text/plain; charset=utf-8",
+    "docx": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "pdf": "application/pdf",
 }
 
 
@@ -61,6 +67,7 @@ def csv():
 @bp.route("/json-converter", methods=["GET", "POST"])
 def json_converter():
     error = None
+    preview = None
     if request.method == "POST":
         try:
             upload = request.files.get("file")
@@ -78,15 +85,57 @@ def json_converter():
                 if len(data) > 400000:
                     raise ConversionError("Pasted JSON is limited to 400 KB. Upload a JSON file for larger data.")
             extension = request.form.get("format", "xlsx")
-            result = convert_json(data, extension)
-            return send_file(io.BytesIO(result), mimetype=MIMETYPES[extension],
-                             as_attachment=True, download_name=f"{stem}.{extension}", max_age=0)
+            depth = request.form.get("max_depth", "5") if extension == "xlsx" else "5"
+            if depth not in {str(number) for number in range(1, 11)}:
+                raise ConversionError("Choose a nesting depth from 1 to 10.")
+            is_preview = request.form.get("action") in {"preview", "pdf_preview"}
+            pdf_options = None
+            if extension == "pdf":
+                size = request.form.get("pdf_font_size", "10")
+                if size not in {"10", "11", "12"}:
+                    raise ConversionError("Choose a PDF text size from 10 to 12 pt.")
+                try:
+                    columns = json.loads(request.form["pdf_columns"]) if request.form.get("pdf_columns") else None
+                except (ValueError, RecursionError) as exc:
+                    raise ConversionError("Choose valid PDF columns.") from exc
+                pdf_options = {"orientation": request.form.get("pdf_orientation", "auto"),
+                               "font_size": int(size), "columns": columns,
+                               "long_cells": request.form.get("pdf_long_cells", "wrap")}
+            result = convert_json(data, extension, request.form.get("nesting", "combined"),
+                                  int(depth), preview=is_preview, pdf_options=pdf_options)
+            if is_preview and extension == "pdf":
+                if request.accept_mimetypes.best == "application/json":
+                    return {"pdf": base64.b64encode(result["pdf"]).decode("ascii"),
+                            "image": base64.b64encode(render_pdf_page(result["pdf"])).decode("ascii"),
+                            "filename": f"{stem}.pdf", "summary": result["summary"]}
+                return send_file(io.BytesIO(result["pdf"]), mimetype="application/pdf",
+                                 download_name=f"{stem}.pdf", max_age=0)
+            if is_preview:
+                preview = result
+                if request.accept_mimetypes.best == "application/json":
+                    return preview
+            else:
+                return send_file(io.BytesIO(result), mimetype=MIMETYPES[extension],
+                                 as_attachment=True, download_name=f"{stem}.{extension}", max_age=0)
         except ConversionError as exc:
             error = str(exc)
             if request.accept_mimetypes.best == "application/json":
                 return {"error": error}, 400
-    return render_template("tools/json_converter.html", error=error,
+    return render_template("tools/json_converter.html", error=error, preview=preview,
                            values=request.form, active_page="tools"), 400 if error else 200
+
+
+@bp.post("/json-converter/pdf-page")
+def json_pdf_page():
+    try:
+        upload = request.files.get("file")
+        page = request.form.get("page", "0")
+        if not upload or not page.isascii() or not page.isdigit() or len(page) > 3:
+            raise ConversionError("Choose a valid PDF preview page.")
+        result = render_pdf_page(upload.read(MAX_FILE_BYTES + 1), int(page))
+        return send_file(io.BytesIO(result), mimetype="image/png", max_age=0)
+    except ConversionError as exc:
+        return {"error": str(exc)}, 400
 
 
 def converter(kind):

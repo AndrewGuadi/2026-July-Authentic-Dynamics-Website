@@ -22,7 +22,7 @@ SOURCE = '[{"code":"001","nested":{"city":"Montréal"},"formula":"=1+1"},{"activ
 @pytest.mark.parametrize('output_format', ['xlsx', 'csv', 'tsv', 'json'])
 @pytest.mark.parametrize('source', ['upload', 'text'])
 def test_json_downloads(client, output_format, source):
-    data = {'format': output_format}
+    data = {'format': output_format, 'nesting': 'keep'}
     if source == 'upload':
         data['file'] = (io.BytesIO(SOURCE.encode()), 'sample.json')
     else:

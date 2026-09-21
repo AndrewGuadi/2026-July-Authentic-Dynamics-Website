@@ -1,6 +1,7 @@
 ## app specific items
 
 myenv/
+add_admin.py
 dev_docs/
 dev_inputs/
 build_files/

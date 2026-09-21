@@ -57,7 +57,8 @@ def authenticate():
 def private_response(response):
     response.headers["Cache-Control"] = "no-store, private"
     response.headers["X-Robots-Tag"] = "noindex, nofollow, noarchive"
-    response.headers["Referrer-Policy"] = "no-referrer"
+    # Flask-WTF's HTTPS CSRF check needs the same-origin referrer on form posts.
+    response.headers["Referrer-Policy"] = "same-origin"
     return response
 
 
