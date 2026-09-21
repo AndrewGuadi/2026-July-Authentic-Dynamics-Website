@@ -4,7 +4,8 @@ export function capabilities() {
 }
 
 // Engine boundary: UI never constructs FFmpeg commands. One worker per job releases WASM memory.
-export function convertVideo({file, options, onUpdate}) {
+export function convertVideo({file, options, onUpdate, mode = 'browser', consent = false}) {
+  if (mode === 'server') return convertOnServer({file, options, onUpdate, consent});
   let worker, rejectJob, loadingTimer, engineReady = false, settled = false;
   const stop = () => { clearTimeout(loadingTimer); worker?.terminate(); };
   const promise = new Promise((resolve, reject) => {
@@ -38,4 +39,36 @@ export function convertVideo({file, options, onUpdate}) {
     stop();
     if (!settled) { settled = true; rejectJob(new Error('cancelled')); }
   }};
+}
+
+function convertOnServer({file, options, onUpdate, consent}) {
+  let xhr;
+  const promise = new Promise((resolve, reject) => {
+    if (!consent) { reject(new Error('Upload consent is required.')); return; }
+    xhr = new XMLHttpRequest();
+    xhr.open('POST', document.getElementById('processing-mode').dataset.endpoint);
+    xhr.responseType = 'blob';
+    xhr.timeout = (Number(document.getElementById('processing-mode').dataset.timeout) + 300) * 1000;
+    xhr.setRequestHeader('X-CSRFToken', document.querySelector('meta[name="csrf-token"]').content);
+    xhr.setRequestHeader('X-Video-Upload-Consent', 'yes');
+    xhr.upload.onprogress = event => onUpdate({type: 'upload', progress: event.lengthComputable ? event.loaded / event.total : 0});
+    xhr.upload.onload = () => onUpdate({type: 'server-processing'});
+    xhr.onload = async () => {
+      if (xhr.status === 200 && xhr.response?.size) resolve(xhr.response);
+      else {
+        let message = xhr.status === 413 ? 'This video exceeds the server upload limit. Choose browser conversion.' : 'Server conversion failed. Try again or choose browser conversion.';
+        try { message = JSON.parse(await xhr.response.text()).error || message; } catch { /* proxy/CSRF HTML response */ }
+        reject(new Error(message));
+      }
+    };
+    xhr.onerror = () => reject(new Error('The server connection failed. Try again or choose browser conversion.'));
+    xhr.ontimeout = () => reject(new Error('The server request timed out. Try a smaller video or browser conversion.'));
+    xhr.onabort = () => reject(new Error('cancelled'));
+    const data = new FormData();
+    // Send a generic name; the original filename is not needed by the server.
+    data.append('file', file, 'input.video');
+    for (const [key, value] of Object.entries(options)) data.append(key, value);
+    xhr.send(data);
+  });
+  return {promise, cancel() { xhr?.abort(); }};
 }

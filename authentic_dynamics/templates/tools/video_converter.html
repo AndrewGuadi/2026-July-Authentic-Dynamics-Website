@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% block title %}Video Converter | Authentic Dynamics{% endblock %}
-{% block description %}Convert, compress and resize video locally in your browser. Your video stays on your device.{% endblock %}
+{% block description %}Convert, compress and resize video. Choose private browser conversion or upload for server conversion.{% endblock %}
 {% block head %}
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='tools/video-converter/video-converter.css') }}">
 {% endblock %}
@@ -11,14 +12,27 @@
 <main id="main">
   <section id="top" class="page-hero dark tool-hero"><div class="wrap">
     <a class="tool-back" href="{{ url_for('tools.catalog') }}">← All tools</a>
-    <p class="eyebrow">VIDEO CONVERTER / LOCAL ONLY</p>
-    <h1>Your video.<br><em>Stays yours.</em></h1>
-    <p class="intro">Convert, compress, resize, or extract audio from a video. Your video stays on your device.</p>
+    <p class="eyebrow">VIDEO CONVERTER / YOUR CHOICE</p>
+    <h1>Your video.<br><em>Your choice.</em></h1>
+    <p class="intro">Convert, compress, resize, or extract audio. Keep it on your device, or choose server conversion for a potential speed boost.</p>
   </div></section>
   <section class="section white"><div class="wrap converter-layout">
     <div class="converter-form video-converter">
       <h2>Video Converter</h2>
-      <label class="upload-field" id="drop-zone" for="video-file"><strong>Choose video or drop it here</strong><span>Read locally. Never uploaded.</span><input id="video-file" type="file" accept="video/*"></label>
+      <label for="processing-mode">Where would you like to convert?</label>
+      <select id="processing-mode" data-endpoint="{{ url_for('tools.video_server') }}" data-max-bytes="{{ server_max_bytes }}" data-timeout="{{ server_timeout }}">
+        <option value="browser" selected>On my device — private, may be slower</option>
+        <option value="server" {% if not server_enabled %}disabled{% endif %}>On the server — uploads video, usually faster{% if not server_enabled %} (unavailable){% endif %}</option>
+      </select>
+      <p class="tool-note">Browser mode never uploads your video. Server speed depends on your connection and server load. We never switch modes automatically.</p>
+      <div id="server-notice" hidden>
+        <h3>Server conversion uploads your video</h3>
+        <p>Your video is sent to Authentic Dynamics for processing. It is not sent to a third-party conversion service. Temporary files are removed when the request finishes or times out; no conversion history is saved.</p>
+        <p>Up to {{ (server_max_bytes / 1048576)|int }} MB input, 128 MB output and {{ server_timeout }} seconds of processing. Cancelling stops your request, but an already-started server conversion may run until it finishes or times out.</p>
+        <label class="tool-checkbox"><input id="upload-consent" type="checkbox"> I agree to upload this video to Authentic Dynamics for conversion.</label>
+      </div>
+      <p id="server-size-warning" class="tool-status is-error" role="alert" hidden>This video exceeds the {{ (server_max_bytes / 1048576)|int }} MB server limit. Choose browser conversion or a smaller video.</p>
+      <label class="upload-field" id="drop-zone" for="video-file"><strong>Choose video or drop it here</strong><span id="selection-note">Read locally. Never uploaded in browser mode.</span><input id="video-file" type="file" accept="video/*"></label>
       <div id="source" hidden><p id="file-info"></p><video id="preview" controls preload="metadata" playsinline></video></div>
       <div id="large-warning" hidden><h3>Large video</h3><p>This file will be processed entirely on this device. Large or high-resolution videos can use significant memory, battery power, and time.</p><label class="tool-checkbox"><input id="large-confirm" type="checkbox"> Continue on this device</label></div>
       <fieldset id="settings" disabled>
@@ -39,9 +53,9 @@
       <p id="status" class="tool-status" role="status" aria-live="polite">Choose a video to get started.</p>
       <progress id="progress" max="100" hidden aria-label="Conversion progress"></progress>
       <section id="result" hidden aria-labelledby="result-title"><h3 id="result-title">Conversion complete</h3><p id="result-info"></p><a id="download" class="button black" download>Download file</a></section>
-      <noscript><p>JavaScript is required to process video locally. No video is uploaded.</p></noscript>
+      <noscript><p>JavaScript is required to use this tool. No video has been uploaded.</p></noscript>
     </div>
-    <aside class="tool-help"><p class="eyebrow">PRIVATE BY DESIGN</p><h3>On your device.<br>Under your control.</h3><p>Your video is processed directly in your browser. It is not uploaded to Authentic Dynamics or sent to a third-party conversion service. No account or conversion history.</p><details><summary>How it works</summary><ol><li>You select a video from your device.</li><li>Your browser reads the file locally.</li><li>Your device performs the conversion.</li><li>Download saves the converted file back to your device.</li></ol><p>The first conversion downloads an approximately 31 MB engine from this website. Only website assets travel over the network. Videos and results stay in temporary browser memory until cleared or the page closes.</p></details><p><strong>Give your device a moment.</strong> Keep this tab open and your device awake. Conversion can take longer than the video itself. Mobile browsers may run out of memory or pause background tabs.</p><p><strong>Compatibility.</strong> Requires JavaScript, WebAssembly and Web Workers. Common MP4, WebM and MOV files are supported by the conversion engine, but some codecs or damaged files may fail. A video that cannot preview may still convert. MP4 uses H.264/AAC; WebM uses VP8/Opus. Extract audio needs an audio track.</p></aside>
+    <aside class="tool-help"><p class="eyebrow">PRIVATE BY DEFAULT</p><h3>You choose<br>where it runs.</h3><p><strong>On your device:</strong> video processing stays in your browser, with no media upload. This can be slower, especially on phones.</p><p><strong>On the server:</strong> you explicitly agree to upload your video to Authentic Dynamics. Native conversion can be faster, but upload time and server load count too. Neither mode requires an account or saves conversion history.</p><details><summary>How it works</summary><ol><li>Select a video locally.</li><li>Choose browser or server processing.</li><li>For server mode, agree to the upload notice.</li><li>Convert, then save the result to your device.</li></ol><p>Browser mode downloads an approximately 31 MB engine from this website when first needed. Server mode uploads only when you click Upload &amp; convert, and uses temporary server files.</p></details><p><strong>Give your device a moment.</strong> Keep this tab open and your device awake. Local conversion can take longer than the video itself. Mobile browsers may run out of memory or pause background tabs.</p><p><strong>Compatibility.</strong> Browser conversion requires WebAssembly and Web Workers. Common MP4, WebM and MOV files work in both modes, subject to codec support. A video that cannot preview may still convert. MP4 uses H.264/AAC; WebM uses VP8/Opus. Extract audio needs an audio track.</p></aside>
   </div></section>
 </main>
 {% include 'partials/footer.html' %}

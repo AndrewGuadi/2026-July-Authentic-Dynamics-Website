@@ -8,6 +8,7 @@ version = "0.1.0"
 description = "Authentic Dynamics Flask website"
 requires-python = ">=3.11"
 dependencies = [
+    "imageio-ffmpeg==0.6.0",
     "pypdfium2>=4.30,<6",
     "Pillow>=11,<13",
     "openpyxl>=3.1.5,<4",

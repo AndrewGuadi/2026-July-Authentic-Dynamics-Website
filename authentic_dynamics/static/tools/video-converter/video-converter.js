@@ -4,6 +4,7 @@ import {capabilities, convertVideo} from './conversion-service.js';
 const $ = id => document.getElementById(id);
 let file = null, sourceURL = null, outputURL = null, job = null, generation = 0;
 const supported = capabilities().supported;
+const serverMode = () => $('processing-mode').value === 'server';
 const size = bytes => `${(bytes / 1048576).toFixed(2)} MB`;
 function status(message, error = false) { $('status').textContent = message; $('status').classList.toggle('is-error', error); }
 function clearOutput() {
@@ -11,13 +12,20 @@ function clearOutput() {
   outputURL = null; $('download').removeAttribute('href'); $('result').hidden = true;
 }
 function ready() {
-  $('convert').disabled = !supported || !file || !!job || (!$('large-warning').hidden && !$('large-confirm').checked);
+  const server = serverMode();
+  $('convert').disabled = (!server && !supported) || !file || !!job ||
+    (server ? !$('upload-consent').checked || file.size > Number($('processing-mode').dataset.maxBytes)
+      : !$('large-warning').hidden && !$('large-confirm').checked);
   $('settings').disabled = !file || !!job;
-  $('video-file').disabled = !supported || !!job;
+  $('video-file').disabled = (!server && !supported) || !!job;
+  $('processing-mode').disabled = !!job;
+  $('upload-consent').disabled = !!job;
+  $('convert').textContent = server ? 'Upload & convert on server' : 'Convert locally';
   $('cancel').hidden = !job;
 }
 function warnLarge() {
-  $('large-warning').hidden = !(file && (file.size >= 200 * 1048576 || $('preview').videoWidth * $('preview').videoHeight > 1920 * 1080 || $('preview').duration > 600));
+  $('large-warning').hidden = serverMode() || !(file && (file.size >= 200 * 1048576 || $('preview').videoWidth * $('preview').videoHeight > 1920 * 1080 || $('preview').duration > 600));
+  $('server-size-warning').hidden = !(serverMode() && file && file.size > Number($('processing-mode').dataset.maxBytes));
   ready();
 }
 function applyPreset() {
@@ -42,8 +50,9 @@ function reset(clearPicker = true) {
   ready();
 }
 function selectFile(selected) {
-  if (job || !supported) return;
+  if (job || (!supported && !serverMode())) return;
   reset(false);
+  $('upload-consent').checked = false;
   if (!selected) return;
   if (!selected.size || !(selected.type.startsWith('video/') || /\.(mp4|m4v|mov|webm|mkv|avi|mpeg|mpg)$/i.test(selected.name))) {
     status('Choose a nonempty video file, such as MP4, WebM or MOV.', true); return;
@@ -76,19 +85,36 @@ $('settings').addEventListener('change', event => {
   if (event.target.id !== 'intent') $('preset-note').textContent = 'Using your adjusted output settings.';
 });
 $('large-confirm').addEventListener('change', ready);
+$('upload-consent').addEventListener('change', ready);
+$('processing-mode').addEventListener('change', () => {
+  clearOutput(); $('upload-consent').checked = false;
+  $('server-notice').hidden = !serverMode();
+  $('selection-note').textContent = serverMode() ? 'Selection is local. Upload starts only when you agree and click Upload & convert.' : 'Read locally. Never uploaded in browser mode.';
+  warnLarge();
+  status(serverMode() ? 'Server mode selected. Review the upload notice before converting.' : 'Browser mode selected. Your video stays on this device.');
+});
 $('clear').addEventListener('click', () => { reset(); status('Video and result cleared from this page.'); });
 $('cancel').addEventListener('click', () => job?.cancel());
 $('convert').addEventListener('click', async () => {
   if ($('convert').disabled) return;
   clearOutput();
   const run = ++generation;
+  const mode = serverMode() ? 'server' : 'browser';
   const options = Object.fromEntries(['format', 'quality', 'resolution', 'fps', 'audio'].map(key => [key, $(key).value]));
   if ($('intent').value === 'extract') options.format = $('audio-format').value;
   const originalSize = file.size, filename = file.name.replace(/\.[^.]+$/, '') + '-converted.' + options.format;
   $('preview').pause(); $('progress').hidden = false; $('progress').removeAttribute('value');
-  status('Preparing local converter… Downloading the engine if needed. Your video is staying on this device.');
-  job = convertVideo({file, options, onUpdate(data) {
+  status(mode === 'server' ? 'Uploading to Authentic Dynamics…' : 'Preparing local converter… Downloading the engine if needed. Your video is staying on this device.');
+  job = convertVideo({file, options, mode, consent: $('upload-consent').checked, onUpdate(data) {
     if (run !== generation) return;
+    if (data.type === 'upload') {
+      $('progress').value = Math.floor(data.progress * 100);
+      status(`Uploading to Authentic Dynamics… ${Math.floor(data.progress * 100)}%`);
+    }
+    if (data.type === 'server-processing') {
+      $('progress').removeAttribute('value');
+      status('Converting on the server… The result will download to this page when ready.');
+    }
     if (data.type === 'ready') status('Converting locally… Your video is staying on this device.');
     if (data.type === 'progress' && Number.isFinite(data.progress) && data.progress > 0) {
       const percent = Math.min(99, Math.floor(data.progress * 100));
@@ -116,10 +142,11 @@ $('convert').addEventListener('click', async () => {
       probe.src = outputURL;
     }
     $('result').hidden = false; $('progress').value = 100;
-    status('Conversion complete. Your video was never uploaded.');
+    status(mode === 'server' ? 'Server conversion complete. The temporary upload has been removed; save your result below.' : 'Conversion complete. Your video was never uploaded.');
   } catch (error) {
     if (run !== generation) return;
-    const message = error.message === 'cancelled' ? 'Conversion cancelled. You can try again.'
+    const message = error.message === 'cancelled' ? (mode === 'server' ? 'Request cancelled. If processing already started, the server may finish before its time limit and then remove temporary files.' : 'Conversion cancelled. You can try again.')
+      : mode === 'server' ? error.message
       : error.message === 'engine' ? 'We couldn’t prepare the local converter. Check your connection for the engine download, then try again in a current browser. Your video was not uploaded.'
       : "We couldn’t convert this video in your browser. The codec may be unsupported, the file damaged, or device memory insufficient. Try another format, a smaller video, or another browser. Audio extraction requires an audio track.";
     status(message, error.message !== 'cancelled');
