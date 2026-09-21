@@ -26,7 +26,7 @@ set -a
 set +a
 ```
 
-The `.env` file is ignored by Git. Leave `AD_SECRET_KEY` blank locally to use the generated `instance/.secret_key`; set a unique secret for deployment. Set `AD_SESSION_COOKIE_SECURE=true` when the site is served over HTTPS.
+The `.env` file is ignored by Git. Leave `AD_SECRET_KEY` blank locally to use the generated `instance/.secret_key`; set a unique secret for deployment. Set `AD_SESSION_COOKIE_SECURE=true` when the site is served over HTTPS, and keep the admin site's same-origin referrer available for HTTPS CSRF validation.
 
 Home page images, styles, scripts, and fonts are served locally. The free tool cards use styled previews built in HTML and CSS.
 
@@ -288,15 +288,95 @@ Blank lines are skipped; inconsistent row widths are rejected. Limits: 10 MiB in
 50,000 data rows, 100 columns, 200,000 total cells, and 32,767 characters per cell.
 
 `/tools/json-converter` accepts a UTF-8 JSON upload (up to 10 MiB) or pasted text
-(up to 400,000 UTF-8 bytes), and exports XLSX, CSV, TSV or formatted JSON. Use one
-input at a time. Spreadsheet exports accept a single object or a nonempty array of
-objects; keys become columns in first-seen order, nested values become JSON text,
-and missing/null values become blank cells. All spreadsheet cells are text; CSV/TSV
-formula-like values receive a protective apostrophe. Spreadsheet limits match CSV
-conversion (including headers in the 200,000-cell limit). Formatted JSON supports any
-JSON value. Duplicate keys, nonfinite numbers and invalid UTF-8 are rejected.
+(up to 400,000 UTF-8 bytes), and exports XLSX, DOCX, PDF, CSV, TSV, plain text or formatted JSON. Use one
+input at a time. Table exports accept a single object or a nonempty array of objects;
+keys become columns in first-seen order. Missing/null values become blank cells.
+All spreadsheet cells are text; CSV/TSV formula-like values receive a protective
+apostrophe. Word, PDF, CSV and TSV keep nested values as JSON in a single table.
+Formatted JSON and plain text support any JSON value. Duplicate keys, nonfinite
+numbers and invalid UTF-8 are rejected.
 
-Conversions run on the server using pypdfium2/PDFium, Pillow and openpyxl (installed
+Excel offers four `nesting` modes: `keep` (nested values in cells), `flatten` (object
+fields become dotted columns), `related` (arrays directly on each row become child
+sheets, while objects stay in cells), and `combined` (flatten objects and separate
+arrays, the default). `max_depth` is 1–10, default 5; a top-level field is level 1
+and each object/array traversal adds a level. Containers beyond the limit stay as
+JSON text and produce a preview warning. Keep mode ignores expansion depth.
+
+Related sheets use generated `@record_id` and `@parent_id` columns; IDs are unique
+within each sheet. The preview identifies each child sheet's parent and source
+field. `@index` is the zero-based array position. Primitive and mixed arrays use
+`@type` and `@value`; object items have ordinary field columns. Arrays inside array
+items stay as JSON in `@value`. Empty arrays keep `[]` in the parent and generate
+an empty child sheet; empty objects stay `{}` in cells. Nonempty expanded arrays
+leave a count and sheet name in the parent cell. Independent arrays never multiply
+each other's rows. Differently shaped objects share the union of columns.
+
+Expanded layouts escape literal dots and backslashes in keys with a backslash,
+escape leading `@` to avoid generated-column collisions, and use `\e` for empty
+keys. Keep mode preserves original keys. Worksheet names are sanitized, shortened
+to 31 characters and made unique case-insensitively. Each worksheet has a styled
+header, frozen header row, text cells, wrapped content and a filter.
+
+The preview button posts `action=preview` to the same CSRF-protected converter
+route. It uses the same normalization and limits as the XLSX download, returning
+sheet names, row counts, columns, parent relationships and warnings. With JavaScript,
+input changes clear stale previews; without JavaScript, preview renders on the page
+and an uploaded file must be selected again before download. Preview data is not saved.
+Limits: 20 sheets, 50,000 data rows and 200,000 cells across the entire workbook
+(including generated fields and headers), 100 columns per sheet, and 32,767
+characters per cell. Other table formats retain the existing single-table limits.
+
+Optional browser regression checks: with Playwright and Chromium installed, run
+`NODE_PATH=/path/to/node_modules node tests/json_converter_browser.cjs` against the
+app at `http://127.0.0.1:5055` (or set `JSON_BASE_URL` for the test runner). These
+cover all four layouts, upload/text previews, downloads, stale responses, mobile
+layout, and the no-JavaScript preview form.
+
+PDF tables use ReportLab with an embedded, bundled DejaVu Sans font (license in
+`static/fonts/DejaVu-LICENSE.txt`). Install updated dependencies with
+`myenv/bin/python -m pip install -e '.[dev]'`. The previous raster-only table export
+is replaced by selectable text. PDF settings offer automatic/portrait/landscape
+A4 orientation, 10/11/12 pt text, column selection and ordering, and three long-cell
+policies: full wrapping (default), a linked appendix for values over 1,000
+characters, or explicitly marked shortening after 1,000 characters. Missing/null
+values are blank; nested values remain JSON text. There is no Excel-style
+32,767-character cap for PDF cells.
+
+Automatic layout compares portrait/landscape and equal/content-weighted columns
+without reducing font size. It prioritizes fewer row continuations, less wrapping,
+then fewer pages. Headers repeat, normal rows move intact when possible, and rows
+taller than a page continue with source row labels. Runtime checks verify exact
+coverage of the prepared text, cell boundaries, overlap, and the 10 pt minimum.
+Unsupported glyphs, control characters, and scripts needing shaping are displayed
+as visible Unicode escape codes, with a warning in the preview and PDF footer.
+Automatic shortening never occurs; user-selected shortening is visibly marked.
+
+PDF limits are 12 selected columns, 5,000 rows, 2 million source/rendered characters,
+200 pages and 10 MiB generated output. Wide tables may require fewer columns or
+landscape. The column picker supports up to 100 source fields. Use Excel/JSON for
+larger datasets. Values moved to the appendix remain complete.
+
+With JavaScript, PDF preview posts `action=pdf_preview` to `/tools/json-converter`.
+The response includes the generated PDF, a first-page image, and layout metadata.
+The browser retains that PDF in memory, so downloads use exactly the reviewed bytes.
+Input/settings changes invalidate the PDF and any outstanding preview request.
+`POST /tools/json-converter/pdf-page` renders a requested page from that same PDF
+blob, with CSRF, byte/page/dimension limits and `Cache-Control: no-store`. Page
+images are rendered by PDFium, not approximated as HTML. No preview is persisted.
+Without JavaScript, PDF preview returns the PDF inline for the browser's viewer.
+PDFium rendering and ReportLab font use are each serialized within a worker.
+
+`tests/test_pdf_tables.py` independently checks exported text and glyph bounds with
+PDFium, including a 100,000-character value, URL wrapping, Unicode, sparse/nested
+data, page boundaries, randomized fixtures, explicit shortening, limits and CSRF.
+It also compares a reviewed raster reference in `tests/fixtures`.
+`NODE_PATH=/path/to/node_modules node tests/json_pdf_browser.cjs` exercises the
+browser preview and verifies byte-identical downloads, page navigation, column
+selection/order, invalidation, uploads and mobile layout. It defaults to
+`http://127.0.0.1:5056`; set `JSON_BASE_URL` to use another local test server.
+
+Conversions run on the server using pypdfium2/PDFium, Pillow, ReportLab and openpyxl (installed
 with the project dependencies). The app does not persist uploads or results to its
 database or a public directory. Flask may spool multipart uploads to temporary files
 for the duration of a request. Download responses use `Cache-Control: no-store`.

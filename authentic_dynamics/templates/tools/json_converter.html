@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}JSON Converter | Authentic Dynamics{% endblock %}
-{% block description %}Convert JSON to Excel, CSV, TSV or formatted JSON. Upload a file or paste text. Free to use, no account needed.{% endblock %}
+{% block description %}Convert JSON to Excel, CSV, TSV, DOCX, PDF, plain text or formatted JSON. Upload a file or paste text. Free to use, no account needed.{% endblock %}
 {% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">{% endblock %}
 {% block content %}
 <a class="skip" href="#main">Skip to content</a>
@@ -8,7 +8,7 @@
 <main id="main">
   <section id="top" class="page-hero dark tool-hero"><div class="wrap"><a class="tool-back" href="{{ url_for('tools.catalog') }}">← All tools</a><p class="eyebrow">08 / SPREADSHEETS &amp; DATA</p><h1>JSON to<br><em>what’s next.</em></h1><p class="intro">From structured data to something you can use. Upload a file or paste your JSON, choose a format, and download.</p></div></section>
   <section class="section white"><div class="wrap converter-layout">
-    <form class="converter-form json-converter" method="post" enctype="multipart/form-data" action="{{ url_for('tools.json_converter') }}" data-converter>
+    <form class="converter-form json-converter" method="post" enctype="multipart/form-data" action="{{ url_for('tools.json_converter') }}" data-converter data-pdf-page-url="{{ url_for('tools.json_pdf_page') }}">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
       <p class="eyebrow">LET’S CONVERT YOUR DATA</p><h2>Start with your JSON.</h2>
       <label class="upload-field" for="tool-file"><strong>01 / Upload a file</strong><span>UTF-8 JSON file · up to 10 MiB</span><input id="tool-file" name="file" type="file" accept=".json,application/json" aria-describedby="file-note"></label>
@@ -16,20 +16,97 @@
       <textarea id="json-text" name="json_text" rows="10" maxlength="400000" spellcheck="false" aria-describedby="json-note file-note" placeholder='[{"name": "Alex", "code": "001", "active": true}]'>{{ values.get('json_text', '') }}</textarea>
       <p id="json-note" class="tool-note">Use one input at a time. Pasted text supports up to 400 KB (UTF-8); upload a file for larger data.</p>
       <p id="file-note" class="tool-note">Files and pasted text are sent to our server to convert. Inputs and results are not saved to the site’s database.</p>
-      <div class="tool-options"><label for="output-format">02 / Output format<select id="output-format" name="format">{% for value, label in [('xlsx', 'Excel workbook (.xlsx)'), ('csv', 'Comma-separated values (.csv)'), ('tsv', 'Tab-separated values (.tsv)'), ('json', 'Formatted JSON (.json)')] %}<option value="{{ value }}" {% if values.get('format', 'xlsx') == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label></div>
-      <p class="tool-status{% if error %} is-error{% endif %}" role="status" aria-live="polite" tabindex="-1">{{ error or '' }}</p>
+      <div class="tool-options"><label for="output-format">02 / Output format<select id="output-format" name="format">{% for value, label in [('xlsx', 'Excel workbook (.xlsx)'), ('docx', 'Word table (.docx)'), ('pdf', 'PDF table (.pdf)'), ('csv', 'Comma-separated values (.csv)'), ('tsv', 'Tab-separated values (.tsv)'), ('txt', 'Plain text (.txt)'), ('json', 'Formatted JSON (.json)')] %}<option value="{{ value }}" {% if values.get('format', 'xlsx') == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label></div>
+      <fieldset class="json-nesting" data-xlsx-options>
+        <legend>03 / Nested data handling · Excel only</legend>
+        <div class="tool-options">
+          <label for="nesting-mode">Workbook layout<select id="nesting-mode" name="nesting" aria-describedby="nesting-note">
+            {% for value, label in [('combined', 'Flatten objects + related sheets (recommended)'), ('keep', 'Keep nested values in cells'), ('flatten', 'Flatten objects'), ('related', 'Create related sheets for arrays')] %}
+            <option value="{{ value }}" {% if values.get('nesting', 'combined') == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select></label>
+          <label for="nesting-depth">Maximum expansion depth<select id="nesting-depth" name="max_depth" aria-describedby="depth-note">
+            {% for depth in range(1, 11) %}<option value="{{ depth }}" {% if values.get('max_depth', '5') == depth|string %}selected{% endif %}>{{ depth }} {{ 'level' if depth == 1 else 'levels' }}</option>{% endfor %}
+          </select></label>
+        </div>
+        <p id="nesting-note" class="tool-note">Flattening makes columns such as customer.name. Related sheets turn arrays into rows linked to their parent. “Related sheets” alone keeps objects in cells and separates only arrays directly on each row.</p>
+        <p id="depth-note" class="tool-note">The first field is level 1. Each nested object or array adds a level. Deeper values stay as JSON text. Depth does not apply to “Keep nested values in cells”.</p>
+        <button class="button black" type="submit" name="action" value="preview">Preview sheets &amp; columns <span>↗</span></button>
+        <p class="tool-note">Preview sends your input to the server using the same settings as the download.</p>
+      </fieldset>
+      <fieldset class="json-nesting" data-pdf-options>
+        <legend>03 / PDF table layout</legend>
+        <div class="tool-options">
+          <label for="pdf-orientation">Page orientation<select id="pdf-orientation" name="pdf_orientation">
+            {% for value, label in [('auto', 'Automatic — choose the best fit'), ('portrait', 'Portrait'), ('landscape', 'Landscape')] %}<option value="{{ value }}" {% if values.get('pdf_orientation', 'auto') == value %}selected{% endif %}>{{ label }}</option>{% endfor %}
+          </select></label>
+          <label for="pdf-font-size">Text size<select id="pdf-font-size" name="pdf_font_size">
+            {% for size in ['10', '11', '12'] %}<option value="{{ size }}" {% if values.get('pdf_font_size', '10') == size %}selected{% endif %}>{{ size }} pt</option>{% endfor %}
+          </select></label>
+          <label for="pdf-long-cells">Long values<select id="pdf-long-cells" name="pdf_long_cells">
+            {% for value, label in [('wrap', 'Wrap full text across pages'), ('appendix', 'Move values over 1,000 characters to an appendix'), ('shorten', 'Shorten after 1,000 characters (loses content)')] %}<option value="{{ value }}" {% if values.get('pdf_long_cells', 'wrap') == value %}selected{% endif %}>{{ label }}</option>{% endfor %}
+          </select></label>
+        </div>
+        <p class="tool-note">A4 pages with repeated headers. Text stays at your chosen size. Long rows continue across pages; nothing is shortened unless you select shortening.</p>
+        <input type="hidden" name="pdf_columns" value="{{ values.get('pdf_columns', '') }}">
+        <div class="pdf-column-actions" data-pdf-js hidden>
+          <button class="button black" type="button" data-pdf-columns-load>Choose columns</button>
+          <button class="button black" type="button" data-pdf-sample>Load a sample table</button>
+        </div>
+        <p class="tool-note" data-pdf-columns-note>All columns are included. Choose columns to select fields and change their order.</p>
+        <div class="pdf-columns" data-pdf-columns></div>
+        <button class="button black" type="submit" name="action" value="pdf_preview">Preview PDF <span>↗</span></button>
+        <p class="tool-note">Review every page below, then download that exact PDF. Preview sends your data to the server; changing the input or settings clears the previous preview.</p>
+      </fieldset>
+      <section class="json-preview" data-workbook-preview aria-label="Workbook preview" {% if not preview %}hidden{% endif %}>
+        {% if preview %}
+        <h3>Workbook preview</h3>
+        {% for sheet in preview.sheets %}
+        <article><h4>{{ sheet.name }} · {{ sheet.row_count }} data rows</h4>
+          {% if sheet.parent_sheet %}<p>From {{ sheet.source_field }}. @parent_id links to @record_id in {{ sheet.parent_sheet }}.</p>{% endif %}
+          <p>Columns: {{ sheet.columns|join(', ') }}</p>
+        </article>
+        {% endfor %}
+        {% for warning in preview.warnings %}<p class="tool-note">{{ warning }}</p>{% endfor %}
+        {% endif %}
+      </section>
+      <noscript><p class="tool-note">PDF preview opens the PDF in your browser; you can save it there. Column selection and the embedded page viewer need JavaScript. After previewing an uploaded file, choose the file again before converting.</p></noscript>
+      <p class="tool-status{% if error %} is-error{% endif %}" role="status" aria-live="polite" tabindex="-1">{{ error or ('Preview ready. Review your sheets, then convert and download.' if preview else '') }}</p>
       <button class="button black" type="submit">Convert &amp; download <span>↓</span></button>
       <a class="tool-download" hidden>Download converted file again ↓</a>
     </form>
     <aside class="tool-help"><p class="eyebrow">A FEW GOOD DETAILS</p><h3>A format that fits.</h3>
-      <p><strong>Excel, CSV or TSV.</strong> Start with an array of objects, or a single object for one row. Keys become columns in first-seen order. Missing values and null become blank cells; nested objects and arrays stay together as JSON text.</p>
+      <p><strong>Choose your Excel structure.</strong> Start with an array of objects, or a single object for one row. The recommended layout flattens objects and moves arrays to related sheets. Preview the sheet names, row counts and columns before downloading.</p>
+      <p><strong>Keep the relationships.</strong> Generated @record_id and @parent_id columns link sheets; @index preserves array order starting at 0. Mixed arrays use @type and @value alongside object fields. Empty arrays show [] in the parent row. Arrays inside array items stay as JSON text.</p>
+      <p><strong>Field names stay distinct.</strong> In expanded layouts, literal dots and backslashes in keys are escaped with a backslash. Keys starting with @ are escaped too, so they cannot overwrite generated columns. An empty key appears as \e.</p>
+      <p><strong>Other table formats.</strong> Word, PDF, CSV and TSV remain single tables, with nested values as JSON text. Missing fields and null values become blank cells in tables.</p>
+      <p><strong>Preview the actual PDF.</strong> Automatic layout compares portrait, landscape and column widths at your chosen text size. Every page is checked for text coverage and cell boundaries before export. The preview shows the generated PDF, with selectable text in the downloaded file.</p>
+      <p><strong>Long text is welcome.</strong> PDF cells can exceed Excel’s 32,767-character limit. Wrap the full value or move values over 1,000 characters to an appendix. Unsupported characters and scripts that need shaping are shown as visible Unicode escape codes, with a notice.</p>
+      <p><strong>PDF limits.</strong> Up to 12 selected columns, 5,000 rows, 2 million characters of rendered text, 200 pages, and 10 MiB of output. Narrow layouts may require fewer columns. For larger datasets, choose Excel or JSON.</p>
       <p><strong>Keep your values intact.</strong> Spreadsheet cells are exported as text, preserving codes such as “001”. CSV and TSV values that could act as formulas receive a protective apostrophe.</p>
-      <p><strong>Just need readable JSON?</strong> Formatted JSON accepts any valid JSON value, preserves its structure, and adds two-space indentation. Duplicate keys are rejected to avoid losing data.</p>
-      <p><strong>Keep it manageable.</strong> Spreadsheet exports support up to 50,000 data rows, 100 columns, 200,000 cells including headers, and 32,767 characters per cell.</p>
+      <p><strong>Just need readable text?</strong> Plain text and formatted JSON accept any valid JSON value, preserve its structure, and add two-space indentation. Duplicate keys are rejected to avoid losing data.</p>
+      <p><strong>Keep it manageable.</strong> Excel supports up to 20 sheets, 50,000 data rows and 200,000 cells across the workbook, including generated columns and headers. Each sheet supports 100 columns; each cell supports 32,767 characters. Expand up to 10 nesting levels.</p>
       <p class="tool-note">No account. No charge. Just a useful conversion.</p>
     </aside>
-  </div></section>
+  </div>
+  <section class="wrap pdf-preview" id="json-pdf-preview" aria-labelledby="pdf-preview-title" hidden>
+    <h2 id="pdf-preview-title">Your PDF preview.</h2>
+    <p data-pdf-summary></p>
+    <p class="tool-note" data-pdf-checks></p>
+    <ul class="pdf-warnings" data-pdf-warnings></ul>
+    <div class="pdf-preview-actions">
+      <a class="button black" data-pdf-download>Download this PDF <span>↓</span></a>
+      <a class="tool-download" data-pdf-open target="_blank" rel="noopener">Open the full PDF in a new tab ↗</a>
+    </div>
+    <div class="pdf-pager">
+      <button type="button" data-pdf-prev>← Previous</button>
+      <label for="pdf-preview-page">Page <select id="pdf-preview-page" data-pdf-page></select></label>
+      <button type="button" data-pdf-next>Next →</button>
+    </div>
+    <p class="tool-note" role="status" aria-live="polite" data-pdf-page-status></p>
+    <div class="pdf-page-image"><img data-pdf-image alt="Generated PDF page"></div>
+  </section></section>
 </main>
 {% include 'partials/footer.html' %}
 {% endblock %}
-{% block scripts %}<script src="{{ url_for('static', filename='js/tools.js') }}" defer></script>{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/json-pdf.js') }}" defer></script><script src="{{ url_for('static', filename='js/tools.js') }}" defer></script>{% endblock %}

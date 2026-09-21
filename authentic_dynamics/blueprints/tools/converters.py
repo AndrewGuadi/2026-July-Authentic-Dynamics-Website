@@ -5,24 +5,25 @@ import io
 import json
 import math
 import re
-import threading
 import zipfile
 from xml.etree import ElementTree as ET
 
 import pypdfium2 as pdfium
 from openpyxl import Workbook
 
-PDF_LOCK = threading.Lock()  # PDFium calls must not overlap within a process.
+from .conversion_errors import ConversionError
+from .json_tables import cell_text, normalize_workbook, workbook_preview, write_workbook
+from .pdf_tables import PDF_LOCK, build_pdf
+
 MAX_FILE_BYTES = 10 * 1024 * 1024
 
 
-class ConversionError(ValueError):
-    pass
-
-
-def convert_json(data, output_format):
-    if output_format not in {"xlsx", "csv", "tsv", "json"}:
+def convert_json(data, output_format, nesting="combined", max_depth=5, preview=False,
+                 pdf_options=None):
+    if output_format not in {"xlsx", "csv", "tsv", "json", "txt", "docx", "pdf"}:
         raise ConversionError("Choose a supported output format.")
+    if preview and output_format not in {"xlsx", "pdf"}:
+        raise ConversionError("Choose Excel or PDF to preview the output.")
     if not data or len(data) > MAX_FILE_BYTES:
         raise ConversionError("Provide nonempty JSON no larger than 10 MiB.")
 
@@ -48,50 +49,72 @@ def convert_json(data, output_format):
         if isinstance(exc, ConversionError):
             raise
         raise ConversionError("Use valid UTF-8 JSON with finite numbers and less nesting.") from exc
-    if output_format == "json":
+    if output_format in {"json", "txt"}:
         return formatted
     records = [value] if isinstance(value, dict) else value
     if not isinstance(records, list) or not records or not all(isinstance(row, dict) for row in records):
-        raise ConversionError("For spreadsheets, use an object or a nonempty array of objects. "
-                              "Formatted JSON supports any JSON value.")
+        raise ConversionError("For tables, use an object or a nonempty array of objects. "
+                              "Formatted JSON and plain text support any JSON value.")
     if len(records) > 50000:
         raise ConversionError("Use at most 50,000 data rows.")
+    if output_format == "xlsx":
+        normalized = normalize_workbook(records, nesting, max_depth)
+        return workbook_preview(normalized) if preview else write_workbook(normalized)
+    if output_format == "pdf":
+        result, summary, _ = build_pdf(records, **(pdf_options or {}))
+        return {"pdf": result, "summary": summary} if preview else result
     headers = list(dict.fromkeys(key for row in records for key in row))
     if not headers or len(headers) > 100:
         raise ConversionError("Use 1–100 columns for a spreadsheet.")
     if (len(records) + 1) * len(headers) > 200000:
         raise ConversionError("Use at most 200,000 cells per file.")
 
-    def cell_text(item):
-        text = item if isinstance(item, str) else (
-            "" if item is None else json.dumps(item, ensure_ascii=False, allow_nan=False))
-        if len(text) > 32767:
-            raise ConversionError("Keep each cell under 32,768 characters.")
-        if re.search(r"[\x00-\x08\x0b\x0c\x0e-\x1f\ufffe\uffff]", text):
-            raise ConversionError("Spreadsheet cells cannot contain unsupported control characters.")
-        return text
-
     rows = [[cell_text(key) for key in headers]]
     rows.extend([cell_text(row.get(key)) for key in headers] for row in records)
+    if output_format == "docx":
+        return _json_docx(rows)
     if output_format in {"csv", "tsv"}:
         output = io.StringIO(newline="")
         writer = csv.writer(output, delimiter="," if output_format == "csv" else "\t")
         writer.writerows([["'" + cell if cell.lstrip().startswith(("=", "+", "-", "@"))
                            else cell for cell in row] for row in rows])
         return output.getvalue().encode("utf-8-sig")
-    workbook = Workbook()
-    sheet = workbook.active
-    sheet.title = "Converted JSON"
-    for row_index, row in enumerate(rows, start=1):
-        for column_index, value in enumerate(row, start=1):
-            cell = sheet.cell(row_index, column_index, value)
-            cell.data_type = "s"
-    sheet.freeze_panes = "A2"
-    sheet.auto_filter.ref = sheet.dimensions
+
+
+def _json_docx(rows):
+    """Create a minimal, readable Word document without a third-party dependency."""
+    body = []
+    for row in rows:
+        cells = "".join(f"<w:tc><w:tcPr/><w:p><w:r><w:t xml:space=\"preserve\">"
+                        f"{_xml_escape(value)}</w:t></w:r></w:p></w:tc>" for value in row)
+        body.append(f"<w:tr>{cells}</w:tr>")
+    document = ("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
+                "<w:document xmlns:w=\"http://schemas.openxmlformats.org/wordprocessingml/2006/main\">"
+                "<w:body><w:tbl><w:tblPr><w:tblBorders><w:top w:val=\"single\"/>"
+                "<w:left w:val=\"single\"/><w:bottom w:val=\"single\"/><w:right w:val=\"single\"/>"
+                "<w:insideH w:val=\"single\"/><w:insideV w:val=\"single\"/></w:tblBorders></w:tblPr>"
+                f"{''.join(body)}</w:tbl><w:sectPr/></w:body></w:document>")
+    content_types = ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+                     "<Types xmlns=\"http://schemas.openxmlformats.org/package/2006/content-types\">"
+                     "<Default Extension=\"rels\" ContentType=\"application/vnd.openxmlformats-package.relationships+xml\"/>"
+                     "<Default Extension=\"xml\" ContentType=\"application/xml\"/>"
+                     "<Override PartName=\"/word/document.xml\" ContentType=\"application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml\"/>"
+                     "</Types>")
+    rels = ("<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+            "<Relationships xmlns=\"http://schemas.openxmlformats.org/package/2006/relationships\">"
+            "<Relationship Id=\"rId1\" Type=\"http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument\" Target=\"word/document.xml\"/>"
+            "</Relationships>")
     output = io.BytesIO()
-    workbook.save(output)
-    workbook.close()
+    with zipfile.ZipFile(output, "w", zipfile.ZIP_DEFLATED) as archive:
+        archive.writestr("[Content_Types].xml", content_types)
+        archive.writestr("_rels/.rels", rels)
+        archive.writestr("word/document.xml", document)
     return output.getvalue()
+
+
+def _xml_escape(value):
+    return (value.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+            .replace('"', "&quot;").replace("'", "&apos;"))
 
 
 def convert_pdf(data, output_format, dpi):
