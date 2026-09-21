@@ -3,7 +3,7 @@ import io
 import json
 from pathlib import Path
 
-from flask import render_template, request, send_file
+from flask import make_response, render_template, request, send_file
 from werkzeug.utils import secure_filename
 
 from . import bp
@@ -42,6 +42,18 @@ def pdf():
 @bp.get("/local-ai")
 def local_ai():
     return render_template("tools/local_ai.html", active_page="tools")
+
+
+@bp.get("/video-converter")
+def video_converter():
+    response = make_response(render_template("tools/video_converter.html", active_page="tools"))
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; "
+        "style-src 'self'; img-src 'self' data:; font-src 'self'; "
+        "media-src blob:; worker-src 'self'; connect-src 'self'; "
+        "form-action 'none'; base-uri 'none'; frame-ancestors 'self'"
+    )
+    return response
 
 
 @bp.get("/list-cleaner")

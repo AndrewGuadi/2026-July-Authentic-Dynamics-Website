@@ -389,3 +389,78 @@ and configure any reverse proxy upload limit accordingly. Conversion limits are 
 in the converter module. PDFium access is serialized within each worker. For a public
 high-traffic deployment, provision worker capacity and proxy request throttling for
 these synchronous conversion endpoints.
+
+## Browser-local Video Converter
+
+`GET /tools/video-converter` serves a public page, linked from the tool catalog.
+There is no video upload/processing endpoint, database record, or account requirement.
+The separate `static/tools/video-converter` UI, conversion service, options/presets,
+and module worker use self-hosted `@ffmpeg/core@0.12.10` (single-thread WebAssembly).
+The engine loads only on Convert. MP4 uses H.264/AAC, WebM uses VP8/Opus; a separate
+Extract audio operation produces MP3 or WAV. Common MP4/WebM/MOV inputs are supported
+subject to their codecs. Only the first video and first audio tracks are retained;
+subtitles and additional tracks are omitted. No HDR/color fidelity guarantees.
+
+Presets cover compression, website-ready video, format changes, resizing, audio
+removal, extraction and custom settings. Output settings include three quality
+levels, original/1080p/720p/480p bounds and original/60/30/24 FPS. Portrait bounds
+are swapped; resizing preserves aspect ratio and never upscales. Odd dimensions
+are rounded down to even pixels for encoding. Explicit frame rates can duplicate
+or drop frames. Compression savings are calculated from the finished Blob only.
+The preview displays browser-detected dimensions/duration without guessing codecs.
+
+Browser APIs: File and `File.arrayBuffer`, Blob, object URLs,
+HTMLVideoElement metadata, drag/drop and module Web Workers with transferable
+output buffers. WebCodecs availability is detected but no native conversion pipeline
+is implemented. A future adapter can implement the same `convertVideo` boundary.
+No File System Access permission is required; downloads use a standard link.
+
+Privacy: all file reads and media processing take place on the device. No analytics,
+telemetry, media network requests or persistent browser history/storage are added.
+FFmpeg accepts only the `file` input protocol. Options are allowlisted and filenames
+are displayed as text, never HTML or command arguments. Results/source object URLs
+are revoked on replacement, clear and page exit. Cancel terminates the worker;
+success/failure also terminates it, releasing its filesystem and WASM memory.
+The worker unlinks temporary files on normal completion/failure. Each new job
+loads a fresh engine using ordinary browser HTTP caching/revalidation.
+
+Deployment: include the vendored JS and approximately 31 MB WASM file and serve
+`.wasm` as `application/wasm`. See the engine's `ffmpeg/README.md` for provenance,
+checksums and GPL license/source information. No new environment variables,
+Python packages, Node runtime, or server FFmpeg installation are required.
+A route-specific CSP allows same-origin scripts/engine downloads, WASM compilation
+and blob media; it blocks external connections, framing by other sites and form
+submission. No global security headers or COOP/COEP isolation settings change.
+Preserve this CSP if configuring a reverse proxy; the site’s other tools are unaffected.
+
+Memory/performance limitations: input, virtual filesystem and output must fit in
+browser memory. There is no arbitrary upload limit. Files at least 200 MiB, above
+1080p pixel count, or longer than ten minutes require explicit acknowledgement.
+Mobile browsers can exhaust memory earlier or suspend background tabs. Keep the
+tab visible and device awake; Cancel remains available if progress stalls. Progress
+is estimated and capped at 99% until output exists. Unsupported/corrupt media,
+missing audio during extraction, engine load failures and worker errors show a
+recoverable message. Engine preparation times out after two minutes with a retry
+message; conversion itself has no imposed duration limit. Preview codec support
+can differ from conversion support. WebM output uses the tested VP8 encoder;
+VP9 encoding is not offered in this iteration.
+
+Validation: `tests/test_video_converter.py` covers route rendering, GET-only behavior,
+catalog discovery, scoped CSP and WASM serving. `tests/video_converter_browser.cjs`
+generates synthetic media using native FFmpeg, drives actual in-browser conversions,
+downloads and independently decodes the results. It checks MP4/WebM/MOV inputs,
+audio/no audio, portrait/landscape, 720p/1080p, compression, resize, extraction,
+cancel/retry, consecutive conversions, corrupt/unsupported files, large-file warning
+and mobile layout. It monitors browser network requests throughout, asserting
+same-origin GET-only traffic, no request bodies and no source filenames in URLs.
+
+Run a local app on port 5056, install test-only `playwright@1.58.2` and
+`ffmpeg-static@5.3.0` in a temporary directory, then run:
+
+```sh
+NODE_PATH=/path/to/node_modules node tests/video_converter_browser.cjs
+```
+
+Set `VIDEO_BASE_URL` to change the origin, `VIDEO_BROWSERS=chromium,firefox,webkit`
+to choose engines, or `FFMPEG_BINARY` to use an existing native FFmpeg executable.
+These testing dependencies are not used by Flask or shipped to browsers.
