@@ -3,10 +3,10 @@ import io
 import json
 from pathlib import Path
 
-from flask import render_template, request, send_file
+from flask import current_app, make_response, render_template, request, send_file
 from werkzeug.utils import secure_filename
 
-from . import bp
+from . import bp, video_backend
 from .converters import MAX_FILE_BYTES, ConversionError, convert_csv, convert_json, convert_pdf
 from .pdf_tables import render_pdf_page
 
@@ -42,6 +42,51 @@ def pdf():
 @bp.get("/local-ai")
 def local_ai():
     return render_template("tools/local_ai.html", active_page="tools")
+
+
+@bp.get("/video-converter")
+def video_converter():
+    response = make_response(render_template(
+        "tools/video_converter.html", active_page="tools",
+        server_enabled=current_app.config["VIDEO_SERVER_ENABLED"],
+        server_max_bytes=current_app.config["VIDEO_MAX_BYTES"],
+        server_timeout=current_app.config["VIDEO_TIMEOUT_SECONDS"],
+        server_max_seconds=current_app.config["VIDEO_MAX_SECONDS"],
+        browser_max_bytes=current_app.config["VIDEO_BROWSER_MAX_BYTES"],
+        browser_max_seconds=current_app.config["VIDEO_BROWSER_MAX_SECONDS"],
+    ))
+    response.headers["Content-Security-Policy"] = (
+        "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; "
+        "style-src 'self'; img-src 'self' data:; font-src 'self'; "
+        "media-src blob:; worker-src 'self'; connect-src 'self'; "
+        "form-action 'none'; base-uri 'none'; frame-ancestors 'self'"
+    )
+    return response
+
+
+@bp.post("/video-converter/convert")
+def video_server():
+    if not current_app.config["VIDEO_SERVER_ENABLED"]:
+        return {"error": "Server conversion is unavailable. Choose browser conversion."}, 503
+    if request.headers.get("X-Video-Upload-Consent") != "yes":
+        return {"error": "Agree to upload your video before using server conversion."}, 400
+    try:
+        upload = request.files.get("file")
+        if upload is None or len(request.files) != 1:
+            raise ConversionError("Choose one video file.")
+        options = {key: request.form.get(key) for key in
+                   ("format", "quality", "resolution", "fps", "audio")}
+        result = video_backend.convert(upload, options, current_app.config["VIDEO_MAX_BYTES"],
+                                       current_app.config["VIDEO_TIMEOUT_SECONDS"],
+                                       current_app.config["VIDEO_MAX_SECONDS"])
+        response = send_file(result, mimetype=video_backend.MIMES[options["format"]],
+                             as_attachment=True, download_name="converted." + options["format"],
+                             max_age=0)
+        response.direct_passthrough = False
+        response.call_on_close(result.close)
+        return response
+    except ConversionError as exc:
+        return {"error": str(exc)}, 400
 
 
 @bp.get("/list-cleaner")

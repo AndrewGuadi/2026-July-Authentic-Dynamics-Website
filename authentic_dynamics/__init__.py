@@ -52,6 +52,15 @@ def create_app(test_config: dict | None = None) -> Flask:
 
     db.init_app(app)
     migrate.init_app(app, db, render_as_batch=True)
+
+    # Apply the larger video-only limit before CSRF protection can parse a request.
+    @app.before_request
+    def video_request_limit():
+        from flask import request
+
+        if request.endpoint == "tools.video_server":
+            request.max_content_length = app.config["VIDEO_MAX_BYTES"] + 1024 * 1024
+
     csrf.init_app(app)
 
     from . import models  # noqa: F401

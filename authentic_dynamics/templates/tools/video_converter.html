@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Video Converter | Authentic Dynamics{% endblock %}
+{% block description %}Convert, compress and resize video. Choose private browser conversion or upload for server conversion.{% endblock %}
+{% block head %}
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='tools/video-converter/video-converter.css') }}">
+{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main">
+  <section id="top" class="page-hero dark tool-hero"><div class="wrap">
+    <a class="tool-back" href="{{ url_for('tools.catalog') }}">← All tools</a>
+    <p class="eyebrow">VIDEO CONVERTER / YOUR CHOICE</p>
+    <h1>Your video.<br><em>Your choice.</em></h1>
+    <p class="intro">Convert, compress, resize, or extract audio. Keep it on your device, or choose server conversion for a potential speed boost.</p>
+  </div></section>
+  <section class="section white"><div class="wrap converter-layout">
+    <div class="converter-form video-converter">
+      <h2>Video Converter</h2>
+      <label for="processing-mode">Where would you like to convert?</label>
+      <select id="processing-mode" data-endpoint="{{ url_for('tools.video_server') }}" data-max-bytes="{{ server_max_bytes }}" data-timeout="{{ server_timeout }}" data-server-max-seconds="{{ server_max_seconds }}" data-browser-max-bytes="{{ browser_max_bytes }}" data-browser-max-seconds="{{ browser_max_seconds }}">
+        <option value="browser" selected>On my device — private, may be slower</option>
+        <option value="server" {% if not server_enabled %}disabled{% endif %}>On the server — uploads video, usually faster{% if not server_enabled %} (unavailable){% endif %}</option>
+      </select>
+      <p class="tool-note">Browser mode never uploads your video. Server speed depends on your connection and server load. We never switch modes automatically.</p>
+      <div id="server-notice" hidden>
+        <h3>Server conversion uploads your video</h3>
+        <p>Your video is sent to Authentic Dynamics for processing. It is not sent to a third-party conversion service. Temporary files are removed when the request finishes or times out; no conversion history is saved.</p>
+        <p>Up to {{ (server_max_bytes / 1048576)|int }} MB input, {{ server_max_seconds // 60 }} minutes of video, 128 MB output and {{ server_timeout // 60 }} minutes of processing. Cancelling stops your request, but an already-started server conversion may run until it finishes or times out.</p>
+        <label class="tool-checkbox"><input id="upload-consent" type="checkbox"> I agree to upload this video to Authentic Dynamics for conversion.</label>
+      </div>
+      <p id="server-size-warning" class="tool-status is-error" role="alert" hidden>Server mode accepts videos up to {{ (server_max_bytes / 1048576)|int }} MB and {{ server_max_seconds // 60 }} minutes long. Choose a smaller or shorter video.</p>
+      <p id="browser-limit-warning" class="tool-status is-error" role="alert" hidden>Browser mode accepts videos up to {{ (browser_max_bytes / 1048576)|int }} MB and {{ browser_max_seconds }} seconds long. Choose server mode or a smaller or shorter video.</p>
+      <label class="upload-field" id="drop-zone" for="video-file"><strong>Choose video or drop it here</strong><span id="selection-note">Read locally. Never uploaded in browser mode.</span><input id="video-file" type="file" accept="video/*"></label>
+      <div id="source" hidden><p id="file-info"></p><video id="preview" controls preload="metadata" playsinline></video></div>
+      <div id="large-warning" hidden><h3>Large video</h3><p>This file will be processed entirely on this device. Large or high-resolution videos can use significant memory, battery power, and time.</p><label class="tool-checkbox"><input id="large-confirm" type="checkbox"> Continue on this device</label></div>
+      <fieldset id="settings" disabled>
+        <legend>What would you like to do?</legend>
+        <label for="intent">Choose a starting point</label>
+        <select id="intent"><option value="smaller">Make the video smaller</option><option value="website">Make it website-ready</option><option value="format">Change video format</option><option value="resize">Resize video</option><option value="silent">Remove audio</option><option value="extract">Extract audio</option><option value="custom">Custom settings</option></select>
+        <p id="preset-note" class="tool-note"></p>
+        <details><summary>Adjust output settings</summary><div class="tool-options">
+          <label>Output format<select id="format"><option value="mp4">MP4 — widely compatible</option><option value="webm">WebM — for the web</option></select></label>
+          <label id="audio-format-label" hidden>Audio format<select id="audio-format"><option value="mp3">MP3</option><option value="wav">WAV — larger, uncompressed</option></select></label>
+          <label>Quality<select id="quality"><option value="smaller">Smaller file</option><option value="balanced">Balanced</option><option value="higher">Higher quality</option></select></label>
+          <label>Resolution<select id="resolution"><option value="original">Keep original</option><option value="1080">1080p</option><option value="720">720p</option><option value="480">480p</option></select></label>
+          <label>Frame rate<select id="fps"><option value="original">Keep original</option><option value="60">60 FPS</option><option value="30">30 FPS</option><option value="24">24 FPS</option></select></label>
+          <label>Audio<select id="audio"><option value="keep">Keep audio</option><option value="remove">Remove audio</option></select></label>
+        </div><p class="tool-note">Resolution fits landscape or portrait within the selected size, without upscaling. A chosen frame rate may duplicate or drop frames. Smaller files are not guaranteed.</p></details>
+      </fieldset>
+      <div class="list-actions"><button id="convert" type="button" class="button black" disabled>Convert locally</button><button id="cancel" type="button" class="button black" hidden>Cancel conversion</button><button id="clear" type="button" class="button black" hidden>Clear video</button></div>
+      <p id="status" class="tool-status" role="status" aria-live="polite">Choose a video to get started.</p>
+      <progress id="progress" max="100" hidden aria-label="Conversion progress"></progress>
+      <section id="result" hidden aria-labelledby="result-title"><h3 id="result-title">Conversion complete</h3><p id="result-info"></p><a id="download" class="button black" download>Download file</a></section>
+      <noscript><p>JavaScript is required to use this tool. No video has been uploaded.</p></noscript>
+    </div>
+    <aside class="tool-help"><p class="eyebrow">PRIVATE BY DEFAULT</p><h3>You choose<br>where it runs.</h3><p><strong>On your device:</strong> video processing stays in your browser, with no media upload. This can be slower, especially on phones. Limit: {{ (browser_max_bytes / 1048576)|int }} MB, {{ browser_max_seconds }} seconds of video and processing.</p><p><strong>On the server:</strong> you explicitly agree to upload your video to Authentic Dynamics. Native conversion can be faster, but upload time and server load count too. Neither mode requires an account or saves conversion history.</p><details><summary>How it works</summary><ol><li>Select a video locally.</li><li>Choose browser or server processing.</li><li>For server mode, agree to the upload notice.</li><li>Convert, then save the result to your device.</li></ol><p>Browser mode downloads an approximately 31 MB engine from this website when first needed. Server mode uploads only when you click Upload &amp; convert, and uses temporary server files.</p></details><p><strong>Give your device a moment.</strong> Keep this tab open and your device awake. Local conversion can take longer than the video itself. Mobile browsers may run out of memory or pause background tabs.</p><p><strong>iPhone MOV support.</strong> Server mode handles many HEVC and ProRes videos, applies portrait rotation metadata, and maps recognized HDR (PQ or HLG) to SDR for standard MP4/WebM output. The converted video will not retain HDR. Browser mode depends on the WebAssembly decoder and may fail on those formats. A video that cannot preview may still convert on the server. MP4 uses H.264/AAC; WebM uses VP8/Opus. Extract audio needs an audio track.</p></aside>
+  </div></section>
+</main>
+{% include 'partials/footer.html' %}
+{% endblock %}
+{% block scripts %}<script type="module" src="{{ url_for('static', filename='tools/video-converter/video-converter.js') }}"></script>{% endblock %}
