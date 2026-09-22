@@ -5,6 +5,10 @@ const $ = id => document.getElementById(id);
 let file = null, sourceURL = null, outputURL = null, job = null, generation = 0;
 const supported = capabilities().supported;
 const serverMode = () => $('processing-mode').value === 'server';
+const processing = $('processing-mode').dataset;
+const duration = () => $('preview').duration;
+const localLimit = () => file && (file.size > Number(processing.browserMaxBytes) ||
+  (Number.isFinite(duration()) && duration() > Number(processing.browserMaxSeconds)));
 const size = bytes => `${(bytes / 1048576).toFixed(2)} MB`;
 function status(message, error = false) { $('status').textContent = message; $('status').classList.toggle('is-error', error); }
 function clearOutput() {
@@ -14,8 +18,9 @@ function clearOutput() {
 function ready() {
   const server = serverMode();
   $('convert').disabled = (!server && !supported) || !file || !!job ||
-    (server ? !$('upload-consent').checked || file.size > Number($('processing-mode').dataset.maxBytes)
-      : !$('large-warning').hidden && !$('large-confirm').checked);
+    (server ? !$('upload-consent').checked || file.size > Number(processing.maxBytes) ||
+      (Number.isFinite(duration()) && duration() > Number(processing.serverMaxSeconds))
+      : !!localLimit() || (!$('large-warning').hidden && !$('large-confirm').checked));
   $('settings').disabled = !file || !!job;
   $('video-file').disabled = (!server && !supported) || !!job;
   $('processing-mode').disabled = !!job;
@@ -24,8 +29,10 @@ function ready() {
   $('cancel').hidden = !job;
 }
 function warnLarge() {
-  $('large-warning').hidden = serverMode() || !(file && (file.size >= 200 * 1048576 || $('preview').videoWidth * $('preview').videoHeight > 1920 * 1080 || $('preview').duration > 600));
-  $('server-size-warning').hidden = !(serverMode() && file && file.size > Number($('processing-mode').dataset.maxBytes));
+  $('large-warning').hidden = serverMode() || !(file && ($('preview').videoWidth * $('preview').videoHeight > 1920 * 1080));
+  $('browser-limit-warning').hidden = serverMode() || !localLimit();
+  $('server-size-warning').hidden = !(serverMode() && file && (file.size > Number(processing.maxBytes) ||
+    (Number.isFinite(duration()) && duration() > Number(processing.serverMaxSeconds))));
   ready();
 }
 function applyPreset() {
@@ -46,7 +53,9 @@ function reset(clearPicker = true) {
   sourceURL = null; file = null; clearOutput();
   if (clearPicker) $('video-file').value = '';
   $('source').hidden = true; $('clear').hidden = true;
-  $('large-warning').hidden = true; $('large-confirm').checked = false; $('progress').hidden = true;
+  $('large-warning').hidden = true; $('browser-limit-warning').hidden = true;
+  $('server-size-warning').hidden = true;
+  $('large-confirm').checked = false; $('progress').hidden = true;
   ready();
 }
 function selectFile(selected) {
@@ -69,7 +78,7 @@ $('preview').addEventListener('loadedmetadata', () => {
   $('file-info').textContent = `${file.name}\n${size(file.size)} · ${video.videoWidth} × ${video.videoHeight}${Number.isFinite(video.duration) ? ' · ' + Math.floor(video.duration / 60) + ':' + String(Math.floor(video.duration % 60)).padStart(2, '0') : ''}`;
   warnLarge();
 });
-$('preview').addEventListener('error', () => { if (file && !job) status('Preview unavailable. You can still try converting this file locally.'); });
+$('preview').addEventListener('error', () => { if (file && !job) status('Preview unavailable. You can still try converting this file.'); });
 $('video-file').addEventListener('change', event => selectFile(event.target.files[0]));
 for (const name of ['dragover', 'drop']) document.addEventListener(name, event => { event.preventDefault(); });
 $('drop-zone').addEventListener('dragover', () => $('drop-zone').classList.add('dragging'));
@@ -105,7 +114,8 @@ $('convert').addEventListener('click', async () => {
   const originalSize = file.size, filename = file.name.replace(/\.[^.]+$/, '') + '-converted.' + options.format;
   $('preview').pause(); $('progress').hidden = false; $('progress').removeAttribute('value');
   status(mode === 'server' ? 'Uploading to Authentic Dynamics…' : 'Preparing local converter… Downloading the engine if needed. Your video is staying on this device.');
-  job = convertVideo({file, options, mode, consent: $('upload-consent').checked, onUpdate(data) {
+  job = convertVideo({file, options, mode, consent: $('upload-consent').checked,
+    maxSeconds: Number(processing.browserMaxSeconds), onUpdate(data) {
     if (run !== generation) return;
     if (data.type === 'upload') {
       $('progress').value = Math.floor(data.progress * 100);
@@ -148,6 +158,8 @@ $('convert').addEventListener('click', async () => {
     const message = error.message === 'cancelled' ? (mode === 'server' ? 'Request cancelled. If processing already started, the server may finish before its time limit and then remove temporary files.' : 'Conversion cancelled. You can try again.')
       : mode === 'server' ? error.message
       : error.message === 'engine' ? 'We couldn’t prepare the local converter. Check your connection for the engine download, then try again in a current browser. Your video was not uploaded.'
+      : error.message === 'limit' ? `Browser conversion exceeded the ${processing.browserMaxSeconds}-second processing limit. Try a shorter video or choose server mode.`
+      : error.message === 'duration' ? `Browser mode needs a detectable video no longer than ${processing.browserMaxSeconds} seconds. Try server mode for this file.`
       : "We couldn’t convert this video in your browser. The codec may be unsupported, the file damaged, or device memory insufficient. Try another format, a smaller video, or another browser. Audio extraction requires an audio track.";
     status(message, error.message !== 'cancelled');
     $('progress').hidden = true;

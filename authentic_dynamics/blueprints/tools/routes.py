@@ -51,6 +51,9 @@ def video_converter():
         server_enabled=current_app.config["VIDEO_SERVER_ENABLED"],
         server_max_bytes=current_app.config["VIDEO_MAX_BYTES"],
         server_timeout=current_app.config["VIDEO_TIMEOUT_SECONDS"],
+        server_max_seconds=current_app.config["VIDEO_MAX_SECONDS"],
+        browser_max_bytes=current_app.config["VIDEO_BROWSER_MAX_BYTES"],
+        browser_max_seconds=current_app.config["VIDEO_BROWSER_MAX_SECONDS"],
     ))
     response.headers["Content-Security-Policy"] = (
         "default-src 'none'; script-src 'self' 'wasm-unsafe-eval'; "
@@ -74,7 +77,8 @@ def video_server():
         options = {key: request.form.get(key) for key in
                    ("format", "quality", "resolution", "fps", "audio")}
         result = video_backend.convert(upload, options, current_app.config["VIDEO_MAX_BYTES"],
-                                       current_app.config["VIDEO_TIMEOUT_SECONDS"])
+                                       current_app.config["VIDEO_TIMEOUT_SECONDS"],
+                                       current_app.config["VIDEO_MAX_SECONDS"])
         response = send_file(result, mimetype=video_backend.MIMES[options["format"]],
                              as_attachment=True, download_name="converted." + options["format"],
                              max_age=0)

@@ -1,5 +1,6 @@
 """Bounded native conversions; no filenames or media details are logged."""
 
+import re
 import shutil
 import subprocess
 import tempfile
@@ -13,9 +14,31 @@ from .converters import ConversionError
 SLOT = BoundedSemaphore(1)  # One native encoder per WSGI process; do not queue requests.
 OUTPUT_LIMIT = 128 * 1024 * 1024
 MIMES = {"mp4": "video/mp4", "webm": "video/webm", "mp3": "audio/mpeg", "wav": "audio/wav"}
+DEMUXERS = "mov,matroska,webm,avi,mpeg,mpegts"
 
 
-def arguments(options):
+def inspect_source(executable, source, max_seconds):
+    """Inspect container duration and HDR transfer before choosing video filters."""
+    try:
+        probe = subprocess.run(
+            [executable, "-hide_banner", "-nostdin", "-protocol_whitelist", "file",
+             "-format_whitelist", DEMUXERS, "-i", str(source)],
+            stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, text=True,
+            timeout=10, check=False,
+        )
+    except subprocess.TimeoutExpired as exc:
+        raise ConversionError("Could not inspect this video. Try a different file.") from exc
+    info = probe.stderr
+    duration = re.search(r"Duration:\s*(\d+):(\d+):(\d+(?:\.\d+)?)", info)
+    if not duration or "Video:" not in info:
+        raise ConversionError("Could not read this video's duration or video track.")
+    seconds = int(duration[1]) * 3600 + int(duration[2]) * 60 + float(duration[3])
+    if seconds > max_seconds:
+        raise ConversionError(f"Server videos must be {max_seconds // 60} minutes or shorter.")
+    return bool(re.search(r"smpte2084|arib-std-b67", info, re.IGNORECASE))
+
+
+def arguments(options, hdr=False, max_seconds=180):
     choices = {"format": MIMES, "quality": ("smaller", "balanced", "higher"),
                "resolution": ("original", "1080", "720", "480"),
                "fps": ("original", "60", "30", "24"), "audio": ("keep", "remove")}
@@ -25,7 +48,7 @@ def arguments(options):
     # Disallow network access, playlists and arbitrary demuxers. Never use a shell.
     args = ["-nostdin", "-y", "-v", "error", "-max_alloc", "134217728",
             "-threads", "2", "-filter_threads", "1", "-protocol_whitelist", "file",
-            "-format_whitelist", "mov,matroska,webm,avi,mpeg,mpegts", "-i", "input",
+            "-format_whitelist", DEMUXERS, "-autorotate", "-i", "input",
             "-map_metadata", "-1"]
     if fmt in ("mp3", "wav"):
         args += ["-map", "0:a:0", "-vn", "-c:a", "libmp3lame" if fmt == "mp3" else "pcm_s16le"]
@@ -41,7 +64,14 @@ def arguments(options):
             scale = (f"scale=w='min(iw,if(gte(iw,ih),{long},{short}))':"
                      f"h='min(ih,if(gte(iw,ih),{short},{long}))':"
                      "force_original_aspect_ratio=decrease:force_divisible_by=2")
+        if hdr:
+            # Map PQ/HLG wide-gamut footage into displayable SDR BT.709.
+            scale = ("zscale=t=linear:npl=100,format=gbrpf32le,"
+                     "tonemap=tonemap=hable:desat=0,"
+                     "zscale=p=bt709:t=bt709:m=bt709:r=tv," + scale)
         args += ["-vf", scale, "-pix_fmt", "yuv420p", "-threads", "2"]
+        if hdr:
+            args += ["-color_primaries", "bt709", "-color_trc", "bt709", "-colorspace", "bt709"]
         if options["fps"] != "original":
             args += ["-r", options["fps"]]
         if fmt == "mp4":
@@ -52,11 +82,11 @@ def arguments(options):
                      "-b:v", {"smaller": "600k", "balanced": "1500k", "higher": "3000k"}[quality],
                      "-deadline", "realtime", "-cpu-used", "6", "-lag-in-frames", "0",
                      "-c:a", "libopus", "-b:a", "96k"]
-    return args + ["-fs", str(OUTPUT_LIMIT), "output." + fmt]
+    return args + ["-t", str(max_seconds), "-fs", str(OUTPUT_LIMIT), "output." + fmt]
 
 
-def convert(upload, options, max_bytes, timeout):
-    args = arguments(options)
+def convert(upload, options, max_bytes, timeout, max_seconds=180):
+    arguments(options)  # Reject untrusted settings before reading a file.
     if not SLOT.acquire(blocking=False):
         raise ConversionError("The server is busy. Try again shortly or choose browser conversion.")
     result = None
@@ -72,7 +102,10 @@ def convert(upload, options, max_bytes, timeout):
                     target.write(chunk)
             if not total:
                 raise ConversionError("Choose a nonempty video file.")
-            subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), *args], cwd=directory,
+            executable = imageio_ffmpeg.get_ffmpeg_exe()
+            hdr = inspect_source(executable, source, max_seconds)
+            args = arguments(options, hdr=hdr, max_seconds=max_seconds)
+            subprocess.run([executable, *args], cwd=directory,
                            stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                            stderr=subprocess.DEVNULL, timeout=timeout, check=True)
             output = Path(directory) / ("output." + options["format"])

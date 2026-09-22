@@ -63,7 +63,7 @@ def test_timeout_cleanup_and_busy(app, video, monkeypatch, tmp_path):
         raise subprocess.TimeoutExpired("ffmpeg", 1)
     monkeypatch.setattr(video_backend.subprocess, "run", timeout)
     result = post(app.test_client(), video)
-    assert "too long" in result.json["error"]
+    assert "inspect" in result.json["error"]
     assert not list(tmp_path.iterdir())
     with video_backend.SLOT:
         assert "busy" in post(app.test_client(), video).json["error"]
@@ -82,3 +82,61 @@ def test_csrf_and_video_only_request_limit(app, video):
     assert response.status_code == 200
     response.close()
     assert client.post('/tools/csv-converter', data={"file": (io.BytesIO(video), "x.csv")}).status_code == 413
+
+
+def make_mov(tmp_path, codec, *, hdr_transfer=None, rotation=False):
+    path = tmp_path / ("source-" + codec + ".mov")
+    args = [imageio_ffmpeg.get_ffmpeg_exe(), "-v", "error", "-f", "lavfi", "-i",
+            "testsrc2=size=320x180:rate=24", "-t", "0.5", "-threads", "1"]
+    if hdr_transfer:
+        args += ["-vf", "format=yuv420p10le", "-c:v", "libx265", "-x265-params",
+                 "pools=1:frame-threads=1:log-level=error", "-color_primaries", "bt2020",
+                 "-color_trc", hdr_transfer, "-colorspace", "bt2020nc"]
+    else:
+        args += ["-c:v", codec]
+    subprocess.run([*args, str(path)], check=True, capture_output=True)
+    if rotation:
+        turned = tmp_path / "rotated.mov"
+        subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), "-v", "error", "-display_rotation",
+                        "90", "-i", str(path), "-c", "copy", str(turned)],
+                       check=True, capture_output=True)
+        path = turned
+    return path.read_bytes()
+
+
+@pytest.mark.parametrize("codec,transfer,rotation,dimensions", [
+    ("libx265", None, False, "320x180"),
+    ("libx265", "smpte2084", False, "320x180"),
+    ("libx265", "arib-std-b67", False, "320x180"),
+    ("libx264", None, True, "180x320"),
+    ("prores_ks", None, False, "320x180"),
+])
+def test_iphone_style_mov_to_sdr_mp4(app, tmp_path, codec, transfer, rotation, dimensions):
+    source = make_mov(tmp_path, codec, hdr_transfer=transfer, rotation=rotation)
+    response = post(app.test_client(), source)
+    assert response.status_code == 200, response.json
+    output = tmp_path / "converted.mp4"
+    output.write_bytes(response.data)
+    response.close()
+    details = subprocess.run([imageio_ffmpeg.get_ffmpeg_exe(), "-hide_banner", "-i", str(output)],
+                             capture_output=True, text=True, check=False).stderr
+    assert "Video: h264" in details
+    assert dimensions in details
+    if transfer:
+        assert "bt709" in details
+        assert transfer not in details
+
+
+def test_server_duration_limit(app, video):
+    app.config["VIDEO_MAX_SECONDS"] = 0
+    response = post(app.test_client(), video)
+    assert response.status_code == 400
+    assert "minutes or shorter" in response.json["error"]
+
+
+def test_default_video_limits(app):
+    assert app.config["VIDEO_MAX_BYTES"] == 128 * 1024 * 1024
+    assert app.config["VIDEO_MAX_SECONDS"] == 180
+    assert app.config["VIDEO_TIMEOUT_SECONDS"] == 300
+    assert app.config["VIDEO_BROWSER_MAX_BYTES"] == 64 * 1024 * 1024
+    assert app.config["VIDEO_BROWSER_MAX_SECONDS"] == 60

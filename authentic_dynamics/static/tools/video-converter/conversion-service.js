@@ -4,36 +4,40 @@ export function capabilities() {
 }
 
 // Engine boundary: UI never constructs FFmpeg commands. One worker per job releases WASM memory.
-export function convertVideo({file, options, onUpdate, mode = 'browser', consent = false}) {
+export function convertVideo({file, options, onUpdate, mode = 'browser', consent = false, maxSeconds = 60}) {
   if (mode === 'server') return convertOnServer({file, options, onUpdate, consent});
   let worker, rejectJob, loadingTimer, engineReady = false, settled = false;
   const stop = () => { clearTimeout(loadingTimer); worker?.terminate(); };
   const promise = new Promise((resolve, reject) => {
     rejectJob = reject;
-    const fail = () => {
+    const fail = (reason = 'conversion') => {
       if (settled) return;
-      settled = true; stop(); reject(new Error(engineReady ? 'conversion' : 'engine'));
+      settled = true; stop(); reject(new Error(reason));
     };
     try {
       worker = new Worker(new URL('./video-worker.js', import.meta.url), {type: 'module'});
-      loadingTimer = setTimeout(fail, 120000);
-      worker.onerror = fail;
-      worker.onmessageerror = fail;
+      loadingTimer = setTimeout(() => fail('engine'), 120000);
+      worker.onerror = () => fail(engineReady ? 'conversion' : 'engine');
+      worker.onmessageerror = () => fail(engineReady ? 'conversion' : 'engine');
       worker.onmessage = ({data}) => {
         try {
           if (data.type === 'complete') {
             const mime = {mp4: 'video/mp4', webm: 'video/webm', mp3: 'audio/mpeg', wav: 'audio/wav'}[options.format];
             const blob = new Blob([data.bytes], {type: mime});
             settled = true; stop(); resolve(blob);
-          } else if (data.type === 'error') fail();
+          } else if (data.type === 'error') fail(data.reason === 'duration' ? 'duration' : 'conversion');
           else {
-            if (data.type === 'ready') { engineReady = true; clearTimeout(loadingTimer); }
+            if (data.type === 'ready') {
+              engineReady = true;
+              clearTimeout(loadingTimer);
+              loadingTimer = setTimeout(() => fail('limit'), maxSeconds * 1000);
+            }
             onUpdate(data);
           }
-        } catch { fail(); }
+        } catch { fail('conversion'); }
       };
-      worker.postMessage({type: 'convert', file, options});
-    } catch { fail(); }
+      worker.postMessage({type: 'convert', file, options, maxSeconds});
+    } catch { fail('engine'); }
   });
   return {promise, cancel() {
     stop();

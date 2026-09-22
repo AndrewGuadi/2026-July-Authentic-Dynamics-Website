@@ -22,8 +22,8 @@ const native = args => execFileSync(ffmpeg, ['-hide_banner', '-y', ...args], {en
   const mov = fixture('private-portrait.mov', '720x1280');
   const silent = fixture('private-silent.mp4', '1280x720', false);
   const hd = fixture('private-hd.mp4', '1920x1080');
-  const medium = fixture('private-medium.mp4', '1280x720', true, '12');
-  const shortMedium = fixture('private-compatibility.mp4', '1280x720', true, '3');
+  const medium = fixture('private-medium.mp4', '1280x720', true, '3');
+  const shortMedium = fixture('private-compatibility.mp4', '1280x720', true, '1');
   const browsers = (process.env.VIDEO_BROWSERS || 'chromium').split(',');
   for (const name of browsers) {
     const browser = await playwright[name].launch({headless: true});
@@ -112,13 +112,13 @@ const native = args => execFileSync(ffmpeg, ['-hide_banner', '-y', ...args], {en
       await page.waitForFunction(() => document.querySelector('#status').classList.contains('is-error'));
       await page.locator('#video-file').setInputFiles({name: 'no.txt', mimeType: 'text/plain', buffer: Buffer.from('not video')});
       assert.ok(await page.locator('#convert').isDisabled());
-      // A sparse browser File exercises size warning without a 200 MB disk fixture.
+      // A browser File exercises the hard local size limit without a disk fixture.
       await page.evaluate(() => {
-        const dt = new DataTransfer(); dt.items.add(new File([new Uint8Array(200 * 1048576)], 'large.mp4', {type: 'video/mp4'}));
+        const dt = new DataTransfer(); dt.items.add(new File([new Uint8Array(64 * 1048576 + 1)], 'large.mp4', {type: 'video/mp4'}));
         const input = document.querySelector('#video-file'); input.files = dt.files; input.dispatchEvent(new Event('change'));
       });
-      assert.ok(await page.locator('#large-warning').isVisible()); assert.ok(await page.locator('#convert').isDisabled());
-      await page.locator('#large-confirm').check(); assert.ok(await page.locator('#convert').isEnabled());
+      assert.ok(await page.locator('#browser-limit-warning').isVisible());
+      assert.ok(await page.locator('#convert').isDisabled());
       await page.locator('#clear').click();
       await select(small); await convert();
       await page.evaluate(() => { document.activeElement.blur(); window.scrollTo(0, 0); });
