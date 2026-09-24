@@ -28,6 +28,8 @@ set +a
 
 The `.env` file is ignored by Git. Leave `AD_SECRET_KEY` blank locally to use the generated `instance/.secret_key`; set a unique secret for deployment. Set `AD_SESSION_COOKIE_SECURE=true` when the site is served over HTTPS, and keep the admin site's same-origin referrer available for HTTPS CSRF validation.
 
+Set `AD_CANONICAL_HOST=www.authenticdynamics.com` for the production app. It redirects requests for any other host that reaches Flask to the HTTPS canonical hostname with a permanent, method-preserving 308, and uses that hostname for sitemap and canonical page URLs. Leave it blank for local development or preview deployments. Keep PythonAnywhere's **Force HTTPS** setting enabled for the `www` web app; Flask cannot reliably infer the browser's original scheme behind its proxy.
+
 Home page images, styles, scripts, and fonts are served locally. The free tool cards use styled previews built in HTML and CSS.
 
 Place local images in `authentic_dynamics/static/images/`, organized by page. The existing folders are `home/hero/`, `home/built-around-you/`, `home/what-we-do/`, `home/selected-work/`, `home/an-asset/`, `home/a-little-help/`, `home/rooted-here/`, `home/no-mystery-in-the-middle/`, `home/your-partner/`, `websites/`, `growth-technology/`, `work/`, and `about-community/`. The contact photos are currently in `static/images/`. Use `shared/` for images shown on more than one page. Add new folders within a page as its image collection grows. For example, a home hero image is referenced in a Flask template with `{{ url_for('static', filename='images/home/hero/your-photo.jpg') }}` and served at `/static/images/home/hero/your-photo.jpg`.
@@ -126,6 +128,7 @@ This app runs as a Flask WSGI application. Use the same Python version for the v
 
    os.environ.setdefault("AD_SECRET_KEY", "PASTE_A_LONG_RANDOM_VALUE_HERE")
    os.environ.setdefault("AD_SESSION_COOKIE_SECURE", "true")
+   os.environ.setdefault("AD_CANONICAL_HOST", "www.authenticdynamics.com")
 
    from wsgi import app  # noqa: E402
    ```
@@ -141,6 +144,14 @@ This app runs as a Flask WSGI application. Use the same Python version for the v
 7. Click **Reload**. Visit your PythonAnywhere domain, then open `/admin/login` to review submissions. Test the contact form, static images, and `/healthz` after the reload.
 
 For later releases, pull or upload the new code, install any dependency changes, run `flask --app wsgi db upgrade`, and reload the web app. Back up `instance/authentic_dynamics.db` before migrations. PythonAnywhere’s [Flask setup guide](https://help.pythonanywhere.com/pages/Flask), [static files guide](https://help.pythonanywhere.com/pages/StaticFiles), and [environment variable guidance](https://help.pythonanywhere.com/pages/environment-variables-for-web-apps/) cover the corresponding dashboard settings.
+
+### Apex domain and HTTPS redirects
+
+`authenticdynamics.com` and `www.authenticdynamics.com` have separate DNS destinations. The apex must be handled by an HTTPS-capable domain forwarding service or edge proxy that serves both `http://authenticdynamics.com` and `https://authenticdynamics.com`, has a valid certificate for the apex, and sends a permanent redirect directly to `https://www.authenticdynamics.com`. Preserve the path and query string. The redirect must work for both GET and HEAD. The current apex forwarder redirects a GET for `/`, but returns 404 for `/websites` and 405 for HEAD requests. Configure this at the current DNS/forwarding provider, not in Flask: these requests never reach the app. Do not point the apex at the PythonAnywhere `www` CNAME target without configuring the apex as a separate web app there.
+
+After changing the forwarding service, verify all four entry URLs and a nested URL. For example, `curl -I http://authenticdynamics.com/websites?x=1` and `curl -I https://authenticdynamics.com/websites?x=1` should each return a permanent redirect to `https://www.authenticdynamics.com/websites?x=1`; `http://www.authenticdynamics.com/` should redirect to HTTPS, and `https://www.authenticdynamics.com/` should return 200. If a provider cannot handle HTTPS on the apex or HEAD requests, use an HTTPS-capable forwarding service or edge proxy instead. PythonAnywhere documents this split in its [naked-domain](https://help.pythonanywhere.com/pages/NakedDomains) and [Force HTTPS](https://help.pythonanywhere.com/pages/ForcingHTTPS) guides.
+
+One concrete edge setup is a [Cloudflare Single Redirect](https://developers.cloudflare.com/rules/url-forwarding/examples/redirect-all-another-domain/). If moving DNS to Cloudflare, copy and verify the existing DNS zone first, especially MX, SPF, DKIM, DMARC, and the `www` CNAME to PythonAnywhere. Keep `www` as DNS-only so PythonAnywhere continues to serve it. Replace the apex forwarding A records with a proxied apex A record to `192.0.2.1` (Cloudflare's [redirect-only placeholder](https://developers.cloudflare.com/fundamentals/manage-domains/redirect-domain/)), then add a wildcard redirect: request URL `http*://authenticdynamics.com/*`, target `https://www.authenticdynamics.com/${2}`, status `301`, **Preserve query string** enabled. This handles both apex schemes and all paths without changing the Flask app or the `www` web app. Change the registrar nameservers only after the imported DNS records and rule are ready; then run the checks above.
 
 ## Browser X-Ray
 

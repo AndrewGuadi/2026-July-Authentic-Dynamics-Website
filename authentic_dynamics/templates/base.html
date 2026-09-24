@@ -6,6 +6,7 @@
   <title>{% block title %}Authentic Dynamics | Your Central PA Digital Partner{% endblock %}</title>
   <meta name="description" content="{% block description %}Websites, local search, marketing and practical technology for Central Pennsylvania businesses. Founder-led. Community-rooted. We build. You own.{% endblock %}">
   <meta name="theme-color" content="#090909">
+  {% if config.CANONICAL_HOST %}<link rel="canonical" href="https://{{ config.CANONICAL_HOST }}{{ request.path }}">{% endif %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
   <script src="{{ url_for('static', filename='js/site.js') }}" defer></script>
