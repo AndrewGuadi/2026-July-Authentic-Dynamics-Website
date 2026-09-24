@@ -1,10 +1,11 @@
 """Application factory and component registration."""
 
 import os
+import re
 import secrets
 from pathlib import Path
 
-from flask import Flask
+from flask import Flask, redirect, request
 
 from .config import Config
 from .errors import register_error_handlers
@@ -47,11 +48,20 @@ def create_app(test_config: dict | None = None) -> Flask:
     app.config.from_prefixed_env(prefix="AD")
     if test_config is not None:
         app.config.update(test_config)
+    canonical_host = app.config["CANONICAL_HOST"].strip().lower()
+    if canonical_host and not re.fullmatch(r"[a-z0-9-]+(?:\.[a-z0-9-]+)+", canonical_host):
+        raise ValueError("CANONICAL_HOST must be a hostname without a scheme or port")
+    app.config["CANONICAL_HOST"] = canonical_host
     _ensure_secret_key(app)
     _prepare_local_database(app)
 
     db.init_app(app)
     migrate.init_app(app, db, render_as_batch=True)
+
+    @app.before_request
+    def redirect_noncanonical_host():
+        if canonical_host and request.host.lower().rstrip(".") != canonical_host:
+            return redirect(f"https://{canonical_host}{request.full_path.rstrip('?')}", code=308)
 
     # Apply the larger video-only limit before CSRF protection can parse a request.
     @app.before_request

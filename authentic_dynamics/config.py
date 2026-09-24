@@ -5,6 +5,8 @@ class Config:
     DEBUG = False
     TESTING = False
     SECRET_KEY = None
+    # Set in production to the single public hostname (without a scheme).
+    CANONICAL_HOST = ""
     SQLALCHEMY_DATABASE_URI = "sqlite:///authentic_dynamics.db"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024
