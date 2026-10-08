@@ -2,6 +2,8 @@
 
 Flask application for the Authentic Dynamics website. The main pages are `/`, `/websites`, `/growth-technology`, `/work`, and `/about-community`. The public pages, including the tools, are listed at `/sitemap.xml`.
 
+The homepage includes `LocalBusiness` and `WebSite` JSON-LD with the public business contact details and Google Business Profile link. A logo is intentionally omitted until a business logo asset is added. `/privacy-policy` and `/terms` are starter pages for legal review; update their language and revision dates whenever the actual business practices or legal terms change.
+
 ## Run locally
 
 Requires Python 3.11 or newer.
