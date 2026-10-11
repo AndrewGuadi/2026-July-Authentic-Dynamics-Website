@@ -55,6 +55,9 @@ def create_app(test_config: dict | None = None) -> Flask:
     _ensure_secret_key(app)
     _prepare_local_database(app)
 
+    from .hub.setup import configure
+    configure(app)
+
     db.init_app(app)
     migrate.init_app(app, db, render_as_batch=True)
 
@@ -75,13 +78,17 @@ def create_app(test_config: dict | None = None) -> Flask:
 
     from . import models  # noqa: F401
     from .commands import admin, contacts
+    from .hub import models as hub_models  # noqa: F401
+    from .hub.cli import hub
 
     app.cli.add_command(contacts)
     app.cli.add_command(admin)
+    app.cli.add_command(hub)
 
     from .blueprints.admin import bp as admin_bp
     from .blueprints.games import bp as games_bp
     from .blueprints.health import bp as health_bp
+    from .blueprints.hub import bp as hub_bp
     from .blueprints.main import bp as main_bp
     from .blueprints.tools import bp as tools_bp
 
@@ -90,6 +97,7 @@ def create_app(test_config: dict | None = None) -> Flask:
     app.register_blueprint(main_bp)
     app.register_blueprint(health_bp)
     app.register_blueprint(admin_bp)
+    app.register_blueprint(hub_bp)
     register_error_handlers(app)
     register_security_headers(app)
     return app

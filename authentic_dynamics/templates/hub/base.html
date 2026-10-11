@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Business Hub | Authentic Dynamics{% endblock %}
+{% block head %}<meta name="robots" content="noindex, nofollow"><link rel="stylesheet" href="{{ url_for('static', filename='css/hub.css') }}">{% endblock %}
+{% block content %}
+<a class="skip" href="#hub-main">Skip to content</a>
+<div class="hub-shell">
+<aside class="hub-sidebar">
+<a class="hub-brand" href="{{ url_for('hub.dashboard') }}">AD<span>↗</span><small>BUSINESS HUB</small></a>
+<nav aria-label="Business Hub">
+<a href="{{ url_for('hub.dashboard') }}" {% if request.endpoint == 'hub.dashboard' %}aria-current="page"{% endif %}>Today</a>
+{% for name, label in hub_nav %}{% if name not in finance_resources or g.membership.role in ['owner','admin'] %}
+<a href="{{ url_for('hub.board') if name == 'opportunities' else url_for('hub.index', resource=name) }}" {% if resource|default('') == name %}aria-current="page"{% endif %}>{{ label }}</a>
+{% endif %}{% endfor %}
+{% if g.membership.role in ['owner','admin'] %}<a href="{{ url_for('hub.settings') }}">Settings & operations</a>{% endif %}
+</nav>
+<div class="hub-sidebar-foot"><a href="{{ url_for('admin.inbox') }}">Website inquiries ↗</a><a href="{{ url_for('admin.password') }}">Change password</a>
+<form method="post" action="{{ url_for('admin.logout') }}"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}"><button type="submit">Sign out</button></form></div>
+</aside>
+<div class="hub-workspace"><header class="hub-topbar"><span>{{ g.workspace.name }} <small>Private workspace</small></span>
+<form action="{{ url_for('hub.search') }}" role="search"><label class="hub-sr" for="global-search">Search Hub</label><input id="global-search" name="q" placeholder="Search your workspace…" value="{{ request.args.get('q', '') }}"><button>Search</button></form><span class="hub-person">{{ g.hub_user.display_name }}<small>{{ g.membership.role|replace('_',' ') }}</small></span></header>
+<main id="hub-main" class="hub-main">{% for message in get_flashed_messages() %}<p class="hub-notice" role="status">{{ message }}</p>{% endfor %}{% block hub_content %}{% endblock %}</main>
+</div></div>
+{% endblock %}
