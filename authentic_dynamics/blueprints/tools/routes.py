@@ -89,6 +89,11 @@ def video_server():
         return {"error": str(exc)}, 400
 
 
+@bp.get("/event-break-even")
+def event_break_even():
+    return render_template("tools/event_break_even.html", active_page="tools")
+
+
 @bp.get("/list-cleaner")
 def list_cleaner():
     return render_template("tools/list_cleaner.html", active_page="tools")
