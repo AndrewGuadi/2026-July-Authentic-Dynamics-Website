@@ -79,8 +79,16 @@ const devices = [
         const response = await context.request.get(url.href);
         assert.ok(response.status() < 400, `${url.href} returned ${response.status()}`);
       }
+
+      await page.goto(`${base}/tools/list-cleaner`);
+      await page.locator('#list-input').fill('Harrisburg\nharrisburg\nMechanicsburg\n\nHarrisburg');
+      await page.locator('#list-case').check();
+      await page.getByRole('button', {name: 'Clean my list'}).click();
+      assert.equal(await page.locator('#list-output').inputValue(), 'Harrisburg\nMechanicsburg');
+      assert.match(await page.locator('#list-status').innerText(), /2 items kept · 2 duplicates removed/);
+      assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
       assert.deepEqual(errors, []);
-      console.log(`${device.name}: metadata, navigation, validation, links, tap targets and overflow passed`);
+      console.log(`${device.name}: metadata, navigation, validation, links, list tool, tap targets and overflow passed`);
       await context.close();
     }
   } finally {
