@@ -532,3 +532,21 @@ limits, disabled mode, corrupt files, timeout cleanup and concurrency.
 `tests/video_modes_browser.cjs` checks actual browser/server conversions, explicit
 consent, mode switching, no upload on selection, and no uploads in browser mode.
 It uses `VIDEO_BASE_URL` (default port 5057) with the same test-only Node dependencies.
+
+## Vendor event break-even calculator
+
+`/tools/event-break-even` estimates contribution per transaction, break-even volume,
+transactions needed for a profit target, and scenario revenue/profit. It appears
+in the tools catalog and sitemap without adding a main navigation item. All
+inputs and calculations stay in page memory; an explicit download saves a text
+estimate. There are no new dependencies, APIs, uploads or persistent storage.
+
+Money is calculated in integer cents; percentage fees round to cents per modeled
+transaction. A nonpositive contribution cannot cover positive fixed costs or
+achieve a positive profit goal. Inputs include explicit bounds and native validation;
+editing an input hides outdated results until recalculation. Example inputs are
+illustrative, not Central PA market data.
+
+Run `node tests/event_break_even_core.mjs` for arithmetic checks. Optional browser
+checks: `NODE_PATH=/path/to/node_modules node tests/event_break_even_browser.cjs`
+with Flask running at `http://127.0.0.1:5055` (`EVENT_BASE_URL` overrides it).

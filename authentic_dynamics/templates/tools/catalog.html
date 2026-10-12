@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}Free Tools | Authentic Dynamics{% endblock %}
-{% block description %}Practical tools for everyday work. Create QR codes and invoices, convert files, clean lists, try local AI, and explore browser APIs.{% endblock %}
+{% block description %}Practical tools for everyday work. Estimate event profit, create QR codes and invoices, convert files, clean lists, try local AI, and explore browser APIs.{% endblock %}
 {% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">{% endblock %}
 {% block content %}
 <a class="skip" href="#main">Skip to content</a>
@@ -9,12 +9,12 @@
   <section id="top" class="page-hero dark"><div class="wrap">
     <p class="eyebrow">THE TOOLBOX / FREE TO USE</p>
     <h1>Small tools.<br><em>Less busywork.</em></h1>
-    <p class="intro">A few useful shortcuts for the files and lists on your desk. Pick a tool and get back to what matters.</p>
+    <p class="intro">A few useful shortcuts for business planning and the files on your desk. Pick a tool and get back to what matters.</p>
     <div class="actions"><a class="button" href="#catalog">Find your tool <span>↓</span></a></div>
   </div></section>
   <div class="page-ribbon"><div class="wrap"><span>No account needed</span><span>Free everyday tools</span><span>Ready when you are</span></div></div>
   <section class="section white" id="catalog"><div class="wrap">
-    <div class="section-head"><div><p class="eyebrow">PRACTICAL BY DESIGN</p><h2>Small tasks.<br>Sorted out.</h2></div><p>Useful shortcuts for files, lists, invoices, local AI, and understanding what your browser can do.</p></div>
+    <div class="section-head"><div><p class="eyebrow">PRACTICAL BY DESIGN</p><h2>Small tasks.<br>Sorted out.</h2></div><p>Useful shortcuts for event planning, files, lists, invoices, local AI, and understanding what your browser can do.</p></div>
     <div class="tool-catalog">
       <article class="page-card tool-card"><span class="card-index">VIDEO / YOUR CHOICE</span><div class="format-preview" aria-hidden="true"><b>VIDEO</b><span>↗</span><div>COMPRESS<br>RESIZE<br>CONVERT</div></div><h3>Video Converter</h3><p>Convert, compress, resize or extract audio. Choose private browser processing or upload for server conversion.</p><div class="tool-tags"><span>MP4 / WebM</span><span>Browser or server</span><span>Audio</span></div><a class="button black" href="{{ url_for('tools.video_converter') }}">Convert a video <span>↗</span></a></article>
       <article class="page-card tool-card"><span class="card-index">01 / DOCUMENTS & IMAGES</span><div class="format-preview" aria-hidden="true"><b>PDF</b><span>↗</span><div>PNG<br>WEBP<br>JPEG</div></div><h3>PDF to image</h3><p>Turn every page into a crisp image. Choose the format and resolution, then download a single image or a ZIP of all your pages.</p><div class="tool-tags"><span>PNG</span><span>WebP</span><span>JPEG</span></div><a class="button black" href="{{ url_for('tools.pdf') }}">Convert a PDF <span>↗</span></a></article>
@@ -25,8 +25,9 @@
       <article class="page-card tool-card"><span class="card-index">06 / LOCAL AI</span><div class="format-preview" aria-hidden="true"><b>AI</b><span>↗</span><div>LOAD<br>PROMPT<br>GENERATE</div></div><h3>Local AI</h3><p>Run a small language model directly in your browser. Try a prompt and generate a response without sending your text to an AI service.</p><div class="tool-tags"><span>Runs locally</span><span>No account</span><span>Experimental</span></div><a class="button black" href="{{ url_for('tools.local_ai') }}">Try local AI <span>↗</span></a></article>
       <article class="page-card tool-card"><span class="card-index">07 / MARKETING &amp; CUSTOMER EXPERIENCE</span><div class="format-preview" aria-hidden="true"><b>QR</b><span>↗</span><div>CREATE<br>BRAND<br>DOWNLOAD</div></div><h3>Free QR Code Maker</h3><p>Create a QR code for reviews, menus, websites, and more. Add your branding and download a code or printable sign, with no account or watermark.</p><div class="tool-tags"><span>No expiration</span><span>Local only</span><span>PNG / SVG / PDF</span></div><a class="button black" href="{{ url_for('tools.qr_code_maker') }}">Make a QR code <span>↗</span></a></article>
       <article class="page-card tool-card"><span class="card-index">08 / SPREADSHEETS &amp; DATA</span><div class="format-preview" aria-hidden="true"><b>JSON</b><span>↗</span><div>XLSX / DOCX<br>PDF / CSV<br>TEXT</div></div><h3>JSON converter</h3><p>Upload JSON or paste your text. Turn objects into Excel, Word, PDF, CSV, TSV, plain text, or formatted JSON.</p><div class="tool-tags"><span>Tables</span><span>Documents</span><span>Paste text</span></div><a class="button black" href="{{ url_for('tools.json_converter') }}">Convert JSON <span>↗</span></a></article>
+      <article class="page-card tool-card"><span class="card-index">09 / VENDORS &amp; EVENTS</span><div class="format-preview" aria-hidden="true"><b>$$</b><span>↗</span><div>PLAN<br>BREAK EVEN<br>COMPARE</div></div><h3>Event Break-Even Calculator</h3><p>Check how many customer transactions cover your booth fee, staffing and travel. Estimate event profit before you book.</p><div class="tool-tags"><span>Local only</span><span>No account</span><span>Download estimate</span></div><a class="button black" href="{{ url_for('tools.event_break_even') }}">Plan an event <span>↗</span></a></article>
     </div>
-    <p class="section-footnote">PDF, CSV and JSON conversions send data to our server (maximum 10 MiB per file; pasted JSON up to 400 KB); uploads and results are not saved to the site’s database. QR Code Maker, List Cleaner, Invoice Maker, and Local AI process your content locally. Local AI downloads its model files when you start it. Browser X-Ray keeps experiment readings in the page and requests sensitive access only when you choose to enable it.</p>
+    <p class="section-footnote">PDF, CSV and JSON conversions send data to our server (maximum 10 MiB per file; pasted JSON up to 400 KB); uploads and results are not saved to the site’s database. Event Break-Even Calculator, QR Code Maker, List Cleaner, Invoice Maker, and Local AI process your content locally. Local AI downloads its model files when you start it. Browser X-Ray keeps experiment readings in the page and requests sensitive access only when you choose to enable it.</p>
   </div></section>
 </main>
 {% include 'partials/footer.html' %}
