@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Growth & Technology | Authentic Dynamics{% endblock %}
 {% block description %}Connect local visibility, marketing, automation and practical technology to a website that works for your business.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/review-request-builder.css') }}">{% endblock %}
 {% block content %}
 <a class="skip" href="#main">Skip to content</a>
 {% include 'partials/header.html' %}
@@ -12,12 +13,40 @@
 
   <section class="section" id="services"><div class="wrap"><div class="section-head"><div><p class="eyebrow">A CONNECTED PRACTICE</p><h2>Find the next useful move.</h2></div><p>Start with the bottleneck you can feel. We connect the work across visibility, conversion and operations so one improvement supports the next.</p></div><div class="page-card-grid three">
     <article class="page-card"><span class="card-index">01 / LOCAL SEARCH</span><h3>Show up for the right searches.</h3><p>Improve the pages, structure and technical basics that help customers understand where you work and what you do.</p><ul><li>Local and technical SEO</li><li>Service and location content</li><li>Useful measurement</li></ul></article>
-    <article class="page-card"><span class="card-index">02 / BUSINESS PROFILE</span><h3>Make your local details useful.</h3><p>Keep your Google Business Profile accurate and connected to your website, hours, services and real service area.</p><ul><li>Profile setup and review</li><li>Photos, services and updates</li><li>Review response workflow</li></ul></article>
+    <article class="page-card"><span class="card-index">02 / BUSINESS PROFILE</span><h3>Make your local details useful.</h3><p>Keep your Google Business Profile accurate and connected to your website, hours, services and real service area.</p><ul><li>Profile setup and review</li><li>Photos, services and updates</li><li>Review response workflow</li></ul><a class="textlink review-builder-link" href="#review-request">Build a review request <span>↓</span></a></article>
     <article class="page-card"><span class="card-index">03 / PAID REACH</span><h3>Make every click count.</h3><p>Connect Google Ads with clear offers, relevant landing pages and conversion tracking so the campaign can be evaluated.</p><ul><li>Search campaign planning</li><li>Landing pages and messages</li><li>Conversion measurement</li></ul></article>
     <article class="page-card"><span class="card-index">04 / FOLLOW-UP</span><h3>Keep the conversation moving.</h3><p>Turn an inquiry into a manageable next step with practical workflows that reduce manual follow-up.</p><ul><li>Inquiry routing</li><li>CRM and email connections</li><li>Simple dashboards</li></ul></article>
     <article class="page-card"><span class="card-index">05 / PRACTICAL AI</span><h3>Use AI where it helps.</h3><p>Explore focused assistants and internal workflows with the right data, human review and clear limits.</p><ul><li>Use-case discovery</li><li>Knowledge-grounded tools</li><li>Documentation and training</li></ul></article>
     <article class="page-card"><span class="card-index">06 / CUSTOM SYSTEMS</span><h3>Build around your operation.</h3><p>When existing tools do not fit, we can scope a custom integration, dashboard or application around the real work.</p><ul><li>Technical discovery</li><li>Connected platforms</li><li>Maintainable handoff</li></ul></article>
   </div></div></section>
+
+  <section class="section white review-builder-section" id="review-request"><div class="wrap">
+    <div class="section-head"><div><p class="eyebrow">A USEFUL FIRST STEP</p><h2>Turn a finished job<br>into an honest review.</h2></div><p>Build a personal Google review request for text or email. Your customer details stay in this browser and nothing is sent by this page.</p></div>
+    <div class="review-builder-layout">
+      <form class="review-builder" id="review-request-form" novalidate>
+        <div class="review-field-grid">
+          <label>Business name <span aria-hidden="true">*</span><input id="review-business" name="business" type="text" maxlength="80" autocomplete="organization" required placeholder="Your business name"></label>
+          <label>Google review link <span aria-hidden="true">*</span><input id="review-link" name="review_link" type="url" maxlength="500" inputmode="url" autocomplete="url" required placeholder="https://g.page/r/.../review" aria-describedby="review-link-note"></label>
+          <p class="review-field-note" id="review-link-note">In your Business Profile, choose <strong>Read reviews → Get more reviews</strong>, then copy the link.</p>
+          <label>Customer first name <span>Optional</span><input id="review-customer" name="customer" type="text" maxlength="50" autocomplete="off" placeholder="Maria"></label>
+          <label>Work completed <span>Optional</span><input id="review-service" name="service" type="text" maxlength="100" autocomplete="off" placeholder="your drain repair"></label>
+        </div>
+        <fieldset class="review-choice"><legend>Send it as</legend><label><input type="radio" name="channel" value="text" checked> Text message</label><label><input type="radio" name="channel" value="email"> Email</label></fieldset>
+        <label class="review-select">Voice<select id="review-tone" name="tone"><option value="warm">Warm and appreciative</option><option value="direct">Short and direct</option><option value="neighborly">Friendly and local</option></select></label>
+        <label class="review-remember"><input id="review-remember" type="checkbox"> Remember my business name and review link on this device</label>
+        <button class="button black" type="submit">Build my request <span>↗</span></button>
+        <p class="review-status" id="review-status" role="status" aria-live="polite">Add your details to create a request.</p>
+      </form>
+      <div class="review-output" id="review-output" aria-live="polite">
+        <div class="review-output-head"><div><span class="card-index">READY TO SEND</span><h3>Your request</h3></div><span id="review-count">0 characters</span></div>
+        <div id="review-subject-wrap" hidden><label for="review-subject">Email subject</label><input id="review-subject" type="text" readonly></div>
+        <label for="review-message">Message</label>
+        <textarea id="review-message" rows="11" readonly placeholder="Your review request will appear here."></textarea>
+        <div class="review-actions"><button class="button black" id="review-copy" type="button" disabled>Copy request</button><button class="textlink" id="review-clear" type="button">Clear</button></div>
+      </div>
+    </div>
+    <div class="review-guidance"><p><strong>Ask for an honest review—not a positive one.</strong> Send requests only to customers with a genuine experience, and never offer discounts, gifts or payment for a review.</p><p>Google supports sharing a review link in thank-you emails, chats and receipts. Review requests and contributions must follow Google’s policies on genuine experiences and fake engagement. <a href="https://support.google.com/business/answer/16816815?hl=en" target="_blank" rel="noopener noreferrer">How to get your review link ↗</a> <a href="https://support.google.com/contributionpolicy/answer/7400114?hl=en" target="_blank" rel="noopener noreferrer">Review policy ↗</a></p><small>Official Google guidance checked October 13, 2026. This tool prepares wording only; it does not send messages or verify policy compliance.</small></div>
+  </div></section>
 
   <section class="section white"><div class="wrap split-section"><div><p class="eyebrow">WHERE WE START</p><h2>One problem.<br>One clear plan.</h2><p class="section-lead">We look at what customers see and what your team has to do after they reach out.</p><p>That may mean tightening local service pages, rebuilding an ad landing page or linking a form to your follow-up system. We agree on what success looks like before choosing the tools.</p><a class="textlink" href="{{ url_for('main.about_community') }}#contact">Bring us the messy part <span>↗</span></a></div><div class="scenario-panel"><span class="card-index">A COMMON PATH</span><div><b>01</b><p>People find your business.</p></div><div><b>02</b><p>The page answers their question.</p></div><div><b>03</b><p>An inquiry reaches the right person.</p></div><div><b>04</b><p>Your team can respond and learn what worked.</p></div></div></div></section>
 
@@ -28,3 +57,4 @@
 </main>
 {% include 'partials/footer.html' %}
 {% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/review-request-builder.js') }}" defer></script>{% endblock %}
