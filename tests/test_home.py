@@ -17,6 +17,8 @@ def test_homepage_renders_with_local_assets(client):
     assert response.content_type.startswith("text/html")
     assert b"Authentic Dynamics" in response.data
     assert b"We build" in response.data
+    assert b"Central PA Website Design &amp; Digital Growth" in response.data
+    assert b'href="/websites">Explore website design' in response.data
     assert b'href="/static/css/site.css"' in response.data
     assert b'src="/static/js/home.js"' in response.data
 
@@ -62,6 +64,15 @@ def test_interior_pages_render_with_navigation(client, path, heading, active_lab
     assert 'src="/static/js/site.js"' in page
     for destination in ("/", "/websites", "/growth-technology", "/work", "/about-community"):
         assert f'href="{destination}"' in page
+
+
+def test_websites_page_has_focused_search_metadata(client):
+    page = client.get("/websites").get_data(as_text=True)
+
+    assert "Pennsylvania Website Design &amp; Development | Authentic Dynamics" in page
+    assert "Custom website design and development for Central Pennsylvania" in page
+    assert "WEBSITE DESIGN &amp; DEVELOPMENT" in page
+    assert "small businesses across Central Pennsylvania" in page
 
 
 def test_about_page_has_contact_submission_form_elements(client):
