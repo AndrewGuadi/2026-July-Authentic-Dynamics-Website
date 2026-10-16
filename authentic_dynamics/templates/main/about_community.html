@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}About & Community | Authentic Dynamics{% endblock %}
 {% block description %}Meet Andrew Guasch and the Central Pennsylvania roots behind Authentic Dynamics. Learn how we work and start a conversation.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/business-resource-finder.css') }}">{% endblock %}
 {% block content %}
 <a class="skip" href="#main">Skip to content</a>
 {% include 'partials/header.html' %}
@@ -11,7 +12,44 @@
 
   <section class="section"><div class="wrap"><div class="section-head"><div><p class="eyebrow">WHAT GUIDES THE WORK</p><h2>Good work should<br>feel straightforward.</h2></div><p>Our approach joins care for the business with care for the people who use what we build.</p></div><div class="page-card-grid three"><article class="page-card"><span class="card-index">01 / CLARITY</span><h3>Say what we mean.</h3><p>Agree on the problem, scope, price and next step in language everyone can understand.</p></article><article class="page-card"><span class="card-index">02 / CRAFT</span><h3>Make it useful.</h3><p>Build for readable content, accessible interactions, mobile screens and the work that happens after launch.</p></article><article class="page-card"><span class="card-index">03 / OWNERSHIP</span><h3>Hand it over well.</h3><p>Keep business accounts under your control and document the agreed assets and systems.</p></article></div></div></section>
 
-  <section class="section dark" id="community"><div class="wrap split-section"><div><p class="eyebrow">ROOTED HERE</p><h2>Better digital.<br><em>Stronger local.</em></h2><p class="section-lead">Central Pennsylvania is home.</p></div><div><p>The businesses and organizations around us employ neighbors, create places to gather and support everyday life. Their digital presence can make it easier for more people to find and take part in that work.</p><div class="town-list">Harrisburg · Camp Hill · Mechanicsburg · Enola · Carlisle · Hershey · Lancaster · York</div><a class="textlink light" href="{{ url_for('main.work') }}">Explore local work <span>↗</span></a></div></div></section>
+  <section class="section dark" id="community"><div class="wrap split-section"><div><p class="eyebrow">ROOTED HERE</p><h2>Better digital.<br><em>Stronger local.</em></h2><p class="section-lead">Central Pennsylvania is home.</p></div><div><p>The businesses and organizations around us employ neighbors, create places to gather and support everyday life. Their digital presence can make it easier for more people to find and take part in that work.</p><div class="town-list">Harrisburg · Camp Hill · Mechanicsburg · Enola · Carlisle · Hershey · Lancaster · York</div><div class="community-links"><a class="textlink light" href="{{ url_for('main.work') }}">Explore local work <span>↗</span></a><a class="textlink light" href="#business-resources">Find business support <span>↓</span></a></div></div></div></section>
+
+  <section class="section resource-finder-section" id="business-resources"><div class="wrap"><div class="resource-finder-heading"><div><p class="eyebrow">CENTRAL PA BUSINESS RESOURCE FINDER</p><h2>Find the right<br>local starting point.</h2></div><p>Choose your county and what you need. We’ll narrow a short, practical list of official state, Small Business Development Center and local economic-development resources.</p></div>
+    <div class="resource-finder" data-resource-finder>
+      <form class="resource-filters" aria-label="Filter Central Pennsylvania business resources">
+        <label for="resource-county">Where is your business?</label>
+        <select id="resource-county" name="county" required>
+          <option value="">Choose a county</option>
+          <option value="cumberland">Cumberland County</option>
+          <option value="dauphin">Dauphin County</option>
+          <option value="lancaster">Lancaster County</option>
+          <option value="lebanon">Lebanon County</option>
+          <option value="perry">Perry County</option>
+          <option value="york">York County</option>
+        </select>
+        <label for="resource-need">What do you need help with?</label>
+        <select id="resource-need" name="need">
+          <option value="all">Any current need</option>
+          <option value="start">Starting or registering</option>
+          <option value="advice">Planning or one-to-one advice</option>
+          <option value="funding">Funding or financing</option>
+          <option value="location">Location, expansion or local data</option>
+          <option value="permits">Licenses, permits or taxes</option>
+          <option value="training">Training or workshops</option>
+        </select>
+        <p class="resource-filter-note"><strong>No signup required.</strong> Your selections stay in this browser tab and are not stored or sent anywhere.</p>
+      </form>
+      <div class="resource-results" aria-live="polite" aria-atomic="false">
+        <div class="resource-empty" data-resource-empty>
+          <span aria-hidden="true">PA ↗</span>
+          <div><h3>Start with your county.</h3><p>Select a county to see a focused set of useful places—not a directory of paid listings.</p></div>
+        </div>
+        <div class="resource-results-head" data-results-head hidden><p data-result-count></p><button class="resource-reset" type="button" data-resource-reset>Clear filters</button></div>
+        <div class="resource-grid" data-resource-results></div>
+      </div>
+    </div>
+    <div class="resource-source-note"><p><strong>How these were chosen:</strong> only Commonwealth of Pennsylvania resources, Pennsylvania SBDC centers and established county or regional economic-development organizations are included.</p><p>Links and service descriptions reviewed October 14, 2026. Programs, eligibility and service areas can change, so confirm details with the provider. This finder is informational, not legal, tax or financial advice.</p></div>
+  </div></section>
 
   <section class="section white"><div class="wrap community-story"><div><p class="eyebrow">COMMUNITY IN ACTION</p><h2>Wish Upon<br>a Food Truck.</h2><p class="section-lead">Food, families, local businesses and a reason to come together.</p><p>We care about the organizations that make this region feel connected. Wish Upon a Food Truck is one example of community work featured across this site.</p><a class="button black" href="https://www.wishuponafoodtruck.com/" target="_blank" rel="noopener noreferrer">Explore the festival <span>↗</span></a></div><div class="community-story-art"><span>FOOD</span><span>FAMILIES</span><span>COMMUNITY</span><strong>GOOD THINGS<br>HAPPEN HERE. ↗</strong></div></div></section>
 
@@ -23,3 +61,4 @@
 </main>
 {% include 'partials/footer.html' %}
 {% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/business-resource-finder.js') }}" defer></script>{% endblock %}
