@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Privacy Policy | Authentic Dynamics{% endblock %}
+{% block description %}How Authentic Dynamics handles contact inquiries, website data, cookies and files used with our free tools.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main">
+  <section class="page-hero dark" id="top"><div class="wrap"><p class="eyebrow">SITE INFORMATION</p><h1>Privacy Policy.</h1><p class="intro">How information is handled when you visit our website, contact us or use our free tools.</p></div></section>
+  <div class="section white"><div class="wrap policy-copy">
+    <p class="policy-updated">Last updated September 28, 2026</p>
+    <p>Authentic Dynamics LLC (“we,” “us,” or “our”) operates this website. This policy describes the information involved in using the site. It does not replace any separate privacy terms agreed for a client project.</p>
+
+    <h2>Information you give us</h2>
+    <p>When you submit a contact form, we receive your name, email address, message, selected area of interest and, if supplied, your business or organization name. We store inquiries so we can review and respond to them. If you contact us by email or phone, we receive the information you choose to provide in that conversation.</p>
+
+    <h2>Website and device information</h2>
+    <p>Our website and hosting provider may process technical information needed to deliver and protect the site, such as an IP address, browser details, requested pages, timestamps and error information. The site uses a session cookie for functions such as form security and administrator sign-in. Some tools save information in your browser, including locally saved invoices and game scores. You can clear that information through the tool or your browser settings, where available.</p>
+
+    <h2>How the free tools handle your content</h2>
+    <p>Some tools work entirely in your browser. The invoice maker, QR code maker, browser games and browser processing modes use your device for their main work. The optional Local Browser AI tool downloads software and model resources from external providers when you choose to load it; your prompt is processed on your device.</p>
+    <p>PDF, CSV and JSON conversion tools send the files or text you submit to our server for processing. Server mode in the video converter uploads your video only after you choose that mode and agree to the upload notice. Converted files are returned to you; uploads and results are not saved to the site's database. Server video conversion uses temporary files that are removed when processing finishes or times out. Avoid submitting sensitive information unless you are comfortable with the processing described on the relevant tool page.</p>
+
+    <h2>How we use and share information</h2>
+    <p>We use information to respond to inquiries, provide the site and tools, maintain security, troubleshoot problems and conduct our business. Our hosting and other service providers may process information for those purposes. We may also disclose information when required by law or when reasonably needed to protect the site, our users or our rights. We do not use contact form submissions to power the free tools.</p>
+
+    <h2>Storage and security</h2>
+    <p>Contact inquiries remain in our administrative system for business follow-up and recordkeeping until they are no longer needed. Technical records may be kept by our hosting provider under its own practices. No website can guarantee absolute security, but we use access controls and other measures intended to protect information we hold.</p>
+
+    <h2>External sites and changes</h2>
+    <p>Links to other websites, including our Google Business Profile, lead to services with their own privacy practices. We may update this policy as the site or our practices change. The date above shows the latest revision.</p>
+
+    <h2>Questions or requests</h2>
+    <p>To ask about information you provided, request a correction or deletion, or raise a privacy question, email <a href="mailto:hello@authenticdynamics.com">hello@authenticdynamics.com</a> or call <a href="tel:+17177295751">(717) 729-5751</a>. Our mailing address is 4625 Laurel Valley Lane, Enola, PA 17025.</p>
+  </div></div>
+</main>
+{% include 'partials/footer.html' %}
+{% endblock %}

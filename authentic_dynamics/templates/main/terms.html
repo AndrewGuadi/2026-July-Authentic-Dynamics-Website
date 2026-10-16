@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}Website Terms | Authentic Dynamics{% endblock %}
+{% block description %}Terms for using the Authentic Dynamics website and its free browser and conversion tools.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main">
+  <section class="page-hero dark" id="top"><div class="wrap"><p class="eyebrow">SITE INFORMATION</p><h1>Website Terms.</h1><p class="intro">The basic terms for visiting this site and using its free tools.</p></div></section>
+  <div class="section white"><div class="wrap policy-copy">
+    <p class="policy-updated">Last updated September 28, 2026</p>
+    <p>These terms apply to the website operated by Authentic Dynamics LLC (“we,” “us,” or “our”). By using the site or its free tools, you agree to these terms. If you do not agree, please do not use the site or tools.</p>
+
+    <h2>Information and services</h2>
+    <p>Website content is general information about our business and free tools. It is not a binding proposal or a promise that a particular service or result is available. Any paid project, scope, price, ownership rights, schedule and support terms are established in a separate written agreement with the client. If that agreement conflicts with these website terms, the project agreement controls for that project.</p>
+
+    <h2>Free tools</h2>
+    <p>The free tools are provided for convenience. You are responsible for reviewing outputs before relying on, publishing or sharing them. In particular, verify calculations, converted files, generated text, QR destinations and invoice details. The tools do not provide legal, tax, accounting, financial or other professional advice. Use a qualified professional when you need that advice.</p>
+    <p>You must have the right to submit any file, text, image or other content you use with a tool. Do not use the site to violate the law, infringe another person's rights, introduce malicious content or interfere with the site's operation. Tool limits and availability may change, and a tool may be unavailable from time to time.</p>
+
+    <h2>Your content and site content</h2>
+    <p>You keep your rights to content you submit to a tool or contact form. Submitting content allows us to process it as needed to provide the requested tool or respond to your inquiry, as described in our <a href="{{ url_for('main.privacy_policy') }}">Privacy Policy</a>. The site's text, design, branding and original software are owned by Authentic Dynamics or their respective rights holders. You may use the site for ordinary personal or business browsing and use the free tools as offered, but may not present our content or branding as your own.</p>
+
+    <h2>Third-party sites and software</h2>
+    <p>The site links to third-party websites and uses some third-party software. Those parties have their own terms and practices. We are not responsible for their content or availability.</p>
+
+    <h2>No guarantee and limits</h2>
+    <p>We work to keep the site useful and secure, but provide the public site and free tools on an “as available” basis. We do not guarantee uninterrupted access, error-free operation or that an output will suit a particular purpose. To the extent permitted by applicable law, Authentic Dynamics is not responsible for losses resulting from use of, inability to use, or reliance on the public site or free tools. Nothing in these terms limits rights that cannot legally be limited.</p>
+
+    <h2>Changes and contact</h2>
+    <p>We may update these terms as the site changes. The date above shows the latest revision. Questions can be sent to <a href="mailto:hello@authenticdynamics.com">hello@authenticdynamics.com</a>, or you can call <a href="tel:+17177295751">(717) 729-5751</a>. Our mailing address is 4625 Laurel Valley Lane, Enola, PA 17025.</p>
+  </div></div>
+</main>
+{% include 'partials/footer.html' %}
+{% endblock %}

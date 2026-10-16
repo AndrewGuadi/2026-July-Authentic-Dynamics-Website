@@ -65,7 +65,7 @@ def private_response(response):
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     if g.admin_user:
-        return redirect(url_for("admin.inbox"), code=303)
+        return redirect('/hub' if request.args.get('next') == '/hub' else url_for("admin.inbox"), code=303)
     error = None
     status = 200
     if request.method == "POST":
@@ -97,7 +97,7 @@ def login():
         if user and password_valid and len(password) <= 1024:
             start_session(user)
             db.session.commit()
-            return redirect(url_for("admin.inbox"), code=303)
+            return redirect('/hub' if request.form.get('next') == '/hub' else url_for("admin.inbox"), code=303)
         db.session.add(AdminLoginAttempt(ip_key=ip_key, email_key=email_key, created_at=now))
         db.session.commit()
         error = "Email or password is incorrect."

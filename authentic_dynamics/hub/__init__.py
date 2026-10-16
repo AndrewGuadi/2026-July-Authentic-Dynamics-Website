@@ -1,0 +1,1 @@
+"""Internal Business Hub backend."""

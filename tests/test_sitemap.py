@@ -20,6 +20,8 @@ def test_sitemap_lists_only_public_pages_with_absolute_urls():
         "https://example.org/growth-technology",
         "https://example.org/work",
         "https://example.org/about-community",
+        "https://example.org/privacy-policy",
+        "https://example.org/terms",
         "https://example.org/tools/",
         "https://example.org/tools/pdf-to-image",
         "https://example.org/tools/csv-converter",

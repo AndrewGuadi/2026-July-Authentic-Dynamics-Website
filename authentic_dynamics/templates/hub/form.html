@@ -1,0 +1,10 @@
+{% extends 'hub/base.html' %}{% block hub_content %}
+<a class="hub-back" href="{{ url_for('hub.index', resource=resource) }}">← {{ hub_title(resource) }}</a>
+<div class="hub-heading"><div><p class="hub-eyebrow">{{ hub_title(resource) }}</p><h1>{{ 'Edit record' if record else 'Make the connection.' }}</h1><p>Required fields are marked with an asterisk.</p></div></div>
+<form class="hub-panel hub-form" method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+{% for field in fields %}<label>{{ field.label }}{% if field.required %} *{% endif %}
+{% if field.kind == 'select' %}<select name="{{ field.name }}" {% if field.required %}required{% endif %}><option value="">Select…</option>{% for value, text in field.options %}<option value="{{ value }}" {% if value|string == field.value|string %}selected{% endif %}>{{ text }}</option>{% endfor %}</select>
+{% elif field.kind == 'textarea' %}<textarea name="{{ field.name }}" rows="4" {% if field.required %}required{% endif %}>{{ field.value }}</textarea>
+{% else %}<input type="{{ field.kind }}" name="{{ field.name }}" value="{{ field.value }}" {% if field.required %}required{% endif %}{% if field.kind == 'number' %} step="{{ field.step }}"{% endif %}>{% endif %}{% if field.hint %}<small>{{ field.hint }}</small>{% endif %}</label>{% endfor %}
+<div class="hub-form-actions"><button class="hub-button">Save record</button><a href="{{ url_for('hub.index', resource=resource) }}">Cancel</a></div></form>
+{% endblock %}

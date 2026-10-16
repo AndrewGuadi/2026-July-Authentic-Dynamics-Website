@@ -23,6 +23,8 @@ def sitemap():
         "main.growth_technology",
         "main.work",
         "main.about_community",
+        "main.privacy_policy",
+        "main.terms",
         "tools.catalog",
         "tools.pdf",
         "tools.csv",
@@ -69,6 +71,16 @@ def about_community():
     return render_template(
         "main/about_community.html", active_page="about", contact_source="about"
     )
+
+
+@bp.get("/privacy-policy")
+def privacy_policy():
+    return render_template("main/privacy_policy.html")
+
+
+@bp.get("/terms")
+def terms():
+    return render_template("main/terms.html")
 
 
 INTERESTS = {
