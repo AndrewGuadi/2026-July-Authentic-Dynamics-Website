@@ -20,6 +20,19 @@ def llms():
     return current_app.send_static_file("llms.txt")
 
 
+@bp.get("/robots.txt")
+def robots():
+    """Direct cooperative crawlers to business pages and away from utilities."""
+    canonical_host = current_app.config["CANONICAL_HOST"]
+    sitemap_url = (
+        f"https://{canonical_host}{url_for('main.sitemap')}"
+        if canonical_host else url_for("main.sitemap", _external=True)
+    )
+    response = make_response(render_template("main/robots.txt", sitemap_url=sitemap_url))
+    response.mimetype = "text/plain"
+    return response
+
+
 @bp.get("/sitemap.xml")
 def sitemap():
     """List business and policy pages on the configured canonical host, when set."""

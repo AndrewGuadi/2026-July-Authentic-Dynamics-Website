@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /tools
+Disallow: /browser-xray
+Disallow: /games
+
+Sitemap: {{ sitemap_url }}
