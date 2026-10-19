@@ -3,7 +3,7 @@ from xml.etree import ElementTree
 from authentic_dynamics import create_app
 
 
-def test_sitemap_lists_only_public_pages_with_absolute_urls():
+def test_sitemap_lists_only_business_and_policy_pages_with_absolute_urls():
     app = create_app({"TESTING": True, "SQLALCHEMY_DATABASE_URI": "sqlite://"})
     response = app.test_client().get("/sitemap.xml", base_url="https://example.org")
 
@@ -22,11 +22,6 @@ def test_sitemap_lists_only_public_pages_with_absolute_urls():
         "https://example.org/about-community",
         "https://example.org/privacy-policy",
         "https://example.org/terms",
-        "https://example.org/tools/",
-        "https://example.org/tools/pdf-to-image",
-        "https://example.org/tools/csv-converter",
-        "https://example.org/tools/qr-code-maker",
-        "https://example.org/tools/video-converter",
     ]
 
 

@@ -22,7 +22,8 @@ def llms():
 
 @bp.get("/sitemap.xml")
 def sitemap():
-    """List the public pages on the configured canonical host, when set."""
+    """List business and policy pages on the configured canonical host, when set."""
+    # Keep tools, Browser X-Ray, and games out of sitemap discovery intentionally.
     endpoints = (
         "main.index",
         "main.websites",
@@ -31,11 +32,6 @@ def sitemap():
         "main.about_community",
         "main.privacy_policy",
         "main.terms",
-        "tools.catalog",
-        "tools.pdf",
-        "tools.csv",
-        "tools.qr_code_maker",
-        "tools.video_converter",
     )
     namespace = "http://www.sitemaps.org/schemas/sitemap/0.9"
     ElementTree.register_namespace("", namespace)

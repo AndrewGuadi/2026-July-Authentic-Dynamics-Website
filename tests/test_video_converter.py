@@ -17,7 +17,7 @@ def test_video_converter_is_public_get_only_and_restricts_network():
     assert 'Cross-Origin-Embedder-Policy' not in response.headers
     assert client.post('/tools/video-converter').status_code == 405
     assert '/tools/video-converter' in client.get('/tools').get_data(as_text=True)
-    assert '/tools/video-converter' in client.get('/sitemap.xml').get_data(as_text=True)
+    assert '/tools/video-converter' not in client.get('/sitemap.xml').get_data(as_text=True)
     assert 'Content-Security-Policy' not in client.get('/').headers
     asset = client.get('/static/tools/video-converter/ffmpeg/ffmpeg-core.wasm')
     assert asset.status_code == 200

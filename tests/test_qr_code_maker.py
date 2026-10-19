@@ -9,7 +9,7 @@ def test_qr_maker_is_public_browser_only_and_discoverable():
     assert b'<form' not in page.data
     assert client.post('/tools/qr-code-maker').status_code == 405
     assert b'href="/tools/qr-code-maker"' in client.get('/tools').data
-    assert b'/tools/qr-code-maker' in client.get('/sitemap.xml').data
+    assert b'/tools/qr-code-maker' not in client.get('/sitemap.xml').data
     for path in ('js/qr-code-maker.js', 'css/qr-code-maker.css',
                  'vendor/qr/qrcode-2.0.4.mjs'):
         assert client.get(f'/static/{path}').status_code == 200
