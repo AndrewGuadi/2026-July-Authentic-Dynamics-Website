@@ -14,6 +14,12 @@ def index():
     return render_template("main/index.html", contact_source="home")
 
 
+@bp.get("/llms.txt")
+def llms():
+    """Serve the published AI reference file at the site root."""
+    return current_app.send_static_file("llms.txt")
+
+
 @bp.get("/sitemap.xml")
 def sitemap():
     """List the public pages on the configured canonical host, when set."""
