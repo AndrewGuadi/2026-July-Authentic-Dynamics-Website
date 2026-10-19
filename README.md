@@ -17,12 +17,39 @@ database using this migration history. Do not run `flask db init`: the repositor
 already contains an initialized migration directory. Do not generate migrations
 on the server.
 
-For the server reset following the failed, independently generated migrations,
-replace the server's old migration directory with this repository's directory and
-start with an empty database. A failed SQLite upgrade can leave tables behind.
-The default database file is `instance/authentic_dynamics.db`; if a database URL is
-configured, use the database selected by that setting. Do not use `stamp head` to
-skip creating missing tables. Resetting a database deletes its existing data.
+### One-time PythonAnywhere reset after conflicting migrations
+
+Pulling does not remove untracked migrations previously generated on the server.
+Those extra files cause "Multiple head revisions" even after deleting the database.
+The reset below discards all data, uploads, and local configuration in `instance/`,
+plus local changes and extra files in `migrations/`. Use it only when intentionally
+starting over with the default SQLite database, as in this deployment reset.
+If a database URL is configured, deleting `instance/` does not reset that external
+database. Preserve any configuration you still need before deleting the folder.
+
+In the activated PythonAnywhere virtual environment, run these commands from the
+project root. Stop if any command fails:
+
+```bash
+cd ~/2026-July-Authentic-Dynamics-Website
+git pull --ff-only
+bash scripts/restore_migrations.sh
+rm -rf -- instance
+flask --app wsgi db heads
+flask --app wsgi db upgrade
+flask --app wsgi db check
+```
+
+`db heads` should show exactly one head (`hub_0004` for this release). The restore
+script replaces migration files with the checked-out commit's versions and removes
+extra migration files, including ignored files. It does not change the database.
+Flask automatically recreates `instance/`; do not run `mkdir instance`, `db init`,
+`db migrate`, or `db stamp head` during this reset. Reload the PythonAnywhere web app
+after the upgrade succeeds.
+
+If `git pull` reports local changes or untracked files specifically under
+`migrations/`, move that folder outside the checkout, restore the tracked copy with
+`git restore --source=HEAD --worktree -- migrations/`, then retry the pull and reset.
 
 During development, after changing models, generate and review a migration:
 
