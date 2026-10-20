@@ -1,5 +1,49 @@
 # Authentic Dynamics
 
+Flask and Jinja website, public business tools, and a private Business Hub.
+
+## Repository map
+
+| Location | Purpose |
+| --- | --- |
+| `authentic_dynamics/blueprints/main/` | Business pages, contact handling, robots and sitemap routes |
+| `authentic_dynamics/blueprints/tools/` | Public tools and conversion endpoints |
+| `authentic_dynamics/blueprints/admin/` | Contact inbox and administrator access |
+| `authentic_dynamics/blueprints/hub/` | Private Business Hub routes |
+| `authentic_dynamics/hub/`, `services/hub/` | Hub models, commands and services (both under `authentic_dynamics/`) |
+| `authentic_dynamics/templates/` | Jinja pages and shared partials |
+| `authentic_dynamics/static/` | CSS, JavaScript, images and vendored browser dependencies |
+| `migrations/` | Versioned database migration history |
+| `tests/` | Python checks and browser test scripts |
+
+## Local development
+
+Use Python 3.11 or newer. From the repository root on macOS or Linux:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[dev]'
+flask --app wsgi db upgrade
+flask --app wsgi run --debug
+```
+
+The development server is available at `http://127.0.0.1:5000`.
+Review `example.env` for supported settings; the application reads `AD_`
+environment variables and `instance/config.py`. Copying the example alone does
+not configure your shell. Keep local credentials and databases in ignored files.
+Use the deployment instructions below for production; the debug server is local only.
+
+## Change workflow
+
+Start each change from current `main` on a fresh dated branch, run checks relevant
+to the change, and open a pull request for Andrew's review. Review pending PRs
+before editing shared files. Merge and deployment are separate approval steps.
+Keep local planning material in `dev_docs/`, which is ignored. Preserve vendored
+licenses and database migrations when cleaning up the repository.
+
+The proposed visual update is documented in [UPDATE-PROPOSAL.md](UPDATE-PROPOSAL.md).
+
 ## Database migrations and deployment
 
 The `migrations/` directory is part of the repository. It contains the complete
@@ -74,6 +118,10 @@ and the `instance/` directory out of version control.
 ## Checks
 
 ```bash
-myenv/bin/python -m pytest -q
-myenv/bin/ruff check .
+python -m pytest -q
+ruff check .
 ```
+
+Run these commands with your development environment activated. Browser scripts
+under `tests/` describe their own runtime requirements; Python checks alone do not
+verify mobile layout or browser interactions.
