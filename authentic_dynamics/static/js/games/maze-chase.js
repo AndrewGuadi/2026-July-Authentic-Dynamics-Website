@@ -7,6 +7,8 @@ const arcade = document.getElementById('arcade');
 const tile = 30, storageKey = 'ad-maze-chase-best';
 let best = 0, storedBest = 0, storageAvailable = true, previousState, previousMessage, lastTime = 0;
 let touchStart = null;
+let animationFrame = 0;
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 try {
   const saved = Number(localStorage.getItem(storageKey));
   if (Number.isSafeInteger(saved) && saved >= 0) best = storedBest = saved;
@@ -44,7 +46,7 @@ function draw(time) {
   }
   const [x, y] = position(game.player);
   const angle = {right: 0, down: Math.PI / 2, left: Math.PI, up: -Math.PI / 2}[game.player.direction];
-  const mouth = game.state === 'playing' ? .16 + Math.abs(Math.sin(time / 95)) * .37 : .3;
+  const mouth = game.state === 'playing' && !reducedMotion.matches ? .16 + Math.abs(Math.sin(time / 95)) * .37 : .3;
   ctx.save(); ctx.translate(x, y); ctx.rotate(angle); ctx.fillStyle = '#b8ff63';
   ctx.beginPath(); ctx.moveTo(0, 0); ctx.arc(0, 0, 11.5, mouth, Math.PI * 2 - mouth); ctx.closePath(); ctx.fill(); ctx.restore();
   for (const ghost of game.ghosts) {
@@ -69,6 +71,8 @@ function updateUI() {
   for (const [id, value] of Object.entries({score: game.score, best, level: game.level, lives: game.lives})) {
     const text = value.toLocaleString(); if ($(id).textContent !== text) $(id).textContent = text;
   }
+  const turn = `Next turn: ${game.nextDirection}`;
+  if ($('direction').textContent !== turn) $('direction').textContent = turn;
   $('power').textContent = game.power > 0 ? `POWER · ${Math.ceil(game.power)}s` : `${game.dots.size} dots left`;
   if (previousMessage !== game.message) { $('status').textContent = game.message; previousMessage = game.message; }
   if (previousState === game.state) return;
@@ -85,10 +89,10 @@ function updateUI() {
   }
 }
 
-function start() { game.start(); lastTime = 0; updateUI(); canvas.focus({preventScroll: true}); }
-function pause() { if (game.state === 'paused') start(); else { game.pause(); updateUI(); } }
+function start() { game.start(); lastTime = 0; updateUI(); scheduleFrame(); canvas.focus({preventScroll: true}); }
+function pause() { if (game.state === 'paused') start(); else { autoPause(); } }
 function newGame() {
-  game.pause(); updateUI();
+  autoPause();
   if (game.score > 0 && !window.confirm('Start a new game? Your current run will end.')) return;
   game.reset(); previousState = null; updateUI(); draw(0);
 }
@@ -108,28 +112,32 @@ arcade.addEventListener('keydown', event => {
   // Buttons retain their normal Space/Enter behavior; game shortcuts require canvas focus.
   if (event.target !== canvas || event.altKey || event.ctrlKey || event.metaKey) return;
   const direction = keys[event.key] || keys[event.key.toLowerCase()];
-  if (direction) { event.preventDefault(); game.steer(direction); }
+  if (direction) { event.preventDefault(); game.steer(direction); updateUI(); }
   else if (event.key.toLowerCase() === 'p' || event.key === ' ') { event.preventDefault(); if (!event.repeat) pause(); }
   else if (event.key === 'Enter' && game.state !== 'playing') { event.preventDefault(); start(); }
 });
 document.querySelectorAll('[data-direction]').forEach(button => {
-  button.addEventListener('pointerdown', event => { event.preventDefault(); game.steer(button.dataset.direction); canvas.focus({preventScroll: true}); });
-  button.addEventListener('click', () => game.steer(button.dataset.direction));
+  button.addEventListener('pointerdown', event => { event.preventDefault(); game.steer(button.dataset.direction); updateUI(); canvas.focus({preventScroll: true}); });
+  button.addEventListener('click', () => { game.steer(button.dataset.direction); updateUI(); });
 });
 canvas.addEventListener('pointerdown', event => { touchStart = {x: event.clientX, y: event.clientY, id: event.pointerId}; canvas.setPointerCapture(event.pointerId); });
 canvas.addEventListener('pointerup', event => {
   if (!touchStart || touchStart.id !== event.pointerId) return;
   const dx = event.clientX - touchStart.x, dy = event.clientY - touchStart.y;
   if (Math.max(Math.abs(dx), Math.abs(dy)) >= 12) game.steer(Math.abs(dx) > Math.abs(dy) ? dx > 0 ? 'right' : 'left' : dy > 0 ? 'down' : 'up');
-  touchStart = null;
+  touchStart = null; updateUI();
 });
 canvas.addEventListener('pointercancel', () => { touchStart = null; });
-function autoPause() { game.pause(); updateUI(); saveBest(); lastTime = 0; }
+function autoPause() { game.pause(); cancelAnimationFrame(animationFrame); animationFrame = 0; updateUI(); draw(0); saveBest(); lastTime = 0; }
 document.addEventListener('visibilitychange', () => { if (document.hidden) autoPause(); });
 window.addEventListener('blur', autoPause);
 window.addEventListener('pagehide', autoPause);
+function scheduleFrame() { if (!animationFrame && game.state === 'playing' && !document.hidden) animationFrame = requestAnimationFrame(frame); }
 function frame(time) {
+  animationFrame = 0;
+  if (game.state !== 'playing' || document.hidden) return;
   game.tick(lastTime ? Math.min((time - lastTime) / 1000, .05) : 0);
-  lastTime = time; draw(game.state === 'playing' ? time : 0); updateUI(); requestAnimationFrame(frame);
+  lastTime = time; draw(game.state === 'playing' ? time : 0); updateUI(); scheduleFrame();
 }
-updateUI(); draw(0); requestAnimationFrame(frame);
+updateUI(); draw(0);
+reducedMotion.addEventListener('change', () => { if (game.state !== 'playing') draw(0); });

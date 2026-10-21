@@ -3,7 +3,7 @@ const fs = require('node:fs/promises');
 const { chromium } = require('playwright');
 
 (async () => {
-  const browser = await chromium.launch({ headless: true });
+  const browser = await chromium.launch({ headless: true, ...(process.env.CHROMIUM_PATH ? {executablePath: process.env.CHROMIUM_PATH} : {}) });
   try {
     const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
     const errors = [], requests = [];
@@ -39,6 +39,7 @@ const { chromium } = require('playwright');
     const svg = (await saveDownload('svg')).toString();
     assert.ok(svg.startsWith('<svg'));
     assert.ok(!/script|href|https?:\/\/(?!www.w3.org)/.test(svg));
+    await page.getByText('Advanced code settings', {exact: true}).click();
     for (const size of ['512', '1024', '2048']) {
       await page.locator('#qr-size').selectOption(size);
       const png = await saveDownload('png');

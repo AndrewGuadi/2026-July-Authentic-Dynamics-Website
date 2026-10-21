@@ -31,6 +31,9 @@ function status(key, state, explanation = '') {
     element.dataset.state = state;
     element.textContent = `${state}${explanation ? ` — ${explanation}` : ''}`;
   }
+  const active = keys.filter(name => states[name] === 'Active');
+  const requesting = keys.filter(name => states[name] === 'Requesting');
+  $('#xr-sensitive-summary').textContent = `Sensitive access: ${active.length ? active.join(', ') + ' active.' : 'none active.'}${requesting.length ? ' Waiting for: ' + requesting.join(', ') + '.' : ''}`;
   $('#xr-count').textContent = `Experiments active: ${Object.values(states).filter(value => value === 'Active').length} / 7`;
 }
 
@@ -425,3 +428,12 @@ document.addEventListener('visibilitychange', () => {
 });
 window.addEventListener('pagehide', reset);
 for (const id of ['#xr-scan', '#xr-reset', '#xr-reset-bottom']) $(id).disabled = false;
+
+// Keep the live access summary below the responsive sticky site header.
+const siteHeader = document.querySelector('header');
+if (siteHeader) {
+  const sizeHeader = () => document.documentElement.style.setProperty('--utility-header-offset', `${siteHeader.getBoundingClientRect().height}px`);
+  sizeHeader();
+  if ('ResizeObserver' in window) new ResizeObserver(sizeHeader).observe(siteHeader);
+  else window.addEventListener('resize', sizeHeader);
+}

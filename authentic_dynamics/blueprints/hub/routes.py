@@ -1,7 +1,9 @@
 """Thin, session-authenticated Hub views; mutations delegate to domain services."""
 
 import re
-from datetime import timedelta
+from datetime import UTC, datetime, timedelta
+from decimal import Decimal, InvalidOperation
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from flask import (
     abort,
@@ -30,6 +32,60 @@ NAV = [('businesses', 'Businesses'), ('people', 'People'), ('opportunities', 'Sa
        ('projects', 'Projects'), ('tasks', 'Tasks'), ('documents', 'Documents'),
        ('contracts', 'Contracts'), ('invoices', 'Invoices'), ('payments', 'Payments'),
        ('expenses', 'Expenses'), ('digital_assets', 'Digital assets'), ('activities', 'Activity')]
+
+
+FILTER_KEYS = ('business_id', 'project_id', 'document_id', 'invoice_id', 'task_id',
+               'asset_id', 'contract_id', 'pipeline_id', 'status', 'q', 'page')
+
+
+def list_context():
+    """Carry only known list filters, never arbitrary redirect URLs."""
+    return {key: request.args[key][:150] for key in FILTER_KEYS if request.args.get(key)}
+
+
+def context_url(endpoint, **values):
+    return url_for(endpoint, **(list_context() | values))
+
+
+def workspace_zone():
+    try:
+        return ZoneInfo(g.workspace.timezone)
+    except (ZoneInfoNotFoundError, ValueError):
+        return ZoneInfo('UTC')
+
+
+def record_summary(record):
+    parts = []
+    if getattr(record, 'business_id', None):
+        business = db.session.get(m.Business, record.business_id)
+        if business and business.workspace_id == g.workspace.id:
+            parts.append(business.name)
+    if isinstance(record, m.Task):
+        if record.due_at:
+            parts.append('Due ' + record.due_at.astimezone(workspace_zone()).strftime('%b %d, %H:%M'))
+        if record.assignee_id:
+            assignee = db.session.get(m.User, record.assignee_id)
+            if assignee:
+                parts.append(assignee.display_name)
+    elif isinstance(record, m.Opportunity):
+        parts.append(f'{record.currency} {Decimal(record.estimated_value_minor) / 100:,.2f}')
+    elif isinstance(record, m.Invoice):
+        parts.append(f'{record.currency} {Decimal(core.outstanding(record)) / 100:,.2f} outstanding')
+    return ' · '.join(parts)
+
+
+def history_actor(event):
+    actor = db.session.get(m.User, event.actor_id) if event.actor_id else None
+    return actor.display_name if actor else 'System'
+
+
+def transition_label(key, value):
+    model = {'stage_id': m.PipelineStage, 'section_id': m.ProjectSection}.get(key)
+    if model and value not in (None, '', 'None'):
+        item = db.session.get(model, value)
+        if item and item.workspace_id == g.workspace.id:
+            return item.name
+    return str(value or 'Not set').replace('_', ' ')
 
 
 def title(resource):
@@ -83,7 +139,9 @@ def private(response):
 @bp.context_processor
 def context():
     return {'hub_nav': NAV, 'hub_label': label, 'hub_title': title, 'hub_models': m.MODELS,
-            'finance_resources': core.FINANCE}
+            'finance_resources': core.FINANCE, 'hub_context_url': context_url,
+            'hub_list_context': list_context, 'hub_summary': record_summary,
+            'hub_actor': history_actor, 'hub_transition_label': transition_label}
 
 
 @bp.errorhandler(ValueError)
@@ -143,7 +201,9 @@ def dashboard():
         .order_by(m.Opportunity.created_at.desc()).limit(10)).all()
     counts = {name: db.session.scalar(db.select(db.func.count()).select_from(model).where(
         model.workspace_id == scope)) for name, model in (
-            ('Businesses', m.Business), ('People', m.Person), ('Projects', m.Project), ('Tasks', m.Task))}
+            ('Businesses', m.Business), ('People', m.Person), ('Projects', m.Project))}
+    counts['Open tasks'] = db.session.scalar(db.select(db.func.count()).select_from(m.Task).where(
+        m.Task.workspace_id == scope, m.Task.status.notin_(['done', 'canceled'])))
     invoices = []
     if g.membership.role in {'owner', 'admin'}:
         invoices = [item for item in db.session.scalars(db.select(m.Invoice).where(
@@ -155,7 +215,7 @@ def dashboard():
                            activities=activities, counts=counts, invoices=invoices, backup=backup,
                            backup_current=bool(backup and backup.status == 'protected' and
                                backup.offsite_verified_at and backup.offsite_verified_at > m.now() - timedelta(hours=24)),
-                           outstanding=core.outstanding)
+                           outstanding=core.outstanding, now=m.now(), timezone=str(workspace_zone()))
 
 
 @bp.get('/search')
@@ -179,7 +239,7 @@ def settings():
     return render_template('hub/settings.html', groups=groups)
 
 
-def form_fields(resource, record=None):
+def form_fields(resource, record=None, posted=None, errors=None):
     result = []
     for column in core.fields_for(resource):
         name = column.name
@@ -242,15 +302,35 @@ def form_fields(resource, record=None):
                     kind = 'number'
                 elif isinstance(column.type, db.Text):
                     kind = 'textarea'
-        if isinstance(column.type, m.UTCDateTime) and value:
-            value = value.isoformat() if hasattr(value, 'isoformat') else value
-        result.append({'name': name, 'label': name.removesuffix('_id').replace('_', ' ').title(),
+        field_label = name.removesuffix('_id').removesuffix('_minor').replace('_', ' ').title()
+        step = '0.0001' if isinstance(column.type, Numeric) else '1'
+        hint = ''
+        if name.endswith('_minor'):
+            kind, step = 'number', '0.01'
+            if value != '':
+                # URL prefills are untrusted and still use the domain's minor units.
+                # Ignore invalid suggestions rather than failing before the form loads.
+                try:
+                    if not re.fullmatch(r'\d{1,13}', str(value)):
+                        raise ValueError('Invalid money prefill')
+                    minor = Decimal(str(value))
+                    if minor > 9_000_000_000_000:
+                        raise ValueError('Money prefill is too large')
+                    value = f'{minor / 100:.2f}'
+                except (InvalidOperation, ValueError):
+                    value = ''
+            hint = 'Amount in the record currency, for example 500.00. No currency symbol.'
+        elif isinstance(column.type, m.UTCDateTime):
+            kind, step = 'datetime-local', 'any'
+            hint = f'Local date and time in {workspace_zone()}. Saved with its timezone.'
+            if value and hasattr(value, 'astimezone'):
+                value = value.astimezone(workspace_zone()).replace(tzinfo=None).isoformat()
+        if posted is not None and name in posted:
+            value = posted[name]
+        result.append({'name': name, 'label': field_label,
                        'kind': kind, 'value': value, 'options': options,
                        'required': not column.nullable and column.default is None,
-                       'step': '0.0001' if isinstance(column.type, Numeric) else '1',
-                       'hint': 'Enter cents (50000 = $500.00).' if name.endswith('_minor') else (
-                           'Use ISO time with offset, e.g. 2026-10-10T14:00:00-04:00.'
-                           if isinstance(column.type, m.UTCDateTime) else '')})
+                       'step': step, 'hint': hint, 'error': (errors or {}).get(name, '')})
     return result
 
 
@@ -271,16 +351,59 @@ def edit(resource, record_id=None):
         storage.may_read(record, g.workspace.id, g.hub_user.id)
     fields = form_fields(resource, record)
     if request.method == 'POST':
-        values = {key: value for key, value in request.form.items() if key != 'csrf_token'}
-        # Blank optional/default fields on creation defer to defaults or NULL.
+        posted = {key: value for key, value in request.form.items()
+                  if key not in {'csrf_token', '_hub_units'}}
+        values, errors = dict(posted), {}
+        columns = {column.name: column for column in core.fields_for(resource)}
+        for name, value in posted.items():
+            if name not in columns:
+                continue  # The domain layer rejects unrecognized fields.
+            column = columns[name]
+            try:
+                if value and request.form.get('_hub_units') == 'major':
+                    if name.endswith('_minor'):
+                        if not re.fullmatch(r'-?\d+(?:\.\d{1,2})?', value.strip()):
+                            raise ValueError('Enter an amount with at most two decimal places.')
+                        amount = Decimal(value.strip()) * 100
+                        if abs(amount) > 9_000_000_000_000:
+                            raise ValueError('Amount is too large.')
+                        values[name] = str(int(amount))
+                    elif isinstance(column.type, m.UTCDateTime):
+                        local = datetime.fromisoformat(value)
+                        if local.tzinfo is not None:
+                            raise ValueError('Use the local date and time shown on this form.')
+                        zone = workspace_zone()
+                        aware = local.replace(tzinfo=zone)
+                        current = getattr(record, name, None) if record else None
+                        if current and current.astimezone(zone).replace(tzinfo=None) == local:
+                            aware = current  # Preserve an existing repeated-hour choice.
+                        elif aware.astimezone(UTC).astimezone(zone).replace(tzinfo=None) != local:
+                            raise ValueError('This time does not exist because the clocks change. Choose another time.')
+                        elif aware.utcoffset() != local.replace(tzinfo=zone, fold=1).utcoffset():
+                            raise ValueError('This time occurs twice when the clocks change. Choose a time outside that repeated hour.')
+                        values[name] = aware.isoformat()
+                if values[name] != '' or (not column.nullable and not column.default):
+                    core.convert(column, values[name])
+            except (ValueError, InvalidOperation, OverflowError) as error:
+                errors[name] = str(error) if not isinstance(error, InvalidOperation) else 'Enter a valid amount.'
         if not record:
             values = {key: value for key, value in values.items() if value != ''}
-        with core.write_lock():
-            record = core.save(resource, values, g.workspace.id, g.hub_user.id, record_id)
-            db.session.commit()
-        flash('Changes saved.')
-        return redirect(url_for('hub.detail', resource=resource, record_id=record.id), code=303)
+        message = None
+        if not errors:
+            try:
+                with core.write_lock():
+                    saved = core.save(resource, values, g.workspace.id, g.hub_user.id, record_id)
+                    db.session.commit()
+                flash('Changes saved.')
+                return redirect(context_url('hub.detail', resource=resource, record_id=saved.id), code=303)
+            except (ValueError, IntegrityError) as error:
+                db.session.rollback()
+                message = str(error) if isinstance(error, ValueError) else 'That change conflicts with an existing record or required relationship. Review your values and try again.'
+        fields = form_fields(resource, record, posted=posted, errors=errors)
+        return render_template('hub/form.html', resource=resource, record=record, fields=fields,
+                               errors=errors, form_error=message), 400
     return render_template('hub/form.html', resource=resource, record=record, fields=fields)
+
 
 
 @bp.get('/<resource>/<record_id>')
@@ -317,7 +440,13 @@ def detail(resource, record_id):
                 linked = core.get_record(kind, value, g.workspace.id)
                 value, link = label(linked), url_for('hub.detail', resource=kind, record_id=linked.id)
         if value is not None:
-            values.append((col.name.replace('_', ' ').title(), value, link))
+            display_name = col.name.replace('_', ' ').title()
+            if col.name.endswith('_minor'):
+                display_name = col.name.removesuffix('_minor').replace('_', ' ').title()
+                value = f'{getattr(record, "currency", "")} {Decimal(value) / 100:,.2f}'.strip()
+            elif isinstance(col.type, m.UTCDateTime):
+                value = value.astimezone(workspace_zone()).strftime('%b %d, %Y · %H:%M %Z')
+            values.append((display_name, value, link))
     return render_template('hub/detail.html', resource=resource, record=record, values=values,
                            related=related, reference=reference, versions=versions, history=history,
                            editable=resource not in core.IMMUTABLE, outstanding=core.outstanding)

@@ -11,13 +11,26 @@
   <section class="section white"><div class="wrap converter-layout">
     <form class="converter-form" method="post" enctype="multipart/form-data" action="{{ url_for('tools.pdf' if is_pdf else 'tools.csv') }}" data-converter>
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <p class="eyebrow">LET’S CONVERT YOUR FILE</p><h2>{{ 'Choose your PDF.' if is_pdf else 'Choose your CSV.' }}</h2>
+      <ol class="workspace-steps" aria-label="Conversion steps"><li>Choose input</li><li>{{ 'Choose finish' if is_pdf else 'Inspect data' }}</li><li>Export</li></ol><p class="eyebrow">LET’S CONVERT YOUR FILE</p><h2>{{ 'Choose your PDF.' if is_pdf else 'Choose your CSV.' }}</h2>
       <label class="upload-field" for="tool-file"><strong>01 / Choose a file</strong><span>{{ 'PDF document' if is_pdf else 'UTF-8 CSV file' }} · up to 10 MiB</span><input id="tool-file" name="file" type="file" accept="{{ '.pdf,application/pdf' if is_pdf else '.csv,text/csv' }}" required aria-describedby="file-note"></label>
       <p id="file-note" class="tool-note">Files are uploaded to our server to convert. Uploads and results are not saved to the site’s database.</p>
       <div class="tool-options"><label for="output-format">02 / Output format<select id="output-format" name="format">{% for value, label in ([('png', 'PNG — lossless image'), ('webp', 'WebP — compact image'), ('jpeg', 'JPEG — widely compatible')] if is_pdf else [('xlsx', 'Excel workbook (.xlsx)'), ('json', 'JSON (.json)'), ('xml', 'XML (.xml)'), ('tsv', 'Tab-separated values (.tsv)')]) %}<option value="{{ value }}" {% if values.get('format') == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
       {% if is_pdf %}<label for="dpi">03 / Resolution<select id="dpi" name="dpi">{% for dpi, label in [('72', '72 DPI — screen / smaller files'), ('150', '150 DPI — balanced'), ('300', '300 DPI — high detail')] %}<option value="{{ dpi }}" {% if values.get('dpi', '150') == dpi %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
       {% else %}<label for="delimiter">03 / CSV delimiter<select id="delimiter" name="delimiter">{% for value, label in [(',', 'Comma (,)'), (';', 'Semicolon (;)'), ('\t', 'Tab'), ('|', 'Pipe (|)')] %}<option value="{{ value }}" {% if values.get('delimiter', ',') == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>{% endif %}</div>
       {% if not is_pdf %}<label class="tool-checkbox"><input type="checkbox" name="headers" {% if not values or values.get('headers') == 'on' %}checked{% endif %}> First row contains column headers</label>{% endif %}
+      {% if not is_pdf %}
+      <div class="workspace-actions" data-csv-actions hidden>
+        <button type="button" class="button tool-secondary" data-csv-sample>Use an inventory sample</button>
+        <button type="submit" name="action" value="preview" class="button tool-secondary">Preview rows</button>
+      </div>
+      <p class="tool-note" data-csv-note hidden>Preview uploads this file to Authentic Dynamics using the same parser as export. Changing the file or settings clears the preview; click Preview rows to refresh it.</p>
+      <section class="csv-preview" data-csv-preview aria-labelledby="csv-preview-title" hidden></section>
+      {% else %}
+      <div class="workspace-actions" data-pdf-presets hidden role="group" aria-label="PDF output presets">
+        <button type="button" class="button tool-secondary" data-pdf-preset="web">For a website · WebP / 72 DPI</button>
+        <button type="button" class="button tool-secondary" data-pdf-preset="detail">For detail · PNG / 300 DPI</button>
+      </div><p class="tool-note">Your selected format and resolution above determine the download. You can adjust either after choosing a preset.</p>
+      {% endif %}
       <p class="tool-status{% if error %} is-error{% endif %}" role="status" aria-live="polite" tabindex="-1">{{ error or '' }}</p>
       <button class="button black" type="submit">Convert & download <span>↓</span></button>
       <a class="tool-download" hidden>Download converted file again ↓</a>

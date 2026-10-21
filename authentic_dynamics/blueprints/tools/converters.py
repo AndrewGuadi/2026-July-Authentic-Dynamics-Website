@@ -170,7 +170,7 @@ def convert_pdf(data, output_format, dpi):
             return output.getvalue(), "zip" if archive else output_format
 
 
-def convert_csv(data, output_format, delimiter, has_headers):
+def convert_csv(data, output_format, delimiter, has_headers, preview=False):
     if output_format not in {"xlsx", "json", "xml", "tsv"}:
         raise ConversionError("Choose a supported output format.")
     if delimiter not in {",", ";", "\t", "|"}:
@@ -205,6 +205,18 @@ def convert_csv(data, output_format, delimiter, has_headers):
     records = rows[1:] if has_headers else rows
     if any(not header.strip() for header in headers) or len(set(headers)) != len(headers):
         raise ConversionError("Column headers must be nonempty and unique, or turn off the header-row option.")
+    if preview:
+        # Validate the entire input with the export parser, but send only a bounded
+        # excerpt. Truncation is presentation-only; exports preserve full cell text.
+        def excerpt(value):
+            return value[:300] + "…" if len(value) > 300 else value
+
+        return {"columns": [excerpt(value) for value in headers],
+                "rows": [[excerpt(value) for value in row] for row in records[:8]],
+                "row_count": len(records), "column_count": len(headers),
+                "truncated": len(records) > 8,
+                "cells_shortened": any(len(value) > 300 for row in [headers, *records[:8]]
+                                       for value in row)}
     if output_format == "json":
         return json.dumps([dict(zip(headers, row)) for row in records], ensure_ascii=False, indent=2).encode()
     if output_format == "xml":
