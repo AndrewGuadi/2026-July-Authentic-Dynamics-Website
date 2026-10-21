@@ -213,3 +213,15 @@ def converter(kind):
                 return {"error": error}, 400
     return render_template("tools/converter.html", kind=kind, error=error,
                            values=request.form, active_page="tools"), 400 if error else 200
+
+
+@bp.get("/ai-lab/<slug>")
+def ai_lab(slug):
+    """One restricted, browser-only lab for each published AI guide."""
+    from flask import abort
+    from authentic_dynamics.blog import get_blog_post
+
+    post = get_blog_post(slug)
+    if post is None:
+        abort(404)
+    return render_template("tools/ai_lab.html", post=post, active_page="tools")

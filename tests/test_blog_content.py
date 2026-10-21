@@ -32,6 +32,8 @@ class Page(HTMLParser):
 def url_for(endpoint, **values):
     if endpoint == "static":
         return "/static/" + values["filename"]
+    if endpoint == "tools.ai_lab":
+        return "/tools/ai-lab/" + values["slug"]
     if endpoint == "main.blog_post":
         return "/blog/" + values["slug"]
     return {
@@ -90,7 +92,8 @@ def test_article_template_metadata_and_navigation(post):
     assert page.find("meta", name="description")[0]["content"] == post["description"]
     assert page.find("meta", property="og:type")[0]["content"] == "article"
     assert len(page.find("a", href="/blog", **{"aria-current": "page"})) == 1
-    assert "Planned — not deployed" in html
+    assert "Browser tool live" in html
+    assert f'data-tool="{post["slug"]}"' in html
     assert "noindex" not in html
     assert "Editorial preview only" not in html
     assert "../posts/" not in html and "READ_ALL_TEN_POSTS" not in html

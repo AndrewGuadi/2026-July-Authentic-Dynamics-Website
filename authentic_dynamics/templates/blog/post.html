@@ -13,6 +13,7 @@
 <meta name="twitter:title" content="{{ post.title }}">
 <meta name="twitter:description" content="{{ post.description }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ai-lab.css') }}">
 <script type="application/ld+json">{{ structured_data|tojson }}</script>
 {% endblock %}
 {% block content %}
@@ -34,9 +35,10 @@
         <div class="blog-contents"><p class="eyebrow">IN THIS GUIDE</p><ol>{% for item in post.toc %}<li><a href="#{{ item.id }}">{{ item.title }}</a></li>{% endfor %}</ol></div>
       </aside>
       <div class="blog-body">
-        <div class="blog-status"><strong>{{ post.demo }}</strong><span>{{ post.demo_status }}</span><p>{{ post.release_gate }}. The article explains the proposed experience; it does not connect to an AI service.</p></div>
+        <div class="blog-status"><strong>{{ post.demo }}</strong><span>{{ post.demo_status }}</span><p>{{ post.release_gate }} This is a usable browser workflow, not a benchmark of the featured Hugging Face model.</p><a class="textlink" href="#try-it">Try the free tool ↗</a></div>
         {# Trusted HTML comes only from reviewed, version-controlled content files. #}
         <div class="blog-prose">{{ post.body_html|safe }}</div>
+        <section class="ai-lab-section" id="try-it" aria-label="Interactive {{ post.demo }}"><p class="eyebrow">FREE INTERACTIVE TOOL</p><h2>Try {{ post.demo }}</h2><p class="ai-lab-caveat">This browser-based workflow is available now. It is not running {{ post.model }}. {{ post.release_gate }}</p><div class="ai-lab" data-tool="{{ post.slug }}"><p>Loading the tool…</p></div><noscript><p>Enable JavaScript to use this tool.</p></noscript><p><a class="textlink" href="{{ url_for('tools.ai_lab', slug=post.slug) }}">Open tool on its own page ↗</a></p></section>
         <div class="blog-editorial"><p>Source review recorded in the editorial draft: <time datetime="{{ post.reviewed }}">{{ post.reviewed }}</time>. Model capabilities, availability and license terms can change. Follow the linked primary sources before deployment.</p><p>Local examples illustrate possible uses, not measured client results or Google search-volume estimates.</p></div>
         <a class="textlink" href="{{ url_for('main.blog') }}">Back to all AI guides <span aria-hidden="true">↗</span></a>
       </div>
@@ -46,3 +48,5 @@
 </main>
 {% include 'partials/footer.html' %}
 {% endblock %}
+
+{% block scripts %}<script src="{{ url_for('static', filename='js/ai-lab.js') }}" defer></script>{% endblock %}

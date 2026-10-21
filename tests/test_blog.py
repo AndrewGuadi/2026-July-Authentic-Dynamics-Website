@@ -34,7 +34,9 @@ def test_each_article_has_content_canonical_and_schema(client, post):
     assert response.status_code == 200
     html = response.get_data(as_text=True)
     assert post["body_html"] in html
-    assert "Planned — not deployed" in html
+    assert "Browser tool live" in html
+    assert f'data-tool="{post["slug"]}"' in html
+    assert f'href="/tools/ai-lab/{post["slug"]}"' in html
     assert "noindex" not in html
     assert html.count('<link rel="canonical"') == 1
     schema = json.loads(re.search(
