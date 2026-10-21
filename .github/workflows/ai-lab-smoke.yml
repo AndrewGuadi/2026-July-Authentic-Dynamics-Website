@@ -1,0 +1,42 @@
+name: AI Lab smoke tests
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'authentic_dynamics/blog.py'
+      - 'authentic_dynamics/blueprints/main/routes.py'
+      - 'authentic_dynamics/blueprints/tools/routes.py'
+      - 'authentic_dynamics/content/blog/**'
+      - 'authentic_dynamics/templates/blog/**'
+      - 'authentic_dynamics/templates/tools/ai_lab.html'
+      - 'authentic_dynamics/static/js/ai-lab.js'
+      - 'tests/test_ai_lab.py'
+      - 'tests/test_blog*.py'
+      - '.github/workflows/ai-lab-smoke.yml'
+  pull_request:
+    paths:
+      - 'authentic_dynamics/blueprints/tools/routes.py'
+      - 'authentic_dynamics/content/blog/**'
+      - 'authentic_dynamics/templates/blog/**'
+      - 'authentic_dynamics/templates/tools/ai_lab.html'
+      - 'authentic_dynamics/static/js/ai-lab.js'
+      - 'tests/test_ai_lab.py'
+      - 'tests/test_blog*.py'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install project and test tooling
+        run: python -m pip install -e '.[dev]'
+      - name: Check browser JavaScript parsing
+        run: node --check authentic_dynamics/static/js/ai-lab.js
+      - name: Run blog and interactive lab route tests
+        run: python -m pytest -q tests/test_ai_lab.py tests/test_blog.py tests/test_blog_content.py tests/test_sitemap.py

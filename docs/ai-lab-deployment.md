@@ -1,7 +1,7 @@
 # Authentic Dynamics — free AI Labs
 
 ## What is now implemented
-Each of the ten published research articles includes a working browser tool, and each tool has a dedicated route at \`/tools/ai-lab/<article-slug>\`.
+Each of the ten published research articles includes a working browser tool, and each tool has a dedicated route at `/tools/ai-lab/<article-slug>`.
 The Blog and Free Tools catalogs link to these routes. These interactive utilities require no sign-in and make no paid model API calls.
 
 | Article category | Working browser feature | Model not yet integrated |
@@ -23,11 +23,11 @@ The research models are NOT running in these public browser tools. The browser i
 ## Deployment
 Pull the change and reload the PythonAnywhere app after tests. No new Python dependencies or database migration are required.
 
-\`\`\`bash
+```bash
 git pull --ff-only origin main
 python -m pytest -q tests/test_ai_lab.py tests/test_blog.py tests/test_blog_content.py tests/test_sitemap.py
 python -m ruff check authentic_dynamics/blueprints/tools/routes.py
-\`\`\`
+```
 
 Validate on desktop and mobile: navigation, all ten blog links, empty/invalid form handling, output/downloads, and browser feature failure states. Video creation needs MediaRecorder and canvas capture; voice playback depends on device support. Recorded content, photos, and documents are not uploaded by these tools. On the independent voice dictation feature, the browser vendor may process microphone audio.
 
