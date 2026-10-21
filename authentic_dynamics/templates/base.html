@@ -9,6 +9,7 @@
   {% if config.CANONICAL_HOST %}<link rel="canonical" href="https://{{ config.CANONICAL_HOST }}{{ request.path }}">{% endif %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/site.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/blog-navigation.css') }}">
   <script src="{{ url_for('static', filename='js/site.js') }}" defer></script>
   {% block head %}{% endblock %}
 </head>

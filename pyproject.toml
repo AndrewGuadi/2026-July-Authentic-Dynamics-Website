@@ -27,7 +27,7 @@ dev = ["pytest>=8,<10", "ruff>=0.11,<1"]
 include = ["authentic_dynamics*"]
 
 [tool.setuptools.package-data]
-authentic_dynamics = ["templates/**/*.html", "templates/**/*.txt", "static/**/*"]
+authentic_dynamics = ["templates/**/*.html", "templates/**/*.txt", "static/**/*", "content/blog/*.json", "content/blog/*.html"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

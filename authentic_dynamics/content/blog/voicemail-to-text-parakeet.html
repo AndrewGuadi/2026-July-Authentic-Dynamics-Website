@@ -1,0 +1,26 @@
+<p>You are finishing a job. Your phone has three voicemails. One might be a supplier, one might be a customer changing an appointment, and one might be the next job.</p>
+<p>A readable transcript could make those messages easier to review. It should not require handing an AI system unrestricted control of your phone—or trusting it to promise a price while you are unavailable.</p>
+<p>For a Central Pennsylvania service business, that is a useful boundary: make the message easier to act on first. Consider additional automation only after that works.</p>
+<h2 id="section-1">Meet Parakeet</h2>
+<p>NVIDIA’s Parakeet TDT 0.6B v3 is a speech-recognition model: it turns recorded speech into text. Its model card lists automatic punctuation, timestamps, and support for 25 European languages, including English and Spanish. It is released under CC BY 4.0. Transcription is its function; customer-service decisions are not. <a href="https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3">1</a></p>
+<p>The distinction helps prevent an expensive misunderstanding. A speech model does not automatically know whether you serve a particular address, whether a technician is available, or what work a customer is describing with enough certainty to quote it.</p>
+<h2 id="section-2">A voicemail demo that starts with a recording</h2>
+<p><strong>Proposed interactive feature: Voicemail-to-Text. The feature is planned; no telephone account is connected by this article.</strong></p>
+<p>The first screen would offer a short, fictional voicemail. Visitors could listen, run a transcription, and compare the words with the recording. An optional upload would accept only audio they are authorized to process.</p>
+<p>The result would show the transcript with replay controls. A second, separately identified step could suggest fields such as the requested service and callback number. Suggested fields would remain editable. The speech model itself should not be credited with extraction or summarization supplied by another component.</p>
+<p>A final “copy follow-up draft” action could prepare a response for the owner to review. It would not send a text message, confirm an appointment, or contact the caller automatically.</p>
+<p>That would make the demonstration useful without pretending that a public web page has permission to access someone’s voicemail.</p>
+<h2 id="section-3">Phone-system access is a separate project</h2>
+<p>To make this part of everyday operations, we would first establish how the business can obtain its audio: an authorized export, a voicemail-to-email attachment, or an integration supported by its telephone provider.</p>
+<p>The answer depends on the system you already use. We would verify that connection before offering automated collection. Processing a recording you supply and continuously recording live calls are different workflows, with different permission requirements.</p>
+<p>For the public demo, fictional sample audio is the safest starting point. Production use needs an agreed process for access, retention, deletion, and who may read the messages.</p>
+<h2 id="section-4">Local details are the test—not the polished sample</h2>
+<p>Imagine a caller leaving a message from Enola while standing beside traffic. Their surname, street, and callback number may be the most important parts of the recording. A transcript that reads smoothly but changes those details is not ready to drive an automated response.</p>
+<p>Our proposed evaluation would therefore check contact details and requested actions separately from overall readability. We would include noisy recordings, repeated numbers, corrections spoken mid-message, and unclear audio. Those are proposed test cases, not completed performance results.</p>
+<p>When the system is uncertain, the interface should make replay easy. It should never silently “repair” a telephone number into something that merely looks valid.</p>
+<h2 id="section-5">Is it an AI receptionist?</h2>
+<p>Not on its own. Transcription could become one component of a larger workflow, but scheduling, live answering, routing, and outbound messaging require their own connections and controls.</p>
+<p>A business may only need a readable message queue. That can be a sensible stopping point. The goal is not to automate every conversation; it is to help the right person understand what needs attention.</p>
+<h2 id="section-6">Start with the messages you already receive</h2>
+<p>Bring the name of your phone provider and one sanitized example of a message that is difficult to manage. Do not send customer recordings through an unreviewed public demo.</p>
+<p><a href="https://www.authenticdynamics.com/growth-technology">Talk with Authentic Dynamics about missed-call follow-up</a>. We can investigate the permitted connection, define what remains human-approved, and build around the phone system you actually have rather than selling a fictional one-click integration.</p>

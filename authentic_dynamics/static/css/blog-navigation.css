@@ -1,0 +1,5 @@
+/* Leave room for the Blog link without changing the existing 1050px menu behavior. */
+@media (min-width: 1051px) and (max-width: 1280px) {
+  header .navcta { display: none; }
+  header #nav { gap: 18px; }
+}

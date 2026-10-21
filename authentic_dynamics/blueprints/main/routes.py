@@ -1,8 +1,9 @@
 import re
 from xml.etree import ElementTree
 
-from flask import current_app, flash, make_response, redirect, render_template, request, url_for
+from flask import abort, current_app, flash, make_response, redirect, render_template, request, url_for
 
+from authentic_dynamics.blog import get_blog_post, get_blog_posts
 from authentic_dynamics.extensions import db
 from authentic_dynamics.models import ContactSubmission
 
@@ -35,7 +36,7 @@ def robots():
 
 @bp.get("/sitemap.xml")
 def sitemap():
-    """List business and policy pages on the configured canonical host, when set."""
+    """List business, policy and published blog pages on the canonical host."""
     # Keep tools, Browser X-Ray, and games out of sitemap discovery intentionally.
     endpoints = (
         "main.index",
@@ -45,6 +46,7 @@ def sitemap():
         "main.about_community",
         "main.privacy_policy",
         "main.terms",
+        "main.blog",
     )
     namespace = "http://www.sitemaps.org/schemas/sitemap/0.9"
     ElementTree.register_namespace("", namespace)
@@ -56,9 +58,100 @@ def sitemap():
         ElementTree.SubElement(page, f"{{{namespace}}}loc").text = (
             f"https://{canonical_host}{path}" if canonical_host else url_for(endpoint, _external=True)
         )
+    for post in get_blog_posts():
+        page = ElementTree.SubElement(root, f"{{{namespace}}}url")
+        ElementTree.SubElement(page, f"{{{namespace}}}loc").text = _blog_url(
+            "main.blog_post", slug=post["slug"]
+        )
+        ElementTree.SubElement(page, f"{{{namespace}}}lastmod").text = post["modified"]
     response = make_response(ElementTree.tostring(root, encoding="utf-8", xml_declaration=True))
     response.mimetype = "application/xml"
     return response
+
+
+def _blog_url(endpoint, **values):
+    host = current_app.config.get("CANONICAL_HOST")
+    return f"https://{host}{url_for(endpoint, **values)}" if host else url_for(
+        endpoint, _external=True, **values
+    )
+
+
+@bp.get("/blog")
+def blog():
+    posts = get_blog_posts()
+    canonical_url = _blog_url("main.blog")
+    structured_data = {
+        "@context": "https://schema.org",
+        "@type": "CollectionPage",
+        "name": "Practical AI Guides for Central Pennsylvania Businesses",
+        "url": canonical_url,
+        "mainEntity": {
+            "@type": "ItemList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": index, "name": post["title"],
+                 "url": _blog_url("main.blog_post", slug=post["slug"])}
+                for index, post in enumerate(posts, 1)
+            ],
+        },
+    }
+    return render_template(
+        "blog/index.html", active_page="blog", posts=posts,
+        canonical_url=canonical_url, structured_data=structured_data,
+    )
+
+
+@bp.get("/blog/")
+def blog_redirect():
+    return redirect(url_for("main.blog"), code=308)
+
+
+@bp.get("/blog/<slug>")
+def blog_post(slug):
+    post = get_blog_post(slug)
+    if post is None:
+        abort(404)
+    canonical_url = _blog_url("main.blog_post", slug=slug)
+    structured_data = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "BlogPosting", "headline": post["title"],
+                "description": post["description"], "url": canonical_url,
+                "mainEntityOfPage": {"@type": "WebPage", "@id": canonical_url},
+                "datePublished": post["published"], "dateModified": post["modified"],
+                "inLanguage": "en-US", "articleSection": post["category"],
+                "author": {"@type": "Organization", "name": "Authentic Dynamics",
+                           "url": _blog_url("main.about_community")},
+                "publisher": {"@type": "Organization", "name": "Authentic Dynamics",
+                              "url": _blog_url("main.index")},
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "Home",
+                     "item": _blog_url("main.index")},
+                    {"@type": "ListItem", "position": 2, "name": "Blog",
+                     "item": _blog_url("main.blog")},
+                    {"@type": "ListItem", "position": 3, "name": post["title"],
+                     "item": canonical_url},
+                ],
+            },
+        ],
+    }
+    posts = get_blog_posts()
+    position = next(i for i, item in enumerate(posts) if item["slug"] == slug)
+    related = [posts[(position + offset) % len(posts)] for offset in range(1, 4)]
+    return render_template(
+        "blog/post.html", active_page="blog", post=post, related=related,
+        canonical_url=canonical_url, structured_data=structured_data,
+    )
+
+
+@bp.get("/blog/<slug>/")
+def blog_post_redirect(slug):
+    if get_blog_post(slug) is None:
+        abort(404)
+    return redirect(url_for("main.blog_post", slug=slug), code=308)
 
 
 @bp.get("/websites")

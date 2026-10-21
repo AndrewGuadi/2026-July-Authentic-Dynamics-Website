@@ -1,9 +1,10 @@
 from xml.etree import ElementTree
 
 from authentic_dynamics import create_app
+from authentic_dynamics.blog import get_blog_posts
 
 
-def test_sitemap_lists_only_business_and_policy_pages_with_absolute_urls():
+def test_sitemap_lists_business_policy_and_blog_pages_with_absolute_urls():
     app = create_app({"TESTING": True, "SQLALCHEMY_DATABASE_URI": "sqlite://"})
     response = app.test_client().get("/sitemap.xml", base_url="https://example.org")
 
@@ -22,7 +23,11 @@ def test_sitemap_lists_only_business_and_policy_pages_with_absolute_urls():
         "https://example.org/about-community",
         "https://example.org/privacy-policy",
         "https://example.org/terms",
-    ]
+        "https://example.org/blog",
+    ] + [f'https://example.org/blog/{post["slug"]}' for post in get_blog_posts()]
+    assert len(locations) == len(set(locations))
+    lastmods = list(root.iter("{http://www.sitemaps.org/schemas/sitemap/0.9}lastmod"))
+    assert [item.text for item in lastmods] == [post["modified"] for post in get_blog_posts()]
 
 
 def test_canonical_host_redirect_and_sitemap():
