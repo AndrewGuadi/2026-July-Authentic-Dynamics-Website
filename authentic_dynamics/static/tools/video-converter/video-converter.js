@@ -12,6 +12,11 @@ const localLimit = () => file && (file.size > Number(processing.browserMaxBytes)
 const size = bytes => `${(bytes / 1048576).toFixed(2)} MB`;
 function status(message, error = false) { $('status').textContent = message; $('status').classList.toggle('is-error', error); }
 function clearOutput() {
+  for (const id of ['output-video', 'output-audio']) {
+    const media = $(id);
+    media.pause(); media.removeAttribute('src'); media.load(); media.hidden = true;
+  }
+  $('output-playback-note').hidden = true;
   if (outputURL) URL.revokeObjectURL(outputURL);
   outputURL = null; $('download').removeAttribute('href'); $('result').hidden = true;
 }
@@ -138,6 +143,9 @@ $('convert').addEventListener('click', async () => {
     if (run !== generation) return;
     outputURL = URL.createObjectURL(blob);
     $('download').href = outputURL; $('download').download = filename;
+    const outputMedia = $(options.format === 'mp4' || options.format === 'webm' ? 'output-video' : 'output-audio');
+    outputMedia.src = outputURL; outputMedia.hidden = false;
+    $('output-playback-note').hidden = false;
     const saved = originalSize - blob.size;
     $('result-info').textContent = `${filename}\n${options.format.toUpperCase()} · ${size(blob.size)}\nOriginal: ${size(originalSize)}\n${saved > 0 ? size(saved) + ' smaller · ' + Math.round(saved / originalSize * 100) + '% reduction' : size(-saved) + ' larger than original'}`;
     if (options.format === 'mp4' || options.format === 'webm') {

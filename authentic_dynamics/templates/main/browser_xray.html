@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Browser X-Ray | Authentic Dynamics{% endblock %}
 {% block description %}What can your browser actually know about you? Explore device capabilities, permissions and local processing in a hands-on privacy lab.{% endblock %}
-{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/browser-xray.css') }}">{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/utility-experience.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/browser-xray.css') }}">{% endblock %}
 {% macro controls(key, label) %}
   <p class="xr-status" id="{{ key }}-status" role="status">Not enabled. No access requested by this page.</p>
   <div class="xr-actions">
@@ -18,15 +18,16 @@
 {% block content %}
 <a class="skip" href="#main">Skip to content</a>
 {% include 'partials/header.html' %}
-<main id="main" class="xray">
+<main id="main" class="xray utility-page">
   <section id="top" class="page-hero dark"><div class="wrap page-hero-grid">
-    <div><p class="eyebrow">BROWSER X-RAY / AN OPEN LAB</p><h1>What can your<br>browser actually<br><em>know about you?</em></h1>
+    <div><p class="eyebrow">BROWSER X-RAY / AN OPEN LAB</p><h1>What can your browser actually <em>know about you?</em></h1>
       <p class="intro">You haven’t started any sensitive experiments on this page. Let’s see what your browser can already tell us.</p>
       <div class="actions"><button id="xr-scan" class="button" type="button" disabled>Scan my browser <span aria-hidden="true">↗</span></button><a class="textlink light" href="#motion-lab">Explore the labs ↓</a></div>
       <p class="xr-hero-note">No account. No uploads. You choose what to switch on.</p>
     </div>
     <aside class="xr-intro-card"><span class="card-index">THREE DIFFERENT QUESTIONS</span><ol><li><strong>Can it?</strong><span>What does this browser support?</span></li><li><strong>May it?</strong><span>What have you allowed?</span></li><li><strong>Where does it go?</strong><span>Local memory or a network request?</span></li></ol><p>Access is a capability.<br>Sharing is another action.</p></aside>
   </div></section>
+  <div class="utility-access"><div class="wrap"><p id="xr-sensitive-summary" role="status">Sensitive access: none active.</p><a href="#xr-reset">Review or stop access ↓</a></div></div>
   <div class="page-ribbon"><div class="wrap"><span>Browser-native experiments</span><span>Sensor data stays in this page</span><span>No recordings or saved readings</span></div></div>
   <section class="section"><div class="wrap">
     <noscript><p class="xr-notice">JavaScript is needed for the experiments. The explanations below still work. No sensors are active.</p></noscript>

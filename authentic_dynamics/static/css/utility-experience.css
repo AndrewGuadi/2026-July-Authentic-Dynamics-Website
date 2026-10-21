@@ -1,0 +1,40 @@
+/* Utilities lead with the task. Higher specificity scopes these overrides. */
+.utility-page > .page-hero {padding:30px 0 34px;}
+.utility-page > .page-hero h1 {font-size:clamp(30px,4vw,52px);max-width:900px;line-height:1.08;}
+.utility-page > .page-hero h1 br {display:none;}
+.utility-page > .page-hero .intro {max-width:780px;font-size:16px;margin-top:16px;line-height:1.65;}
+.utility-page > .page-hero .tool-back {margin-bottom:16px;}
+.utility-page > .page-hero .page-hero-grid {gap:30px;}
+.utility-page > .section {padding-top:32px;}
+.utility-notice {padding:15px 18px;background:#f5f5f0;border-left:3px solid #496623;line-height:1.6;font-size:14px;}
+.utility-steps {display:flex;flex-wrap:wrap;gap:8px;margin:20px 0;}
+.utility-steps a {display:inline-flex;align-items:center;min-height:44px;padding:10px 16px;border:1px solid #d9d9d3;border-radius:8px;text-decoration:none;color:#090909;background:#f5f5f0;font-weight:650;}
+.utility-steps a:hover,.utility-steps a:focus-visible {background:#b8ff63;}
+.utility-page .utility-details {margin:12px 0;padding:12px;border:1px solid #d9d9d3;border-radius:8px;}
+.utility-details summary {cursor:pointer;min-height:32px;font-weight:650;}
+.utility-page .qr-downloads button.is-primary {background:#b8ff63;color:#090909;border-color:#496623;order:-1;font-weight:750;}
+.utility-page .qr-downloads button:disabled {opacity:.5;}
+.utility-access {position:sticky;top:var(--utility-header-offset,88px);z-index:15;background:#f5f5f0;border-bottom:1px solid #d9d9d3;}
+.utility-access .wrap {display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:8px;padding-bottom:8px;}
+.utility-access p {font-size:13px;line-height:1.5;margin:0;}
+.utility-access a {font-size:13px;min-height:44px;display:inline-flex;align-items:center;}
+.utility-page .utility-featured-game {grid-template-columns:minmax(0,680px);}
+.game-direction {font-size:12px;color:#b8ff63;min-height:20px;margin-top:12px;}
+.utility-page .game-section {padding-top:24px;}
+.utility-page #list-sample,.utility-page #ai-example {margin:8px 0 18px;min-height:44px;}
+.utility-page #ai-copy {margin-top:16px;}
+.utility-page .im-privacy {padding:14px 18px;}
+.utility-page .im-privacy p {margin:6px 0 0;}
+.utility-page #im-save-status {border-left:3px solid #496623;padding:12px 16px;background:#f5f5f0;}
+.utility-page :is(button,a):focus-visible {outline:3px solid #496623;outline-offset:3px;}
+@media(max-width:600px){.utility-page > .page-hero{padding:22px 0 26px}.utility-page > .page-hero .intro{font-size:14px}.utility-access .wrap{align-items:flex-start;flex-direction:column;gap:0}.utility-page .xr-intro-card{padding:18px}.utility-steps a{flex:1 1 auto;justify-content:center}.utility-page > .section{padding-top:24px}}
+@media print{.utility-steps,.utility-access{display:none!important}}
+/* The global mobile navigation rule must not turn editor jump links into a menu. */
+.utility-page .utility-steps {position:static;inset:auto;flex-direction:row;background:transparent;border:0;padding:0;}
+.utility-page .utility-steps a {white-space:normal;}
+.utility-page.xray > .page-hero h1 {font-size:clamp(32px,4vw,52px);}
+.utility-page.xray .xr-intro-card {padding:20px;}
+.utility-page.xray .xr-intro-card li {padding:10px 0;}
+.utility-page.xray .xr-intro-card strong {font-size:19px;letter-spacing:-.02em;}
+.utility-page.xray .xr-intro-card li span {font-size:13px;}
+.utility-page.xray .xr-intro-card p {font-size:13px;margin:14px 0 0;}

@@ -1,10 +1,21 @@
-{% extends 'hub/base.html' %}{% block hub_content %}
-<a class="hub-back" href="{{ url_for('hub.index', resource=resource) }}">← {{ hub_title(resource) }}</a>
-<div class="hub-heading"><div><p class="hub-eyebrow">{{ hub_title(resource) }}</p><h1>{{ 'Edit record' if record else 'Make the connection.' }}</h1><p>Required fields are marked with an asterisk.</p></div></div>
-<form class="hub-panel hub-form" method="post"><input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-{% for field in fields %}<label>{{ field.label }}{% if field.required %} *{% endif %}
-{% if field.kind == 'select' %}<select name="{{ field.name }}" {% if field.required %}required{% endif %}><option value="">Select…</option>{% for value, text in field.options %}<option value="{{ value }}" {% if value|string == field.value|string %}selected{% endif %}>{{ text }}</option>{% endfor %}</select>
-{% elif field.kind == 'textarea' %}<textarea name="{{ field.name }}" rows="4" {% if field.required %}required{% endif %}>{{ field.value }}</textarea>
-{% else %}<input type="{{ field.kind }}" name="{{ field.name }}" value="{{ field.value }}" {% if field.required %}required{% endif %}{% if field.kind == 'number' %} step="{{ field.step }}"{% endif %}>{% endif %}{% if field.hint %}<small>{{ field.hint }}</small>{% endif %}</label>{% endfor %}
-<div class="hub-form-actions"><button class="hub-button">Save record</button><a href="{{ url_for('hub.index', resource=resource) }}">Cancel</a></div></form>
+{% extends 'hub/base.html' %}
+{% macro attributes(field) -%}
+id="field-{{ field.name }}" name="{{ field.name }}" {% if field.required %}required{% endif %}
+{% if field.error %}aria-invalid="true"{% endif %}
+{% if field.hint or field.error %}aria-describedby="{% if field.hint %}hint-{{ field.name }}{% endif %}{% if field.hint and field.error %} {% endif %}{% if field.error %}error-{{ field.name }}{% endif %}"{% endif %}
+{%- endmacro %}
+{% block hub_content %}
+<a class="hub-back" href="{{ hub_context_url('hub.index', resource=resource) }}">← {{ hub_title(resource) }}</a>
+<div class="hub-heading"><div><p class="hub-eyebrow">{{ hub_title(resource) }}</p><h1>{{ 'Edit' if record else 'Add to' }} {{ hub_title(resource)|lower }}.</h1><p>Required fields are marked with an asterisk. Changes are saved only when you choose Save record.</p></div></div>
+{% if errors or form_error %}<section class="hub-form-error" role="alert" tabindex="-1" autofocus aria-labelledby="form-error-title"><h2 id="form-error-title">Your changes have not been saved.</h2><p>{{ form_error or 'Check the highlighted fields. Your entries are still below.' }}</p>{% if errors %}<ul>{% for field in fields if field.error %}<li><a href="#field-{{ field.name }}">{{ field.label }}: {{ field.error }}</a></li>{% endfor %}</ul>{% endif %}</section>{% endif %}
+<form class="hub-panel hub-form" method="post">
+<input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+<input type="hidden" name="_hub_units" value="major">
+{% for field in fields %}<div class="hub-field{% if field.kind == 'textarea' %} hub-field-wide{% endif %}"><label for="field-{{ field.name }}">{{ field.label }}{% if field.required %} *{% endif %}</label>
+{% if field.kind == 'select' %}<select {{ attributes(field) }}><option value="">Select…</option>{% for value, text in field.options %}<option value="{{ value }}" {% if value|string == field.value|string %}selected{% endif %}>{{ text }}</option>{% endfor %}</select>
+{% elif field.kind == 'textarea' %}<textarea {{ attributes(field) }} rows="4">{{ field.value }}</textarea>
+{% else %}<input {{ attributes(field) }} type="{{ field.kind }}" value="{{ field.value }}"{% if field.kind in ['number', 'datetime-local'] %} step="{{ field.step }}"{% endif %}{% if field.kind == 'number' %} min="{{ '0' if field.name.endswith('_minor') or field.step == '0.0001' else '-9000000000000' }}"{% endif %}{% if field.name.endswith('_minor') %} inputmode="decimal"{% endif %}>{% endif %}
+{% if field.hint %}<small id="hint-{{ field.name }}">{{ field.hint }}</small>{% endif %}
+{% if field.error %}<p class="hub-field-error" id="error-{{ field.name }}">{{ field.error }}</p>{% endif %}</div>{% endfor %}
+<div class="hub-form-actions"><button class="hub-button">Save record</button><a href="{{ hub_context_url('hub.detail', resource=resource, record_id=record.id) if record else hub_context_url('hub.index', resource=resource) }}">Cancel</a></div></form>
 {% endblock %}

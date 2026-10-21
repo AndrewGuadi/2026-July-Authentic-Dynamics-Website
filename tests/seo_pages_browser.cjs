@@ -61,7 +61,7 @@ const devices = [
       assert.equal(new URL(page.url()).hash, '#starter');
       await page.getByRole('link', {name: 'See custom options'}).click();
       assert.equal(new URL(page.url()).hash, '#options');
-      assert.equal(await page.getByRole('link', {name: 'Talk about my website'}).getAttribute('href'), '/about-community#contact');
+      assert.equal(await page.getByRole('link', {name: 'Talk about my website'}).getAttribute('href'), '/about-community?interest=website#contact');
 
       const tapTargets = await page.locator('button:visible, a.button:visible').all();
       for (const target of tapTargets) {

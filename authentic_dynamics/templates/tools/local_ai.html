@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}Local Browser AI | Authentic Dynamics{% endblock %}
 {% block description %}An experimental small AI model that runs locally in your browser using WebGPU.{% endblock %}
-{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/utility-experience.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">{% endblock %}
 {% block content %}
 <a class="skip" href="#main">Skip to content</a>
 {% include 'partials/header.html' %}
-<main id="main">
+<main id="main" class="utility-page">
   <section id="top" class="page-hero dark tool-hero"><div class="wrap">
     <a class="tool-back" href="{{ url_for('tools.catalog') }}">← All tools</a>
     <p class="eyebrow">EXPERIMENTAL / ON YOUR DEVICE</p>
@@ -16,16 +16,16 @@
     <div class="converter-form local-ai" aria-labelledby="ai-heading">
       <p class="eyebrow">A SMALL LOCAL EXPERIMENT</p>
       <h2 id="ai-heading">Try a short prompt.</h2>
-      <button id="ai-load" class="button black" type="button">Load Local AI</button>
+      <p class="utility-notice"><strong>Before starting:</strong> this experiment needs WebGPU and hundreds of megabytes of model downloads. Downloading begins only when you choose Load Local AI.</p><button id="ai-load" class="button black" type="button">Load Local AI</button>
       <p id="ai-status" class="tool-status" role="status" aria-live="polite">Not loaded. Click Load Local AI to begin.</p>
       <progress id="ai-progress" max="1" value="0" aria-label="Model loading progress" hidden></progress>
-      <label for="ai-prompt">Your prompt</label>
+      <button id="ai-example" class="textlink" type="button" disabled>Try a customer-reply example</button><label for="ai-prompt">Your prompt</label>
       <textarea id="ai-prompt" rows="6" maxlength="4000" aria-describedby="ai-limit" autocomplete="off" spellcheck="false" disabled></textarea>
       <p id="ai-limit" class="tool-note"><span id="ai-count">0</span> / 4,000 characters. Keep it short; some text may still exceed the model’s token limit.</p>
       <button id="ai-ask" class="button black" type="button" disabled>Ask AI</button>
       <h3 id="ai-response-heading">Response</h3>
       <div id="ai-output" class="local-ai-output" role="region" aria-labelledby="ai-response-heading" tabindex="0">Your response will appear here.</div>
-      <noscript><p>JavaScript is required to run this browser-only experiment.</p></noscript>
+      <button id="ai-copy" class="button black" type="button" disabled>Copy response</button><noscript><p>JavaScript is required to run this browser-only experiment.</p></noscript>
     </div>
     <aside class="tool-help">
       <p class="eyebrow">BEFORE YOU LOAD</p><h3>Your browser does the work.</h3>

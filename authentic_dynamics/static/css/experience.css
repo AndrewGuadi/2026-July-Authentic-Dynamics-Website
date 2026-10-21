@@ -1,0 +1,41 @@
+/* Shared interaction and document refinements. Content works before JS loads. */
+:root{--motion-feedback:140ms;--motion-state:220ms;--focus-ink:#315015}
+[hidden]{display:none!important}
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{outline:3px solid var(--focus-ink);outline-offset:4px}
+.dark :where(a,button,summary,[tabindex]):focus-visible,header :focus-visible,footer :focus-visible{outline-color:var(--lime)}
+:where(button,.button,.textlink){transition:background-color var(--motion-feedback),color var(--motion-feedback),box-shadow var(--motion-feedback)}
+:where(h2,h3,[id]){scroll-margin-top:100px}
+.contact-form .form-help{font-size:13px;line-height:1.6;color:#bcbcb4}
+.contact-form .form-help a,.contact-form .form-error a{text-decoration:underline;text-underline-offset:3px}
+.contact-form .form-error{padding:16px;border:1px solid currentColor;border-radius:10px;margin-top:16px}
+.contact-form .form-error ul{padding-left:20px;margin:8px 0 0;line-height:1.8}
+.contact-form .form-error:focus{outline:3px solid #ffb6a7;outline-offset:4px}
+.contact-form [aria-invalid="true"]{border:2px solid #ffb6a7}
+header:not(.nav-enhanced) .menu{display:none}
+.policy-page .page-hero{padding:58px 0 64px}
+.policy-page .page-hero h1{font-size:clamp(42px,5vw,66px)}
+.policy-page .page-hero .intro{margin-top:20px}
+.policy-page .section{padding-top:40px}
+.policy-contents{border:1px solid var(--border);border-radius:14px;background:var(--paper);padding:24px;margin-bottom:30px}
+.policy-contents ul{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:4px 24px;margin:12px 0 0}
+.policy-contents a{display:inline-block;padding:10px 0;font-size:14px;line-height:1.5}
+.error-page{min-height:70vh;display:grid;align-content:center}
+.error-page .wrap{max-width:760px}
+.error-page h1{font-size:clamp(36px,6vw,66px);line-height:1.1;margin-bottom:24px}
+.error-page .error-actions{display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin-top:28px}
+@media(max-width:1050px){
+ header:not(.nav-enhanced) .navrow{height:auto;min-height:76px;flex-wrap:wrap;padding-block:16px;gap:16px}
+ header:not(.nav-enhanced) #nav{display:flex;position:static;order:3;width:100%;max-height:none;flex-direction:row;flex-wrap:wrap;gap:8px 22px;padding:0;border:0}
+ header:not(.nav-enhanced) #nav a{padding:10px 0;font-size:14px}
+ header.nav-enhanced #nav.open{animation:menu-enter var(--motion-state) ease-out}
+}
+@media(max-width:600px){.policy-contents ul{grid-template-columns:1fr}.policy-page .page-hero{padding:36px 0 40px}}
+@keyframes menu-enter{from{opacity:0;transform:translateY(-5px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){:root{--motion-feedback:0ms;--motion-state:0ms}html{scroll-behavior:auto}header.nav-enhanced #nav.open{animation:none}}
+@media print{
+ .policy-page header,.policy-page footer,.policy-page .skip,.policy-contents{display:none!important}
+ .policy-page,.policy-page .page-hero,.policy-page .white{background:#fff!important;color:#000!important}
+ .policy-page .page-hero{padding:0}.policy-page .page-hero:before{display:none}
+ .policy-page .page-hero .intro{color:#222}.policy-page .section{padding:12px 0}
+ .policy-page .wrap{width:100%;max-width:none}.policy-copy h2{break-after:avoid}.policy-copy p{orphans:3;widows:3}
+}

@@ -10,6 +10,9 @@ if (finder) {
   const resultCount = finder.querySelector('[data-result-count]');
   const results = finder.querySelector('[data-resource-results]');
   const resetButton = finder.querySelector('[data-resource-reset]');
+  const resourceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let resultTransition;
+  resourceMotion.addEventListener('change', () => resultTransition?.cancel());
 
   const counties = {
     cumberland: { name: 'Cumberland County', sbdc: 'Shippensburg University SBDC' },
@@ -116,9 +119,10 @@ if (finder) {
   const render = () => {
     const countyKey = countySelect.value;
     const need = needSelect.value;
+    resultTransition?.cancel();
     results.replaceChildren();
 
-    if (!countyKey) {
+    if (!countyKey || !counties[countyKey]) {
       emptyState.hidden = false;
       resultsHead.hidden = true;
       return;
@@ -149,6 +153,11 @@ if (finder) {
       return;
     }
     resources.forEach(resource => results.append(createCard(resource)));
+    if (!resourceMotion.matches && results.animate) {
+      resultTransition = results.animate([{ opacity: .65 }, { opacity: 1 }], {
+        duration: 160, easing: 'ease-out'
+      });
+    }
   };
 
   countySelect.addEventListener('change', render);
