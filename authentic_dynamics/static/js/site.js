@@ -57,6 +57,9 @@ if (menuButton && navigation) {
   // Do not close the menu on focusout: touch and assistive technology can
   // temporarily produce relatedTarget=null while a link is being activated.
   mobileBreakpoint.addEventListener('change', closeMenu);
+  window.addEventListener('resize', () => {
+    if (!mobileBreakpoint.matches) closeMenu();
+  });
 }
 
 document.addEventListener('click', event => {

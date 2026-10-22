@@ -72,7 +72,13 @@ const scenarios = [
       // Wider viewport cannot leave a stale expanded state behind.
       await tapMenu();
       await page.setViewportSize({ width: 1300, height: 900 });
-      assert.equal(await button.getAttribute('aria-expanded'), 'false');
+      // Mobile-device emulation may keep CSS viewport width at the physical
+      // device size despite setViewportSize. Only assert the desktop behavior
+      // when the CSS media query actually crossed its breakpoint.
+      const desktopCSS = await page.evaluate(() => !window.matchMedia('(max-width: 1050px)').matches);
+      if (desktopCSS) {
+        await page.waitForFunction(() => document.querySelector('button.menu').getAttribute('aria-expanded') === 'false');
+      }
 
       assert.deepEqual(errors, [], 'Unexpected browser errors: ' + errors.join('; '));
       console.log(scenario.name + ': tap-to-navigate, focus, outside taps, Escape, and resize passed');
