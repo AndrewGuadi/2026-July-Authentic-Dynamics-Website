@@ -54,7 +54,11 @@ const scenarios = [
 
       // Outside taps close the menu, without changing the page.
       await tapMenu();
-      await page.locator('footer').tap();
+      const navBox = await page.locator('#nav').boundingBox();
+      const viewport = page.viewportSize();
+      const outsideY = Math.min(viewport.height - 16, Math.ceil(navBox.y + navBox.height + 30));
+      assert.ok(outsideY > navBox.y + navBox.height, 'Expected a tappable region below the open menu');
+      await page.touchscreen.tap(14, outsideY);
       assert.equal(await page.locator('button.menu').getAttribute('aria-expanded'), 'false');
 
       // Accessibility: the keyboard can open and dismiss the same menu.
