@@ -13,6 +13,7 @@ def test_touch_safe_navigation_event_handlers():
     assert "navigation.addEventListener('focusout'" not in SCRIPT
     assert "window.setTimeout(closeMenu, 0)" in SCRIPT
     assert "event.detail === 0" in SCRIPT
+    assert "document.addEventListener('pointerdown', closeWhenOutside)" in SCRIPT
 
 
 def test_mobile_nav_includes_tappable_links_and_cache_busted_script():

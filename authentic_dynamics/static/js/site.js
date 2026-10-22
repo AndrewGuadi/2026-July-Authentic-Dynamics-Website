@@ -35,12 +35,17 @@ if (menuButton && navigation) {
     window.setTimeout(closeMenu, 0);
   });
 
-  document.addEventListener('click', event => {
+  const closeWhenOutside = event => {
     if (menuButton.getAttribute('aria-expanded') !== 'true') return;
     if (!navigation.contains(event.target) && !menuButton.contains(event.target)) {
       closeMenu();
     }
-  });
+  };
+
+  // On iOS Safari, taps on non-interactive areas do not always synthesize
+  // a click. pointerdown fires for touch targets outside the menu.
+  document.addEventListener('pointerdown', closeWhenOutside);
+  document.addEventListener('click', closeWhenOutside);
 
   document.addEventListener('keydown', event => {
     if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
