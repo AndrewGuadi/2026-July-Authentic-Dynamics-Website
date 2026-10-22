@@ -54,7 +54,7 @@ const scenarios = [
 
       // Outside taps close the menu, without changing the page.
       await tapMenu();
-      await page.locator('.page-hero h1').tap();
+      await page.locator('footer').tap();
       assert.equal(await page.locator('button.menu').getAttribute('aria-expanded'), 'false');
 
       // Accessibility: the keyboard can open and dismiss the same menu.
