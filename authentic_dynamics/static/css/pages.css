@@ -182,3 +182,24 @@ footer .footer-main>div{flex-wrap:wrap}
   .portfolio-image{height:220px}
   .page-cta{padding:55px 0}
 }
+
+
+/* iOS/touch navigation: scrollable menu with large, reliable link targets. */
+@media (max-width: 1050px) {
+  header #nav {
+    max-height: calc(100vh - 76px); /* fallback for older iOS Safari */
+    max-height: calc(100dvh - 76px);
+    padding-bottom: calc(22px + env(safe-area-inset-bottom, 0px));
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    z-index: 22;
+  }
+  header #nav a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    position: relative;
+    touch-action: manipulation;
+  }
+}
