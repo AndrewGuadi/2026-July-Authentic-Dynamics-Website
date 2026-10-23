@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
-{% block title %}Growth & Technology | Authentic Dynamics{% endblock %}
-{% block description %}Connect local visibility, marketing, automation and practical technology to a website that works for your business.{% endblock %}
+{% block title %}Website Analytics &amp; Growth Services in Central PA | Authentic Dynamics{% endblock %}
+{% block description %}Website analytics services for Central PA small businesses: Search Console, GA4 setup, inquiry tracking and practical reporting alongside local marketing and automation.{% endblock %}
 {% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/review-request-builder.css') }}">{% endblock %}
 {% block content %}
 <a class="skip" href="#main">Skip to content</a>
@@ -20,6 +20,7 @@
     <article class="page-card"><span class="card-index">06 / CUSTOM SYSTEMS</span><h3>Build around your operation.</h3><p>When existing tools do not fit, we can scope a custom integration, dashboard or application around the real work.</p><ul><li>Technical discovery</li><li>Connected platforms</li><li>Maintainable handoff</li></ul></article>
   </div></div></section>
 
+  {% include 'partials/website_analytics.html' %}
   <section class="section white review-builder-section" id="review-request"><div class="wrap">
     <div class="section-head"><div><p class="eyebrow">A USEFUL FIRST STEP</p><h2>Turn a finished job<br>into an honest review.</h2></div><p>Build a personal Google review request for text or email. Your customer details stay in this browser and nothing is sent by this page.</p></div>
     <div class="review-builder-layout">
