@@ -1,10 +1,10 @@
 # Coding Calendar
 
-This adds a daily learning area to the existing Flask/Jinja app. It is committed content and working application code, with no AI API or code-execution server. The first collection has 21 lessons: JavaScript, Python and SQLite SQL for October 24–30, 2026.
+This adds a daily learning area to the existing Flask/Jinja app. It is committed content and working application code, with no AI API or code-execution server. The original collection had 21 lessons for October 24–30, 2026. The first daily expansion adds 18 lessons, producing 39 lessons over October 21–November 2. All lessons are categorized by topic and difficulty.
 
 ## Visitor experience
 
-`/coding-calendar/` shows three language cards and an archive. Each card opens today's lesson or clearly labels the latest published lesson if today's content is missing. Dates follow America/New_York, including daylight saving time. Future lessons return 404 until their publication dates.
+`/coding-calendar/` selects the actual current date in America/New_York, including daylight saving time. It has keyboard language tabs, Previous/Next/Today controls, a date picker, and a categorized archive. Explicit date selections are preserved; Today resets to the real date. When a date has no lesson the page says so instead of substituting another date. Upcoming topics may be browsed, but future challenge pages return 404 until publication. Archive filters cover topic, language, difficulty and month, with pagination after 20 date groups.
 
 Each permanent page (`/coding-calendar/javascript/2026-10-24/`, for example) includes the exact method signature, an original explanation of inputs and return values, pitfalls, a link to the complete official documentation, three business scenarios, a challenge, examples, a hint, and a CodeMirror 6 editor. Users can run tests, inspect failures and console output, stop execution, restore starter code, and download their solution. Drafts and completion timestamps stay in localStorage on that browser and device. No login is required, and progress does not sync across devices.
 
@@ -35,7 +35,7 @@ Tests and expected results are intentionally visible. Correctness checks accept 
 
 Copy an existing JSON file into the appropriate language directory using `YYYY-MM-DD.json`. Update its date, reference, content, starter and tests, and add a trusted solution to `tests/fixtures/coding/solutions.json`. Keep the fields consistent with existing examples. Python/JavaScript challenges define synchronous `solve(value)` returning a JSON-compatible value. SQL uses a single SELECT/WITH query and exact expected column names and row order.
 
-Add one lesson for each track on the same day, review the official reference and reference solution, then commit. No cron is needed for publication: the server compares the scheduled date with the current New York date. The initial queue ends October 30; new content must be authored to continue daily publication. After that, the archive remains usable and the page explicitly reports that no lesson is scheduled today.
+Add one lesson for each track on the same day, review the official reference and reference solution, then commit. No cron is needed for publication: the server compares the scheduled date with the current New York date. The finite 30-day authoring program is described in [coding-calendar-daily.md](coding-calendar-daily.md); its first source batch extends the queue through November 2. New content must be authored to continue publication. After that, the archive remains usable and the page explicitly reports that no lesson is scheduled today.
 
 ## Rebuild editor
 
@@ -60,9 +60,9 @@ The browser suite exercises all 21 trusted reference solutions in real runtimes.
 
 ## Deployment
 
-Merge the review branch, deploy it through the normal PythonAnywhere workflow and reload the app. Ensure the deployment includes `content/coding/`, the new templates and static files. No schema or secret changes are required. This branch is not a live deployment. Verify the catalog, a JavaScript run, a Python run and a SQL run over HTTPS after deployment. Ensure any upstream reverse proxy preserves the `/coding-calendar/sandbox` CSP header; do not add allow-same-origin to the frame. No sitemap changes were made because this repository deliberately distinguishes business search pages from utility discovery; these pages remain linked from the catalog and footer.
+Merge the review branch, deploy it through the normal PythonAnywhere workflow and reload the app. Ensure the deployment includes `content/coding/`, the new templates and static files. No schema or secret changes are required. The original release was deployed; each subsequent revision still requires its own verified deployment. Verify the catalog, a JavaScript run, a Python run and a SQL run over HTTPS after deployment. Ensure any upstream reverse proxy preserves the `/coding-calendar/sandbox` CSP header; do not add allow-same-origin to the frame. No sitemap changes were made because this repository deliberately distinguishes business search pages from utility discovery; these pages remain linked from the catalog and footer.
 
-## Validation recorded for this change
+## Initial release validation
 
 - Full Python suite: **241 passed**.
 - Browser reference solutions: **all 21 challenges passed**, covering **65 example and edge-case assertions** across JavaScript, actual Pyodide Python and SQLite.
@@ -77,3 +77,19 @@ Merge the review branch, deploy it through the normal PythonAnywhere workflow an
 ### Mobile
 
 ![Mobile lesson and editor](coding-calendar-mobile.png)
+
+## Date navigation and daily expansion
+
+See [the finite daily program](coding-calendar-daily.md) for authoring, idempotency, bounds, keyboard/date behavior, testing and the existing deployment target. Calendar pages send `Cache-Control: no-store`; an open default calendar refreshes at a New York date change, while an explicit historical selection remains stable.
+
+### Navigation release validation
+
+- Full Python suite: **252 passed**, including actual-date defaults, missing-day behavior, New York midnight/DST boundaries, archive filters/pagination and finite batch idempotency.
+- **39 reference challenges / 119 assertions** passed in actual JavaScript, Pyodide and SQLite browser runtimes.
+- Browser checks passed for manual tab activation, Left/Right/Home/End/Enter/Space, Tab/Shift+Tab exiting tab panels, Tab exiting the code editor, date picker, Previous/Next/Today, language retention, future scheduling, archive filters, explicit historical-date preservation across midnight, 390 px layout, native horizontal keyboard scrolling of the archive, and existing runner regressions.
+- Mobile navigation regions were verified to stay in document flow, overriding the existing header-only mobile nav styles.
+- The first batch adds 18 original lessons and categorizes all 39. The separate finite task covers 29 further mornings through November 22, 2026.
+
+![Desktop calendar navigation and categorized archive](calendar-navigation-desktop.png)
+
+![Mobile calendar navigation and categorized archive](calendar-navigation-mobile.png)

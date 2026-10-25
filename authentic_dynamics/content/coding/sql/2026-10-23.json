@@ -1,0 +1,72 @@
+{
+  "language": "sql",
+  "date": "2026-10-23",
+  "method": "IS NULL",
+  "summary": "Find records whose optional value is missing.",
+  "syntax": "SELECT columns FROM table_name WHERE optional_column IS NULL;",
+  "documentation": "IS NULL tests whether an expression has the SQL NULL value. Unlike equality comparison with NULL, this produces a useful true-or-false condition.",
+  "inputs": "An expression that may be NULL.",
+  "returns": "A condition suitable for filtering rows.",
+  "caution": "An empty string is a value, not NULL. Comparing a column with = NULL does not select its NULL rows.",
+  "docs_url": "https://www.sqlite.org/lang_expr.html#isnull",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Find orders missing a customer association.",
+    "Review contacts without an optional field.",
+    "Detect incomplete imports before a follow-up step."
+  ],
+  "title": "Find orders without a customer",
+  "problem": "Return id from orders where customer IS NULL, ordered by id ascending. Do not treat an empty string as missing.",
+  "goal": "Use IS NULL or an equivalent approach that demonstrates the same concept.",
+  "hint": "Filter with IS NULL, then order by id.",
+  "minutes": 12,
+  "starter": "-- Write one SELECT query against the example tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Missing and named",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT); INSERT INTO orders VALUES (2, NULL, 100, 'paid'), (1, 'Micki', 200, 'paid'), (3, NULL, 300, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "id"
+          ],
+          "values": [
+            [
+              2
+            ],
+            [
+              3
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty is present",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT); INSERT INTO orders VALUES (1, '', 100, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "id"
+          ],
+          "values": []
+        }
+      ]
+    },
+    {
+      "name": "No rows",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "conditions",
+  "level": "beginner"
+}

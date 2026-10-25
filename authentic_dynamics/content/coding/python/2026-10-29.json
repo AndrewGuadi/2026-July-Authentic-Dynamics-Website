@@ -47,5 +47,7 @@
       },
       "expected": "To: "
     }
-  ]
+  ],
+  "category": "strings",
+  "level": "beginner"
 }

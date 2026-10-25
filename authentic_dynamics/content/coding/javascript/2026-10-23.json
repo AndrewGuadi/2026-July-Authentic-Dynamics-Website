@@ -1,0 +1,61 @@
+{
+  "language": "javascript",
+  "date": "2026-10-23",
+  "method": "Number.isFinite()",
+  "summary": "Accept numeric values without silently converting text.",
+  "syntax": "Number.isFinite(value)",
+  "documentation": "Number.isFinite returns true only when its argument has type number and is neither positive infinity, negative infinity nor NaN. It does not coerce strings, booleans or null.",
+  "inputs": "One value of any type.",
+  "returns": "A boolean indicating whether the value is a finite number.",
+  "caution": "The global isFinite function performs coercion. Number.isFinite deliberately does not.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isFinite",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Validate numeric measurements before plotting them.",
+    "Reject text that arrived in a numeric import column.",
+    "Check calculations before showing a customer-facing total."
+  ],
+  "title": "Keep actual numeric readings",
+  "problem": "Given a list of JSON values, return only finite numbers in their original order. Numeric strings, booleans and null must not be accepted.",
+  "goal": "Use Number.isFinite() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Filter the values using Number.isFinite.",
+  "minutes": 12,
+  "starter": "function solve(value) {\n  // Return your answer here.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Mixed readings",
+      "input": [
+        12,
+        "12",
+        null,
+        3.5,
+        true
+      ],
+      "expected": [
+        12,
+        3.5
+      ]
+    },
+    {
+      "name": "Zero is numeric",
+      "input": [
+        0,
+        false,
+        "0",
+        -2
+      ],
+      "expected": [
+        0,
+        -2
+      ]
+    },
+    {
+      "name": "Empty readings",
+      "input": [],
+      "expected": []
+    }
+  ],
+  "category": "numbers",
+  "level": "beginner"
+}

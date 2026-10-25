@@ -1,40 +1,58 @@
 {% extends 'base.html' %}
 {% block title %}Coding Calendar — Daily JavaScript, Python & SQL | Authentic Dynamics{% endblock %}
-{% block description %}Learn a practical coding method each day. Read documentation, see real business uses, and solve challenges in your browser.{% endblock %}
-{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/coding.css') }}">{% endblock %}
+{% block description %}Learn a practical coding method each day. Browse categorized lessons, read documentation, and solve real challenges in your browser.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/coding.css', v='dates-20261024') }}">{% endblock %}
 {% block content %}
 <a class="skip" href="#main">Skip to content</a>{% include 'partials/header.html' %}
-<main id="main">
+<main id="main" data-calendar-today="{{ today }}">
   <section class="page-hero dark" id="top"><div class="wrap">
     <p class="eyebrow">THE CODING CALENDAR / LEARN BY DOING</p>
     <h1>One concept.<br><em>Make it work.</em></h1>
-    <p class="intro">A little documentation. A real-world problem. Your code, running right here. Build a useful habit in JavaScript, Python, or SQL.</p>
-    <div class="calendar-badges"><span>Three language tracks</span><span>No account needed</span><span>Runs on your device</span></div>
+    <p class="intro">A little documentation. A real-world problem. Your code, running right here. Find today’s challenge or revisit a skill from the archive.</p>
+    <div class="calendar-badges"><span>JavaScript · Python · SQL</span><span>No account needed</span><span>Runs on your device</span></div>
   </div></section>
   <section class="section white"><div class="wrap">
-    <div class="calendar-heading"><div><p class="eyebrow">DAILY PRACTICE</p><h2>Choose your starting point.</h2></div><p>Calendar dates follow America/New_York.<br><time datetime="{{ today }}">{{ today }}</time></p></div>
-    <div class="calendar-tracks">
+    <div class="calendar-heading"><div><p class="eyebrow">{{ 'UPCOMING' if upcoming else 'TODAY' if selected == today else 'FROM THE ARCHIVE' }}</p><h2 id="calendar-date-heading"><time datetime="{{ selected }}" {% if selected == today %}aria-current="date"{% endif %}>{{ selected_label }}</time></h2></div><p>Calendar dates follow America/New_York.<br>Today: <time datetime="{{ today }}">{{ today }}</time></p></div>
+    <nav class="calendar-date-nav" aria-label="Browse calendar dates">
+      {% if previous_day %}<a class="button" id="calendar-previous" href="{{ calendar_url(date=previous_day.isoformat(), page=1) }}" aria-label="Previous date: {{ previous_day }}">← Previous date</a>{% else %}<span class="calendar-unavailable">Start of calendar</span>{% endif %}
+      <a class="button black" id="calendar-today" href="{{ calendar_url(date=None, page=1) }}" {% if selected == today %}aria-current="date"{% endif %}>Today</a>
+      {% if next_day %}<a class="button" id="calendar-next" href="{{ calendar_url(date=next_day.isoformat(), page=1) }}" aria-label="Next date: {{ next_day }}">Next date →</a>{% else %}<span class="calendar-unavailable">End of prepared dates</span>{% endif %}
+    </nav>
+    <form class="calendar-date-form" method="get" action="{{ url_for('coding.index') }}">
+      <label for="calendar-date">Jump to a date<input id="calendar-date" type="date" name="date" value="{{ selected }}" min="{{ first_day }}" max="{{ last_day }}" required></label>
+      <label for="calendar-language">Language<select name="language" id="calendar-language">{% for language, label in languages.items() %}<option value="{{ language }}" {% if language == selected_language %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+      {% for field in ['category','level','track','month'] %}{% if filters[field] %}<input type="hidden" name="{{ field }}" value="{{ filters[field] }}">{% endif %}{% endfor %}
+      <button class="button black" type="submit">Go to date</button>
+    </form>
+    <div class="calendar-language-tabs" role="tablist" aria-label="Language for the selected date">
+      {% for language, label in languages.items() %}<a id="calendar-tab-{{ language }}" role="tab" aria-selected="{{ 'true' if language == selected_language else 'false' }}" aria-controls="calendar-panel-{{ language }}" href="{{ calendar_url(language=language) }}" data-language="{{ language }}">{{ label }}</a>{% endfor %}
+    </div>
+    <p class="calendar-footnote">Use Tab to reach the language tabs, Left/Right Arrow to choose one, and Enter or Space to open it.</p>
     {% for language, label in languages.items() %}
-      {% set track = lessons | selectattr('language', 'equalto', language) | list %}
-      <article class="calendar-track">
+      {% set item = day_lessons.get(language) %}
+      <article class="calendar-track calendar-day-panel" id="calendar-panel-{{ language }}" role="tabpanel" aria-labelledby="calendar-tab-{{ language }}" tabindex="0" {% if language != selected_language %}hidden{% endif %}>
         <span class="language-mark">{{ {'javascript':'JS', 'python':'PY', 'sql':'SQL'}[language] }}</span>
         <h3>{{ label }}</h3>
-        {% if track %}{% set latest = track[-1] %}
-          <p class="eyebrow">{{ 'TODAY' if latest.date == today else 'LATEST PUBLISHED' }} / {{ latest.date }}</p>
-          <h4>{{ latest.method }}</h4><p>{{ latest.summary }}</p>
-          <a class="button black" href="{{ url_for('coding.lesson', language=language, day=latest.date) }}">Open challenge <span>↗</span></a>
-        {% else %}<p>The first lesson is being prepared.</p>{% endif %}
+        {% if item %}<p class="eyebrow">{{ categories[item.category] }} · {{ levels[item.level] }}</p><h4>{{ item.method }}</h4><p>{{ item.summary }}</p>
+          {% if upcoming %}<p class="calendar-notice">Available on {{ selected }}. This challenge is prepared and opens on its scheduled date.</p>{% else %}<a class="button black" href="{{ url_for('coding.lesson', language=language, day=selected) }}">Open challenge <span>↗</span></a>{% endif %}
+        {% else %}<p class="calendar-notice">No lesson is scheduled for this date in {{ label }}. Choose another date or explore the archive below.</p>{% endif %}
       </article>
     {% endfor %}
-    </div>
-    {% if not lessons | selectattr('date', 'equalto', today) | list %}<p class="calendar-notice">There is no new lesson scheduled for today. The latest published lessons and archive are available below.</p>{% endif %}
-    <div class="calendar-heading archive-heading"><div><p class="eyebrow">KEEP EXPLORING</p><h2>The lesson archive.</h2></div><p>Your older challenges stay available.</p></div>
-    <div class="calendar-table-scroll"><table class="calendar-table"><caption>Published challenges by date and language</caption><thead><tr><th scope="col">Date</th>{% for label in languages.values() %}<th scope="col">{{ label }}</th>{% endfor %}</tr></thead><tbody>
-    {% for group in lessons | groupby('date') | reverse %}
-      <tr><th scope="row"><time datetime="{{ group.grouper }}">{{ group.grouper }}</time></th>{% for language in languages %}<td>{% for item in group.list if item.language == language %}<a href="{{ url_for('coding.lesson', language=language, day=item.date) }}">{{ item.method }}</a>{% endfor %}</td>{% endfor %}</tr>
-    {% endfor %}
-    </tbody></table></div>
-    <p class="calendar-footnote">New lessons appear on their scheduled dates. The first collection covers seven days across three languages, with past challenges available to revisit any time.</p>
+    <div class="calendar-heading archive-heading" id="archive"><div><p class="eyebrow">KEEP EXPLORING</p><h2>The lesson archive.</h2></div><p>{{ archive_count }} matching published lessons.<br>Older challenges stay available.</p></div>
+    <form class="calendar-archive-filters" method="get" action="{{ url_for('coding.index') }}#archive">
+      <input type="hidden" name="date" value="{{ selected }}"><input type="hidden" name="language" value="{{ selected_language }}">
+      <label for="archive-category">Topic<select id="archive-category" name="category"><option value="">All topics</option>{% for value, label in categories.items() %}<option value="{{ value }}" {% if filters.category == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+      <label for="archive-track">Language<select id="archive-track" name="track"><option value="">All languages</option>{% for value, label in languages.items() %}<option value="{{ value }}" {% if filters.track == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+      <label for="archive-level">Difficulty<select id="archive-level" name="level"><option value="">All levels</option>{% for value, label in levels.items() %}<option value="{{ value }}" {% if filters.level == value %}selected{% endif %}>{{ label }}</option>{% endfor %}</select></label>
+      <label for="archive-month">Month<select id="archive-month" name="month"><option value="">All months</option>{% for value in months %}<option value="{{ value }}" {% if filters.month == value %}selected{% endif %}>{{ value }}</option>{% endfor %}</select></label>
+      <button class="button black" type="submit">Filter archive</button><a href="{{ calendar_url(category=None, track=None, level=None, month=None, page=1) }}#archive">Clear filters</a>
+    </form>
+    {% if lessons %}<div class="calendar-table-scroll" role="region" aria-label="Published lesson archive" tabindex="0"><table class="calendar-table"><caption>Published challenges by date, language, topic, and difficulty</caption><thead><tr><th scope="col">Date</th>{% for label in languages.values() %}<th scope="col">{{ label }}</th>{% endfor %}</tr></thead><tbody>
+    {% for group in lessons | groupby('date') | reverse %}<tr><th scope="row"><a href="{{ calendar_url(date=group.grouper) }}"><time datetime="{{ group.grouper }}">{{ group.grouper }}</time></a></th>{% for language in languages %}<td>{% for item in group.list if item.language == language %}<a href="{{ url_for('coding.lesson', language=language, day=item.date) }}">{{ item.method }}</a><small>{{ categories[item.category] }} · {{ levels[item.level] }}</small>{% else %}<span aria-label="No matching lesson">—</span>{% endfor %}</td>{% endfor %}</tr>{% endfor %}
+    </tbody></table></div>{% else %}<p class="calendar-notice">No published lessons match these filters. Clear a filter to see more.</p>{% endif %}
+    <nav class="calendar-pagination" aria-label="Archive pages">{% if archive_page > 1 %}<a class="button" href="{{ calendar_url(page=archive_page-1) }}#archive">← Newer archive dates</a>{% endif %}<span>Page {{ archive_page }} of {{ archive_pages }}</span>{% if archive_page < archive_pages %}<a class="button" href="{{ calendar_url(page=archive_page+1) }}#archive">Older archive dates →</a>{% endif %}</nav>
+    <p class="calendar-footnote">The calendar opens on the actual current date. Older lessons stay organized by topic, language, difficulty, and month; upcoming dates show when their challenges will open.</p>
   </div></section>
 </main>{% include 'partials/footer.html' %}
 {% endblock %}
+{% block scripts %}<script type="module" src="{{ url_for('static', filename='js/coding/navigation.js') }}"></script>{% endblock %}

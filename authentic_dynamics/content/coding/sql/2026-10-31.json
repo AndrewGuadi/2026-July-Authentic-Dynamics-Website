@@ -1,0 +1,78 @@
+{
+  "language": "sql",
+  "date": "2026-10-31",
+  "method": "HAVING",
+  "summary": "Filter groups after calculating their totals.",
+  "syntax": "SELECT key, SUM(amount) AS total FROM table_name GROUP BY key HAVING SUM(amount) >= threshold;",
+  "documentation": "HAVING filters aggregate groups after grouping. WHERE instead filters individual input rows before aggregation.",
+  "inputs": "Grouped rows and an aggregate condition.",
+  "returns": "Only the groups that pass the condition.",
+  "caution": "Filtering individual rows with WHERE can change a total before HAVING evaluates it. Pick the stage that matches the question.",
+  "docs_url": "https://www.sqlite.org/lang_select.html#resultset",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Find customers whose combined spend exceeds a threshold.",
+    "Identify categories with enough orders to report.",
+    "Flag technicians whose total workload exceeds capacity."
+  ],
+  "title": "Find customers above the spending threshold",
+  "problem": "Return customer and SUM(amount_cents) AS total_cents for customers with a combined total of at least 1000 cents, ordered by customer ascending. Amounts are non-NULL integers.",
+  "goal": "Use HAVING or an equivalent approach that demonstrates the same concept.",
+  "hint": "Group by customer and put the sum condition in HAVING.",
+  "minutes": 12,
+  "starter": "-- Write one SELECT query against the example tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Combine before filtering",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT); INSERT INTO orders VALUES (1, 'Ava', 600, 'paid'), (2, 'Ava', 500, 'paid'), (3, 'Micki', 900, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "customer",
+            "total_cents"
+          ],
+          "values": [
+            [
+              "Ava",
+              1100
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Exact boundary",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT); INSERT INTO orders VALUES (1, 'Micki', 1000, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "customer",
+            "total_cents"
+          ],
+          "values": [
+            [
+              "Micki",
+              1000
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No groups",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "customer",
+            "total_cents"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "aggregation",
+  "level": "intermediate"
+}

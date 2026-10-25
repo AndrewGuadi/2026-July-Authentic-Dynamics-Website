@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}{{ lesson.method }} — {{ languages[lesson.language] }} Daily Challenge | Authentic Dynamics{% endblock %}
 {% block description %}{{ lesson.summary }} Practice with a real coding challenge and browser-based tests.{% endblock %}
-{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/coding.css') }}">{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/coding.css', v='dates-20261024') }}">{% endblock %}
 {% block content %}
 <a class="skip" href="#main">Skip to content</a>{% include 'partials/header.html' %}
 <main id="main">
@@ -10,6 +10,16 @@
     <p class="eyebrow">{{ languages[lesson.language] }} / <time datetime="{{ lesson.date }}">{{ lesson.date }}</time> / {{ lesson.minutes }} MINUTES</p>
     <h1>{{ lesson.method }}</h1><p class="intro">{{ lesson.summary }}</p><div class="actions"><a class="button" href="#workbench">Try the challenge <span>↓</span></a></div>
   </div></section>
+  <div class="wrap">
+    <nav class="lesson-date-nav" aria-label="Browse lesson dates">
+      {% if previous_day %}<a id="lesson-previous" href="{{ url_for('coding.lesson', language=lesson.language, day=previous_day.isoformat()) }}">← {{ previous_day }}</a>{% endif %}
+      <a id="calendar-today" href="{{ url_for('coding.index', language=lesson.language) }}">Today</a>
+      {% if next_day %}<a id="lesson-next" href="{{ url_for('coding.lesson', language=lesson.language, day=next_day.isoformat()) }}">{{ next_day }} →</a>{% endif %}
+      <form class="lesson-date-form" method="get" action="{{ url_for('coding.index') }}"><input type="hidden" name="language" value="{{ lesson.language }}"><label for="lesson-date">Jump to date<input type="date" id="lesson-date" name="date" value="{{ lesson.date }}" required></label><button class="button black" type="submit">Go</button></form>
+    </nav>
+    <nav class="lesson-language-links" aria-label="Languages for {{ lesson.date }}">{% for language in same_day_languages %}<a href="{{ url_for('coding.lesson', language=language, day=lesson.date) }}" {% if language == lesson.language %}aria-current="page"{% endif %}>{{ languages[language] }}</a>{% endfor %}</nav>
+    <p class="calendar-footnote">{{ categories[lesson.category] }} · {{ levels[lesson.level] }}</p>
+  </div>
   <section class="section white"><div class="wrap coding-layout">
     <article class="coding-guide">
       <p class="eyebrow">01 / UNDERSTAND IT</p><h2>The reference.</h2>

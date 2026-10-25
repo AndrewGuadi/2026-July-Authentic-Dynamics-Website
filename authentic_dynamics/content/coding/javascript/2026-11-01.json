@@ -1,0 +1,63 @@
+{
+  "language": "javascript",
+  "date": "2026-11-01",
+  "method": "Object.entries()",
+  "summary": "Turn an object into key-and-value records you can work with.",
+  "syntax": "Object.entries(object)",
+  "documentation": "Object.entries returns an array containing the own enumerable string-keyed properties of an object as [key, value] pairs. Inherited and symbol-keyed properties are not included.",
+  "inputs": "An object whose own string-keyed properties should be listed.",
+  "returns": "An array of two-element arrays.",
+  "caution": "Property enumeration has defined ordering rules, but a report should explicitly sort when a particular presentation order matters.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Turn inventory quantities into rows for a report.",
+    "Display a settings dictionary as labeled values.",
+    "Convert a count-by-category object into chart inputs."
+  ],
+  "title": "List stock quantities by code",
+  "problem": "Input is an object whose lowercase alphabetic keys are stock codes and whose values are integer quantities. Return its [key, value] pairs sorted by key ascending.",
+  "goal": "Use Object.entries() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Use Object.entries, then sort the pairs by their first element.",
+  "minutes": 12,
+  "starter": "function solve(value) {\n  // Return your answer here.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Unordered stock",
+      "input": {
+        "seal": 4,
+        "pipe": 2
+      },
+      "expected": [
+        [
+          "pipe",
+          2
+        ],
+        [
+          "seal",
+          4
+        ]
+      ]
+    },
+    {
+      "name": "Zero stock",
+      "input": {
+        "valve": 0
+      },
+      "expected": [
+        [
+          "valve",
+          0
+        ]
+      ]
+    },
+    {
+      "name": "No stock",
+      "input": {},
+      "expected": []
+    }
+  ],
+  "category": "objects",
+  "level": "beginner"
+}

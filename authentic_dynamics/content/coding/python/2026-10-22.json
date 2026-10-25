@@ -1,0 +1,44 @@
+{
+  "language": "python",
+  "date": "2026-10-22",
+  "method": "str.lower()",
+  "summary": "Normalize the case of a text value.",
+  "syntax": "text.lower()",
+  "documentation": "lower returns a new string with cased characters converted to lowercase. Characters without a lowercase mapping remain unchanged.",
+  "inputs": "The string whose case should be normalized.",
+  "returns": "A new string containing lowercase characters.",
+  "caution": "lower is not the same as Unicode casefolding. This challenge uses ASCII input and preserves whitespace.",
+  "docs_url": "https://docs.python.org/3/library/stdtypes.html#str.lower",
+  "docs_source": "Python",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Normalize a simple imported status field.",
+    "Prepare ASCII tags for case-insensitive comparison.",
+    "Create consistent labels from mixed-case input."
+  ],
+  "title": "Normalize an ASCII status",
+  "problem": "Return the input ASCII string in lowercase. Preserve spaces, digits and punctuation exactly.",
+  "goal": "Use str.lower() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Use lower without trimming the text.",
+  "minutes": 12,
+  "starter": "def solve(value):\n    # Return your answer here.\n    return None\n",
+  "tests": [
+    {
+      "name": "Mixed case",
+      "input": "Ready TO Dispatch",
+      "expected": "ready to dispatch"
+    },
+    {
+      "name": "Punctuation and padding",
+      "input": "  INV-42!  ",
+      "expected": "  inv-42!  "
+    },
+    {
+      "name": "Empty status",
+      "input": "",
+      "expected": ""
+    }
+  ],
+  "category": "strings",
+  "level": "beginner"
+}

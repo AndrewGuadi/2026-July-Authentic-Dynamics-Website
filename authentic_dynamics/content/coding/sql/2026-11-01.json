@@ -1,0 +1,86 @@
+{
+  "language": "sql",
+  "date": "2026-11-01",
+  "method": "LEFT JOIN",
+  "summary": "Keep the primary records even when related data is absent.",
+  "syntax": "SELECT ... FROM primary_table LEFT JOIN related_table ON join_condition;",
+  "documentation": "LEFT JOIN preserves every row from its left input. If no right-side row satisfies the join condition, the right-side columns in that result row are NULL.",
+  "inputs": "Two inputs and a relationship expressed in ON.",
+  "returns": "Matched rows plus unmatched left-side rows with NULL right-side values.",
+  "caution": "A right-table filter in WHERE can remove unmatched rows. Consider whether a condition belongs in ON instead.",
+  "docs_url": "https://www.sqlite.org/lang_select.html#fromclause",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "List all customers, including those without a booking.",
+    "Show every product even when it has no sales yet.",
+    "Report every staff member, including those without an assignment."
+  ],
+  "title": "Include customers without jobs",
+  "problem": "Return customers.id AS customer_id and jobs.id AS job_id for every customer, including customers without jobs. Order by customer_id, then job_id ascending.",
+  "goal": "Use LEFT JOIN or an equivalent approach that demonstrates the same concept.",
+  "hint": "Keep customers on the left and join jobs using the customer ID.",
+  "minutes": 12,
+  "starter": "-- Write one SELECT query against the example tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "A customer without jobs",
+      "setup": "CREATE TABLE customers (id INTEGER, name TEXT); CREATE TABLE jobs (id INTEGER, customer_id INTEGER); INSERT INTO customers VALUES (1,'Ava'),(2,'Micki'); INSERT INTO jobs VALUES (8,1),(7,1);",
+      "expected": [
+        {
+          "columns": [
+            "customer_id",
+            "job_id"
+          ],
+          "values": [
+            [
+              1,
+              7
+            ],
+            [
+              1,
+              8
+            ],
+            [
+              2,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No jobs at all",
+      "setup": "CREATE TABLE customers (id INTEGER, name TEXT); CREATE TABLE jobs (id INTEGER, customer_id INTEGER); INSERT INTO customers VALUES (3,'Andrew');",
+      "expected": [
+        {
+          "columns": [
+            "customer_id",
+            "job_id"
+          ],
+          "values": [
+            [
+              3,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No customers",
+      "setup": "CREATE TABLE customers (id INTEGER, name TEXT); CREATE TABLE jobs (id INTEGER, customer_id INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "customer_id",
+            "job_id"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "joins",
+  "level": "intermediate"
+}

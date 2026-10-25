@@ -34,7 +34,7 @@ const cache = process.env.CODING_RUNTIME_CACHE;
   }
   try {
     await page.goto(base + '/coding-calendar/');
-    assert.equal(await page.locator('.calendar-table tbody tr').count(), new Set(Object.keys(solutions).map(key => key.split('/')[1])).size);
+    assert.equal(await page.locator('.calendar-table tbody tr').count(), Math.min(20, new Set(Object.keys(solutions).map(key => key.split('/')[1])).size));
     for (const [key, code] of (process.env.CODING_SKIP_REFERENCE ? [] : Object.entries(solutions))) {
       await page.goto(base + '/coding-calendar/' + key + '/');
       await source(code);
@@ -43,6 +43,9 @@ const cache = process.env.CODING_RUNTIME_CACHE;
       console.log('PASS', key);
     }
     await page.goto(base + '/coding-calendar/javascript/2026-10-24/');
+    await page.locator('.cm-content').focus();
+    await page.keyboard.press('Tab');
+    assert.equal(await page.evaluate(() => document.activeElement.id), 'coding-run');
     await source('function solve(value) { return []; }');
     await run(/2 of 3 tests passed/);
     await source('function solve(value) { throw new Error("<img src=x onerror=alert(1)>"); }');

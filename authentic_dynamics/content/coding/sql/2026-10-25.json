@@ -76,5 +76,7 @@
         }
       ]
     }
-  ]
+  ],
+  "category": "aggregation",
+  "level": "intermediate"
 }
