@@ -128,3 +128,9 @@ nav a,.textlink,.industry-actions .textlink,.service .textlink,.tool-card .textl
  .about-gallery{grid-template-columns:1fr 1fr}.about-gallery > div{height:150px}
  .visual-break-grid{grid-template-columns:1fr 1fr;height:130px}.visual-break-grid>*:nth-child(n+3){display:none}
 }
+
+/* The contact clip keeps the existing image footprint and a permanent still fallback. */
+.contact-conversation{position:relative}
+.contact-conversation video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.contact-conversation video[hidden]{display:none}
+@media(prefers-reduced-motion:reduce){.contact-conversation video{display:none}}

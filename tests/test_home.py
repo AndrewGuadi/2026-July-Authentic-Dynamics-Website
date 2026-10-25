@@ -89,3 +89,19 @@ def test_about_page_has_contact_submission_form_elements(client):
     assert 'name="email" type="email"' in page
     for asset in ("/static/css/pages.css", "/static/js/site.js"):
         assert client.get(asset).status_code == 200
+
+
+def test_contact_conversation_has_accessible_still_and_optional_motion(client):
+    html = client.get("/").get_data(as_text=True)
+    assert 'class="contact-founder-photo contact-conversation"' in html
+    assert 'alt="A friendly conversation over coffee at a café"' in html
+    assert 'hidden muted loop playsinline controls preload="none"' in html
+    assert 'autoplay' not in html.split('id="contact-conversation"')[1].split('</video>')[0]
+    for asset in (
+        "js/contact-motion.js",
+        "images/contact-conversation-poster.webp",
+        "videos/contact-conversation.mp4",
+    ):
+        response = client.get(f"/static/{asset}")
+        assert response.status_code == 200
+        assert response.data
