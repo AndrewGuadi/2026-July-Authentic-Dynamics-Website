@@ -10,19 +10,56 @@ const industries = {
  community:{label:'NONPROFITS / COMMUNITY ORGANIZATIONS',title:'Make your mission easier to get behind.',copy:'Help people understand the impact, find the information they need and decide how to help. Build clear paths for donations, volunteering, registration and community support.',priority:'Participation & support',start:'Mission-led website + simple actions',tool:'planner',toolLabel:'Outline your organization’s site',interest:'Community project or nonprofit',images:[{file:'nonprofit-section-1-image-1.webp',alt:'Volunteers distributing supplies at a community event'},{file:'nonprofit-section-1-image-2.webp',alt:'Community organization representative speaking with visitors'},{file:'nonprofit-section-1-image-3-mobile.webp',alt:'Illustrative nonprofit website shown on a phone'}]},
  platforms:{label:'FOUNDERS / GROWING TEAMS',title:'Build around the way your business works.',copy:'When spreadsheets, disconnected tools and manual follow-up start holding you back, map the real need first. Then build the platform, integration or workflow that solves it.',priority:'Less friction, more capacity',start:'Discovery + custom systems',tool:'calculator',toolLabel:'Compare website costs',interest:'AI, automation & custom systems',images:[{file:'founders-section-1-image-1.webp',alt:'Small business owner planning work at a laptop'},{file:'founders-section-1-image-2.webp',alt:'Diagram of inquiry capture, customer records, follow-up, and notifications'},{file:'founders-section-1-image-3.webp',alt:'Illustrative business dashboard showing inquiries, projects, and follow-up tasks'}]}
 };
-function selectIndustry(key){
+const homeMotionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+let industryTransition;
+let inquiryContextInterest = '';
+homeMotionPreference.addEventListener('change', () => industryTransition?.cancel());
+const industryExamples = {
+ trades: ['/work#plumbing', 'Explore a home-services example'],
+ food: ['/work#festival', 'Explore a community-event example'],
+ property: ['/work#real-estate', 'Explore a real-estate example'],
+ events: ['/work#festival', 'Explore an event example'],
+ community: ['/work#festival', 'Explore a community example'],
+ platforms: ['/growth-technology', 'Explore practical technology']
+};
+function selectIndustry(key, animate = false){
  const d=industries[key];
+ if (!d) return;
+ industryTransition?.cancel();
  $$('[data-industry]').forEach(b=>{const active=b.dataset.industry===key;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});
  const panel=$('#industry-panel');panel.setAttribute('aria-labelledby','tab-'+key);
  const imageBase=panel.dataset.imageBase;
- panel.innerHTML=`<div class="industry-visuals${key==='platforms'?' industry-visuals-platforms':''}"><div class="industry-primary"><img loading="lazy" decoding="async" src="${imageBase}${d.images[0].file}" alt="${escapeHTML(d.images[0].alt)}"></div><div><img loading="lazy" decoding="async" src="${imageBase}${d.images[1].file}" alt="${escapeHTML(d.images[1].alt)}"></div><div class="industry-screen"><img loading="lazy" decoding="async" src="${imageBase}${d.images[2].file}" alt="${escapeHTML(d.images[2].alt)}"></div></div><p class="eyebrow">${d.label}</p><h3>${d.title}</h3><p>${d.copy}</p><div class="industry-details"><div><small>YOUR PRIORITY</small><strong>${d.priority}</strong></div><div><small>A SMART START</small><strong>${d.start}</strong></div></div><div class="industry-actions"><a class="textlink" href="#contact" data-interest="${d.interest}">Talk about your business <span>↗</span></a><button class="textlink" data-tool="${d.tool}">${d.toolLabel} <span>↗</span></button></div>`;
+ panel.innerHTML=`<div class="industry-visuals${key==='platforms'?' industry-visuals-platforms':''}"><div class="industry-primary"><img loading="lazy" decoding="async" src="${imageBase}${d.images[0].file}" alt="${escapeHTML(d.images[0].alt)}"></div><div><img loading="lazy" decoding="async" src="${imageBase}${d.images[1].file}" alt="${escapeHTML(d.images[1].alt)}"></div><div class="industry-screen"><img loading="lazy" decoding="async" src="${imageBase}${d.images[2].file}" alt="${escapeHTML(d.images[2].alt)}"></div></div><p class="eyebrow">${d.label}</p><h3>${d.title}</h3><p>${d.copy}</p><div class="industry-details"><div><small>YOUR PRIORITY</small><strong>${d.priority}</strong></div><div><small>A SMART START</small><strong>${d.start}</strong></div></div><div class="industry-actions"><a class="textlink" href="#contact" data-industry-contact="${key}" data-interest="${d.interest}">Talk about your business <span>↗</span></a><button class="textlink" data-tool="${d.tool}">${d.toolLabel} <span>↗</span></button></div><a class="textlink industry-proof" href="${industryExamples[key][0]}">${industryExamples[key][1]} <span aria-hidden="true">↗</span></a>`;
+ if (animate && !homeMotionPreference.matches && panel.animate) {
+  industryTransition = panel.animate([{opacity: .65, transform: 'translateY(5px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 180, easing: 'ease-out'});
+ }
 }
 selectIndustry('trades');
 $$('[data-industry]').forEach((button,i)=>{
- button.addEventListener('click',()=>selectIndustry(button.dataset.industry));
- button.addEventListener('keydown',e=>{const keys=['ArrowDown','ArrowUp','ArrowRight','ArrowLeft','Home','End'];if(!keys.includes(e.key))return;e.preventDefault();const tabs=$$('[data-industry]');let n=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowDown'||e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;selectIndustry(tabs[n].dataset.industry);tabs[n].focus();});
+ button.addEventListener('click',()=>selectIndustry(button.dataset.industry, true));
+ button.addEventListener('keydown',e=>{const keys=['ArrowDown','ArrowUp','ArrowRight','ArrowLeft','Home','End'];if(!keys.includes(e.key))return;e.preventDefault();const tabs=$$('[data-industry]');let n=e.key==='Home'?0:e.key==='End'?tabs.length-1:(i+(e.key==='ArrowDown'||e.key==='ArrowRight'?1:-1)+tabs.length)%tabs.length;selectIndustry(tabs[n].dataset.industry, true);tabs[n].focus();});
 });
-document.addEventListener('click',e=>{const trigger=e.target.closest('[data-tool]');if(trigger)openTool(trigger.dataset.tool);});
+document.addEventListener('click',e=>{
+ const trigger=e.target.closest('[data-tool]');
+ if(trigger)openTool(trigger.dataset.tool);
+ const contactLink=e.target.closest('[data-industry-contact]');
+ if(contactLink){
+  const industry=industries[contactLink.dataset.industry];
+  const context=$('#industry-context');
+  if(industry && context){
+   inquiryContextInterest=industry.interest;
+   context.textContent=`Your starting point: ${industry.priority}. You can change the service below or describe a different goal.`;
+   context.hidden=false;
+  }
+ }else if(e.target.closest('[data-interest]')){
+  const context=$('#industry-context');
+  if(context)context.hidden=true;
+ }
+});
+$('#interest')?.addEventListener('change', () => {
+ const context=$('#industry-context');
+ if (context && $('#interest').value !== inquiryContextInterest) context.hidden=true;
+});
 const dialog=$('#tool-dialog');let activeTool='';let resultText='';
 $('#close-tool').addEventListener('click',()=>dialog.close());
 dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});
@@ -33,12 +70,22 @@ function wireResult(){ $('#download-result')?.addEventListener('click',downloadR
 function openTool(key){
  activeTool=key;resultText='';$('#tool-output').innerHTML='';
  const config={planner:['Homepage Planner','A practical, rules-based outline built from your answers. Use it as a starting brief for your website.'],calculator:['Website Ownership Calculator','Compare two options using your own costs. These are estimates, not a quote or a recommendation.'],visibility:['Local Visibility Checklist','A self-assessment of the basics. This does not scan your site, access your Google profile or measure your search rankings.']};
+ if (!config[key]) return;
  $('#tool-title').textContent=config[key][0];$('#tool-description').textContent=config[key][1];
  if(key==='planner'){
- $('#tool-body').innerHTML=`<form id="planner-form" class="tool-form"><label>Business name<input name="business" maxlength="100" required placeholder="Your business name"></label><label>Location or service area<input name="area" maxlength="180" required placeholder="e.g. Camp Hill & West Shore"></label><label class="full">Who do you help?<input name="audience" maxlength="220" required placeholder="e.g. Homeowners who need reliable plumbing help"></label><label class="full">Your main services or products<input name="services" maxlength="350" required placeholder="e.g. Drain cleaning, repairs, water heaters"></label><label class="full">Why should a customer choose you?<input name="difference" maxlength="350" required placeholder="A specific promise or strength you can back up"></label><label>Main customer action<select name="action"><option>Request a quote</option><option>Book a consultation</option><option>Call for service</option><option>Browse products</option><option>Register for an event</option><option>Donate or volunteer</option></select></label><label>Public contact detail<input name="contact" maxlength="180" required placeholder="Business phone or email"></label><button type="submit" class="button black full">Build my homepage outline ↗</button></form>`;
+ $('#tool-body').innerHTML=`<form id="planner-form" class="tool-form"><div class="full"><button type="button" class="textlink" id="planner-example">Try a fictional business example <span aria-hidden="true">↗</span></button><p class="caption" id="planner-example-note" hidden>Fictional example loaded. Change any answer to suit your business before building the outline.</p></div><label>Business name<input name="business" maxlength="100" required placeholder="Your business name"></label><label>Location or service area<input name="area" maxlength="180" required placeholder="e.g. Camp Hill & West Shore"></label><label class="full">Who do you help?<input name="audience" maxlength="220" required placeholder="e.g. Homeowners who need reliable plumbing help"></label><label class="full">Your main services or products<input name="services" maxlength="350" required placeholder="e.g. Drain cleaning, repairs, water heaters"></label><label class="full">Why should a customer choose you?<input name="difference" maxlength="350" required placeholder="A specific promise or strength you can back up"></label><label>Main customer action<select name="action"><option>Request a quote</option><option>Book a consultation</option><option>Call for service</option><option>Browse products</option><option>Register for an event</option><option>Donate or volunteer</option></select></label><label>Public contact detail<input name="contact" maxlength="180" required placeholder="Business phone or email"></label><button type="submit" class="button black full">Build my homepage outline ↗</button></form>`;
+ $('#planner-example').addEventListener('click', () => {
+  const sample={business:'Keystone Garden Care', area:'Camp Hill & West Shore', audience:'Homeowners who need seasonal garden care', services:'Garden cleanup, planting and routine maintenance', difference:'A clear plan and estimate before work begins', action:'Request a quote', contact:'hello@example.com'};
+  const form=$('#planner-form');
+  Object.entries(sample).forEach(([name,value])=>{form.elements.namedItem(name).value=value;});
+  $('#tool-output').replaceChildren();
+  resultText='';
+  $('#planner-example-note').hidden=false;
+  form.elements.namedItem('business').focus();
+ });
  $('#planner-form').addEventListener('submit',e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target));const sections=[['1. First screen',`${d.business} — ${d.services} in ${d.area}.\nHelp ${d.audience.toLowerCase()}.\nLead with: ${d.difference}\nPrimary button: ${d.action}.`],['2. What you offer',`Create a short section for each of these: ${d.services}. Explain the customer’s need, what is included and how to take the next step.`],['3. Why customers can trust you','Use real work examples, original photos and approved customer feedback. Include credentials only when they apply and can be verified.'],['4. How it works',`Explain what happens when someone chooses “${d.action}”: the first contact, what you need from them, and what happens next.`],['5. Local information',`Clearly list ${d.area}, your business hours and any service-area limits. Keep contact information consistent: ${d.contact}.`],['6. Common questions','Answer questions about scope, timing, pricing or estimates, and how to get started. Be specific about what requires a custom quote.'],['7. Final invitation',`Repeat “${d.action}” with the contact route: ${d.contact}. Remove any extra steps that make it harder to act.`],['Before you launch','Check contact links and forms, keyboard access, mobile readability, page speed, image descriptions and accuracy of every business claim.']];
  resultText=`HOMEPAGE OUTLINE — ${d.business}\nCreated with Authentic Dynamics\n\n`+sections.map(x=>x.join('\n')).join('\n\n');
- $('#tool-output').innerHTML='<div class="result"><h3>Your homepage starting point</h3>'+sections.map(([title,copy])=>`<h4>${title}</h4><p>${escapeHTML(copy).replace(/\n/g,'<br>')}</p>`).join('')+resultFooter()+'</div>';wireResult();$('#tool-output').scrollIntoView({behavior:'smooth',block:'nearest'});});
+ $('#tool-output').innerHTML='<div class="result"><h3>Your homepage starting point</h3>'+sections.map(([title,copy])=>`<h4>${title}</h4><p>${escapeHTML(copy).replace(/\n/g,'<br>')}</p>`).join('')+resultFooter()+'</div>';wireResult();$('#tool-output').scrollIntoView({behavior:homeMotionPreference.matches?'instant':'smooth',block:'nearest'});});
  }else if(key==='calculator'){
  $('#tool-body').innerHTML=`<form id="calculator-form" class="tool-form"><label>Owning: initial build ($)<input type="number" name="build" value="500" min="0" max="10000000" step="0.01" required></label><label>Owning: monthly costs ($)<input type="number" name="ownMonthly" value="25" min="0" max="100000" step="0.01" required></label><label>Renting: setup cost ($)<input type="number" name="setup" value="0" min="0" max="10000000" step="0.01" required></label><label>Renting: monthly costs ($)<input type="number" name="rentMonthly" value="100" min="0" max="100000" step="0.01" required></label><label class="full">Free hosting months included with ownership<input type="number" name="freeMonths" value="12" min="0" max="60" step="1" required></label><button type="submit" class="button black full">Compare costs ↗</button></form><p class="caption">Example values are editable, not quoted renewal rates. Include comparable hosting, support and maintenance in each option. The free-month setting waives all entered ownership monthly costs for that period; set it to 0 if those costs still apply.</p>`;
  $('#calculator-form').addEventListener('submit',e=>{e.preventDefault();const values=Object.fromEntries([...new FormData(e.target)].map(([k,v])=>[k,Number(v)]));const {build,ownMonthly,setup,rentMonthly,freeMonths}=values;const money=n=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n);const own=m=>build+Math.max(0,m-freeMonths)*ownMonthly;const rent=m=>setup+m*rentMonthly;const months=[12,24,36,60];let first=null;for(let m=0;m<=60;m++){if(own(m)<=rent(m)){first=m;break;}}

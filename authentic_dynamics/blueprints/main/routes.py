@@ -1,7 +1,17 @@
 import re
 from xml.etree import ElementTree
 
-from flask import abort, current_app, flash, make_response, redirect, render_template, request, url_for
+from flask import (
+    abort,
+    current_app,
+    flash,
+    make_response,
+    redirect,
+    render_template,
+    request,
+    url_for,
+)
+from sqlalchemy.exc import SQLAlchemyError
 
 from authentic_dynamics.blog import get_blog_post, get_blog_posts
 from authentic_dynamics.extensions import db
@@ -12,7 +22,8 @@ from . import bp
 
 @bp.get("/")
 def index():
-    return render_template("main/index.html", contact_source="home")
+    return render_template("main/index.html", contact_source="home", active_page="home",
+                           form_values=_contact_prefill())
 
 
 @bp.get("/llms.txt")
@@ -177,18 +188,19 @@ def work():
 @bp.get("/about-community")
 def about_community():
     return render_template(
-        "main/about_community.html", active_page="about", contact_source="about"
+        "main/about_community.html", active_page="about", contact_source="about",
+        form_values=_contact_prefill(),
     )
 
 
 @bp.get("/privacy-policy")
 def privacy_policy():
-    return render_template("main/privacy_policy.html")
+    return render_template("main/privacy_policy.html", active_page="privacy")
 
 
 @bp.get("/terms")
 def terms():
-    return render_template("main/terms.html")
+    return render_template("main/terms.html", active_page="terms")
 
 
 INTERESTS = {
@@ -200,8 +212,23 @@ INTERESTS = {
     "Community project or nonprofit",
 }
 
+INTEREST_KEYS = {
+    "website": "Small business website — from $500",
+    "custom": "Website rebuild or larger platform",
+    "growth": "Local visibility & marketing",
+    "automation": "AI, automation & custom systems",
+    "community": "Community project or nonprofit",
+}
+
+
+def _contact_prefill():
+    """Only explicit public service keys can prefill an editable form field."""
+    interest = INTEREST_KEYS.get(request.args.get("interest", ""))
+    return {"interest": interest} if interest else {}
+
+
 CONTACT_PAGES = {
-    "home": ("main/index.html", "main.index", None),
+    "home": ("main/index.html", "main.index", "home"),
     "about": ("main/about_community.html", "main.about_community", "about"),
 }
 
@@ -240,7 +267,18 @@ def submit_contact():
             form_errors=errors,
         ), 400
 
-    db.session.add(ContactSubmission(source_page=source, **values))
-    db.session.commit()
+    try:
+        db.session.add(ContactSubmission(source_page=source, **values))
+        db.session.commit()
+    except SQLAlchemyError:
+        db.session.rollback()
+        # Do not put contact content or database credentials in error messages/logs.
+        current_app.logger.error("Contact inquiry could not be saved.")
+        return render_template(
+            template, active_page=active_page, contact_source=source,
+            form_values=values,
+            form_errors={"_form": "Your inquiry was not saved. Your text is still below. "
+                         "Please try again, or contact us by email."},
+        ), 503
     flash("Thanks. Your inquiry was saved and we’ll be in touch using the email you provided.", "success")
     return redirect(f"{url_for(endpoint)}#contact", code=303)

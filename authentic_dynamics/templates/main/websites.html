@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
-{% block title %}Pennsylvania Website Design &amp; Development | Authentic Dynamics{% endblock %}
-{% block description %}Custom website design and development for Central Pennsylvania small businesses. Mobile-first sites, local SEO basics, clear ownership and $500 starting builds.{% endblock %}
+{% block title %}Harrisburg Web Design for Small Businesses | Authentic Dynamics{% endblock %}
+{% block description %}Web design for Harrisburg and Central PA small businesses. Mobile-first websites from $500, first-year standard hosting and clear ownership. See scope and local work.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/service-experiences.css') }}">{% endblock %}
 {% block content %}
 <a class="skip" href="#main">Skip to content</a>
 {% include 'partials/header.html' %}
@@ -9,23 +10,39 @@
     <div class="wrap page-hero-grid">
       <div>
         <p class="eyebrow">01 / WEBSITE DESIGN &amp; DEVELOPMENT</p>
-        <h1>A website that<br><em>earns its place.</em></h1>
-        <p class="intro">We design and develop mobile-first websites for small businesses across Central Pennsylvania. Give people a clear reason to trust you and an easy way to take the next step—then own the asset we build together.</p>
+        <h1>Harrisburg web design.<br><em>Built for your business.</em></h1>
+        <p class="intro">We design and develop mobile-first websites for small businesses in Harrisburg and across Central Pennsylvania. Give people a clear reason to trust you and an easy way to take the next step—then own the asset we build together.</p>
         <div class="actions"><a class="button" href="#starter">Explore the $500 start <span>↗</span></a><a class="textlink light" href="#options">See custom options <span>↗</span></a></div>
       </div>
-      <div class="web-visual" aria-label="Illustration of a business website on desktop and mobile">
-        <div class="web-window"><div class="web-chrome"><i></i><i></i><i></i><span>yourbusiness.com</span></div><div class="web-screen"><span class="mini-label">YOUR BUSINESS, CLEARLY.</span><strong>Make a strong<br>first impression.</strong><span class="fake-button">Get in touch ↗</span><div class="web-screen-lines"><b></b><b></b><b></b></div></div></div>
-        <div class="web-phone"><span></span><strong>Built for<br>every screen.</strong><i></i><i></i><i></i></div>
-        <span class="web-stamp">WE BUILD. YOU OWN. ↗</span>
-      </div>
+      <aside class="service-experience" id="website-experience" aria-labelledby="website-demo-heading">
+        <div class="experience-caption"><span>TRY A CUSTOMER JOURNEY</span><span>Fictional business</span></div>
+        <h2 id="website-demo-heading">What should your website do?</h2>
+        <div class="experience-choices" role="group" aria-label="Website goal" data-service-controls hidden>
+          <button type="button" data-website-goal="inquiries" aria-pressed="true">Get inquiries</button>
+          <button type="button" data-website-goal="booking" aria-pressed="false">Plan a visit</button>
+          <button type="button" data-website-goal="catalog" aria-pressed="false">Show products</button>
+        </div>
+        <div class="example-site" id="website-demo-panel">
+          <div class="example-site-bar"><strong>KEYSTONE HOME &amp; GARDEN</strong><span>Example website</span></div>
+          <p class="example-site-kicker" id="website-demo-kicker">LOCAL SERVICE / CLEAR NEXT STEP</p>
+          <h3 id="website-demo-title">A little help for your outdoor space.</h3>
+          <p id="website-demo-copy">Understand the service, check the fit, then start a conversation.</p>
+          <div class="example-site-detail" id="website-demo-detail">Garden care · Seasonal cleanup · Small outdoor projects</div>
+          <button class="button black" type="button" id="website-demo-action" data-service-controls hidden>Try an inquiry <span aria-hidden="true">↗</span></button>
+          <p class="example-site-status" id="website-demo-status" role="status" aria-live="polite">Preview only. No information is collected or sent.</p>
+        </div>
+        <div class="experience-recommendation"><span class="card-index">A USEFUL START</span><p id="website-demo-scope">Clear services, real coverage and a simple inquiry path. A focused site can start at $500; exact scope is agreed first.</p><a class="textlink light" id="website-demo-contact" href="{{ url_for('main.about_community', interest='website') }}#contact">Talk about this kind of website <span aria-hidden="true">↗</span></a></div>
+        <noscript><p class="experience-note">An inquiry site explains the service and provides a clear way to contact you. Appointment and catalog features are scoped to your business. JavaScript enables the optional examples.</p></noscript>
+      </aside>
     </div>
   </section>
 
   <div class="page-ribbon"><div class="wrap"><span>Mobile first</span><span>Clear next steps</span><span>Local search basics</span><span>Ownership handoff</span></div></div>
+  {% include 'partials/local_web_design.html' %}
 
   <section class="section" id="starter"><div class="wrap split-section">
     <div><p class="eyebrow">A SENSIBLE START</p><h2>A focused website.<br>A clear price.</h2><p class="section-lead">For a small business that needs a dependable home online, a focused build can be the right first step.</p><p>We confirm the page count, content, revision rounds and handoff before work starts. More involved features get their own scope.</p></div>
-    <article class="offer-panel"><div class="offer-panel-top"><span>SMALL BUSINESS STARTER</span><span>01 / FOUNDATION</span></div><div class="offer-number">$500 <small>starting build</small></div><p>A focused business website with the first year of standard hosting included.</p><ul class="tick-list"><li>Mobile-first design</li><li>Business and service information</li><li>Contact or booking inquiry path</li><li>Local SEO basics and analytics setup</li><li>Domain connection, social links and ownership handoff</li></ul><a class="button black" href="{{ url_for('main.about_community') }}#contact">Talk about my website <span>↗</span></a><small>Final scope is quoted before work begins. Domain, renewal hosting and third-party fees are agreed separately.</small></article>
+    <article class="offer-panel"><div class="offer-panel-top"><span>SMALL BUSINESS STARTER</span><span>01 / FOUNDATION</span></div><div class="offer-number">$500 <small>starting build</small></div><p>A focused business website with the first year of standard hosting included.</p><ul class="tick-list"><li>Mobile-first design</li><li>Business and service information</li><li>Contact or booking inquiry path</li><li>Local SEO basics and analytics setup</li><li>Domain connection, social links and ownership handoff</li></ul><a class="button black" href="{{ url_for('main.about_community', interest='website') }}#contact">Talk about my website <span>↗</span></a><small>Final scope is quoted before work begins. Domain, renewal hosting and third-party fees are agreed separately.</small></article>
   </div></section>
 
   <section class="section white" id="options"><div class="wrap">
@@ -38,7 +55,7 @@
     <p class="section-footnote">Growth websites and custom platforms are priced after discovery. E-commerce, advanced booking and custom systems are quoted separately from the starter offer.</p>
   </div></section>
 
-  <section class="section dark"><div class="wrap ownership-callout"><div><p class="eyebrow">AN ASSET, NOT A RENTAL</p><h2>We build.<br><em>You own.</em></h2></div><div><p>Your domain, content and agreed project assets stay under your control. We document the handoff so you can keep working with us, manage the site yourself or move to another partner.</p><div class="owner-pills"><span>Clear scope</span><span>Account access</span><span>Documented handoff</span></div><small>Ownership of code and third-party licenses follows your written project agreement.</small></div></div></section>
+  <section class="section dark"><div class="wrap ownership-callout"><div><p class="eyebrow">AN ASSET, NOT A RENTAL</p><h2>We build.<br><em>You own.</em></h2></div><div><p>Your domain, content and agreed project assets stay under your control. We document the handoff so you can keep working with us, manage the site yourself or move to another partner.</p><ul class="handoff-list"><li><strong>Accounts</strong> Domain and agreed business access</li><li><strong>Assets</strong> Agreed code, content and files</li><li><strong>Instructions</strong> How to manage the site and find support</li></ul><small>Ownership of code and third-party licenses follows your written project agreement.</small></div></div></section>
 
   <section class="section white"><div class="wrap"><div class="section-head"><div><p class="eyebrow">THE WAY WE WORK</p><h2>A clear path from idea to launch.</h2></div><p>Each project is different, but the sequence stays understandable.</p></div><div class="step-grid"><article><span>01</span><h3>Understand</h3><p>We learn your goals, audience, content and constraints.</p></article><article><span>02</span><h3>Plan</h3><p>We agree on the pages, features, timeline and price.</p></article><article><span>03</span><h3>Build</h3><p>You review working progress and give feedback.</p></article><article><span>04</span><h3>Launch & hand over</h3><p>We check the site, connect the domain and share the assets.</p></article></div></div></section>
 
@@ -49,3 +66,5 @@
 </main>
 {% include 'partials/footer.html' %}
 {% endblock %}
+
+{% block scripts %}<script src="{{ url_for('static', filename='js/service-experiences.js') }}" defer></script>{% endblock %}

@@ -10,7 +10,11 @@
   <section class="section white"><div class="wrap converter-layout">
     <form class="converter-form json-converter" method="post" enctype="multipart/form-data" action="{{ url_for('tools.json_converter') }}" data-converter data-pdf-page-url="{{ url_for('tools.json_pdf_page') }}">
       <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
-      <p class="eyebrow">LET’S CONVERT YOUR DATA</p><h2>Start with your JSON.</h2>
+      <ol class="workspace-steps" aria-label="Conversion steps"><li>Choose input</li><li>Inspect layout</li><li>Export</li></ol><p class="eyebrow">LET’S CONVERT YOUR DATA</p><h2>Start with your JSON.</h2>
+      <div class="workspace-actions" data-json-samples hidden role="group" aria-label="Load a JSON sample">
+        <button type="button" class="button tool-secondary" data-json-sample="inventory">Use an inventory sample</button>
+        <button type="button" class="button tool-secondary" data-json-sample="orders">Use nested orders</button>
+      </div><p class="tool-note" data-json-sample-note hidden>Samples replace the file and text inputs. They stay in this page until you choose Preview or Convert.</p>
       <label class="upload-field" for="tool-file"><strong>01 / Upload a file</strong><span>UTF-8 JSON file · up to 10 MiB</span><input id="tool-file" name="file" type="file" accept=".json,application/json" aria-describedby="file-note"></label>
       <label class="json-text-label" for="json-text">Or paste JSON text</label>
       <textarea id="json-text" name="json_text" rows="10" maxlength="400000" spellcheck="false" aria-describedby="json-note file-note" placeholder='[{"name": "Alex", "code": "001", "active": true}]'>{{ values.get('json_text', '') }}</textarea>

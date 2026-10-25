@@ -89,6 +89,11 @@ def video_server():
         return {"error": str(exc)}, 400
 
 
+@bp.get("/event-break-even")
+def event_break_even():
+    return render_template("tools/event_break_even.html", active_page="tools")
+
+
 @bp.get("/list-cleaner")
 def list_cleaner():
     return render_template("tools/list_cleaner.html", active_page="tools")
@@ -202,8 +207,11 @@ def converter(kind):
                     raise ConversionError("Choose a supported resolution.")
                 result, extension = convert_pdf(data, extension, int(dpi))
             else:
+                is_preview = request.form.get("action") == "preview"
                 result = convert_csv(data, extension, request.form.get("delimiter", ","),
-                                     request.form.get("headers") == "on")
+                                     request.form.get("headers") == "on", preview=is_preview)
+                if is_preview:
+                    return result
             stem = Path(secure_filename(upload.filename)).stem[:100] or "converted"
             return send_file(io.BytesIO(result), mimetype=MIMETYPES[extension],
                              as_attachment=True, download_name=f"{stem}.{extension}", max_age=0)

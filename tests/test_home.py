@@ -20,7 +20,7 @@ def test_homepage_renders_with_local_assets(client):
     assert b"Authentic Dynamics" in response.data
     assert b"We build" in response.data
     assert b"Central PA Website Design &amp; Digital Growth" in response.data
-    assert b'href="/websites">Explore website design' in response.data
+    assert b'href="/websites">Explore Harrisburg web design' in response.data
     assert b'href="/static/css/site.css"' in response.data
     assert b'src="/static/js/home.js"' in response.data
 
@@ -49,7 +49,7 @@ def test_unknown_page_has_a_home_link(client):
 @pytest.mark.parametrize(
     ("path", "heading", "active_label"),
     [
-        ("/websites", "A website that", "Websites"),
+        ("/websites", "Harrisburg web design.", "Websites"),
         ("/growth-technology", "More than", "Growth &amp; Technology"),
         ("/work", "Built for real", "Work"),
         ("/about-community", "Local enough", "About &amp; Community"),
@@ -71,10 +71,10 @@ def test_interior_pages_render_with_navigation(client, path, heading, active_lab
 def test_websites_page_has_focused_search_metadata(client):
     page = client.get("/websites").get_data(as_text=True)
 
-    assert "Pennsylvania Website Design &amp; Development | Authentic Dynamics" in page
-    assert "Custom website design and development for Central Pennsylvania" in page
+    assert "Harrisburg Web Design for Small Businesses | Authentic Dynamics" in page
+    assert "Web design for Harrisburg and Central PA small businesses" in page
     assert "WEBSITE DESIGN &amp; DEVELOPMENT" in page
-    assert "small businesses across Central Pennsylvania" in page
+    assert "small businesses in Harrisburg and across Central Pennsylvania" in page
 
 
 def test_about_page_has_contact_submission_form_elements(client):
@@ -89,3 +89,19 @@ def test_about_page_has_contact_submission_form_elements(client):
     assert 'name="email" type="email"' in page
     for asset in ("/static/css/pages.css", "/static/js/site.js"):
         assert client.get(asset).status_code == 200
+
+
+def test_contact_conversation_has_accessible_still_and_optional_motion(client):
+    html = client.get("/").get_data(as_text=True)
+    assert 'class="contact-founder-photo contact-conversation"' in html
+    assert 'alt="A friendly conversation over coffee at a café"' in html
+    assert 'hidden muted loop playsinline controls preload="none"' in html
+    assert 'autoplay' not in html.split('id="contact-conversation"')[1].split('</video>')[0]
+    for asset in (
+        "js/contact-motion.js",
+        "images/contact-conversation-poster.webp",
+        "videos/contact-conversation.mp4",
+    ):
+        response = client.get(f"/static/{asset}")
+        assert response.status_code == 200
+        assert response.data

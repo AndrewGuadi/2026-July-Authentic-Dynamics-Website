@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 {% block title %}{{ code }} — {{ title }} | Authentic Dynamics{% endblock %}
 {% block content %}
-<main class="section">
+<main class="section error-page" id="main">
   <div class="wrap">
-    <p class="eyebrow">{{ code }}</p>
+    <p class="eyebrow">AUTHENTIC DYNAMICS / {{ code }}</p>
     <h1>{{ title }}</h1>
     <p>{{ message }}</p>
-    <a class="button black" href="{{ url_for('main.index') }}">Back to home</a>
+    <p>{{ recovery_hint|default('Please try again shortly. If the problem continues, email us so we can help.') }}</p>
+    <div class="error-actions"><a class="button black" href="{{ url_for(recovery_endpoint|default('main.index')) }}{% if recovery_endpoint|default('') == 'main.about_community' %}#contact{% endif %}">{{ recovery_label|default('Back to home') }}</a>
+    {% if code == 404 %}<a class="textlink" href="{{ url_for('main.websites') }}">Explore website services ↗</a>{% else %}<a class="textlink" href="mailto:hello@authenticdynamics.com">Email for help ↗</a>{% endif %}</div>
   </div>
 </main>
 {% endblock %}

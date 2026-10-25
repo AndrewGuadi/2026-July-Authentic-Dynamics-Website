@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Vendor Event Break-Even Calculator | Authentic Dynamics{% endblock %}
+{% block description %}Work out how many sales cover your booth fee, staffing and travel. A free event profit calculator for Central PA food trucks, makers and market vendors.{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/event-break-even.css') }}">
+{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main">
+  <section id="top" class="page-hero dark tool-hero"><div class="wrap">
+    <a class="tool-back" href="{{ url_for('tools.catalog') }}">← All tools</a>
+    <p class="eyebrow">VENDORS &amp; EVENTS / FREE PLANNING TOOL</p>
+    <h1>Before you book.<br><em>Know your numbers.</em></h1>
+    <p class="intro">A market in Harrisburg, a craft fair in Carlisle, or a food truck event in Hershey: estimate the sales you need before committing to a booth.</p>
+  </div></section>
+  <section class="section white"><div class="wrap converter-layout">
+    <div class="converter-form event-calculator">
+      <h2>Event break-even calculator</h2>
+      <p class="tool-note" id="event-input-help">Use US dollars for one event. A sale means one customer transaction, not one item. Enter 0 for costs that do not apply. Your numbers stay in this page; they are not uploaded or saved.</p>
+      <form id="event-form" aria-describedby="event-input-help">
+        <fieldset><legend>Costs for the event</legend><div class="event-fields">
+          <label for="booth">Booth or entry fee ($)<input id="booth" type="number" min="0" max="1000000" step="0.01" inputmode="decimal" required></label>
+          <label for="labor">Total staffing cost ($)<input id="labor" type="number" min="0" max="1000000" step="0.01" inputmode="decimal" required></label>
+          <label for="other">Other fixed costs ($)<input id="other" type="number" min="0" max="1000000" step="0.01" inputmode="decimal" required aria-describedby="other-help"></label>
+        </div><p class="tool-note" id="other-help">Include travel, parking, rentals and any event-specific costs. Include a value for your own time in staffing. Count each cost only once.</p></fieldset>
+        <fieldset><legend>Each customer transaction</legend><div class="event-fields">
+          <label for="sale">Average sale before sales tax ($)<input id="sale" type="number" min="0.01" max="1000000" step="0.01" inputmode="decimal" required></label>
+          <label for="cost">Product cost per sale ($)<input id="cost" type="number" min="0" max="1000000" step="0.01" inputmode="decimal" required aria-describedby="cost-help"></label>
+          <label for="fee">Sales-based fees (%)<input id="fee" type="number" min="0" max="100" step="0.01" inputmode="decimal" required aria-describedby="cost-help"></label>
+        </div><p class="tool-note" id="cost-help">Product cost includes ingredients or stock, packaging, and fixed per-transaction charges. Use fees for the effective percentage of sales paid to the organizer or processor. Exclude sales tax collected for remittance.</p></fieldset>
+        <fieldset><legend>Your scenario</legend><div class="event-fields">
+          <label for="transactions">Expected transactions<input id="transactions" type="number" min="0" max="100000" step="1" inputmode="numeric" required></label>
+          <label for="target">Target event profit ($)<input id="target" type="number" min="0" max="1000000" step="0.01" inputmode="decimal" required></label>
+        </div><p class="tool-note">Use your own sales history or a cautious estimate. Event attendance is not the same as customers at your booth.</p></fieldset>
+        <div class="list-actions"><button class="button black" type="submit" id="calculate">Calculate</button><button class="button black" type="button" id="example">Load example</button><button class="button black" type="reset">Clear</button></div>
+      </form>
+      <p class="tool-status" id="event-status" role="status">Enter your numbers or load the illustrative example.</p>
+      <section id="event-result" hidden aria-labelledby="result-heading">
+        <h3 id="result-heading" tabindex="-1">Your event estimate</h3>
+        <dl class="event-metrics">
+          <div><dt>Fixed event costs</dt><dd id="fixed-result"></dd></div>
+          <div><dt>Contribution per sale</dt><dd id="contribution-result"></dd></div>
+          <div><dt>Transactions to break even</dt><dd id="break-even-result"></dd></div>
+          <div><dt>Transactions for target profit</dt><dd id="target-result"></dd></div>
+          <div><dt>Estimated revenue</dt><dd id="revenue-result"></dd></div>
+          <div><dt>Estimated event profit / loss</dt><dd id="profit-result"></dd></div>
+        </dl>
+        <p id="event-explanation"></p>
+        <button class="button black" type="button" id="download">Download estimate (.txt)</button>
+      </section>
+      <noscript><p>This calculator needs JavaScript. No numbers are sent to the server.</p></noscript>
+    </div>
+    <aside class="tool-help"><p class="eyebrow">PLAN THE DAY</p><h3>Enough sales.<br>Enough margin.</h3>
+      <p><strong>Contribution is what one sale leaves behind.</strong> Average sale − product cost − percentage fees = contribution. That money first covers your fixed event costs, then contributes to profit.</p>
+      <p><strong>Break-even transactions</strong> = fixed costs ÷ contribution per sale, rounded up. For a profit goal, add that goal to fixed costs before dividing. If contribution is zero or negative, more sales cannot produce a positive profit.</p>
+      <p><strong>Try a slower day.</strong> Lower expected transactions and recalculate. Compare the required sales with how many customers you can realistically serve during the event.</p>
+      <p><strong>An estimate, not a sales forecast.</strong> Results assume every transaction has the same average value and cost. Percentage fees are rounded to cents per transaction. Include spoilage or unsold stock costs where relevant. Results exclude taxes on profit and overhead you have not entered.</p>
+      <p><strong>Keep your plan.</strong> Download an estimate before changing inputs to compare events. Refreshing or clearing the page removes your entries, but does not delete downloaded files.</p>
+      <p>Ready for the event? <a href="{{ url_for('tools.qr_code_maker') }}">Make a QR code for your menu or website</a>.</p>
+    </aside>
+  </div></section>
+</main>
+{% include 'partials/footer.html' %}
+{% endblock %}
+{% block scripts %}<script type="module" src="{{ url_for('static', filename='js/event-break-even.mjs') }}"></script>{% endblock %}

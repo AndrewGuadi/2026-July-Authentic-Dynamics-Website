@@ -44,16 +44,16 @@ const devices = [
       assert.equal(await contact.locator('[name="name"]').evaluate(element => element.validity.valueMissing), true);
       assert.equal(new URL(page.url()).pathname, '/');
 
-      const websiteLink = page.getByRole('link', {name: 'Explore website design'});
+      const websiteLink = page.getByRole('link', {name: 'Explore Harrisburg web design'});
       assert.equal(await websiteLink.getAttribute('href'), '/websites');
       await websiteLink.click();
       assert.equal(new URL(page.url()).pathname, '/websites');
-      assert.equal(await page.title(), 'Pennsylvania Website Design & Development | Authentic Dynamics');
+      assert.equal(await page.title(), 'Harrisburg Web Design for Small Businesses | Authentic Dynamics');
       assert.match(
         await page.locator('meta[name="description"]').getAttribute('content'),
-        /Custom website design and development for Central Pennsylvania/,
+        /Web design for Harrisburg and Central PA small businesses/,
       );
-      assert.match(await page.locator('.page-hero .intro').innerText(), /small businesses across Central Pennsylvania/);
+      assert.match(await page.locator('.page-hero .intro').innerText(), /small businesses in Harrisburg and across Central Pennsylvania/);
       assert.equal(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true);
       await page.screenshot({path: `/tmp/seo-websites-${device.name}.png`, fullPage: true});
 
@@ -61,7 +61,7 @@ const devices = [
       assert.equal(new URL(page.url()).hash, '#starter');
       await page.getByRole('link', {name: 'See custom options'}).click();
       assert.equal(new URL(page.url()).hash, '#options');
-      assert.equal(await page.getByRole('link', {name: 'Talk about my website'}).getAttribute('href'), '/about-community#contact');
+      assert.equal(await page.getByRole('link', {name: 'Talk about my website'}).getAttribute('href'), '/about-community?interest=website#contact');
 
       const tapTargets = await page.locator('button:visible, a.button:visible').all();
       for (const target of tapTargets) {

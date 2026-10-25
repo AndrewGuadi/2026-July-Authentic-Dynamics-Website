@@ -37,7 +37,7 @@ def url_for(endpoint, **values):
     if endpoint == "main.blog_post":
         return "/blog/" + values["slug"]
     return {
-        "coding.index": "/coding-calendar/",
+        "coding.index": "/coding-calendar/", "tools.catalog": "/tools/",
         "main.index": "/", "main.blog": "/blog", "main.websites": "/websites",
         "main.growth_technology": "/growth-technology", "main.work": "/work",
         "main.about_community": "/about-community", "main.privacy_policy": "/privacy-policy",
@@ -98,7 +98,7 @@ def test_article_template_metadata_and_navigation(post):
     assert "noindex" not in html
     assert "Editorial preview only" not in html
     assert "../posts/" not in html and "READ_ALL_TEN_POSTS" not in html
-    schema = re.search(r'<script type="application/ld\+json">(.*?)</script>', html, re.S)[1]
+    schema = re.search(r'<script type="application/ld\+json">(.*?)</script>', html, re.DOTALL)[1]
     assert json.loads(schema)["name"] == "Safe <test>"
     assert "<test>" not in schema
 

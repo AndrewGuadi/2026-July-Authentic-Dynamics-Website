@@ -134,3 +134,35 @@
  .home-page .work-card:nth-child(3){grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;align-items:center}
  .home-page .work-minor:last-child{grid-column:1/-1}
 }
+
+/* One inspectable project leads the hero; no carousel or automatic motion. */
+.home-page .hero-grid{align-items:center}
+.home-page .hero-project{padding:24px;background:#151711;border:1px solid #34372e;border-radius:24px}
+.home-page .hero-project .card-top{margin-bottom:18px}
+.home-page .hero-project-image{display:block;overflow:hidden;border-radius:12px;background:var(--paper);aspect-ratio:4/3;border:1px solid #565a4e}
+.home-page .hero-project-image img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.home-page .hero-project-image:focus-visible{outline:3px solid var(--lime);outline-offset:5px}
+.home-page .hero-project-caption{padding-top:22px}
+.home-page .hero-project-caption .eyebrow{font-size:10px;color:var(--lime);margin-bottom:10px}
+.home-page .hero-project-caption h2{font-size:clamp(23px,2.25vw,31px);line-height:1.15;margin:0}
+.home-page .hero-project-caption p{font-size:14px;line-height:1.65;margin:12px 0;color:#c4c7bd}
+.home-page .hero-project-caption .textlink{font-size:14px}
+.home-page .industry-panel{min-width:0}
+.home-page .industry-panel h3{min-height:2.4em}
+.home-page .industry-panel>.industry-proof{font-size:13px;margin-top:14px;color:#324620}
+.home-page .industry-context{border:1px solid #617f41;border-radius:12px;background:#17230f;padding:18px 22px;color:var(--paper);max-width:900px;margin:0 0 32px;line-height:1.6}
+.home-page .industry-context[hidden]{display:none}
+@media(max-width:850px){
+ .home-page .hero-project{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 24px}
+ .home-page .hero-project .card-top{grid-column:1/-1}
+ .home-page .hero-project-caption{padding-top:0;align-self:center}
+ .home-page .hero-project-caption h2{font-size:25px}
+}
+@media(max-width:650px){
+ .home-page .hero-project{display:block;padding:20px}
+ .home-page .hero-project-image{aspect-ratio:16/10}
+ .home-page .hero-project-caption{padding-top:18px}
+ .home-page .hero-project-caption h2{font-size:25px}
+ .home-page .hero-project-caption p{display:block}
+ .home-page .industry-panel h3{min-height:0}
+}

@@ -9,6 +9,9 @@ const outputElement = document.querySelector('#ai-output');
 const countElement = document.querySelector('#ai-count');
 let engine = null;
 let busy = false;
+const exampleButton = document.querySelector('#ai-example');
+const copyButton = document.querySelector('#ai-copy');
+let responseRevision = 0;
 
 function setStatus(message, isError = false) {
   statusElement.textContent = message;
@@ -28,6 +31,7 @@ function updateProgress(report) {
 function updateInput() {
   countElement.textContent = promptElement.value.length.toLocaleString('en-US');
   askButton.disabled = !engine || busy;
+  exampleButton.disabled = !engine || busy;
 }
 
 async function checkWebGPU() {
@@ -76,6 +80,27 @@ loadButton.addEventListener('click', async () => {
 });
 
 promptElement.addEventListener('input', updateInput);
+exampleButton.addEventListener('click', () => {
+  if (busy || !engine) return;
+  if (promptElement.value.trim()) { setStatus('Clear your current prompt first to load the example.'); return; }
+  promptElement.value = 'Rewrite this customer reply in a friendly, concise tone without adding promises: Thanks for reaching out about our services. Please tell us what you need help with and your preferred day for a call.';
+  updateInput(); promptElement.focus();
+  setStatus('Example loaded. Edit it to fit your business, then choose Ask AI.');
+});
+copyButton.addEventListener('click', async () => {
+  const revision = responseRevision;
+  try {
+    if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+    await navigator.clipboard.writeText(outputElement.textContent);
+    if (revision === responseRevision) setStatus('Response copied. Review it before sharing.');
+  } catch {
+    if (revision !== responseRevision) return;
+    const selection = window.getSelection();
+    const range = document.createRange(); range.selectNodeContents(outputElement);
+    selection.removeAllRanges(); selection.addRange(range); outputElement.focus();
+    setStatus('Automatic copying is unavailable. Response selected; use your device’s Copy command.');
+  }
+});
 askButton.addEventListener('click', async () => {
   if (!engine || busy) return;
   const userText = promptElement.value.trim();
@@ -87,6 +112,7 @@ askButton.addEventListener('click', async () => {
   busy = true;
   promptElement.disabled = true;
   updateInput();
+  responseRevision += 1; copyButton.disabled = true;
   outputElement.textContent = '';
   outputElement.setAttribute('aria-busy', 'true');
   setStatus('Generating locally on your device…');
@@ -106,6 +132,7 @@ askButton.addEventListener('click', async () => {
       response += chunk.choices[0]?.delta?.content || '';
       outputElement.textContent = response;
     }
+    copyButton.disabled = !response;
     if (!response) outputElement.textContent = 'No text returned. Try another short prompt.';
     setStatus('Finished. You can ask another question.');
   } catch (error) {

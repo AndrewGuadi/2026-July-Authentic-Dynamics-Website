@@ -1,14 +1,36 @@
 {% extends 'base.html' %}
-{% block title %}Growth & Technology | Authentic Dynamics{% endblock %}
-{% block description %}Connect local visibility, marketing, automation and practical technology to a website that works for your business.{% endblock %}
-{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/review-request-builder.css') }}">{% endblock %}
+{% block title %}Website Analytics &amp; Growth Services in Central PA | Authentic Dynamics{% endblock %}
+{% block description %}Website analytics services for Central PA small businesses: Search Console, GA4 setup, inquiry tracking and practical reporting alongside local marketing and automation.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/review-request-builder.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/service-experiences.css') }}">{% endblock %}
 {% block content %}
 <a class="skip" href="#main">Skip to content</a>
 {% include 'partials/header.html' %}
 <main id="main">
   <section class="page-hero dark" id="top"><div class="wrap page-hero-grid">
     <div><p class="eyebrow">02 / GROWTH &amp; TECHNOLOGY</p><h1>More than<br><em>a launch day.</em></h1><p class="intro">A website is a foundation. We help the right people find it, give them a clear next step and make the work behind the scenes easier to manage.</p><div class="actions"><a class="button" href="#services">Explore the services <span>↗</span></a><a class="textlink light" href="{{ url_for('main.about_community') }}#contact">Talk through a challenge <span>↗</span></a></div></div>
-    <div class="growth-visual" aria-label="Illustration connecting visibility, inquiries, and business systems"><span class="growth-node">01 <strong>Get found</strong><small>Search &amp; local presence</small></span><span class="growth-connector">↓</span><span class="growth-node accent">02 <strong>Start a conversation</strong><small>Pages &amp; campaigns</small></span><span class="growth-connector">↓</span><span class="growth-node">03 <strong>Follow through</strong><small>Systems &amp; automation</small></span></div>
+    <aside class="service-experience" id="growth-experience" aria-labelledby="growth-demo-heading">
+      <div class="experience-caption"><span>A WORKFLOW YOU CAN EXPLORE</span><span>Simulation only</span></div>
+      <h2 id="growth-demo-heading">Where does work get stuck?</h2>
+      <div class="experience-choices" role="group" aria-label="Business challenge" data-service-controls hidden>
+        <button type="button" data-growth-goal="visibility" aria-pressed="false">Getting found</button>
+        <button type="button" data-growth-goal="inquiries" aria-pressed="false">Getting inquiries</button>
+        <button type="button" data-growth-goal="followup" aria-pressed="true">Following up</button>
+      </div>
+      <p id="growth-recommendation">Connect the inquiry to an owner, a clear response and a trackable next step.</p>
+      <ol class="workflow-steps" aria-label="Example workflow" data-service-controls hidden>
+        <li><button type="button" data-workflow-step="0" aria-current="step">1 · Inquiry</button></li>
+        <li><button type="button" data-workflow-step="1">2 · Review</button></li>
+        <li><button type="button" data-workflow-step="2">3 · Follow-up</button></li>
+      </ol>
+      <div class="workflow-panes" id="growth-demo-panel">
+        <div><span class="card-index">Customer view</span><h3 id="growth-customer-title">A clear request</h3><p id="growth-customer-copy">Sam asks a fictional garden business about seasonal cleanup in Camp Hill.</p></div>
+        <div><span class="card-index">Owner view</span><h3 id="growth-owner-title">One place to start</h3><p id="growth-owner-copy">The example inquiry is collected in a single record. No message has been sent.</p></div>
+      </div>
+      <p class="experience-note" id="growth-demo-status" role="status" aria-live="polite">Example step 1 of 3. Explore each step; nothing is connected or sent.</p>
+      <a class="textlink light" id="growth-demo-contact" href="{{ url_for('main.about_community', interest='automation') }}#contact">Talk about follow-up <span aria-hidden="true">↗</span></a>
+      <p class="experience-note">A real setup needs your chosen services, access and consent rules. Integrations, costs and failure handling are scoped before implementation.</p>
+      <noscript><p class="experience-note">The example path is inquiry → human review → an agreed next step. JavaScript enables the optional walkthrough.</p></noscript>
+    </aside>
   </div></section>
 
   <section class="section" id="services"><div class="wrap"><div class="section-head"><div><p class="eyebrow">A CONNECTED PRACTICE</p><h2>Find the next useful move.</h2></div><p>Start with the bottleneck you can feel. We connect the work across visibility, conversion and operations so one improvement supports the next.</p></div><div class="page-card-grid three">
@@ -20,6 +42,7 @@
     <article class="page-card"><span class="card-index">06 / CUSTOM SYSTEMS</span><h3>Build around your operation.</h3><p>When existing tools do not fit, we can scope a custom integration, dashboard or application around the real work.</p><ul><li>Technical discovery</li><li>Connected platforms</li><li>Maintainable handoff</li></ul></article>
   </div></div></section>
 
+  {% include 'partials/website_analytics.html' %}
   <section class="section white review-builder-section" id="review-request"><div class="wrap">
     <div class="section-head"><div><p class="eyebrow">A USEFUL FIRST STEP</p><h2>Turn a finished job<br>into an honest review.</h2></div><p>Build a personal Google review request for text or email. Your customer details stay in this browser and nothing is sent by this page.</p></div>
     <div class="review-builder-layout">
@@ -48,13 +71,11 @@
     <div class="review-guidance"><p><strong>Ask for an honest review—not a positive one.</strong> Send requests only to customers with a genuine experience, and never offer discounts, gifts or payment for a review.</p><p>Google supports sharing a review link in thank-you emails, chats and receipts. Review requests and contributions must follow Google’s policies on genuine experiences and fake engagement. <a href="https://support.google.com/business/answer/16816815?hl=en" target="_blank" rel="noopener noreferrer">How to get your review link ↗</a> <a href="https://support.google.com/contributionpolicy/answer/7400114?hl=en" target="_blank" rel="noopener noreferrer">Review policy ↗</a></p><small>Official Google guidance checked October 13, 2026. This tool prepares wording only; it does not send messages or verify policy compliance.</small></div>
   </div></section>
 
-  <section class="section white"><div class="wrap split-section"><div><p class="eyebrow">WHERE WE START</p><h2>One problem.<br>One clear plan.</h2><p class="section-lead">We look at what customers see and what your team has to do after they reach out.</p><p>That may mean tightening local service pages, rebuilding an ad landing page or linking a form to your follow-up system. We agree on what success looks like before choosing the tools.</p><a class="textlink" href="{{ url_for('main.about_community') }}#contact">Bring us the messy part <span>↗</span></a></div><div class="scenario-panel"><span class="card-index">A COMMON PATH</span><div><b>01</b><p>People find your business.</p></div><div><b>02</b><p>The page answers their question.</p></div><div><b>03</b><p>An inquiry reaches the right person.</p></div><div><b>04</b><p>Your team can respond and learn what worked.</p></div></div></div></section>
-
-  <section class="section dark"><div class="wrap split-section"><div><p class="eyebrow">FIT FOR PURPOSE</p><h2>Technology should<br><em>make work lighter.</em></h2></div><div><p>We choose platforms and integrations for the job, not for a trend. The outcome should be understandable to the people who use it and documented for the people who maintain it.</p><div class="owner-pills"><span>Human review</span><span>Clear ownership</span><span>Useful reporting</span></div><p class="small-copy">Specific software, access, security needs and ongoing costs are confirmed during discovery.</p></div></div></section>
+  <section class="section dark"><div class="wrap split-section"><div><p class="eyebrow">FIT FOR YOUR OPERATION</p><h2>Less chasing.<br><em>More clarity.</em></h2></div><div><p>Start with one bottleneck and one useful measure of progress. We map the customer path, choose the smallest practical improvement and review it with you.</p><ul class="handoff-list"><li><strong>You control</strong> Business accounts, approved access and the scope</li><li><strong>People decide</strong> Exceptions, sensitive replies and commitments</li><li><strong>We plan for failure</strong> Clear alerts, a manual fallback and documented support</li></ul><p class="small-copy">Software, ongoing costs, consent requirements and provider limitations are confirmed during discovery.</p></div></div></section>
 
   <section class="section white"><div class="wrap"><div class="section-head"><div><p class="eyebrow">HOW WE WORK TOGETHER</p><h2>See the work take shape.</h2></div><p>A good growth plan is something you can understand, review and adjust.</p></div><div class="step-grid"><article><span>01</span><h3>Map the friction</h3><p>Review the customer path and the work behind it.</p></article><article><span>02</span><h3>Choose the next step</h3><p>Set a focused scope and a useful measure of progress.</p></article><article><span>03</span><h3>Build &amp; connect</h3><p>Improve pages, campaigns or systems with your team.</p></article><article><span>04</span><h3>Learn &amp; refine</h3><p>Look at real usage and decide what to improve next.</p></article></div></div></section>
   {% include 'partials/page_cta.html' %}
 </main>
 {% include 'partials/footer.html' %}
 {% endblock %}
-{% block scripts %}<script src="{{ url_for('static', filename='js/review-request-builder.js') }}" defer></script>{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/service-experiences.js') }}" defer></script><script src="{{ url_for('static', filename='js/review-request-builder.js') }}" defer></script>{% endblock %}
