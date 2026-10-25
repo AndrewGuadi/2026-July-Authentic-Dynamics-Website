@@ -77,3 +77,7 @@ and the `instance/` directory out of version control.
 myenv/bin/python -m pytest -q
 myenv/bin/ruff check .
 ```
+
+## Coding Calendar
+
+`/coding-calendar/` adds daily JavaScript, Python and SQL learning pages with official references, practical scenarios, and code that runs in an isolated browser workspace. The initial collection includes 21 Git-backed lesson files for October 24–30, 2026. See [the authoring, isolation, testing and deployment guide](docs/coding-calendar.md).

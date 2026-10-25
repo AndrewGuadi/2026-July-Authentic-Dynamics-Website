@@ -1,0 +1,40 @@
+{
+  "python": {
+    "base": "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/",
+    "files": {
+      "pyodide.js": {
+        "sha256": "b4cb23a53aba19c221659b9fb40a2f18281d685691dc06647fb0afd0681baf98",
+        "size": 14913
+      },
+      "pyodide.asm.js": {
+        "sha256": "6b4c90de5b7172873f04f21884d0e9d2274e305fe32116558fe3e4fbe3618d51",
+        "size": 1255688
+      },
+      "pyodide.asm.wasm": {
+        "sha256": "a50dd1843f805a0b7c45b61037ee0d7b26dfe85efe0e18ef95a34ad24e401f5f",
+        "size": 10105545
+      },
+      "python_stdlib.zip": {
+        "sha256": "16611534726e5d8ac2bd8f926410b2dcb8d6f49aa24913463533b457a2115c16",
+        "size": 2360737
+      },
+      "pyodide-lock.json": {
+        "sha256": "9c45b916001a750f4102fc287494f3eab215909c7535c626a20db80fd6333e2c",
+        "size": 112205
+      }
+    }
+  },
+  "sql": {
+    "base": "https://cdn.jsdelivr.net/npm/sql.js@1.13.0/dist/",
+    "files": {
+      "sql-wasm.js": {
+        "sha256": "694ca5b36aa3e6e71f417819d7df390b65343665fcfa5c69015ca33d93d291b3",
+        "size": 48788
+      },
+      "sql-wasm.wasm": {
+        "sha256": "0734155c83e493983d1f2ff5b09a4fab6e35a32e9449c7e4e545756439f62d73",
+        "size": 659806
+      }
+    }
+  }
+}

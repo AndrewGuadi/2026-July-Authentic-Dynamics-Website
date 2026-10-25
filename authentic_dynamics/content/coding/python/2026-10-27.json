@@ -1,0 +1,53 @@
+{
+  "language": "python",
+  "date": "2026-10-27",
+  "method": "dict.get()",
+  "summary": "Read an optional value without a missing-key error.",
+  "syntax": "mapping.get(key, default=None)",
+  "documentation": "get returns the value for a key if present, otherwise the provided default. It does not insert the missing key.",
+  "inputs": "A dictionary key and an optional default.",
+  "returns": "The stored value or the default.",
+  "caution": "A present key with value None still returns None, not the fallback.",
+  "docs_url": "https://docs.python.org/3/library/stdtypes.html#dict.get",
+  "docs_source": "Python",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Read an optional customer preference.",
+    "Apply a default setting to imported records.",
+    "Handle incomplete API responses."
+  ],
+  "title": "Choose the notification channel",
+  "problem": "Given a dictionary, return its channel value if that key exists. Otherwise return \"email\". Preserve explicit values such as None or an empty string.",
+  "goal": "Use dict.get() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Use get with \"email\" as its default.",
+  "minutes": 12,
+  "starter": "def solve(value):\n    # Return your answer here.\n    return None\n",
+  "tests": [
+    {
+      "name": "Explicit SMS",
+      "input": {
+        "channel": "sms"
+      },
+      "expected": "sms"
+    },
+    {
+      "name": "Missing preference",
+      "input": {},
+      "expected": "email"
+    },
+    {
+      "name": "Explicit None",
+      "input": {
+        "channel": null
+      },
+      "expected": null
+    },
+    {
+      "name": "Empty value",
+      "input": {
+        "channel": ""
+      },
+      "expected": ""
+    }
+  ]
+}

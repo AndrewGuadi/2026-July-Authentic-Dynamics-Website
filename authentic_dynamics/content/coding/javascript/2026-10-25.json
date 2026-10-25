@@ -1,0 +1,61 @@
+{
+  "language": "javascript",
+  "date": "2026-10-25",
+  "method": "Array.map()",
+  "summary": "Transform each record into a useful new value.",
+  "syntax": "array.map((item, index, array) => newValue)",
+  "documentation": "map calls a callback for assigned elements and returns a new array containing the callback results in corresponding positions.",
+  "inputs": "An array and a transformation callback.",
+  "returns": "A new array of transformed values.",
+  "caution": "A callback with braces needs an explicit return. Sparse array holes stay holes.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Build a list of product labels from inventory records.",
+    "Convert API records to the format a chart expects.",
+    "Create invoice line totals from quantities and unit prices."
+  ],
+  "title": "Calculate each line total",
+  "problem": "Given line items with quantity and unitPriceCents, return an array of quantity × unitPriceCents for each item. Prices use integer cents.",
+  "goal": "Use Array.map() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Map each line to its quantity multiplied by its unit price.",
+  "minutes": 12,
+  "starter": "function solve(value) {\n  // Return your answer here.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Two products",
+      "input": [
+        {
+          "quantity": 3,
+          "unitPriceCents": 250
+        },
+        {
+          "quantity": 2,
+          "unitPriceCents": 1499
+        }
+      ],
+      "expected": [
+        750,
+        2998
+      ]
+    },
+    {
+      "name": "No items",
+      "input": [],
+      "expected": []
+    },
+    {
+      "name": "Zero quantity",
+      "input": [
+        {
+          "quantity": 0,
+          "unitPriceCents": 1999
+        }
+      ],
+      "expected": [
+        0
+      ]
+    }
+  ]
+}

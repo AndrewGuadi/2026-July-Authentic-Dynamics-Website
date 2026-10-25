@@ -1,0 +1,80 @@
+{
+  "language": "sql",
+  "date": "2026-10-25",
+  "method": "SUM() + GROUP BY",
+  "summary": "Summarize many rows for each customer.",
+  "syntax": "SELECT key, SUM(amount) AS total FROM table_name GROUP BY key;",
+  "documentation": "GROUP BY partitions rows by the grouping expression. SUM adds non-NULL numeric values within each group.",
+  "inputs": "Rows with a grouping key and numeric values.",
+  "returns": "One result row per group.",
+  "caution": "SUM returns NULL if there are no non-NULL inputs. Explicit ORDER BY controls result order.",
+  "docs_url": "https://www.sqlite.org/lang_aggfunc.html#sumunc",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Total sales per customer.",
+    "Summarize parts usage by technician.",
+    "Calculate daily revenue from order records."
+  ],
+  "title": "Total each customer's spending",
+  "problem": "Return customer and SUM(amount_cents) AS total_cents from orders, grouped by customer and ordered by customer ascending. All amounts in this exercise are non-NULL integers.",
+  "goal": "Use SUM() + GROUP BY or an equivalent approach that demonstrates the same concept.",
+  "hint": "Group by customer, name the sum total_cents, and sort by customer.",
+  "minutes": 12,
+  "starter": "-- Write one SELECT query against the example tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Repeat customers",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);\nINSERT INTO orders VALUES (1, 'Micki', 500, 'paid'), (2, 'Andrew', 700, 'paid'), (3, 'Micki', 300, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "customer",
+            "total_cents"
+          ],
+          "values": [
+            [
+              "Andrew",
+              700
+            ],
+            [
+              "Micki",
+              800
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Credit adjustment",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);\nINSERT INTO orders VALUES (1, 'Ava', 1000, 'paid'), (2, 'Ava', -200, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "customer",
+            "total_cents"
+          ],
+          "values": [
+            [
+              "Ava",
+              800
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No orders",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "customer",
+            "total_cents"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "language": "sql",
+  "date": "2026-10-27",
+  "method": "AVG()",
+  "summary": "Find the arithmetic mean of a numeric field.",
+  "syntax": "SELECT AVG(amount) AS average_name FROM table_name;",
+  "documentation": "AVG computes the average of non-NULL values and returns a floating-point result when inputs exist. It returns NULL for an empty non-NULL input set.",
+  "inputs": "Numeric values from selected rows.",
+  "returns": "A floating-point average or NULL.",
+  "caution": "NULL values are excluded from both the total and the count. SQLite may coerce nonnumeric text, so validate imported data.",
+  "docs_url": "https://www.sqlite.org/lang_aggfunc.html#avg",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Compare average order sizes.",
+    "Estimate typical service duration.",
+    "Track average response times."
+  ],
+  "title": "Average the order amounts",
+  "problem": "Return one column called average_cents with the average amount_cents from orders. Return SQL NULL when there are no non-NULL amounts.",
+  "goal": "Use AVG() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Use AVG(amount_cents) with the expected alias.",
+  "minutes": 12,
+  "starter": "-- Write one SELECT query against the example tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Two orders",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);\nINSERT INTO orders VALUES (1, 'Ava', 100, 'paid'), (2, 'Micki', 300, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "average_cents"
+          ],
+          "values": [
+            [
+              200.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NULL amount excluded",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);\nINSERT INTO orders VALUES (1, 'Ava', 100, 'paid'), (2, 'Micki', NULL, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "average_cents"
+          ],
+          "values": [
+            [
+              100.0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty table",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "average_cents"
+          ],
+          "values": [
+            [
+              null
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}
