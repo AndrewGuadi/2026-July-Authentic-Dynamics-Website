@@ -1,0 +1,79 @@
+{
+  "language": "sql",
+  "date": "2026-10-22",
+  "method": "DISTINCT",
+  "summary": "Remove duplicate result rows.",
+  "syntax": "SELECT DISTINCT column_name FROM table_name ORDER BY column_name;",
+  "documentation": "DISTINCT removes duplicate rows after the result expressions are evaluated. When several columns are selected, uniqueness applies to the complete combination.",
+  "inputs": "One or more selected result expressions.",
+  "returns": "The unique result rows.",
+  "caution": "DISTINCT is not a replacement for defining the intended data relationship. Add ORDER BY for a predictable display order.",
+  "docs_url": "https://www.sqlite.org/lang_select.html#distinct",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "List customers who appear in an order export.",
+    "Build a list of available service categories.",
+    "Find the unique statuses used by imported data."
+  ],
+  "title": "Find unique customer names",
+  "problem": "Return the distinct customer values from orders, sorted by customer ascending. Keep one NULL value if any customer is NULL; SQLite sorts it before text in ascending order.",
+  "goal": "Use DISTINCT or an equivalent approach that demonstrates the same concept.",
+  "hint": "Select DISTINCT customer and order by customer.",
+  "minutes": 12,
+  "starter": "-- Write one SELECT query against the example tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Repeated names",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT); INSERT INTO orders VALUES (1, 'Micki', 100, 'paid'), (2, 'Ava', 200, 'paid'), (3, 'Micki', 300, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "customer"
+          ],
+          "values": [
+            [
+              "Ava"
+            ],
+            [
+              "Micki"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Repeated NULLs",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT); INSERT INTO orders VALUES (1, NULL, 100, 'paid'), (2, NULL, 200, 'paid'), (3, 'Ava', 300, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "customer"
+          ],
+          "values": [
+            [
+              null
+            ],
+            [
+              "Ava"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty table",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "customer"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "querying",
+  "level": "beginner"
+}

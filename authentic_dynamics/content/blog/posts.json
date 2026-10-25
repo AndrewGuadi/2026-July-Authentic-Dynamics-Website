@@ -1,0 +1,422 @@
+[
+  {
+    "slug": "ai-website-design-deepseek",
+    "title": "AI Website Design for Central PA Businesses: Where DeepSeek Helps—and Where It Doesn’t",
+    "seo_title": "AI Websites in Central PA: DeepSeek | Authentic Dynamics",
+    "description": "Explore how DeepSeek could support a small-business website, what still needs testing, and how Authentic Dynamics scopes practical Central PA builds.",
+    "category": "AI for building websites",
+    "model": "deepseek-ai/DeepSeek-V4.1-Flash",
+    "model_url": "https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash",
+    "demo": "AI Homepage Preview",
+    "demo_status": "Browser tool live — AI model not connected",
+    "release_gate": "Real form-to-homepage preview and HTML export; no DeepSeek inference.",
+    "published": "2026-10-21",
+    "modified": "2026-10-21",
+    "reviewed": "2026-10-20",
+    "reading_minutes": 4,
+    "cta_url": "https://www.authenticdynamics.com/websites",
+    "toc": [
+      {
+        "id": "section-1",
+        "title": "What DeepSeek can contribute"
+      },
+      {
+        "id": "section-2",
+        "title": "A homepage preview that gives you something useful"
+      },
+      {
+        "id": "section-3",
+        "title": "What happens after the attractive first draft?"
+      },
+      {
+        "id": "section-4",
+        "title": "Is this cheaper than a traditional website?"
+      },
+      {
+        "id": "section-5",
+        "title": "Start with the part of your website that is getting in the way"
+      }
+    ],
+    "tool_path": "/tools/ai-lab/ai-website-design-deepseek"
+  },
+  {
+    "slug": "menu-photo-to-website-unlimited-ocr",
+    "title": "Turn a Menu Photo into Website Content: A Practical Look at Unlimited-OCR",
+    "seo_title": "Turn a Menu Photo into a Website | Authentic Dynamics",
+    "description": "See how Unlimited-OCR could turn a menu photo into editable website content, with price checks, owner approval, and a realistic path to POS integration.",
+    "category": "Document and menu reading",
+    "model": "baidu/Unlimited-OCR",
+    "model_url": "https://huggingface.co/baidu/Unlimited-OCR",
+    "demo": "Menu-to-Web Draft",
+    "demo_status": "Browser tool live — AI model not connected",
+    "release_gate": "Editable menu drafts and owner-approved exports; OCR worker not connected.",
+    "published": "2026-10-21",
+    "modified": "2026-10-21",
+    "reviewed": "2026-10-20",
+    "reading_minutes": 4,
+    "cta_url": "https://www.authenticdynamics.com/growth-technology",
+    "toc": [
+      {
+        "id": "section-1",
+        "title": "What the model does—and what the website still has to do"
+      },
+      {
+        "id": "section-2",
+        "title": "The proposed Menu-to-Web Draft"
+      },
+      {
+        "id": "section-3",
+        "title": "The most important step is checking the prices"
+      },
+      {
+        "id": "section-4",
+        "title": "Will this connect to my POS?"
+      },
+      {
+        "id": "section-5",
+        "title": "Why editable website content matters"
+      },
+      {
+        "id": "section-6",
+        "title": "Make one repeated task easier"
+      }
+    ],
+    "tool_path": "/tools/ai-lab/menu-photo-to-website-unlimited-ocr"
+  },
+  {
+    "slug": "voicemail-to-text-parakeet",
+    "title": "AI Voicemail Transcription for Small Businesses: What NVIDIA Parakeet Can Do",
+    "seo_title": "AI Voicemail Transcription | Authentic Dynamics",
+    "description": "Learn what NVIDIA Parakeet can do for business voicemail, what requires phone-provider access, and how a reviewed transcript could improve follow-up.",
+    "category": "Speech recognition",
+    "model": "nvidia/parakeet-tdt-0.6b-v3",
+    "model_url": "https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3",
+    "demo": "Voicemail-to-Text",
+    "demo_status": "Browser tool live — AI model not connected",
+    "release_gate": "Recording playback, browser dictation where supported, and editable reply; Parakeet not connected.",
+    "published": "2026-10-21",
+    "modified": "2026-10-21",
+    "reviewed": "2026-10-20",
+    "reading_minutes": 4,
+    "cta_url": "https://www.authenticdynamics.com/growth-technology",
+    "toc": [
+      {
+        "id": "section-1",
+        "title": "Meet Parakeet"
+      },
+      {
+        "id": "section-2",
+        "title": "A voicemail demo that starts with a recording"
+      },
+      {
+        "id": "section-3",
+        "title": "Phone-system access is a separate project"
+      },
+      {
+        "id": "section-4",
+        "title": "Local details are the test—not the polished sample"
+      },
+      {
+        "id": "section-5",
+        "title": "Is it an AI receptionist?"
+      },
+      {
+        "id": "section-6",
+        "title": "Start with the messages you already receive"
+      }
+    ],
+    "tool_path": "/tools/ai-lab/voicemail-to-text-parakeet"
+  },
+  {
+    "slug": "ai-voiceovers-fish-audio-drama-3",
+    "title": "AI Voiceovers for Small Businesses: Fish Audio Drama 3 and the Licensing Catch",
+    "seo_title": "AI Voiceovers: Drama 3 Explained | Authentic Dynamics",
+    "description": "Explore Fish Audio Drama 3 for business narration, including the hosted-service licensing limit, voice permissions, and a proposed voiceover workflow.",
+    "category": "AI voice generation",
+    "model": "fishaudio/drama-3",
+    "model_url": "https://huggingface.co/fishaudio/drama-3",
+    "demo": "Voiceover Preview",
+    "demo_status": "Browser tool live — AI model not connected",
+    "release_gate": "Browser text-to-speech playback; Fish Audio model not connected.",
+    "published": "2026-10-21",
+    "modified": "2026-10-21",
+    "reviewed": "2026-10-20",
+    "reading_minutes": 4,
+    "cta_url": "https://www.authenticdynamics.com/growth-technology",
+    "toc": [
+      {
+        "id": "section-1",
+        "title": "What Drama 3 is designed to do"
+      },
+      {
+        "id": "section-2",
+        "title": "The license changes the public-demo plan"
+      },
+      {
+        "id": "section-3",
+        "title": "What a useful voiceover preview would look like"
+      },
+      {
+        "id": "section-4",
+        "title": "Keep the business facts outside the performance"
+      },
+      {
+        "id": "section-5",
+        "title": "What should you compare before choosing it?"
+      }
+    ],
+    "tool_path": "/tools/ai-lab/ai-voiceovers-fish-audio-drama-3"
+  },
+  {
+    "slug": "ai-marketing-images-qwen",
+    "title": "AI Marketing Images for Small Businesses: Investigating Qwen Image 2.1 Turbo",
+    "seo_title": "Qwen Marketing Images: Uses & License | Authentic Dynamics",
+    "description": "Investigate Qwen Image 2.1 Turbo for marketing concepts, understand its commercial-use restriction, and plan a workflow that preserves real product facts.",
+    "category": "Image generation",
+    "model": "Qwen/Qwen-Image-2.1-Turbo",
+    "model_url": "https://huggingface.co/Qwen/Qwen-Image-2.1-Turbo",
+    "demo": "Marketing Image Studio",
+    "demo_status": "Browser tool live — AI model not connected",
+    "release_gate": "Real browser-created campaign graphics and PNG export; Qwen image model not connected.",
+    "published": "2026-10-21",
+    "modified": "2026-10-21",
+    "reviewed": "2026-10-20",
+    "reading_minutes": 4,
+    "cta_url": "https://www.authenticdynamics.com/growth-technology",
+    "toc": [
+      {
+        "id": "section-1",
+        "title": "What the model offers"
+      },
+      {
+        "id": "section-2",
+        "title": "The current license is a commercial-use gate"
+      },
+      {
+        "id": "section-3",
+        "title": "A practical Marketing Image Studio"
+      },
+      {
+        "id": "section-4",
+        "title": "Do not let an attractive image misrepresent the business"
+      },
+      {
+        "id": "section-5",
+        "title": "What you can prepare before choosing a generator"
+      },
+      {
+        "id": "section-6",
+        "title": "Turn a visual idea into an honest business asset"
+      }
+    ],
+    "tool_path": "/tools/ai-lab/ai-marketing-images-qwen"
+  },
+  {
+    "slug": "short-business-videos-ltx",
+    "title": "Short Business Videos with LTX-2.5: Start with a Real Message, Not an AI Effect",
+    "seo_title": "LTX-2.5 Business Video Guide | Authentic Dynamics",
+    "description": "Explore LTX-2.5 for short business videos, including realistic production steps, commercial-license conditions, and a proposed brief-to-clip feature.",
+    "category": "Video generation",
+    "model": "Lightricks/LTX-2.5",
+    "model_url": "https://huggingface.co/Lightricks/LTX-2.5",
+    "demo": "Short Video Preview",
+    "demo_status": "Browser tool live — AI model not connected",
+    "release_gate": "Real browser-animated promotional video and WebM export; LTX not connected.",
+    "published": "2026-10-21",
+    "modified": "2026-10-21",
+    "reviewed": "2026-10-20",
+    "reading_minutes": 4,
+    "cta_url": "https://www.authenticdynamics.com/growth-technology",
+    "toc": [
+      {
+        "id": "section-1",
+        "title": "What LTX-2.5 can generate"
+      },
+      {
+        "id": "section-2",
+        "title": "The proposed Brief-to-Clip experience"
+      },
+      {
+        "id": "section-3",
+        "title": "Sometimes the right video uses no generated footage"
+      },
+      {
+        "id": "section-4",
+        "title": "The production work after generation"
+      },
+      {
+        "id": "section-5",
+        "title": "Give the video somewhere useful to lead"
+      }
+    ],
+    "tool_path": "/tools/ai-lab/short-business-videos-ltx"
+  },
+  {
+    "slug": "business-document-search-embeddinggemma",
+    "title": "Search Your Business Documents with EmbeddingGemma 2—Without Inventing Answers",
+    "seo_title": "AI Business Document Search | Authentic Dynamics",
+    "description": "Learn how EmbeddingGemma 2 could help search approved business documents, with visible sources, access controls, and a practical answer-finder demo plan.",
+    "category": "Business knowledge search",
+    "model": "google/embeddinggemma-2",
+    "model_url": "https://huggingface.co/google/embeddinggemma-2",
+    "demo": "Business Answer Finder",
+    "demo_status": "Browser tool live — AI model not connected",
+    "release_gate": "Private local keyword document search with cited lines; embeddings model not connected.",
+    "published": "2026-10-21",
+    "modified": "2026-10-21",
+    "reviewed": "2026-10-20",
+    "reading_minutes": 4,
+    "cta_url": "https://www.authenticdynamics.com/growth-technology",
+    "toc": [
+      {
+        "id": "section-1",
+        "title": "An embedding model is not a chatbot"
+      },
+      {
+        "id": "section-2",
+        "title": "The proposed Business Answer Finder"
+      },
+      {
+        "id": "section-3",
+        "title": "What this could look like for a local business"
+      },
+      {
+        "id": "section-4",
+        "title": "The permissions are part of the product"
+      },
+      {
+        "id": "section-5",
+        "title": "When a conventional FAQ is enough"
+      },
+      {
+        "id": "section-6",
+        "title": "Start with the questions your team keeps answering"
+      }
+    ],
+    "tool_path": "/tools/ai-lab/business-document-search-embeddinggemma"
+  },
+  {
+    "slug": "local-ai-liquid-lfm",
+    "title": "Can Your Business Run AI Locally? A Practical Look at Liquid AI’s LFM2.5",
+    "seo_title": "Run AI Locally: LFM2.5 Guide | Authentic Dynamics",
+    "description": "Understand LFM2.5 hardware needs, licensing, and privacy boundaries before buying equipment or planning a locally hosted AI workflow for your business.",
+    "category": "Small-device language AI",
+    "model": "LiquidAI/LFM2.5-24B-A2B",
+    "model_url": "https://huggingface.co/LiquidAI/LFM2.5-24B-A2B",
+    "demo": "Local AI Fit Check",
+    "demo_status": "Browser tool live — AI model not connected",
+    "release_gate": "Real hardware planning calculator and downloadable report; no LFM inference.",
+    "published": "2026-10-21",
+    "modified": "2026-10-21",
+    "reviewed": "2026-10-20",
+    "reading_minutes": 4,
+    "cta_url": "https://www.authenticdynamics.com/growth-technology",
+    "toc": [
+      {
+        "id": "section-1",
+        "title": "What the model is designed for"
+      },
+      {
+        "id": "section-2",
+        "title": "Start with a Local AI Fit Check"
+      },
+      {
+        "id": "section-3",
+        "title": "Pick a job small enough to evaluate"
+      },
+      {
+        "id": "section-4",
+        "title": "Local hosting does not automatically mean private"
+      },
+      {
+        "id": "section-5",
+        "title": "Check the license alongside the hardware"
+      }
+    ],
+    "tool_path": "/tools/ai-lab/local-ai-liquid-lfm"
+  },
+  {
+    "slug": "small-business-sales-forecast-timestral",
+    "title": "AI Sales Forecasting for Small Businesses: Testing Timestral Against a Simple Baseline",
+    "seo_title": "AI Sales Forecasting with Timestral | Authentic Dynamics",
+    "description": "See how a Timestral sales-forecasting pilot should handle data quality, historical testing, simple baselines, and uncertainty before influencing decisions.",
+    "category": "Business forecasting",
+    "model": "mistralai/Timestral-209M",
+    "model_url": "https://huggingface.co/mistralai/Timestral-209M",
+    "demo": "Sales Forecast Sandbox",
+    "demo_status": "Browser tool live — AI model not connected",
+    "release_gate": "Real local forecasting baselines and downloadable predictions; Timestral not connected.",
+    "published": "2026-10-21",
+    "modified": "2026-10-21",
+    "reviewed": "2026-10-20",
+    "reading_minutes": 4,
+    "cta_url": "https://www.authenticdynamics.com/growth-technology",
+    "toc": [
+      {
+        "id": "section-1",
+        "title": "What Timestral is"
+      },
+      {
+        "id": "section-2",
+        "title": "The proposed Sales Forecast Sandbox"
+      },
+      {
+        "id": "section-3",
+        "title": "Test on the past before trusting the future"
+      },
+      {
+        "id": "section-4",
+        "title": "Your records need a business explanation"
+      },
+      {
+        "id": "section-5",
+        "title": "What a forecast should not decide alone"
+      }
+    ],
+    "tool_path": "/tools/ai-lab/small-business-sales-forecast-timestral"
+  },
+  {
+    "slug": "product-photo-cutouts-sam3",
+    "title": "Cleaner Product Photos with SAM 3: Separate the Product Without Reinventing It",
+    "seo_title": "SAM 3 Product Photo Cutouts | Authentic Dynamics",
+    "description": "Explore SAM 3 for product-photo cutouts, including object masks, edge review, access requirements, and a workflow that keeps real products accurate.",
+    "category": "Visual recognition",
+    "model": "facebook/sam3",
+    "model_url": "https://huggingface.co/facebook/sam3",
+    "demo": "Product Photo Cutout",
+    "demo_status": "Browser tool live — AI model not connected",
+    "release_gate": "Real manual image masking and PNG export; SAM 3 not connected.",
+    "published": "2026-10-21",
+    "modified": "2026-10-21",
+    "reviewed": "2026-10-20",
+    "reading_minutes": 4,
+    "cta_url": "https://www.authenticdynamics.com/websites",
+    "toc": [
+      {
+        "id": "section-1",
+        "title": "What SAM 3 does"
+      },
+      {
+        "id": "section-2",
+        "title": "A Product Photo Cutout demonstration"
+      },
+      {
+        "id": "section-3",
+        "title": "Where a local business might use it"
+      },
+      {
+        "id": "section-4",
+        "title": "The edge cases deserve attention"
+      },
+      {
+        "id": "section-5",
+        "title": "Keep cleanup separate from misrepresentation"
+      },
+      {
+        "id": "section-6",
+        "title": "Make the result useful on the website"
+      }
+    ],
+    "tool_path": "/tools/ai-lab/product-photo-cutouts-sam3"
+  }
+]

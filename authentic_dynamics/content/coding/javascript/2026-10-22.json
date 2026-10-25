@@ -1,0 +1,54 @@
+{
+  "language": "javascript",
+  "date": "2026-10-22",
+  "method": "String.split()",
+  "summary": "Separate a simple delimited value into an array.",
+  "syntax": "text.split(separator, limit)",
+  "documentation": "split finds separator boundaries and returns the pieces as an array. A string separator is matched literally; repeated separators can produce empty strings.",
+  "inputs": "A string separator or regular expression, and an optional result limit.",
+  "returns": "An array of string pieces.",
+  "caution": "This exercise is simple comma-separated text, not quoted CSV. Empty fields remain empty strings.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/split",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Read a simple set of comma-separated product tags.",
+    "Break a known-format reference into its parts.",
+    "Split a multi-line text import into lines."
+  ],
+  "title": "Read the raw service fields",
+  "problem": "Split the input string at each comma. Do not trim fields or remove empty fields. An empty input string must produce an array containing one empty string.",
+  "goal": "Use String.split() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Use a literal comma separator.",
+  "minutes": 12,
+  "starter": "function solve(value) {\n  // Return your answer here.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Three fields",
+      "input": "drain,repair,inspect",
+      "expected": [
+        "drain",
+        "repair",
+        "inspect"
+      ]
+    },
+    {
+      "name": "Empty middle field",
+      "input": "pipe,,seal",
+      "expected": [
+        "pipe",
+        "",
+        "seal"
+      ]
+    },
+    {
+      "name": "Empty input",
+      "input": "",
+      "expected": [
+        ""
+      ]
+    }
+  ],
+  "category": "strings",
+  "level": "beginner"
+}

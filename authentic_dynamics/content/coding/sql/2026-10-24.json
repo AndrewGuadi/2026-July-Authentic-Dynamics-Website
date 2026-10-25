@@ -1,0 +1,77 @@
+{
+  "language": "sql",
+  "date": "2026-10-24",
+  "method": "WHERE",
+  "summary": "Keep only the rows that meet a condition.",
+  "syntax": "SELECT columns FROM table_name WHERE condition;",
+  "documentation": "WHERE filters input rows before the result is produced. Comparisons can be combined with AND or OR. Rows for which the condition is false or NULL are excluded.",
+  "inputs": "A table and a condition evaluated for each row.",
+  "returns": "Rows satisfying the condition.",
+  "caution": "Use IS NULL to test missing values; equality with NULL does not evaluate to true.",
+  "docs_url": "https://www.sqlite.org/lang_select.html#whereclause",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Find unpaid orders for follow-up.",
+    "List stock below a reorder threshold.",
+    "Select appointments for a particular technician."
+  ],
+  "title": "Find paid orders",
+  "problem": "The orders table has id, customer, amount_cents, and status. Return id and customer for status = 'paid', ordered by id ascending.",
+  "goal": "Use WHERE or an equivalent approach that demonstrates the same concept.",
+  "hint": "Filter on status and add ORDER BY id.",
+  "minutes": 12,
+  "starter": "-- Write one SELECT query against the example tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Mixed statuses",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);\nINSERT INTO orders VALUES (2, 'Micki', 500, 'paid'), (1, 'Andrew', 900, 'pending'), (3, 'Ava', 400, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "customer"
+          ],
+          "values": [
+            [
+              2,
+              "Micki"
+            ],
+            [
+              3,
+              "Ava"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No paid orders",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);\nINSERT INTO orders VALUES (1, 'Andrew', 100, 'pending');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "customer"
+          ],
+          "values": []
+        }
+      ]
+    },
+    {
+      "name": "Empty orders",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "customer"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "conditions",
+  "level": "beginner"
+}

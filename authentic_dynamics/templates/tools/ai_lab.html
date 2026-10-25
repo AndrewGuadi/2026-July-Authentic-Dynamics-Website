@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}{{ post.demo }} | Free Tools | Authentic Dynamics{% endblock %}
+{% block description %}Try the {{ post.demo }} interactive browser tool from Authentic Dynamics. Free and practical for small businesses in Central Pennsylvania.{% endblock %}
+{% block head %}
+<meta name="robots" content="noindex,follow">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/ai-lab.css') }}">
+{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main">
+  <section class="page-hero dark" id="top"><div class="wrap">
+    <p class="eyebrow">AUTHENTIC DYNAMICS / HANDS-ON LAB</p>
+    <h1>{{ post.demo }}</h1>
+    <p class="intro">An accessible starting point for a real small-business task. No account required.</p>
+    <div class="actions"><a class="textlink light" href="{{ url_for('main.blog_post', slug=post.slug) }}">Read the research guide ↗</a><a class="textlink light" href="{{ url_for('main.blog') }}">All AI guides ↗</a></div>
+  </div></section>
+  <section class="section white" aria-label="Interactive tool"><div class="wrap">
+    <p class="ai-lab-caveat"><strong>What this is:</strong> {{ post.release_gate }} It operates on this page using browser capabilities. It is not connected to the featured {{ post.model }} checkpoint.</p>
+    <div class="ai-lab" data-tool="{{ post.slug }}"><p>Loading the interactive tool…</p></div>
+    <noscript><p>JavaScript is required for this browser tool.</p></noscript>
+    <p class="ai-lab-footer"><a class="textlink" href="{{ url_for('main.blog_post', slug=post.slug) }}">Explore what the featured AI model could add ↗</a></p>
+  </div></section>
+</main>
+{% include 'partials/footer.html' %}
+{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/ai-lab.js') }}" defer></script>{% endblock %}

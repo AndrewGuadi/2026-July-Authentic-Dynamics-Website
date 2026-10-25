@@ -1,0 +1,53 @@
+{
+  "language": "python",
+  "date": "2026-10-29",
+  "method": "str.replace()",
+  "summary": "Replace matching text consistently.",
+  "syntax": "text.replace(old, new, count=-1)",
+  "documentation": "replace returns a copy with occurrences of old changed to new. count can limit how many replacements occur.",
+  "inputs": "The old substring, replacement substring, and optional count.",
+  "returns": "A new string.",
+  "caution": "Matching is literal and case-sensitive. It is not a regular expression.",
+  "docs_url": "https://docs.python.org/3/library/stdtypes.html#str.replace",
+  "docs_source": "Python",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Update a placeholder in a message template.",
+    "Normalize a known delimiter in imported text.",
+    "Change a product label in generated descriptions."
+  ],
+  "title": "Fill the customer placeholder",
+  "problem": "Given an object with template and name strings, replace every exact occurrence of \"{name}\" in template with name. Leave other placeholders alone.",
+  "goal": "Use str.replace() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Replace \"{name}\" with value[\"name\"].",
+  "minutes": 12,
+  "starter": "def solve(value):\n    # Return your answer here.\n    return None\n",
+  "tests": [
+    {
+      "name": "Repeated placeholder",
+      "input": {
+        "template": "Hi {name}. Thanks, {name}!",
+        "name": "Micki"
+      },
+      "expected": "Hi Micki. Thanks, Micki!"
+    },
+    {
+      "name": "Other placeholders",
+      "input": {
+        "template": "Hi {Name}, see {date}.",
+        "name": "Andrew"
+      },
+      "expected": "Hi {Name}, see {date}."
+    },
+    {
+      "name": "Empty name",
+      "input": {
+        "template": "To: {name}",
+        "name": ""
+      },
+      "expected": "To: "
+    }
+  ],
+  "category": "strings",
+  "level": "beginner"
+}

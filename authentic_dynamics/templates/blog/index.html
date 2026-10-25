@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Practical AI for Central PA Businesses | Authentic Dynamics Blog{% endblock %}
+{% block description %}Explore practical AI guides for Central Pennsylvania businesses: websites, menus, voicemail, marketing, document search and more. Clear limits. Useful next steps.{% endblock %}
+{% block head %}
+{% if not config.CANONICAL_HOST %}<link rel="canonical" href="{{ canonical_url }}">{% endif %}
+<meta property="og:type" content="website">
+<meta property="og:title" content="Practical AI for Central PA Businesses | Authentic Dynamics">
+<meta property="og:description" content="Understand the models. Explore real business uses. Know what still needs testing.">
+<meta property="og:url" content="{{ canonical_url }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
+<script type="application/ld+json">{{ structured_data|tojson }}</script>
+{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main">
+  <section class="blog-hero dark" id="top">
+    <div class="wrap">
+      <p class="eyebrow">THE AUTHENTIC DYNAMICS BLOG</p>
+      <h1>Practical AI.<br><em>Useful work.</em></h1>
+      <p class="blog-intro">What can AI actually do for your business? Start with the task, understand the model, and see what a useful implementation could look like.</p>
+      <div class="actions"><a class="button" href="#guides">Explore the guides <span aria-hidden="true">↓</span></a><a class="textlink light" href="{{ url_for('main.growth_technology') }}">Explore our technology services <span aria-hidden="true">↗</span></a></div>
+      <p class="blog-local">For business owners in Harrisburg, Camp Hill, Enola, Mechanicsburg and across Central Pennsylvania.</p>
+    </div>
+  </section>
+  <section class="section" id="guides" aria-labelledby="guides-title">
+    <div class="wrap">
+      <div class="section-head"><div><p class="eyebrow">START WITH SOMETHING THAT GETS IN YOUR WAY</p><h2 id="guides-title">Ten tasks.<br>Ten model investigations.</h2></div><p>Research-based guides, not hands-on benchmark reviews. Each guide includes a working, private browser tool. The featured research models are not connected to these tools.</p></div>
+      <div class="blog-grid">
+        {% for post in posts %}
+        <article class="blog-card">
+          <p class="eyebrow">{{ '%02d'|format(loop.index) }} / {{ post.category }}</p>
+          <h3><a href="{{ url_for('main.blog_post', slug=post.slug) }}">{{ post.title }}</a></h3>
+          <p>{{ post.description }}</p>
+          <div class="blog-card-meta"><span>{{ post.reading_minutes }} min read</span><span>Research guide</span></div>
+          <div class="blog-feature"><span>TRY A WORKING BROWSER TOOL</span><strong>{{ post.demo }}</strong></div>
+          <a class="textlink" href="{{ url_for('main.blog_post', slug=post.slug) }}" aria-label="Read {{ post.title }}">Read the guide <span aria-hidden="true">↗</span></a><a class="textlink" href="{{ url_for('tools.ai_lab', slug=post.slug) }}" aria-label="Try {{ post.demo }}">Try the tool <span aria-hidden="true">↗</span></a>
+        </article>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  <section class="section dark"><div class="wrap blog-cta"><div><p class="eyebrow">YOUR BUSINESS COMES FIRST</p><h2>Bring the problem.<br><em>Not the buzzword.</em></h2><p>Tell us what is taking too much time, what is not connecting, or what your customers cannot find. We will start there.</p></div><a class="button" href="{{ url_for('main.about_community') }}#contact">Talk about your business <span aria-hidden="true">↗</span></a></div></section>
+</main>
+{% include 'partials/footer.html' %}
+{% endblock %}

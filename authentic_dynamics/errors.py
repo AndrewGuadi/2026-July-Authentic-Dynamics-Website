@@ -8,6 +8,25 @@ from werkzeug.exceptions import HTTPException
 def register_error_handlers(app: Flask) -> None:
     @app.errorhandler(HTTPException)
     def http_error(error):
+        if isinstance(error, CSRFError) and request.path == "/contact":
+            from authentic_dynamics.blueprints.main.routes import CONTACT_PAGES
+
+            source = request.form.get("source_page", "")
+            if source in CONTACT_PAGES:
+                template, _, active_page = CONTACT_PAGES[source]
+                limits = {"name": 120, "business": 120, "email": 254,
+                          "interest": 120, "message": 4000}
+                values = {key: request.form.get(key, "")[:limit]
+                          for key, limit in limits.items()}
+                # Reject the request, but keep an escaped, bounded draft and issue
+                # a fresh token. Nothing is persisted or automatically retried.
+                return render_template(
+                    template, active_page=active_page, contact_source=source,
+                    form_values=values,
+                    form_errors={"_form": "Your security check expired or was missing. "
+                                 "Nothing was submitted. Your text is still below; "
+                                 "please review it and send again."},
+                ), 400
         recovery_endpoint = "main.index"
         recovery_label = "Back to home"
         recovery_hint = "Explore our services or start again from the homepage."

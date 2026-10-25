@@ -1,0 +1,82 @@
+{
+  "language": "sql",
+  "date": "2026-11-02",
+  "method": "CASE",
+  "summary": "Choose a result value using explicit conditions.",
+  "syntax": "CASE WHEN condition THEN result ELSE fallback END",
+  "documentation": "CASE selects a result from the first matching WHEN condition. An ELSE clause provides a fallback when none match; without ELSE the fallback is NULL.",
+  "inputs": "Ordered conditions and their result expressions.",
+  "returns": "One chosen result value for each input row.",
+  "caution": "WHEN conditions are checked in order. Put a more specific condition before a broader one when they overlap.",
+  "docs_url": "https://www.sqlite.org/lang_expr.html#the_case_expression",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Translate internal status codes into useful report labels.",
+    "Group amounts into reporting bands.",
+    "Show different text for paid and unpaid records."
+  ],
+  "title": "Label payment follow-ups",
+  "problem": "Return id and a column called action: \"Complete\" when status = 'paid', otherwise \"Follow up\". Include NULL statuses in the fallback and order by id.",
+  "goal": "Use CASE or an equivalent approach that demonstrates the same concept.",
+  "hint": "Use a WHEN branch for paid and an ELSE branch for every other status.",
+  "minutes": 12,
+  "starter": "-- Write one SELECT query against the example tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Paid and pending",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT); INSERT INTO orders VALUES (2, 'Ava', 100, 'pending'), (1, 'Micki', 200, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "action"
+          ],
+          "values": [
+            [
+              1,
+              "Complete"
+            ],
+            [
+              2,
+              "Follow up"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Missing status",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT); INSERT INTO orders VALUES (3, 'Andrew', 100, NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "action"
+          ],
+          "values": [
+            [
+              3,
+              "Follow up"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No orders",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "action"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "conditions",
+  "level": "beginner"
+}

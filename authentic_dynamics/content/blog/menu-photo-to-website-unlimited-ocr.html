@@ -1,0 +1,27 @@
+<p>Your menu changes. Your website should be able to keep up without requiring you to type every item again.</p>
+<p>Picture a restaurant owner in Harrisburg updating a lunch special before opening. The printed menu is correct, but the website still shows last week’s price. Posting another photograph is one option. Turning that photograph into editable information is another.</p>
+<p>That is the practical reason to investigate Baidu’s Unlimited-OCR: not because a model name is exciting, but because the same information should not need to be entered repeatedly.</p>
+<h2 id="section-1">What the model does—and what the website still has to do</h2>
+<p>Unlimited-OCR provides document-parsing workflows for images and multiple pages. Its official repository includes deployment examples and identifies an MIT license. This makes it a candidate for extracting text from a photographed menu or scanned document. It does not, by itself, create a trustworthy menu database or synchronize your point-of-sale system. <a href="https://huggingface.co/baidu/Unlimited-OCR">1</a></p>
+<p>That distinction matters. Reading “tomato soup — $6” is one task. Deciding which category it belongs in, checking that the price is current, and publishing it in the right place are separate tasks.</p>
+<p>A useful system connects them while keeping the owner in control.</p>
+<h2 id="section-2">The proposed Menu-to-Web Draft</h2>
+<p><strong>Proposed interactive feature: upload one menu image and review an editable web-menu draft. This is a feature specification, not a live upload service.</strong></p>
+<p>The page would offer a fictional sample menu first. A visitor could see the process without uploading a document or providing an email address.</p>
+<p>After upload, the original image would sit beside a structured draft containing item names, descriptions, categories, and prices. The interface would highlight fields requiring review and let the owner correct every value before export. Unreadable text would be marked as uncertain, not replaced with a convincing guess.</p>
+<p>The finished output would be downloadable text and structured data. A later authorized integration could update the business’s website. Nothing would publish automatically from the initial public demonstration.</p>
+<p>For a food truck, the same workflow could prepare a short event menu. For a café, it could turn a photographed specials board into a draft for that day’s web page. These are proposed uses, not claims that those businesses have already tested this model.</p>
+<h2 id="section-3">The most important step is checking the prices</h2>
+<p>The demonstration should be judged by what it gets right and how easily you can fix what it gets wrong.</p>
+<p>A missed decorative heading is inconvenient. A wrong decimal point in a price is a different problem. We would test cramped columns, glare, small print, crossed-out items, and menu photographs taken at an angle. We would also keep a human approval step for every price before publication.</p>
+<p>Ingredients and allergen statements need the same care. The system should extract information that exists; it should not infer that a dish is gluten-free, nut-free, or suitable for a particular diet from its name.</p>
+<p>The owner remains the source of truth. A digital draft should make that review easier, not disguise the need for it.</p>
+<h2 id="section-4">Will this connect to my POS?</h2>
+<p>Not automatically. A POS connection depends on the provider, the owner’s permission, and the functions available through that provider’s integration tools. A website menu and a POS catalog can also describe the same item differently.</p>
+<p>Our preferred first step would be a reviewed export. Only after the fields match would we consider a controlled connection with a clear source of truth and a way to undo mistakes. We would not promise support for a particular POS before checking it.</p>
+<h2 id="section-5">Why editable website content matters</h2>
+<p>For Google visibility, important information should be available as text, and the page should be accessible to crawling. A reviewed web menu can provide readable content alongside photographs rather than making a picture the only place your business explains what it sells. That is not a guarantee of rankings. <a href="https://developers.google.com/search/docs/appearance/ai-features">2</a></p>
+<p>For the owner, the more immediate benefit is simpler: a correction can become a correction to a field instead of a new design project.</p>
+<h2 id="section-6">Make one repeated task easier</h2>
+<p>A restaurant does not need to reorganize its whole operation to investigate this. Start with one menu, identify who approves changes, and decide where the approved information needs to appear.</p>
+<p><a href="https://www.authenticdynamics.com/growth-technology">Discuss a menu or document workflow with Authentic Dynamics</a>. We will scope the practical connection between your existing information and your website—not assume that you need a new POS, a new subscription, or a completely new business process.</p>

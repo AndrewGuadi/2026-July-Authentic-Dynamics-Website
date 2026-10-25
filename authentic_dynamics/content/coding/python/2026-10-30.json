@@ -1,0 +1,62 @@
+{
+  "language": "python",
+  "date": "2026-10-30",
+  "method": "sorted()",
+  "summary": "Return values in a predictable order.",
+  "syntax": "sorted(iterable, *, key=None, reverse=False)",
+  "documentation": "sorted is a built-in function that returns a new list in sorted order. key can extract a comparison value, and reverse changes the direction. Sorting is stable for equal keys.",
+  "inputs": "An iterable; optional key function and reverse boolean.",
+  "returns": "A new sorted list.",
+  "caution": "sorted creates a list; list.sort changes an existing list in place and returns None.",
+  "docs_url": "https://docs.python.org/3/library/functions.html#sorted",
+  "docs_source": "Python",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Rank appointment durations for capacity planning.",
+    "Order exported records before reporting.",
+    "Build consistent lists for customer-facing screens."
+  ],
+  "title": "Sort the appointment durations",
+  "problem": "Given an array of integer appointment durations, return a new list in ascending numeric order. Preserve duplicate durations.",
+  "goal": "Use sorted() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Use sorted on the input.",
+  "minutes": 12,
+  "starter": "def solve(value):\n    # Return your answer here.\n    return None\n",
+  "tests": [
+    {
+      "name": "Unordered durations",
+      "input": [
+        60,
+        15,
+        90,
+        30
+      ],
+      "expected": [
+        15,
+        30,
+        60,
+        90
+      ]
+    },
+    {
+      "name": "Duplicate durations",
+      "input": [
+        30,
+        15,
+        30
+      ],
+      "expected": [
+        15,
+        30,
+        30
+      ]
+    },
+    {
+      "name": "No appointments",
+      "input": [],
+      "expected": []
+    }
+  ],
+  "category": "arrays",
+  "level": "beginner"
+}

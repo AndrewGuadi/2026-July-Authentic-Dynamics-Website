@@ -97,3 +97,22 @@ def test_saved_contact_can_be_reviewed_from_cli(contact_app):
     assert "taylor@example.com" in listing.output
     assert detail.exit_code == 0
     assert "I would like to discuss a new business website." in detail.output
+
+
+def test_csrf_rejection_preserves_draft_and_allows_explicit_retry(contact_app):
+    client = contact_app.test_client()
+    payload = valid_contact("home", "expired-token")
+    payload["message"] = '<script>alert("x")</script> Please help with my website.'
+    response = client.post("/contact", data=payload)
+    assert response.status_code == 400
+    assert "Nothing was submitted" in response.text
+    assert "Taylor Example" in response.text
+    assert '&lt;script&gt;' in response.text
+    assert '<script>alert("x")</script>' not in response.text
+    with contact_app.app_context():
+        assert db.session.execute(db.select(ContactSubmission)).first() is None
+    token = re.search(r'name="csrf_token" value="([^"]+)"', response.text)[1]
+    payload["csrf_token"] = token
+    assert client.post("/contact", data=payload).status_code == 303
+    with contact_app.app_context():
+        assert len(db.session.execute(db.select(ContactSubmission)).scalars().all()) == 1

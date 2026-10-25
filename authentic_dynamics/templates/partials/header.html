@@ -6,6 +6,7 @@
       <a href="{{ url_for('main.websites') }}" {% if active_page == 'websites' %}aria-current="page"{% endif %}>Websites</a>
       <a href="{{ url_for('main.growth_technology') }}" {% if active_page == 'growth' %}aria-current="page"{% endif %}>Growth &amp; Technology</a>
       <a href="{{ url_for('main.work') }}" {% if active_page == 'work' %}aria-current="page"{% endif %}>Work</a>
+      <a href="{{ url_for('main.blog') }}" {% if active_page == 'blog' %}aria-current="page"{% endif %}>Blog</a>
       <a href="{{ url_for('main.about_community') }}" {% if active_page == 'about' %}aria-current="page"{% endif %}>About &amp; Community</a>
     </nav>
     <a class="button small navcta" href="{{ url_for('main.index') if request.endpoint == 'main.index' or active_page == 'home' else url_for('main.about_community') }}#contact">Let’s talk <span>↗</span></a>
