@@ -1,0 +1,60 @@
+{
+  "language": "python",
+  "date": "2026-10-23",
+  "method": "list.count()",
+  "summary": "Count the occurrences of a chosen value.",
+  "syntax": "items.count(value)",
+  "documentation": "count scans a list and returns how many elements compare equal to the requested value. It does not change the list.",
+  "inputs": "A list and the value to count.",
+  "returns": "An integer occurrence count.",
+  "caution": "Equality determines a match. This exercise uses strings so case differences remain significant.",
+  "docs_url": "https://docs.python.org/3/library/stdtypes.html#sequence.count",
+  "docs_source": "Python",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Count repeated product codes in a packing list.",
+    "Measure how often a status appears in a simple export.",
+    "Count a selected label in survey responses."
+  ],
+  "title": "Count the requested part",
+  "problem": "Input is an object with parts (a list of strings) and target (a string). Return how many parts equal target exactly.",
+  "goal": "Use list.count() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Call count on value[\"parts\"] with value[\"target\"].",
+  "minutes": 12,
+  "starter": "def solve(value):\n    # Return your answer here.\n    return None\n",
+  "tests": [
+    {
+      "name": "Repeated part",
+      "input": {
+        "parts": [
+          "pipe",
+          "seal",
+          "pipe"
+        ],
+        "target": "pipe"
+      },
+      "expected": 2
+    },
+    {
+      "name": "Case-sensitive code",
+      "input": {
+        "parts": [
+          "Pipe",
+          "PIPE"
+        ],
+        "target": "pipe"
+      },
+      "expected": 0
+    },
+    {
+      "name": "Empty parts",
+      "input": {
+        "parts": [],
+        "target": "seal"
+      },
+      "expected": 0
+    }
+  ],
+  "category": "arrays",
+  "level": "beginner"
+}

@@ -76,5 +76,7 @@
         }
       ]
     }
-  ]
+  ],
+  "category": "querying",
+  "level": "beginner"
 }

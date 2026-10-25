@@ -1,0 +1,58 @@
+{
+  "language": "javascript",
+  "date": "2026-10-31",
+  "method": "Array.every()",
+  "summary": "Check whether every item satisfies the same rule.",
+  "syntax": "array.every(item => condition)",
+  "documentation": "every checks assigned array elements until one predicate result is falsy. If all tested elements pass, it returns true. An empty array also returns true.",
+  "inputs": "An array and a predicate callback.",
+  "returns": "A boolean representing whether every tested element passed.",
+  "caution": "An empty collection passes every. If a real workflow also requires at least one record, check its length separately.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Check that every order line is ready before dispatch.",
+    "Confirm that all required checklist items are complete.",
+    "Validate every imported record before accepting a batch."
+  ],
+  "title": "Check the completion flags",
+  "problem": "Given tasks with a complete property, return true only if every task has complete === true. For this exercise an empty list returns true.",
+  "goal": "Use Array.every() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Use every and a strict boolean comparison.",
+  "minutes": 12,
+  "starter": "function solve(value) {\n  // Return your answer here.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "All complete",
+      "input": [
+        {
+          "complete": true
+        },
+        {
+          "complete": true
+        }
+      ],
+      "expected": true
+    },
+    {
+      "name": "Truthy is not true",
+      "input": [
+        {
+          "complete": true
+        },
+        {
+          "complete": "yes"
+        }
+      ],
+      "expected": false
+    },
+    {
+      "name": "No tasks",
+      "input": [],
+      "expected": true
+    }
+  ],
+  "category": "arrays",
+  "level": "beginner"
+}

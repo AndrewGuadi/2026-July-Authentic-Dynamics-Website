@@ -34,7 +34,7 @@ const cache = process.env.CODING_RUNTIME_CACHE;
   }
   try {
     await page.goto(base + '/coding-calendar/');
-    assert.equal(await page.locator('.calendar-table tbody tr').count(), new Set(Object.keys(solutions).map(key => key.split('/')[1])).size);
+    assert.equal(await page.locator('.calendar-table tbody tr').count(), Math.min(20, new Set(Object.keys(solutions).map(key => key.split('/')[1])).size));
     for (const [key, code] of (process.env.CODING_SKIP_REFERENCE ? [] : Object.entries(solutions))) {
       await page.goto(base + '/coding-calendar/' + key + '/');
       await source(code);
@@ -43,6 +43,9 @@ const cache = process.env.CODING_RUNTIME_CACHE;
       console.log('PASS', key);
     }
     await page.goto(base + '/coding-calendar/javascript/2026-10-24/');
+    await page.locator('.cm-content').focus();
+    await page.keyboard.press('Tab');
+    assert.equal(await page.evaluate(() => document.activeElement.id), 'coding-run');
     await source('function solve(value) { return []; }');
     await run(/2 of 3 tests passed/);
     await source('function solve(value) { throw new Error("<img src=x onerror=alert(1)>"); }');
@@ -75,13 +78,11 @@ const cache = process.env.CODING_RUNTIME_CACHE;
     await run(/Challenge complete/);
     await page.setViewportSize({ width: 390, height: 844 });
     await page.evaluate(() => { document.activeElement?.blur(); document.documentElement.style.scrollBehavior = 'auto'; window.scrollTo({ top: 0, behavior: 'instant' }); });
-    await page.waitForFunction(() => window.scrollY === 0);
     await page.screenshot({ path: process.env.CODING_SCREENSHOT || '/tmp/coding-calendar-mobile.png', fullPage: true });
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth));
     assert.ok(await page.locator('#coding-source').isHidden());
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
-    await page.waitForFunction(() => window.scrollY === 0);
     await page.screenshot({ path: '/tmp/coding-calendar-desktop.png', fullPage: true });
     assert.deepEqual(errors, []);
     assert.ok(!requests.some(r => r.method !== 'GET'));

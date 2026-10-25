@@ -1,0 +1,82 @@
+{
+  "language": "sql",
+  "date": "2026-10-21",
+  "method": "SELECT",
+  "summary": "Choose the columns a report actually needs.",
+  "syntax": "SELECT column_a, column_b FROM table_name ORDER BY column_a;",
+  "documentation": "SELECT evaluates result expressions for the input rows. Listing columns explicitly controls the shape and names of the returned data.",
+  "inputs": "A source table and the expressions or columns to return.",
+  "returns": "A result set with the requested columns.",
+  "caution": "Rows have no guaranteed order without ORDER BY. SELECT * can expose columns a report does not need.",
+  "docs_url": "https://www.sqlite.org/lang_select.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Create a customer-facing order summary.",
+    "Export only the fields another system needs.",
+    "Inspect a small table before writing a more complex query."
+  ],
+  "title": "List the order owners",
+  "problem": "Return id and customer from every order, sorted by id ascending. Include rows with a NULL customer.",
+  "goal": "Use SELECT or an equivalent approach that demonstrates the same concept.",
+  "hint": "Select the two named columns and order by id.",
+  "minutes": 12,
+  "starter": "-- Write one SELECT query against the example tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Unordered rows",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT); INSERT INTO orders VALUES (2, 'Micki', 100, 'paid'), (1, 'Andrew', 200, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "customer"
+          ],
+          "values": [
+            [
+              1,
+              "Andrew"
+            ],
+            [
+              2,
+              "Micki"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Missing customer",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT); INSERT INTO orders VALUES (1, NULL, 100, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "customer"
+          ],
+          "values": [
+            [
+              1,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No rows",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "customer"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "querying",
+  "level": "beginner"
+}

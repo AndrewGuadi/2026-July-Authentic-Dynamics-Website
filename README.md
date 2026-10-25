@@ -80,4 +80,4 @@ myenv/bin/ruff check .
 
 ## Coding Calendar
 
-`/coding-calendar/` adds daily JavaScript, Python and SQL learning pages with official references, practical scenarios, and code that runs in an isolated browser workspace. The initial collection includes 21 Git-backed lesson files for October 24–30, 2026. See [the authoring, isolation, testing and deployment guide](docs/coding-calendar.md).
+`/coding-calendar/` adds daily JavaScript, Python and SQL learning pages with official references, practical scenarios, and code that runs in an isolated browser workspace. The calendar includes dated, categorized lesson files, actual-date defaults, keyboard language tabs, and date/archive navigation. A finite 30-day content expansion adds three earlier and three later dates per batch across all three tracks. See [the authoring, isolation, testing and deployment guide](docs/coding-calendar.md).

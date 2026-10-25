@@ -44,5 +44,7 @@
       "input": [],
       "expected": ""
     }
-  ]
+  ],
+  "category": "strings",
+  "level": "beginner"
 }

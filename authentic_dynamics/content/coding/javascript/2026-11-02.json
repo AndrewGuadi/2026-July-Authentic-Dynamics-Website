@@ -1,0 +1,62 @@
+{
+  "language": "javascript",
+  "date": "2026-11-02",
+  "method": "Array.sort()",
+  "summary": "Sort numeric values with an explicit comparison rule.",
+  "syntax": "array.sort((a, b) => a - b)",
+  "documentation": "sort rearranges the array in place. Its comparator returns a negative value when a should come first, a positive value when b should come first, and zero when they compare equally.",
+  "inputs": "An array and an optional comparator.",
+  "returns": "The same array after sorting.",
+  "caution": "Without a comparator, values are compared as strings. Copy the array first when the original should remain unchanged.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Order quoted prices numerically before presenting options.",
+    "Arrange appointment durations for capacity planning.",
+    "Sort stock counts before reviewing low quantities."
+  ],
+  "title": "Order the estimate amounts",
+  "problem": "Given an array of integer amounts in cents, return the amounts in ascending numeric order. Keep duplicates and allow negative credits.",
+  "goal": "Use Array.sort() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Copy with [...value], then use a numeric comparator.",
+  "minutes": 12,
+  "starter": "function solve(value) {\n  // Return your answer here.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Numeric order",
+      "input": [
+        100,
+        20,
+        3
+      ],
+      "expected": [
+        3,
+        20,
+        100
+      ]
+    },
+    {
+      "name": "Credits and duplicates",
+      "input": [
+        0,
+        -5,
+        20,
+        -5
+      ],
+      "expected": [
+        -5,
+        -5,
+        0,
+        20
+      ]
+    },
+    {
+      "name": "Empty amounts",
+      "input": [],
+      "expected": []
+    }
+  ],
+  "category": "arrays",
+  "level": "beginner"
+}

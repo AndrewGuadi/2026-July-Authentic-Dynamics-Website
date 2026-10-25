@@ -43,5 +43,7 @@
       "input": "",
       "expected": false
     }
-  ]
+  ],
+  "category": "strings",
+  "level": "beginner"
 }

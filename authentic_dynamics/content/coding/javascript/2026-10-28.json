@@ -52,5 +52,7 @@
       "input": [],
       "expected": false
     }
-  ]
+  ],
+  "category": "arrays",
+  "level": "beginner"
 }

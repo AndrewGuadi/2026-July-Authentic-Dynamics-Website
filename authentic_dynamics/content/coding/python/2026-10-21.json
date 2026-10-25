@@ -1,0 +1,51 @@
+{
+  "language": "python",
+  "date": "2026-10-21",
+  "method": "len()",
+  "summary": "Measure how many items a collection contains.",
+  "syntax": "len(collection)",
+  "documentation": "len returns the number of items in a supported collection. For a list it counts elements, not the sizes of the values inside those elements.",
+  "inputs": "A sequence or collection supporting the length protocol.",
+  "returns": "A non-negative integer.",
+  "caution": "len counts items. It does not sum numeric values or recursively count nested list elements.",
+  "docs_url": "https://docs.python.org/3/library/functions.html#len",
+  "docs_source": "Python",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Count appointments in a dispatch list.",
+    "Check how many products were imported.",
+    "Show the number of selected contacts in a message composer."
+  ],
+  "title": "Count the scheduled jobs",
+  "problem": "Given a list of job identifiers, return the number of identifiers. Repeated identifiers still count as separate list entries.",
+  "goal": "Use len() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Call len on the list.",
+  "minutes": 12,
+  "starter": "def solve(value):\n    # Return your answer here.\n    return None\n",
+  "tests": [
+    {
+      "name": "Three entries",
+      "input": [
+        "A1",
+        "A2",
+        "A3"
+      ],
+      "expected": 3
+    },
+    {
+      "name": "Repeated identifiers",
+      "input": [
+        "A1",
+        "A1"
+      ],
+      "expected": 2
+    },
+    {
+      "name": "Empty schedule",
+      "input": [],
+      "expected": 0
+    }
+  ],
+  "category": "arrays",
+  "level": "beginner"
+}

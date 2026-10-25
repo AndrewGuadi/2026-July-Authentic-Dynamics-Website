@@ -46,5 +46,7 @@
       ],
       "expected": 750
     }
-  ]
+  ],
+  "category": "arrays",
+  "level": "beginner"
 }
