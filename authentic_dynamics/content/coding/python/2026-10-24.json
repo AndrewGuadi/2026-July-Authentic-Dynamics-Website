@@ -1,0 +1,50 @@
+{
+  "language": "python",
+  "date": "2026-10-24",
+  "method": "str.split()",
+  "summary": "Turn a line of text into useful pieces.",
+  "syntax": "text.split(sep=None, maxsplit=-1)",
+  "documentation": "split returns substrings separated by a chosen separator. Without sep, runs of whitespace are treated as one separator and leading or trailing whitespace is ignored.",
+  "inputs": "A string; optional separator and maximum number of splits.",
+  "returns": "A list of strings.",
+  "caution": "An explicit separator preserves empty fields, while the default whitespace mode does not.",
+  "docs_url": "https://docs.python.org/3/library/stdtypes.html#str.split",
+  "docs_source": "Python",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Read space-separated labels from pasted text.",
+    "Break a log line into fields when its format is simple.",
+    "Parse a simple delimiter-separated input; use the csv module for quoted CSV."
+  ],
+  "title": "Read the service tags",
+  "problem": "Given a string of tags separated by whitespace, return the tags as a list. Ignore extra whitespace and preserve spelling and order.",
+  "goal": "Use str.split() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Call split without an explicit separator.",
+  "minutes": 12,
+  "starter": "def solve(value):\n    # Return your answer here.\n    return None\n",
+  "tests": [
+    {
+      "name": "Extra spaces",
+      "input": "  plumbing   heating drain  ",
+      "expected": [
+        "plumbing",
+        "heating",
+        "drain"
+      ]
+    },
+    {
+      "name": "Tabs and newlines",
+      "input": "repair\tinstall\ninspect",
+      "expected": [
+        "repair",
+        "install",
+        "inspect"
+      ]
+    },
+    {
+      "name": "Blank input",
+      "input": "   ",
+      "expected": []
+    }
+  ]
+}

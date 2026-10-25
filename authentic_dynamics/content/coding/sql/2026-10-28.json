@@ -1,0 +1,80 @@
+{
+  "language": "sql",
+  "date": "2026-10-28",
+  "method": "ORDER BY + LIMIT",
+  "summary": "Choose the top rows with a deliberate tie-breaker.",
+  "syntax": "SELECT columns FROM table_name ORDER BY amount DESC, id ASC LIMIT n;",
+  "documentation": "ORDER BY sorts result rows using one or more expressions. LIMIT caps the number returned after sorting. A secondary key makes tied results predictable.",
+  "inputs": "Result rows, sort expressions, and a row limit.",
+  "returns": "A sorted subset of result rows.",
+  "caution": "Without ORDER BY, row order is not guaranteed. Add a tie-breaker for repeatable top-N reports.",
+  "docs_url": "https://www.sqlite.org/lang_select.html#orderby",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Show the largest recent orders.",
+    "Prioritize high-value follow-ups.",
+    "Present the next few appointments."
+  ],
+  "title": "Find the two largest orders",
+  "problem": "Return id and amount_cents for the two largest orders. Sort by amount_cents descending, then id ascending for ties. Return all available rows if fewer than two exist.",
+  "goal": "Use ORDER BY + LIMIT or an equivalent approach that demonstrates the same concept.",
+  "hint": "ORDER BY amount_cents DESC, id ASC, followed by LIMIT 2.",
+  "minutes": 12,
+  "starter": "-- Write one SELECT query against the example tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Tied amounts",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);\nINSERT INTO orders VALUES (3, 'Ava', 500, 'paid'), (2, 'Micki', 900, 'paid'), (1, 'Andrew', 900, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "amount_cents"
+          ],
+          "values": [
+            [
+              1,
+              900
+            ],
+            [
+              2,
+              900
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "One order",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);\nINSERT INTO orders VALUES (7, 'Ava', 400, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "amount_cents"
+          ],
+          "values": [
+            [
+              7,
+              400
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No orders",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "amount_cents"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

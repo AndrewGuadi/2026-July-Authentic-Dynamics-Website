@@ -1,5 +1,7 @@
 """Smoke tests for the first page and its local dependencies."""
 
+import re
+
 import pytest
 
 from authentic_dynamics import create_app
@@ -60,8 +62,8 @@ def test_interior_pages_render_with_navigation(client, path, heading, active_lab
     assert response.status_code == 200
     assert heading in page
     assert f'aria-current="page">{active_label}</a>' in page
-    assert 'href="/static/css/pages.css"' in page
-    assert 'src="/static/js/site.js"' in page
+    assert re.search(r'href="/static/css/pages\.css(?:\?[^"\s]*)?"', page)
+    assert re.search(r'src="/static/js/site\.js(?:\?[^"\s]*)?"', page)
     for destination in ("/", "/websites", "/growth-technology", "/work", "/about-community"):
         assert f'href="{destination}"' in page
 

@@ -1,0 +1,71 @@
+{
+  "language": "javascript",
+  "date": "2026-10-30",
+  "method": "Array.flatMap()",
+  "summary": "Transform groups and flatten one level.",
+  "syntax": "array.flatMap(item => arrayOfResults)",
+  "documentation": "flatMap applies a callback and flattens array results by exactly one level, combining transformation and one-level flattening.",
+  "inputs": "An array and a callback returning values or arrays.",
+  "returns": "A new array with callback arrays flattened once.",
+  "caution": "It does not recursively flatten deeply nested arrays.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Combine line items from several customer orders.",
+    "Build one contact list from several departments.",
+    "Expand event records into individual time slots."
+  ],
+  "title": "Collect all order items",
+  "problem": "Given orders with an items array of strings, return a single array of items in order. Keep duplicates; empty orders contribute no items.",
+  "goal": "Use Array.flatMap() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Return each order.items from flatMap.",
+  "minutes": 12,
+  "starter": "function solve(value) {\n  // Return your answer here.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Multiple orders",
+      "input": [
+        {
+          "items": [
+            "filter",
+            "pipe"
+          ]
+        },
+        {
+          "items": [
+            "seal"
+          ]
+        }
+      ],
+      "expected": [
+        "filter",
+        "pipe",
+        "seal"
+      ]
+    },
+    {
+      "name": "Empty orders",
+      "input": [
+        {
+          "items": []
+        },
+        {
+          "items": [
+            "pipe",
+            "pipe"
+          ]
+        }
+      ],
+      "expected": [
+        "pipe",
+        "pipe"
+      ]
+    },
+    {
+      "name": "No orders",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

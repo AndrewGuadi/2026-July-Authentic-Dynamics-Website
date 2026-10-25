@@ -86,6 +86,7 @@ def create_app(test_config: dict | None = None) -> Flask:
     app.cli.add_command(hub)
 
     from .blueprints.admin import bp as admin_bp
+    from .blueprints.coding import bp as coding_bp
     from .blueprints.games import bp as games_bp
     from .blueprints.health import bp as health_bp
     from .blueprints.hub import bp as hub_bp
@@ -94,6 +95,7 @@ def create_app(test_config: dict | None = None) -> Flask:
 
     app.register_blueprint(tools_bp)
     app.register_blueprint(games_bp)
+    app.register_blueprint(coding_bp)
     app.register_blueprint(main_bp)
     app.register_blueprint(health_bp)
     app.register_blueprint(admin_bp)

@@ -1,0 +1,47 @@
+{
+  "language": "python",
+  "date": "2026-10-28",
+  "method": "str.startswith()",
+  "summary": "Match the beginning of a string.",
+  "syntax": "text.startswith(prefix[, start[, end]])",
+  "documentation": "startswith checks whether a string begins with a prefix. A tuple of prefixes can be used to test alternatives. Optional indices limit the tested region.",
+  "inputs": "A prefix string or tuple of prefixes, plus optional indices.",
+  "returns": "A boolean.",
+  "caution": "Matching is case-sensitive. This exercise deliberately keeps that behavior.",
+  "docs_url": "https://docs.python.org/3/library/stdtypes.html#str.startswith",
+  "docs_source": "Python",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Route imported records with known reference prefixes.",
+    "Recognize a command at the start of a message.",
+    "Classify file names before further processing."
+  ],
+  "title": "Recognize invoice references",
+  "problem": "Return true if the input string starts with exactly \"INV-\". Do not trim or change the case first.",
+  "goal": "Use str.startswith() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Pass \"INV-\" to startswith.",
+  "minutes": 12,
+  "starter": "def solve(value):\n    # Return your answer here.\n    return None\n",
+  "tests": [
+    {
+      "name": "Invoice reference",
+      "input": "INV-2026-42",
+      "expected": true
+    },
+    {
+      "name": "Different case",
+      "input": "inv-2026-42",
+      "expected": false
+    },
+    {
+      "name": "Padding is not a prefix",
+      "input": " INV-1",
+      "expected": false
+    },
+    {
+      "name": "Empty reference",
+      "input": "",
+      "expected": false
+    }
+  ]
+}

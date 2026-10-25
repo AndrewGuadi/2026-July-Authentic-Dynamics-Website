@@ -1,0 +1,20 @@
+{
+  "name": "authentic-dynamics-coding-editor",
+  "version": "1.0.0",
+  "description": "Rebuild the vendored CodeMirror 6 editor",
+  "scripts": {
+    "build": "esbuild editor.js --bundle --minify --format=esm --target=es2020 --supported:template-literal=false --outfile=../../authentic_dynamics/static/js/coding/editor.bundle.js --legal-comments=none"
+  },
+  "license": "MIT",
+  "type": "module",
+  "dependencies": {
+    "@codemirror/lang-javascript": "^6.2.5",
+    "@codemirror/lang-python": "^6.2.1",
+    "@codemirror/lang-sql": "^6.10.0",
+    "@codemirror/state": "^6.7.6",
+    "@codemirror/view": "^6.43.15",
+    "codemirror": "^6.0.2",
+    "esbuild": "^0.28.2"
+  },
+  "private": true
+}

@@ -1,0 +1,20 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><title>Isolated coding runner</title>
+<script>
+// Only the parent may start a single worker; never interpret learner code here.
+let worker;
+window.addEventListener('message', event => {
+  if (event.source !== parent || event.data?.type !== 'start' || worker) return;
+  const port = event.ports[0];
+  if (!port) return;
+  const url = URL.createObjectURL(new Blob([event.data.source], { type: 'text/javascript' }));
+  try {
+    worker = new Worker(url);
+    worker.onmessage = event => port.postMessage(event.data);
+    worker.onerror = () => port.postMessage({ type: 'error', message: 'Runner failed to start. Try again.' });
+    port.onmessage = event => { if (event.data === 'stop') worker.terminate(); };
+    worker.postMessage(event.data.payload);
+  } catch (error) { port.postMessage({ type: 'error', message: String(error.message).slice(0, 500) }); }
+  finally { URL.revokeObjectURL(url); }
+});
+parent.postMessage({ type: 'coding-sandbox-ready' }, '*');
+</script></html>

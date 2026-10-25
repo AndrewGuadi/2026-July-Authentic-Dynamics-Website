@@ -1,0 +1,58 @@
+{
+  "language": "javascript",
+  "date": "2026-10-29",
+  "method": "Array.includes()",
+  "summary": "Check whether a simple value appears in a list.",
+  "syntax": "array.includes(searchElement, fromIndex)",
+  "documentation": "includes tests for the presence of a value using SameValueZero comparison. Strings are case-sensitive; object values are compared by identity.",
+  "inputs": "A search value and an optional starting index.",
+  "returns": "A boolean indicating whether the value exists.",
+  "caution": "includes does not search inside object properties or ignore letter case automatically.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Check whether a service is offered in a ZIP code.",
+    "Find a selected tag in a filter list.",
+    "Check a permission name in an allowed-actions list."
+  ],
+  "title": "Check a service area",
+  "problem": "Input is an object with coveredZips (an array of strings) and zip (a string). Return whether the exact ZIP code is covered. Preserve leading zeros by treating ZIP codes as strings.",
+  "goal": "Use Array.includes() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Read value.coveredZips and test whether it includes value.zip.",
+  "minutes": 12,
+  "starter": "function solve(value) {\n  // Return your answer here.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Covered area",
+      "input": {
+        "coveredZips": [
+          "17101",
+          "17011"
+        ],
+        "zip": "17011"
+      },
+      "expected": true
+    },
+    {
+      "name": "Outside area",
+      "input": {
+        "coveredZips": [
+          "17101"
+        ],
+        "zip": "18015"
+      },
+      "expected": false
+    },
+    {
+      "name": "Leading zeros matter",
+      "input": {
+        "coveredZips": [
+          "01001"
+        ],
+        "zip": "1001"
+      },
+      "expected": false
+    }
+  ]
+}

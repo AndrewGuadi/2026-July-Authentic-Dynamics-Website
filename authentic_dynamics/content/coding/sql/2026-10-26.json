@@ -1,0 +1,75 @@
+{
+  "language": "sql",
+  "date": "2026-10-26",
+  "method": "COUNT(*)",
+  "summary": "Count records, including rows with missing fields.",
+  "syntax": "SELECT COUNT(*) AS count_name FROM table_name;",
+  "documentation": "COUNT(*) counts rows in the selected input. COUNT(expression) instead counts rows where that expression is not NULL.",
+  "inputs": "A table or filtered set of rows.",
+  "returns": "An integer count.",
+  "caution": "COUNT(column) can undercount records when that column is NULL.",
+  "docs_url": "https://www.sqlite.org/lang_aggfunc.html#count",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Count incoming leads even when a contact field is missing.",
+    "Count bookings in a time range.",
+    "Measure how many orders need review."
+  ],
+  "title": "Count pending orders",
+  "problem": "Return one column called pending_count containing the number of orders with status = 'pending'.",
+  "goal": "Use COUNT(*) or an equivalent approach that demonstrates the same concept.",
+  "hint": "Use COUNT(*) and a WHERE filter.",
+  "minutes": 12,
+  "starter": "-- Write one SELECT query against the example tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Mixed orders",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);\nINSERT INTO orders VALUES (1, 'Ava', 100, 'pending'), (2, 'Micki', 200, 'paid'), (3, NULL, 300, 'pending');",
+      "expected": [
+        {
+          "columns": [
+            "pending_count"
+          ],
+          "values": [
+            [
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Nothing pending",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);\nINSERT INTO orders VALUES (1, 'Ava', 100, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "pending_count"
+          ],
+          "values": [
+            [
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty table",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "pending_count"
+          ],
+          "values": [
+            [
+              0
+            ]
+          ]
+        }
+      ]
+    }
+  ]
+}

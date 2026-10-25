@@ -1,0 +1,73 @@
+{
+  "language": "javascript",
+  "date": "2026-10-24",
+  "method": "Array.filter()",
+  "summary": "Keep the records that match a rule.",
+  "syntax": "array.filter((item, index, array) => condition)",
+  "documentation": "filter evaluates a callback for each assigned array element and creates a new array containing elements with truthy callback results. It preserves their original order.",
+  "inputs": "An array and a predicate callback; thisArg is optional.",
+  "returns": "A shallow copy containing matching elements.",
+  "caution": "The array is new, but object elements still refer to the same objects. filter does not copy nested data.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Show only open service requests in a dispatch dashboard.",
+    "Keep in-stock products when a customer changes a storefront filter.",
+    "Select unpaid invoices for a follow-up list."
+  ],
+  "title": "Find the jobs ready to dispatch",
+  "problem": "Given an array of jobs with id and status fields, return the complete job objects whose status is exactly \"ready\". Preserve input order.",
+  "goal": "Use Array.filter() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Return value.filter(...) and compare each status with \"ready\".",
+  "minutes": 12,
+  "starter": "function solve(value) {\n  // Return your answer here.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Mixed jobs",
+      "input": [
+        {
+          "id": 1,
+          "status": "ready"
+        },
+        {
+          "id": 2,
+          "status": "booked"
+        },
+        {
+          "id": 3,
+          "status": "ready"
+        }
+      ],
+      "expected": [
+        {
+          "id": 1,
+          "status": "ready"
+        },
+        {
+          "id": 3,
+          "status": "ready"
+        }
+      ]
+    },
+    {
+      "name": "Empty queue",
+      "input": [],
+      "expected": []
+    },
+    {
+      "name": "No matching status",
+      "input": [
+        {
+          "id": 4,
+          "status": "Ready"
+        },
+        {
+          "id": 5,
+          "status": "done"
+        }
+      ],
+      "expected": []
+    }
+  ]
+}

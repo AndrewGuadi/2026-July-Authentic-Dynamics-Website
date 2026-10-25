@@ -1,0 +1,48 @@
+{
+  "language": "python",
+  "date": "2026-10-26",
+  "method": "str.join()",
+  "summary": "Assemble text with a consistent separator.",
+  "syntax": "separator.join(iterable_of_strings)",
+  "documentation": "join inserts the separator between each string in an iterable. The separator is the string on which the method is called.",
+  "inputs": "An iterable whose elements are strings.",
+  "returns": "One combined string.",
+  "caution": "Non-string items raise TypeError; convert values deliberately when necessary.",
+  "docs_url": "https://docs.python.org/3/library/stdtypes.html#str.join",
+  "docs_source": "Python",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Build a readable list of selected services.",
+    "Construct a breadcrumb label.",
+    "Combine cleaned text lines into an email body."
+  ],
+  "title": "Format the service list",
+  "problem": "Given an array of service-name strings, join them with \", \". Return an empty string for an empty list.",
+  "goal": "Use str.join() or an equivalent approach that demonstrates the same concept.",
+  "hint": "The separator is \", \"; call its join method.",
+  "minutes": 12,
+  "starter": "def solve(value):\n    # Return your answer here.\n    return None\n",
+  "tests": [
+    {
+      "name": "Three services",
+      "input": [
+        "Drain",
+        "Repair",
+        "Inspect"
+      ],
+      "expected": "Drain, Repair, Inspect"
+    },
+    {
+      "name": "One service",
+      "input": [
+        "Install"
+      ],
+      "expected": "Install"
+    },
+    {
+      "name": "No services",
+      "input": [],
+      "expected": ""
+    }
+  ]
+}

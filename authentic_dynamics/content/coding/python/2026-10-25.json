@@ -1,0 +1,42 @@
+{
+  "language": "python",
+  "date": "2026-10-25",
+  "method": "str.strip()",
+  "summary": "Remove unwanted padding from the edges.",
+  "syntax": "text.strip(chars=None)",
+  "documentation": "strip creates a string with leading and trailing whitespace removed. With chars, it removes any of those characters from each end.",
+  "inputs": "A string and an optional set of characters to remove.",
+  "returns": "A new trimmed string.",
+  "caution": "The chars argument is a set of characters, not a prefix or suffix. Interior whitespace remains unchanged.",
+  "docs_url": "https://docs.python.org/3/library/stdtypes.html#str.strip",
+  "docs_source": "Python",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Clean names pasted into a CRM.",
+    "Normalize labels read from text files.",
+    "Remove accidental padding from form values."
+  ],
+  "title": "Clean the customer name",
+  "problem": "Return the input string with leading and trailing whitespace removed. Preserve all internal whitespace and letter case.",
+  "goal": "Use str.strip() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Use strip with no argument.",
+  "minutes": 12,
+  "starter": "def solve(value):\n    # Return your answer here.\n    return None\n",
+  "tests": [
+    {
+      "name": "Padded name",
+      "input": "  Andrew Guasch  ",
+      "expected": "Andrew Guasch"
+    },
+    {
+      "name": "Internal spaces",
+      "input": "\tWest  Shore\n",
+      "expected": "West  Shore"
+    },
+    {
+      "name": "Only whitespace",
+      "input": " \n\t",
+      "expected": ""
+    }
+  ]
+}

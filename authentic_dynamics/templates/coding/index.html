@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block title %}Coding Calendar — Daily JavaScript, Python & SQL | Authentic Dynamics{% endblock %}
+{% block description %}Learn a practical coding method each day. Read documentation, see real business uses, and solve challenges in your browser.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/coding.css') }}">{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>{% include 'partials/header.html' %}
+<main id="main">
+  <section class="page-hero dark" id="top"><div class="wrap">
+    <p class="eyebrow">THE CODING CALENDAR / LEARN BY DOING</p>
+    <h1>One concept.<br><em>Make it work.</em></h1>
+    <p class="intro">A little documentation. A real-world problem. Your code, running right here. Build a useful habit in JavaScript, Python, or SQL.</p>
+    <div class="calendar-badges"><span>Three language tracks</span><span>No account needed</span><span>Runs on your device</span></div>
+  </div></section>
+  <section class="section white"><div class="wrap">
+    <div class="calendar-heading"><div><p class="eyebrow">DAILY PRACTICE</p><h2>Choose your starting point.</h2></div><p>Calendar dates follow America/New_York.<br><time datetime="{{ today }}">{{ today }}</time></p></div>
+    <div class="calendar-tracks">
+    {% for language, label in languages.items() %}
+      {% set track = lessons | selectattr('language', 'equalto', language) | list %}
+      <article class="calendar-track">
+        <span class="language-mark">{{ {'javascript':'JS', 'python':'PY', 'sql':'SQL'}[language] }}</span>
+        <h3>{{ label }}</h3>
+        {% if track %}{% set latest = track[-1] %}
+          <p class="eyebrow">{{ 'TODAY' if latest.date == today else 'LATEST PUBLISHED' }} / {{ latest.date }}</p>
+          <h4>{{ latest.method }}</h4><p>{{ latest.summary }}</p>
+          <a class="button black" href="{{ url_for('coding.lesson', language=language, day=latest.date) }}">Open challenge <span>↗</span></a>
+        {% else %}<p>The first lesson is being prepared.</p>{% endif %}
+      </article>
+    {% endfor %}
+    </div>
+    {% if not lessons | selectattr('date', 'equalto', today) | list %}<p class="calendar-notice">There is no new lesson scheduled for today. The latest published lessons and archive are available below.</p>{% endif %}
+    <div class="calendar-heading archive-heading"><div><p class="eyebrow">KEEP EXPLORING</p><h2>The lesson archive.</h2></div><p>Your older challenges stay available.</p></div>
+    <div class="calendar-table-scroll"><table class="calendar-table"><caption>Published challenges by date and language</caption><thead><tr><th scope="col">Date</th>{% for label in languages.values() %}<th scope="col">{{ label }}</th>{% endfor %}</tr></thead><tbody>
+    {% for group in lessons | groupby('date') | reverse %}
+      <tr><th scope="row"><time datetime="{{ group.grouper }}">{{ group.grouper }}</time></th>{% for language in languages %}<td>{% for item in group.list if item.language == language %}<a href="{{ url_for('coding.lesson', language=language, day=item.date) }}">{{ item.method }}</a>{% endfor %}</td>{% endfor %}</tr>
+    {% endfor %}
+    </tbody></table></div>
+    <p class="calendar-footnote">New lessons appear on their scheduled dates. The first collection covers seven days across three languages, with past challenges available to revisit any time.</p>
+  </div></section>
+</main>{% include 'partials/footer.html' %}
+{% endblock %}
