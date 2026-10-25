@@ -1,0 +1,82 @@
+{
+  "language": "sql",
+  "date": "2026-11-04",
+  "method": "UNION ALL",
+  "summary": "Combine result rows while keeping repeated occurrences.",
+  "syntax": "SELECT ... UNION ALL SELECT ...",
+  "documentation": "UNION ALL concatenates rows from compatible SELECT statements without removing duplicates. Each side needs the same number of output columns. A final ORDER BY controls the combined result rather than either source table alone.",
+  "inputs": "Two or more SELECT results with matching column counts.",
+  "returns": "One combined result set retaining all source occurrences.",
+  "caution": "UNION removes duplicate rows, while UNION ALL preserves them. Never assume table or branch order is the report’s display order.",
+  "docs_url": "https://www.sqlite.org/lang_select.html#compound_select_statements",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Combine two sales channels while preserving separate purchases.",
+    "Merge current and archived logs for one report.",
+    "Collect counts from multiple event sign-in sources."
+  ],
+  "title": "Combine channel sales",
+  "problem": "Tables shop_sales(cents INTEGER) and market_sales(cents INTEGER) each contain non-NULL sales. Return one cents column containing every sale from both tables, duplicates included, ordered by cents ascending.",
+  "goal": "Use UNION ALL or an equivalent approach demonstrating the same premise.",
+  "hint": "Combine with UNION ALL and add a final ORDER BY.",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query using the provided tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Repeated sales",
+      "setup": "CREATE TABLE shop_sales(cents INTEGER); CREATE TABLE market_sales(cents INTEGER);INSERT INTO shop_sales VALUES(500),(100); INSERT INTO market_sales VALUES(500);",
+      "expected": [
+        {
+          "columns": [
+            "cents"
+          ],
+          "values": [
+            [
+              100
+            ],
+            [
+              500
+            ],
+            [
+              500
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "One channel",
+      "setup": "CREATE TABLE shop_sales(cents INTEGER); CREATE TABLE market_sales(cents INTEGER);INSERT INTO market_sales VALUES(0),(20);",
+      "expected": [
+        {
+          "columns": [
+            "cents"
+          ],
+          "values": [
+            [
+              0
+            ],
+            [
+              20
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Both empty",
+      "setup": "CREATE TABLE shop_sales(cents INTEGER); CREATE TABLE market_sales(cents INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "cents"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "querying",
+  "level": "intermediate"
+}

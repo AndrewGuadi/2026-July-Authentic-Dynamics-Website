@@ -1,0 +1,89 @@
+{
+  "language": "javascript",
+  "date": "2026-11-04",
+  "method": "Object.fromEntries()",
+  "summary": "Turn key/value pairs into a lookup object.",
+  "syntax": "Object.fromEntries(entries)",
+  "documentation": "Object.fromEntries consumes an iterable of key/value pairs to construct a new object. Repeated keys are assigned repeatedly, so a later pair replaces an earlier value for that key. This reverses the common Object.entries representation.",
+  "inputs": "An iterable whose elements each provide a key and a value.",
+  "returns": "A new object with properties from the supplied pairs.",
+  "caution": "Duplicate keys lose earlier values. Decide whether that overwrite policy fits your data before using it.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Convert form entries into a plain object before local validation.",
+    "Build a settings lookup from an exported list of pairs.",
+    "Reassemble selected entries after filtering a configuration object."
+  ],
+  "title": "Apply settings in order",
+  "problem": "Input is an array of [stringKey, value] pairs. Return an object using the last value for each repeated key. Preserve false, zero and null values.",
+  "goal": "Use Object.fromEntries() or an equivalent approach demonstrating the same premise.",
+  "hint": "Build the object directly from the pairs; later assignments win.",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Settings",
+      "input": [
+        [
+          "theme",
+          "lime"
+        ],
+        [
+          "size",
+          12
+        ]
+      ],
+      "expected": {
+        "theme": "lime",
+        "size": 12
+      }
+    },
+    {
+      "name": "Overwrite",
+      "input": [
+        [
+          "theme",
+          "ink"
+        ],
+        [
+          "theme",
+          "paper"
+        ]
+      ],
+      "expected": {
+        "theme": "paper"
+      }
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": {}
+    },
+    {
+      "name": "Falsey",
+      "input": [
+        [
+          "count",
+          0
+        ],
+        [
+          "on",
+          false
+        ],
+        [
+          "note",
+          null
+        ]
+      ],
+      "expected": {
+        "count": 0,
+        "on": false,
+        "note": null
+      }
+    }
+  ],
+  "category": "objects",
+  "level": "intermediate"
+}

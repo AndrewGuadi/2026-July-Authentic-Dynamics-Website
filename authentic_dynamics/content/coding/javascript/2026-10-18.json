@@ -1,0 +1,49 @@
+{
+  "language": "javascript",
+  "date": "2026-10-18",
+  "method": "String.startsWith()",
+  "summary": "Check a literal prefix before routing a value.",
+  "syntax": "text.startsWith(prefix, position = 0)",
+  "documentation": "startsWith compares a string prefix at a chosen position and returns a Boolean. It performs a case-sensitive comparison and does not remove spaces or interpret regular expressions.",
+  "inputs": "A prefix string and optional starting position.",
+  "returns": "true when the prefix matches; false otherwise.",
+  "caution": "An empty prefix matches every string. A RegExp argument throws; this is not URL validation.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/startsWith",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Route invoice references beginning with INV- to billing staff.",
+    "Recognize a documented command prefix in a support console.",
+    "Separate internal SKU families before showing their forms."
+  ],
+  "title": "Recognize invoice references",
+  "problem": "Input is a string. Return true only when it begins with the exact prefix INV-. Do not trim or change case.",
+  "goal": "Use String.startsWith() or an equivalent approach demonstrating the same premise.",
+  "hint": "Check the first characters against the literal prefix.",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Invoice",
+      "input": "INV-204",
+      "expected": true
+    },
+    {
+      "name": "Wrong case",
+      "input": "inv-204",
+      "expected": false
+    },
+    {
+      "name": "Prefix later",
+      "input": "XINV-204",
+      "expected": false
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": false
+    }
+  ],
+  "category": "strings",
+  "level": "beginner"
+}

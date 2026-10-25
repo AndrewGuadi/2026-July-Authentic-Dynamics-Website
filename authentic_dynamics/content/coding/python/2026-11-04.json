@@ -1,0 +1,58 @@
+{
+  "language": "python",
+  "date": "2026-11-04",
+  "method": "all()",
+  "summary": "Require every supplied condition to hold.",
+  "syntax": "all(iterable)",
+  "documentation": "all returns False at the first falsey item, otherwise True. With no items it returns True. Use a generator to test each item without building a separate list.",
+  "inputs": "An iterable containing values or condition results.",
+  "returns": "A Boolean indicating whether every item is truthy.",
+  "caution": "Empty input passes all by definition. Add a separate nonempty check when a business rule requires at least one item.",
+  "docs_url": "https://docs.python.org/3/library/functions.html#all",
+  "docs_source": "Python",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Confirm all mandatory fields passed validation.",
+    "Check that every shipment item has sufficient stock.",
+    "Require all reviewers to approve a change."
+  ],
+  "title": "Check a nonempty shipping batch",
+  "problem": "Input is a list of package weights. Return True only when the list is nonempty and every weight is greater than 0. Return False for an empty list, zero or a negative weight.",
+  "goal": "Use all() or an equivalent approach demonstrating the same premise.",
+  "hint": "Combine a nonempty check with all over the positivity condition.",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Ready",
+      "input": [
+        1,
+        2.5
+      ],
+      "expected": true
+    },
+    {
+      "name": "Zero",
+      "input": [
+        1,
+        0
+      ],
+      "expected": false
+    },
+    {
+      "name": "Negative",
+      "input": [
+        -1,
+        2
+      ],
+      "expected": false
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": false
+    }
+  ],
+  "category": "conditions",
+  "level": "intermediate"
+}

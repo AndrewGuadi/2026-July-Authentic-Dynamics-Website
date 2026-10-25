@@ -1,0 +1,58 @@
+{
+  "language": "python",
+  "date": "2026-10-19",
+  "method": "min()",
+  "summary": "Select a smallest value without inventing a zero quote.",
+  "syntax": "min(iterable, default=fallback)",
+  "documentation": "min selects the smallest item. A default handles an empty iterable; with no default, empty input raises ValueError. A key function may choose which attribute is compared.",
+  "inputs": "An iterable and optional default/key arguments.",
+  "returns": "The smallest item, or the supplied default when empty.",
+  "caution": "Zero can be a legitimate minimum. Keep a missing result distinct from a real zero-valued quote.",
+  "docs_url": "https://docs.python.org/3/library/functions.html#min",
+  "docs_source": "Python",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Compare delivery quotes for a local order.",
+    "Find the earliest available appointment time.",
+    "Determine the lowest stock quantity in a category."
+  ],
+  "title": "Find the lowest delivery quote",
+  "problem": "Input is a list of nonnegative integer prices in cents. Return the smallest quote, or None when the list is empty. A free quote of 0 must remain 0.",
+  "goal": "Use min() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use None as the empty-list default.",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Quotes",
+      "input": [
+        500,
+        250,
+        900
+      ],
+      "expected": 250
+    },
+    {
+      "name": "Free",
+      "input": [
+        800,
+        0
+      ],
+      "expected": 0
+    },
+    {
+      "name": "One",
+      "input": [
+        400
+      ],
+      "expected": 400
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": null
+    }
+  ],
+  "category": "numbers",
+  "level": "beginner"
+}

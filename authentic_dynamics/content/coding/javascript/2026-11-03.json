@@ -1,0 +1,59 @@
+{
+  "language": "javascript",
+  "date": "2026-11-03",
+  "method": "Array.findIndex()",
+  "summary": "Locate the position of the first qualifying item.",
+  "syntax": "items.findIndex((item, index, array) => condition)",
+  "documentation": "findIndex calls a predicate from the beginning until it finds a truthy result. It returns that element’s zero-based position, or -1 when nothing qualifies. Unlike find, it returns a position rather than the item itself.",
+  "inputs": "A callback receiving the current item, its index and the array.",
+  "returns": "The first matching index, or -1.",
+  "caution": "Index 0 is a valid match but is falsey. Compare with -1 instead of using the index as a Boolean.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findIndex",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Find the first overdue item before scrolling to its row.",
+    "Identify where a stock reorder queue first needs attention.",
+    "Locate the first invalid field in a form’s validation results."
+  ],
+  "title": "Find the first stockout",
+  "problem": "Input is an array of nonnegative stock quantities. Return the index of the first quantity equal to zero, or -1 if none exist.",
+  "goal": "Use Array.findIndex() or an equivalent approach demonstrating the same premise.",
+  "hint": "Stop at the first exact zero, including at index 0.",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Middle",
+      "input": [
+        5,
+        0,
+        0
+      ],
+      "expected": 1
+    },
+    {
+      "name": "First",
+      "input": [
+        0,
+        9
+      ],
+      "expected": 0
+    },
+    {
+      "name": "Absent",
+      "input": [
+        3,
+        2
+      ],
+      "expected": -1
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": -1
+    }
+  ],
+  "category": "arrays",
+  "level": "beginner"
+}

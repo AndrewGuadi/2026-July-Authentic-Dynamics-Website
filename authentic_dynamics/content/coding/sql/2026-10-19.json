@@ -1,0 +1,82 @@
+{
+  "language": "sql",
+  "date": "2026-10-19",
+  "method": "IN",
+  "summary": "Test membership in a short explicit set.",
+  "syntax": "expression IN (value1, value2, ...)",
+  "documentation": "IN checks whether a value matches a member of a list or subquery. WHERE keeps rows where that comparison is true. When NULL participates, a nonmatching result can be unknown rather than false.",
+  "inputs": "A left expression and list or single-column subquery.",
+  "returns": "A membership truth value, potentially NULL.",
+  "caution": "NOT IN with a NULL in its comparison set can yield surprising unknown results. Do not assume it behaves like an ordinary two-valued exclusion.",
+  "docs_url": "https://www.sqlite.org/lang_expr.html#the_in_and_not_in_operators",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Select orders in several active workflow states.",
+    "Report on a chosen set of branch offices.",
+    "Retrieve appointments assigned to selected staff IDs."
+  ],
+  "title": "Collect active order states",
+  "problem": "From orders(id INTEGER, status TEXT), return id and status where status is exactly pending or packed. Use default text comparison; exclude other or NULL statuses and order by id.",
+  "goal": "Use IN or an equivalent approach demonstrating the same premise.",
+  "hint": "List both accepted statuses in one membership condition.",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query using the provided tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "States",
+      "setup": "CREATE TABLE orders(id INTEGER,status TEXT);INSERT INTO orders VALUES(3,'shipped'),(2,'packed'),(1,'pending');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "status"
+          ],
+          "values": [
+            [
+              1,
+              "pending"
+            ],
+            [
+              2,
+              "packed"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Case and null",
+      "setup": "CREATE TABLE orders(id INTEGER,status TEXT);INSERT INTO orders VALUES(1,NULL),(2,'Pending'),(3,'pending');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "status"
+          ],
+          "values": [
+            [
+              3,
+              "pending"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE orders(id INTEGER,status TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "status"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "conditions",
+  "level": "beginner"
+}

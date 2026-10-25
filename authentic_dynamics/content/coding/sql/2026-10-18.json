@@ -1,0 +1,82 @@
+{
+  "language": "sql",
+  "date": "2026-10-18",
+  "method": "BETWEEN",
+  "summary": "Select a closed numeric interval.",
+  "syntax": "expression BETWEEN lower AND upper",
+  "documentation": "BETWEEN checks whether an expression lies within two bounds, including both endpoints. It behaves like two inclusive comparisons, while evaluating its left expression only once. NULL comparisons do not become true in WHERE.",
+  "inputs": "An expression and lower/upper bounds.",
+  "returns": "A truth value, or NULL when comparisons are unknown.",
+  "caution": "Bounds are not automatically reordered. BETWEEN 100 AND 50 does not mean the interval 50 through 100.",
+  "docs_url": "https://www.sqlite.org/lang_expr.html#the_between_operator",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Find invoices within a budget band.",
+    "Filter products by an inclusive price range.",
+    "Select visits occurring in a numeric reporting interval."
+  ],
+  "title": "Select midrange invoices",
+  "problem": "From invoices(id INTEGER, cents INTEGER), return id and cents for amounts from 1000 through 2000 inclusive. Exclude NULL amounts and order by id.",
+  "goal": "Use BETWEEN or an equivalent approach demonstrating the same premise.",
+  "hint": "Use inclusive bounds and specify output ordering.",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query using the provided tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Endpoints",
+      "setup": "CREATE TABLE invoices(id INTEGER,cents INTEGER);INSERT INTO invoices VALUES(3,2001),(2,2000),(1,1000),(4,999);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "cents"
+          ],
+          "values": [
+            [
+              1,
+              1000
+            ],
+            [
+              2,
+              2000
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Unknown",
+      "setup": "CREATE TABLE invoices(id INTEGER,cents INTEGER);INSERT INTO invoices VALUES(1,NULL),(2,1500);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "cents"
+          ],
+          "values": [
+            [
+              2,
+              1500
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No invoices",
+      "setup": "CREATE TABLE invoices(id INTEGER,cents INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "cents"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "conditions",
+  "level": "beginner"
+}

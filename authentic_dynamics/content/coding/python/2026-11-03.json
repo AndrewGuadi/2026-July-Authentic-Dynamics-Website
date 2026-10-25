@@ -1,0 +1,59 @@
+{
+  "language": "python",
+  "date": "2026-11-03",
+  "method": "any()",
+  "summary": "Stop once at least one condition is true.",
+  "syntax": "any(iterable)",
+  "documentation": "any returns True when an iterable supplies a truthy item, stopping at the first one. It returns False for an empty iterable. A generator expression can evaluate a condition lazily.",
+  "inputs": "An iterable of values or condition results.",
+  "returns": "A Boolean indicating whether at least one item is truthy.",
+  "caution": "Truthiness is broader than equality with True. Generate an explicit condition for numeric thresholds.",
+  "docs_url": "https://docs.python.org/3/library/functions.html#any",
+  "docs_source": "Python",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Flag an order when at least one line is out of stock.",
+    "Warn if any invoice is overdue.",
+    "Check whether a delivery route contains a priority stop."
+  ],
+  "title": "Detect a negative balance",
+  "problem": "Input is a list of integer account balances in cents. Return True if at least one balance is negative, otherwise False. Zero is not negative.",
+  "goal": "Use any() or an equivalent approach demonstrating the same premise.",
+  "hint": "Generate balance < 0 for each item.",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Negative",
+      "input": [
+        50,
+        -1,
+        30
+      ],
+      "expected": true
+    },
+    {
+      "name": "Zero",
+      "input": [
+        0,
+        10
+      ],
+      "expected": false
+    },
+    {
+      "name": "All negative",
+      "input": [
+        -2,
+        -3
+      ],
+      "expected": true
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": false
+    }
+  ],
+  "category": "conditions",
+  "level": "beginner"
+}

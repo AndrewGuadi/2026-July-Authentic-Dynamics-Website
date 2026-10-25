@@ -1,0 +1,69 @@
+{
+  "language": "javascript",
+  "date": "2026-10-20",
+  "method": "Object.keys()",
+  "summary": "Inspect an object’s own enumerable property names.",
+  "syntax": "Object.keys(record)",
+  "documentation": "Object.keys builds an array of an object’s own enumerable string-keyed property names. It does not include symbol keys or inherited properties. Sort the returned keys when a report needs alphabetical order.",
+  "inputs": "An object whose own keys should be inspected.",
+  "returns": "An array of string property names.",
+  "caution": "Integer-like keys have special enumeration order. Do not assume insertion order equals alphabetical order.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "List editable fields supplied by a form configuration.",
+    "Inspect column names in an imported JSON record.",
+    "Build a compact checklist of enabled configuration fields."
+  ],
+  "title": "List supplied profile fields",
+  "problem": "Input is a JSON object. Return its own property names sorted using JavaScript’s default string sort. Include keys whose values are null, false or zero.",
+  "goal": "Use Object.keys() or an equivalent approach demonstrating the same premise.",
+  "hint": "Collect keys, then sort the resulting array.",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Alphabetize",
+      "input": {
+        "phone": "x",
+        "email": "y"
+      },
+      "expected": [
+        "email",
+        "phone"
+      ]
+    },
+    {
+      "name": "Falsey values",
+      "input": {
+        "z": null,
+        "a": 0,
+        "m": false
+      },
+      "expected": [
+        "a",
+        "m",
+        "z"
+      ]
+    },
+    {
+      "name": "No fields",
+      "input": {},
+      "expected": []
+    },
+    {
+      "name": "Numeric text keys",
+      "input": {
+        "2": "b",
+        "10": "a"
+      },
+      "expected": [
+        "10",
+        "2"
+      ]
+    }
+  ],
+  "category": "objects",
+  "level": "beginner"
+}

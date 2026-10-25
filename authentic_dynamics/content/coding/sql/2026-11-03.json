@@ -1,0 +1,86 @@
+{
+  "language": "sql",
+  "date": "2026-11-03",
+  "method": "NULLIF()",
+  "summary": "Convert a sentinel value to a missing value.",
+  "syntax": "NULLIF(first, second)",
+  "documentation": "NULLIF compares its two arguments and returns NULL when they are equal. Otherwise it returns the first argument. It is useful when an existing storage convention uses a special value to represent missing data.",
+  "inputs": "Two expressions to compare.",
+  "returns": "NULL if equal, otherwise the first expression.",
+  "caution": "NULLIF does not trim or normalize values. Only convert a sentinel after confirming it cannot be a legitimate value.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#nullif",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Convert blank imported phone values into missing data.",
+    "Normalize a legacy unknown-value marker in a report.",
+    "Protect a reporting denominator by converting zero to NULL."
+  ],
+  "title": "Normalize blank phone fields",
+  "problem": "From contacts(id INTEGER, phone TEXT), return id and NULLIF(phone, '') as phone. Empty strings become NULL; preserve whitespace-only strings and existing NULL. Order by id.",
+  "goal": "Use NULLIF() or an equivalent approach demonstrating the same premise.",
+  "hint": "Compare phone with the empty string; do not trim it.",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query using the provided tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Blank vs present",
+      "setup": "CREATE TABLE contacts(id INTEGER,phone TEXT);INSERT INTO contacts VALUES(2,''),(1,'717-555-0100');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "phone"
+          ],
+          "values": [
+            [
+              1,
+              "717-555-0100"
+            ],
+            [
+              2,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Whitespace and null",
+      "setup": "CREATE TABLE contacts(id INTEGER,phone TEXT);INSERT INTO contacts VALUES(1,' '),(2,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "phone"
+          ],
+          "values": [
+            [
+              1,
+              " "
+            ],
+            [
+              2,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE contacts(id INTEGER,phone TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "phone"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "conditions",
+  "level": "beginner"
+}
