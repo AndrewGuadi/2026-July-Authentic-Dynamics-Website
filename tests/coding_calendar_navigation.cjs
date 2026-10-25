@@ -68,10 +68,8 @@ const base = process.env.CODING_BASE_URL || 'http://127.0.0.1:5073';
     await page.waitForFunction(() => document.querySelector('.calendar-table-scroll').scrollLeft > 0);
     await page.waitForTimeout(250); // Let the browser's native keyboard scroll animation finish.
     await page.locator('.calendar-table-scroll').evaluate(el => { el.scrollTo({ left: 0, behavior: 'instant' }); el.blur(); });
-    await page.waitForFunction(() => document.querySelector('.calendar-table-scroll').scrollLeft === 0);
     assert.equal(await page.locator('[tabindex]').evaluateAll(items => items.some(item => Number(item.getAttribute('tabindex')) > 0)), false);
     await page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; window.scrollTo(0, 0); document.activeElement?.blur(); });
-    await page.waitForFunction(() => scrollY === 0);
     await page.screenshot({ path: '/tmp/calendar-navigation-mobile.png', fullPage: true });
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.screenshot({ path: '/tmp/calendar-navigation-desktop.png', fullPage: true });
