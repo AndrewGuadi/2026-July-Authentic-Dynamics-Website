@@ -1,0 +1,63 @@
+{
+  "language": "python",
+  "date": "2026-11-05",
+  "method": "dict.items()",
+  "summary": "Iterate through dictionary keys together with their values.",
+  "syntax": "record.items()",
+  "documentation": "items returns a view of the dictionary’s key/value pairs. The view reflects dictionary changes and can be used for pair unpacking in a loop. Build a separate result instead of changing its size during iteration.",
+  "inputs": "A dictionary; items takes no arguments.",
+  "returns": "A dynamic view of (key, value) pairs.",
+  "caution": "Adding or deleting keys while iterating can raise RuntimeError. Sort the output explicitly for a deterministic report.",
+  "docs_url": "https://docs.python.org/3/library/stdtypes.html#dict.items",
+  "docs_source": "Python",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Create field/value summaries for a client intake record.",
+    "Inspect SKU stock counts alongside their product identifiers.",
+    "Select configuration settings meeting a value condition."
+  ],
+  "title": "List products needing restock",
+  "problem": "Input is an object mapping product names to nonnegative integer quantities. Return an alphabetically sorted list of names whose quantity is less than 3.",
+  "goal": "Use dict.items() or an equivalent approach demonstrating the same premise.",
+  "hint": "Unpack name and quantity from items, filter by quantity, then sort names.",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Mixed",
+      "input": {
+        "soap": 2,
+        "tea": 5,
+        "bread": 0
+      },
+      "expected": [
+        "bread",
+        "soap"
+      ]
+    },
+    {
+      "name": "Boundary",
+      "input": {
+        "a": 3,
+        "b": 2
+      },
+      "expected": [
+        "b"
+      ]
+    },
+    {
+      "name": "No products",
+      "input": {},
+      "expected": []
+    },
+    {
+      "name": "Enough",
+      "input": {
+        "x": 10
+      },
+      "expected": []
+    }
+  ],
+  "category": "objects",
+  "level": "intermediate"
+}

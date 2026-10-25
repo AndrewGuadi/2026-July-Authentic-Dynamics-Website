@@ -1,0 +1,59 @@
+{
+  "language": "python",
+  "date": "2026-10-18",
+  "method": "max()",
+  "summary": "Find a largest value with an explicit empty-input policy.",
+  "syntax": "max(iterable, default=fallback)",
+  "documentation": "max selects the largest item of an iterable. The default keyword supplies a result when that iterable is empty; without a default an empty iterable raises ValueError. A key function can customize comparisons.",
+  "inputs": "An iterable; optional default and comparison key.",
+  "returns": "The largest item, or default for an empty iterable.",
+  "caution": "default is for the single-iterable form. Comparing incompatible types can raise TypeError.",
+  "docs_url": "https://docs.python.org/3/library/functions.html#max",
+  "docs_source": "Python",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Find the busiest hour from booking totals.",
+    "Pick the largest outstanding invoice amount.",
+    "Display a peak daily visitor count."
+  ],
+  "title": "Find peak bookings",
+  "problem": "Input is a list of nonnegative integer booking counts. Return the largest count, or 0 for an empty list.",
+  "goal": "Use max() or an equivalent approach demonstrating the same premise.",
+  "hint": "Supply an explicit default for an empty iterable.",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Peak",
+      "input": [
+        4,
+        12,
+        7
+      ],
+      "expected": 12
+    },
+    {
+      "name": "Tied",
+      "input": [
+        3,
+        3
+      ],
+      "expected": 3
+    },
+    {
+      "name": "Zeros",
+      "input": [
+        0,
+        0
+      ],
+      "expected": 0
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": 0
+    }
+  ],
+  "category": "numbers",
+  "level": "beginner"
+}

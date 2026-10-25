@@ -1,0 +1,82 @@
+{
+  "language": "sql",
+  "date": "2026-10-20",
+  "method": "LIKE ... ESCAPE",
+  "summary": "Match text patterns while treating a wildcard literally.",
+  "syntax": "text LIKE pattern ESCAPE escape_character",
+  "documentation": "LIKE matches text against a pattern: percent represents any sequence and underscore represents one character. ESCAPE declares a single character that makes a following wildcard literal. SQLite’s default case folding covers ASCII, not all Unicode.",
+  "inputs": "Text, a pattern and optionally one escape character.",
+  "returns": "A pattern-match truth value; NULL input produces NULL.",
+  "caution": "A plain underscore is a wildcard. Escape it when a product-code prefix actually contains an underscore.",
+  "docs_url": "https://www.sqlite.org/lang_expr.html#the_like_glob_regexp_match_and_extract_operators",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Find stock codes with a literal underscore separator.",
+    "Search customer names using a controlled text pattern.",
+    "Inspect export filenames sharing a documented prefix."
+  ],
+  "title": "Find literal SKU prefixes",
+  "problem": "From products(id INTEGER, sku TEXT), return id and sku starting with literal KIT_ using SQLite’s default LIKE behavior. The underscore must be literal, and ASCII case differences may match. Exclude NULL. Order by id.",
+  "goal": "Use LIKE ... ESCAPE or an equivalent approach demonstrating the same premise.",
+  "hint": "Use an ESCAPE clause: pattern KIT!_% with ! as the escape character.",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query using the provided tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Literal separator",
+      "setup": "CREATE TABLE products(id INTEGER,sku TEXT);INSERT INTO products VALUES(2,'KITX9'),(1,'KIT_9'),(3,'KIT_');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "sku"
+          ],
+          "values": [
+            [
+              1,
+              "KIT_9"
+            ],
+            [
+              3,
+              "KIT_"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Case and missing",
+      "setup": "CREATE TABLE products(id INTEGER,sku TEXT);INSERT INTO products VALUES(1,'kit_a'),(2,NULL),(3,'OTHER');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "sku"
+          ],
+          "values": [
+            [
+              1,
+              "kit_a"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE products(id INTEGER,sku TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "sku"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "strings",
+  "level": "intermediate"
+}

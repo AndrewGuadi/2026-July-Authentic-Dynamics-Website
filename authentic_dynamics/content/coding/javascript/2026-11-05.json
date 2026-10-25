@@ -1,0 +1,49 @@
+{
+  "language": "javascript",
+  "date": "2026-11-05",
+  "method": "String.replaceAll()",
+  "summary": "Replace every occurrence of a literal token.",
+  "syntax": "text.replaceAll(search, replacement)",
+  "documentation": "replaceAll returns a new string after replacing each non-overlapping occurrence of a search string. A regular expression is also allowed when it has the global flag. String replacement patterns can interpret dollar-sign sequences.",
+  "inputs": "A search string or global RegExp, and a replacement string or function.",
+  "returns": "A new string; the original is unchanged.",
+  "caution": "A non-global RegExp throws. Use a replacement function when replacement text must be treated literally.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replaceAll",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Render repeated placeholders in a local receipt template.",
+    "Normalize a repeated delimiter in a supplier export.",
+    "Replace obsolete product labels in a batch of descriptions."
+  ],
+  "title": "Fill a repeated city token",
+  "problem": "Input is a string. Replace every exact occurrence of {{city}} with Harrisburg. Keep all other characters and case unchanged.",
+  "goal": "Use String.replaceAll() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use a literal search token so braces do not become regular-expression syntax.",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Repeated",
+      "input": "Visit {{city}}. Buy in {{city}}.",
+      "expected": "Visit Harrisburg. Buy in Harrisburg."
+    },
+    {
+      "name": "Absent",
+      "input": "Visit Hershey.",
+      "expected": "Visit Hershey."
+    },
+    {
+      "name": "Adjacent",
+      "input": "{{city}}{{city}}",
+      "expected": "HarrisburgHarrisburg"
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": ""
+    }
+  ],
+  "category": "strings",
+  "level": "beginner"
+}

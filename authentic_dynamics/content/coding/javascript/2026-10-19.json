@@ -1,0 +1,71 @@
+{
+  "language": "javascript",
+  "date": "2026-10-19",
+  "method": "Array.slice()",
+  "summary": "Copy a bounded portion without removing the original items.",
+  "syntax": "items.slice(start, end)",
+  "documentation": "slice creates a shallow array copy from start up to, but not including, end. Missing end means the array length; negative indices count backward from the end.",
+  "inputs": "An array and optional start/end indices.",
+  "returns": "A new array containing the selected elements.",
+  "caution": "Nested objects remain shared references. slice copies; splice mutates the original array.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/slice",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Show the first few bookings in a dashboard preview.",
+    "Split an already sorted delivery list into pages.",
+    "Keep a copy of the most recent log entries."
+  ],
+  "title": "Preview three bookings",
+  "problem": "Return the first three items of the input array in their existing order. For fewer than three items, return all of them.",
+  "goal": "Use Array.slice() or an equivalent approach demonstrating the same premise.",
+  "hint": "The ending index is exclusive.",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Long list",
+      "input": [
+        "A",
+        "B",
+        "C",
+        "D"
+      ],
+      "expected": [
+        "A",
+        "B",
+        "C"
+      ]
+    },
+    {
+      "name": "Short list",
+      "input": [
+        7
+      ],
+      "expected": [
+        7
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    },
+    {
+      "name": "Zero values",
+      "input": [
+        0,
+        false,
+        null,
+        9
+      ],
+      "expected": [
+        0,
+        false,
+        null
+      ]
+    }
+  ],
+  "category": "arrays",
+  "level": "beginner"
+}

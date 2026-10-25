@@ -1,0 +1,98 @@
+{
+  "language": "sql",
+  "date": "2026-11-05",
+  "method": "ROW_NUMBER()",
+  "summary": "Assign a position within each ordered group.",
+  "syntax": "ROW_NUMBER() OVER (PARTITION BY group_column ORDER BY sort_column)",
+  "documentation": "ROW_NUMBER numbers rows from one within each window partition. Its window ORDER BY controls numbering; a separate outer ORDER BY controls display. Add a unique tie-breaker for stable positions when primary sort values tie.",
+  "inputs": "Window partition expressions and ordering expressions.",
+  "returns": "A sequential integer for every row in its partition.",
+  "caution": "ROW_NUMBER gives tied rows different numbers. RANK has different tie behavior; an unspecified tie order is not deterministic.",
+  "docs_url": "https://www.sqlite.org/windowfunctions.html#row_number",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Rank bookings within each service route.",
+    "Number purchases within each customer history.",
+    "Label queue positions for each branch office."
+  ],
+  "title": "Number branch appointments",
+  "problem": "From appointments(id INTEGER, branch TEXT, slot INTEGER), return id, branch and a column position. Number each branch starting at 1 by slot ascending, breaking ties by id ascending. Display rows ordered by branch, slot, id. All fields are non-NULL and id is unique.",
+  "goal": "Use ROW_NUMBER() or an equivalent approach demonstrating the same premise.",
+  "hint": "Partition by branch, order the window by slot then id, and separately order the final rows.",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query using the provided tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Partitions and ties",
+      "setup": "CREATE TABLE appointments(id INTEGER,branch TEXT,slot INTEGER);INSERT INTO appointments VALUES(3,'West',9),(2,'East',8),(1,'East',8),(4,'West',7);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "branch",
+            "position"
+          ],
+          "values": [
+            [
+              1,
+              "East",
+              1
+            ],
+            [
+              2,
+              "East",
+              2
+            ],
+            [
+              4,
+              "West",
+              1
+            ],
+            [
+              3,
+              "West",
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "One appointment",
+      "setup": "CREATE TABLE appointments(id INTEGER,branch TEXT,slot INTEGER);INSERT INTO appointments VALUES(8,'East',10);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "branch",
+            "position"
+          ],
+          "values": [
+            [
+              8,
+              "East",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE appointments(id INTEGER,branch TEXT,slot INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "branch",
+            "position"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "querying",
+  "level": "intermediate"
+}

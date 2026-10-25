@@ -1,0 +1,61 @@
+{
+  "language": "python",
+  "date": "2026-10-20",
+  "method": "abs()",
+  "summary": "Measure distance from a target without its sign.",
+  "syntax": "abs(number)",
+  "documentation": "abs returns a number’s absolute value. For integers and floats this gives its nonnegative magnitude. For complex numbers it gives magnitude rather than removing a sign.",
+  "inputs": "A numeric value.",
+  "returns": "The absolute value of that number.",
+  "caution": "Absolute value removes direction: keep the signed difference separately if over/under target matters.",
+  "docs_url": "https://docs.python.org/3/library/functions.html#abs",
+  "docs_source": "Python",
+  "reviewed": "2026-10-25",
+  "scenarios": [
+    "Measure how far a cash drawer is from its expected balance.",
+    "Compare a measured size against a manufacturing target.",
+    "Show the size of a budget variance independently of its direction."
+  ],
+  "title": "Measure a cash variance",
+  "problem": "Input has integer fields actual and expected, in cents. Return the absolute difference between them.",
+  "goal": "Use abs() or an equivalent approach demonstrating the same premise.",
+  "hint": "Subtract the expected amount from the actual amount, then take its magnitude.",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Over",
+      "input": {
+        "actual": 1200,
+        "expected": 1000
+      },
+      "expected": 200
+    },
+    {
+      "name": "Under",
+      "input": {
+        "actual": 800,
+        "expected": 1000
+      },
+      "expected": 200
+    },
+    {
+      "name": "Exact",
+      "input": {
+        "actual": 0,
+        "expected": 0
+      },
+      "expected": 0
+    },
+    {
+      "name": "Negative balance",
+      "input": {
+        "actual": -50,
+        "expected": 50
+      },
+      "expected": 100
+    }
+  ],
+  "category": "numbers",
+  "level": "beginner"
+}
