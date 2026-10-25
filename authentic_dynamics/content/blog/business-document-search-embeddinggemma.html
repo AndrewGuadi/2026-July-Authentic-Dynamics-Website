@@ -1,0 +1,28 @@
+<p>Some business questions are hard to answer for the wrong reason. The answer already exists, but it is buried in a handbook, an old document, or a page nobody remembers updating.</p>
+<p>“What is included in this service?” “Which form should a new employee use?” “Where is the current cancellation policy?”</p>
+<p>A useful AI search tool should help someone find the right source. It should not turn an outdated note into a confident answer or expose an internal document to a customer.</p>
+<p>That makes Google’s EmbeddingGemma 2 an interesting model for a focused business-search workflow.</p>
+<h2 id="section-1">An embedding model is not a chatbot</h2>
+<p>EmbeddingGemma 2 creates numerical representations of content so an application can compare meaning and retrieve relevant material. Google’s model card describes support across text and other media, and identifies an Apache 2.0 license. The model produces embeddings—not finished customer-facing answers. <a href="https://huggingface.co/google/embeddinggemma-2">1</a></p>
+<p>For a small business, that suggests a straightforward first use: search a carefully selected collection of documents and display relevant passages with their sources.</p>
+<p>A separate language model could later draft an answer from those passages. It would be a separate component, with its own evaluation. Adding it should solve a real problem rather than make the search interface sound more impressive.</p>
+<h2 id="section-2">The proposed Business Answer Finder</h2>
+<p><strong>Proposed interactive feature: search a fictional business knowledge base and open the supporting passage. This is a specification, not a live search index.</strong></p>
+<p>The demo would provide a small set of clearly labeled sample documents: services, opening hours, a booking policy, and frequently asked questions. Visitors could ask in ordinary language and inspect the document excerpts returned.</p>
+<p>Every result would show its source and effective date. A visitor could open the surrounding text instead of trusting an isolated sentence.</p>
+<p>When a question is unsupported, the page would say so. If the sample documents do not mention Saturday appointments, the system should not invent them. A “not found” result is useful when it accurately identifies a missing piece of business information.</p>
+<p>The public demonstration would not accept private employee documents or become a shared storage area for unrelated businesses.</p>
+<h2 id="section-3">What this could look like for a local business</h2>
+<p>Imagine a small service company on the West Shore with several people answering customer inquiries. One employee remembers the current policy; another finds an older document. A search system could help them locate the approved version instead of relying on memory.</p>
+<p>That is a proposed scenario, not a measured result. Whether the tool helps depends on the quality of the source material and whether people actually use the maintained documents.</p>
+<p>Before choosing a model, we would identify who owns each policy, how updates are approved, and which information belongs in a public versus internal collection.</p>
+<h2 id="section-4">The permissions are part of the product</h2>
+<p>A staff handbook, a price list, and a customer-facing FAQ should not automatically share the same audience. Our proposed implementation would apply access controls before retrieval, not merely ask a chatbot to avoid revealing sensitive text afterward.</p>
+<p>Each business would have a separate authorized document collection. Removing a document would also require removing its searchable representation. Updates would replace or clearly supersede older versions.</p>
+<p>We would test questions that should return an answer and questions that must not. We would also test whether similar wording accidentally pulls information from the wrong policy or account. Those are release requirements, not tests already completed for this article.</p>
+<h2 id="section-5">When a conventional FAQ is enough</h2>
+<p>A business with ten short answers may need a well-organized FAQ page rather than a search system. That is a legitimate outcome of the discovery process.</p>
+<p>The stronger use case is a collection large or varied enough that finding the right information has become a recurring task. Even then, the first deliverable may be a cleaned-up source library. Better retrieval cannot make an obsolete policy current.</p>
+<h2 id="section-6">Start with the questions your team keeps answering</h2>
+<p>Choose a few repeated questions and identify the approved document that answers each one. That creates a practical evaluation set before any model is deployed.</p>
+<p><a href="https://www.authenticdynamics.com/growth-technology">Discuss business knowledge search with Authentic Dynamics</a>. We can scope a source-first tool with clear permissions, visible evidence, and a handoff your team can maintain—without presenting guesses as company policy.</p>

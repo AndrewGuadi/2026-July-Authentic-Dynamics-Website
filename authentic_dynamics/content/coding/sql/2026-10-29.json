@@ -1,0 +1,81 @@
+{
+  "language": "sql",
+  "date": "2026-10-29",
+  "method": "INNER JOIN",
+  "summary": "Connect related records across tables.",
+  "syntax": "SELECT ... FROM a INNER JOIN b ON a.key = b.foreign_key;",
+  "documentation": "An inner join combines rows when the join condition is true. Rows with no match are omitted. Multiple matching rows produce multiple result rows.",
+  "inputs": "Two related tables and a join condition.",
+  "returns": "Combined rows for matched records.",
+  "caution": "A missing or incorrect join condition can multiply rows unexpectedly. Qualify shared column names.",
+  "docs_url": "https://www.sqlite.org/lang_select.html#fromclause",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Show customer names beside service jobs.",
+    "Connect invoice lines to product details.",
+    "Build a booking list with staff names."
+  ],
+  "title": "Attach customers to jobs",
+  "problem": "customers has id and name. jobs has id and customer_id. Return jobs.id AS job_id and customers.name AS customer_name for matched records only, ordered by job_id ascending.",
+  "goal": "Use INNER JOIN or an equivalent approach that demonstrates the same concept.",
+  "hint": "Join jobs.customer_id to customers.id.",
+  "minutes": 12,
+  "starter": "-- Write one SELECT query against the example tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Two jobs for one customer",
+      "setup": "CREATE TABLE customers (id INTEGER, name TEXT); CREATE TABLE jobs (id INTEGER, customer_id INTEGER); INSERT INTO customers VALUES (1,'Micki'),(2,'Andrew'); INSERT INTO jobs VALUES (9,1),(7,2),(8,1);",
+      "expected": [
+        {
+          "columns": [
+            "job_id",
+            "customer_name"
+          ],
+          "values": [
+            [
+              7,
+              "Andrew"
+            ],
+            [
+              8,
+              "Micki"
+            ],
+            [
+              9,
+              "Micki"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Unmatched job",
+      "setup": "CREATE TABLE customers (id INTEGER, name TEXT); CREATE TABLE jobs (id INTEGER, customer_id INTEGER); INSERT INTO customers VALUES (1,'Ava'); INSERT INTO jobs VALUES (2,99);",
+      "expected": [
+        {
+          "columns": [
+            "job_id",
+            "customer_name"
+          ],
+          "values": []
+        }
+      ]
+    },
+    {
+      "name": "Empty tables",
+      "setup": "CREATE TABLE customers (id INTEGER, name TEXT); CREATE TABLE jobs (id INTEGER, customer_id INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "job_id",
+            "customer_name"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "joins",
+  "level": "intermediate"
+}

@@ -1,0 +1,25 @@
+<p>Running AI on a computer you control is an appealing idea. It could let you build a narrowly defined workflow without sending every prompt to a remote inference service.</p>
+<p>But “local” should describe an actual deployment—not just a marketing label. You still need suitable hardware, a model that fits the task, and a clear understanding of which other parts of the application connect to the internet.</p>
+<p>For a Central Pennsylvania business investigating that option, Liquid AI’s LFM2.5-24B-A2B is a model to evaluate carefully rather than assume will run comfortably on any office laptop.</p>
+<h2 id="section-1">What the model is designed for</h2>
+<p>Liquid AI describes this release as a text-only reasoning model for agentic workloads, with 24 billion total parameters and approximately 2.45 billion active per token in its detailed specifications. The model card also recommends retrieval or web search for knowledge-heavy tasks rather than relying on the model alone. <a href="https://huggingface.co/LiquidAI/LFM2.5-24B-A2B">1</a></p>
+<p>The “A2B” label does not mean you only need to store a two-billion-parameter model. Total model size remains relevant to memory, even when only part of it is used for a given token.</p>
+<p>As a rough mathematical illustration, 24 billion parameters at four bits each would represent about 12 GB of weights alone. That is not a hardware recommendation: runtime memory, caches, quantization details, and the operating system add requirements beyond that simplified calculation.</p>
+<h2 id="section-2">Start with a Local AI Fit Check</h2>
+<p><strong>Proposed interactive feature: a browser-based hardware and workflow planner. This calculator would not itself run LFM2.5 or demonstrate private AI inference.</strong></p>
+<p>The visitor would enter their operating system, available memory, any GPU details, and the task they want to perform. They would also identify whether the workflow needs outside information or access to another business system.</p>
+<p>The output would be a deployment brief: what is known about the machine, which specifications remain unverified, and what a controlled pilot would need to test. It should not produce a green “compatible” badge from RAM alone.</p>
+<p>A later model-backed demonstration could process synthetic text on an approved machine. If that demonstration runs on a remote server, the page must say so. An internet demo is not proof that an owner’s data stays on their own computer.</p>
+<h2 id="section-3">Pick a job small enough to evaluate</h2>
+<p>Imagine an office in Mechanicsburg that wants to turn an approved service note into a first draft of a customer email. That is a more useful initial test than “make an AI employee.”</p>
+<p>The input, desired output, and approval step can be described clearly. A person can compare the draft with the original note and check whether any facts changed.</p>
+<p>Another candidate might be suggesting a category for an incoming request. The system could propose a label while leaving the actual routing action to a human during the pilot.</p>
+<p>These are proposed experiments, not claims of completed local deployments or measured time savings.</p>
+<h2 id="section-4">Local hosting does not automatically mean private</h2>
+<p>Our proposed review would examine the entire route taken by the data. Does the application call an external search service? Are prompts written to logs? Are backups sent elsewhere? Which staff members can access the machine?</p>
+<p>Those choices matter even when model inference happens locally. We would verify them before making a privacy claim.</p>
+<p>Giving the model tools also requires boundaries. A pilot could read synthetic notes without permission to send messages, delete files, or change appointments. Additional actions should be deliberately authorized, not enabled because the model supports tool use.</p>
+<h2 id="section-5">Check the license alongside the hardware</h2>
+<p>This release uses the Liquid AI LFM license, which includes a commercial-use limitation tied to a $10 million annual-revenue threshold. It should not be described as unrestricted Apache- or MIT-licensed software. The applicable entity and intended use need review before deployment. <a href="https://huggingface.co/LiquidAI/LFM2.5-24B-A2B/blob/main/LICENSE">2</a></p>
+<p>Hardware, licensing, setup, and ongoing maintenance all belong in the decision. Local deployment may fit the job; it may also be more work than a carefully selected hosted arrangement.</p>
+<p><a href="https://www.authenticdynamics.com/growth-technology">Discuss a local AI pilot with Authentic Dynamics</a>. Start with one task and the equipment you already own. The goal is a useful, controlled workflow—not an unnecessary hardware purchase.</p>

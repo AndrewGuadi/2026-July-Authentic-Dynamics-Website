@@ -1,0 +1,65 @@
+{
+  "language": "javascript",
+  "date": "2026-10-27",
+  "method": "Array.find()",
+  "summary": "Find the first record that fits.",
+  "syntax": "array.find(item => condition)",
+  "documentation": "find returns the first element for which a callback returns a truthy value. It stops once it finds a match.",
+  "inputs": "An array and a predicate callback.",
+  "returns": "The matching element, or undefined if none matches.",
+  "caution": "find returns one element, not an array. This challenge uses null for a missing result so its output is JSON-compatible.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Locate a customer record by its account ID.",
+    "Choose the first available appointment.",
+    "Find the first stock item needing attention."
+  ],
+  "title": "Find the first urgent ticket",
+  "problem": "Given tickets with id and priority, return the first complete ticket whose priority is \"urgent\". Return null when none match.",
+  "goal": "Use Array.find() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Use find, then convert a missing result to null.",
+  "minutes": 12,
+  "starter": "function solve(value) {\n  // Return your answer here.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "First match wins",
+      "input": [
+        {
+          "id": 1,
+          "priority": "normal"
+        },
+        {
+          "id": 2,
+          "priority": "urgent"
+        },
+        {
+          "id": 3,
+          "priority": "urgent"
+        }
+      ],
+      "expected": {
+        "id": 2,
+        "priority": "urgent"
+      }
+    },
+    {
+      "name": "Empty tickets",
+      "input": [],
+      "expected": null
+    },
+    {
+      "name": "No urgent ticket",
+      "input": [
+        {
+          "id": 4,
+          "priority": "normal"
+        }
+      ],
+      "expected": null
+    }
+  ],
+  "category": "arrays",
+  "level": "beginner"
+}

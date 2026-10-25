@@ -125,3 +125,7 @@ ruff check .
 Run these commands with your development environment activated. Browser scripts
 under `tests/` describe their own runtime requirements; Python checks alone do not
 verify mobile layout or browser interactions.
+
+## Coding Calendar
+
+`/coding-calendar/` adds daily JavaScript, Python and SQL learning pages with official references, practical scenarios, and code that runs in an isolated browser workspace. The calendar includes dated, categorized lesson files, actual-date defaults, keyboard language tabs, and date/archive navigation. A finite 30-day content expansion adds three earlier and three later dates per batch across all three tracks. See [the authoring, isolation, testing and deployment guide](docs/coding-calendar.md).

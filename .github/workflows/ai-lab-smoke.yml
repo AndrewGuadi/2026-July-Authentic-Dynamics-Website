@@ -1,0 +1,74 @@
+name: AI Lab smoke tests
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'authentic_dynamics/blog.py'
+      - 'authentic_dynamics/blueprints/main/routes.py'
+      - 'authentic_dynamics/blueprints/tools/routes.py'
+      - 'authentic_dynamics/content/blog/**'
+      - 'authentic_dynamics/templates/blog/**'
+      - 'authentic_dynamics/templates/tools/ai_lab.html'
+      - 'authentic_dynamics/static/js/ai-lab.js'
+      - 'tests/test_ai_lab.py'
+      - 'tests/test_blog*.py'
+      - 'authentic_dynamics/static/js/site.js'
+      - 'authentic_dynamics/static/css/pages.css'
+      - 'authentic_dynamics/templates/base.html'
+      - 'tests/mobile_navigation_webkit.cjs'
+      - '.github/workflows/ai-lab-smoke.yml'
+  pull_request:
+    paths:
+      - 'authentic_dynamics/blueprints/tools/routes.py'
+      - 'authentic_dynamics/content/blog/**'
+      - 'authentic_dynamics/templates/blog/**'
+      - 'authentic_dynamics/templates/tools/ai_lab.html'
+      - 'authentic_dynamics/static/js/ai-lab.js'
+      - 'tests/test_ai_lab.py'
+      - 'tests/test_blog*.py'
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install project and test tooling
+        run: python -m pip install -e '.[dev]'
+      - name: Check browser JavaScript parsing
+        run: node --check authentic_dynamics/static/js/ai-lab.js
+      - name: Run blog and interactive lab route tests
+        run: python -m pytest -q tests/test_ai_lab.py tests/test_blog.py tests/test_blog_content.py tests/test_sitemap.py tests/test_mobile_navigation.py
+
+  mobile-webkit:
+    name: iPhone Safari navigation
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Install Flask application
+        run: python -m pip install -e .
+      - name: Install iPhone WebKit browser test runtime
+        run: |
+          npm install --no-save --no-audit --no-fund playwright@1.56.1
+          npx playwright install --with-deps webkit
+      - name: Start test website
+        run: |
+          python -m flask --app wsgi run --host 127.0.0.1 --port 5055 >/tmp/mobile-nav-flask.log 2>&1 &
+          for i in $(seq 1 40); do
+            if curl --fail --silent http://127.0.0.1:5055/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/mobile-nav-flask.log
+          exit 1
+      - name: Tap navigation links in iPhone WebKit
+        run: node tests/mobile_navigation_webkit.cjs

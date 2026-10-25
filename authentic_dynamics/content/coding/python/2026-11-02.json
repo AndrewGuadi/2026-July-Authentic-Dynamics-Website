@@ -1,0 +1,52 @@
+{
+  "language": "python",
+  "date": "2026-11-02",
+  "method": "sum()",
+  "summary": "Combine numeric values into one total.",
+  "syntax": "sum(iterable, start=0)",
+  "documentation": "sum adds the values of an iterable to a starting value. The default start is zero, which also becomes the result for an empty iterable.",
+  "inputs": "An iterable of numeric values and an optional starting value.",
+  "returns": "The accumulated numeric total.",
+  "caution": "Use integer cents for exact money totals in this exercise. sum is not intended to concatenate strings.",
+  "docs_url": "https://docs.python.org/3/library/functions.html#sum",
+  "docs_source": "Python",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Total invoice amounts stored in cents.",
+    "Add up planned service minutes.",
+    "Calculate quantities across several stock locations."
+  ],
+  "title": "Total the account adjustments",
+  "problem": "Given integer amounts in cents, return their sum. Negative amounts are credits, and an empty list has total 0.",
+  "goal": "Use sum() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Pass the list to sum.",
+  "minutes": 12,
+  "starter": "def solve(value):\n    # Return your answer here.\n    return None\n",
+  "tests": [
+    {
+      "name": "Invoice amounts",
+      "input": [
+        1200,
+        450,
+        300
+      ],
+      "expected": 1950
+    },
+    {
+      "name": "Credits",
+      "input": [
+        1000,
+        -250,
+        -50
+      ],
+      "expected": 700
+    },
+    {
+      "name": "No adjustments",
+      "input": [],
+      "expected": 0
+    }
+  ],
+  "category": "numbers",
+  "level": "beginner"
+}

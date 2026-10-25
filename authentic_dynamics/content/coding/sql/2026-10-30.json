@@ -1,0 +1,82 @@
+{
+  "language": "sql",
+  "date": "2026-10-30",
+  "method": "COALESCE()",
+  "summary": "Use a fallback only when a value is NULL.",
+  "syntax": "COALESCE(value, fallback, ...)",
+  "documentation": "COALESCE returns the first non-NULL argument. It is useful for readable reports when optional fields are missing.",
+  "inputs": "At least two expressions, evaluated in order.",
+  "returns": "The first non-NULL value, or NULL if all arguments are NULL.",
+  "caution": "An empty string and zero are values, not NULL, so they do not trigger the fallback.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#coalesce",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Show a friendly label when a customer name is missing.",
+    "Prefer a mobile number, then an office number.",
+    "Replace a missing aggregate with a suitable reporting default."
+  ],
+  "title": "Label unnamed customers",
+  "problem": "Return id and COALESCE(customer, 'Walk-in') AS customer_label from orders, ordered by id. Preserve empty strings.",
+  "goal": "Use COALESCE() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Use COALESCE on customer with the fallback \"Walk-in\".",
+  "minutes": 12,
+  "starter": "-- Write one SELECT query against the example tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Named and unnamed",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);\nINSERT INTO orders VALUES (1, 'Micki', 100, 'paid'), (2, NULL, 200, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "customer_label"
+          ],
+          "values": [
+            [
+              1,
+              "Micki"
+            ],
+            [
+              2,
+              "Walk-in"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty name is present",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);\nINSERT INTO orders VALUES (3, '', 100, 'paid');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "customer_label"
+          ],
+          "values": [
+            [
+              3,
+              ""
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No customers",
+      "setup": "CREATE TABLE orders (id INTEGER, customer TEXT, amount_cents INTEGER, status TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "customer_label"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "conditions",
+  "level": "beginner"
+}

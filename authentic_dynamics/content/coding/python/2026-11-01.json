@@ -1,0 +1,80 @@
+{
+  "language": "python",
+  "date": "2026-11-01",
+  "method": "zip()",
+  "summary": "Walk through related collections together.",
+  "syntax": "zip(*iterables, strict=False)",
+  "documentation": "zip produces tuples containing one item from each iterable. By default it stops when the shortest iterable is exhausted. strict=True can instead reject unequal lengths.",
+  "inputs": "Two or more iterables; an optional strict flag.",
+  "returns": "An iterator of paired or grouped tuples.",
+  "caution": "The default silently stops at the shortest input. Choose strict=True when unequal lengths indicate a data error.",
+  "docs_url": "https://docs.python.org/3/library/functions.html#zip",
+  "docs_source": "Python",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Pair product codes with quantities from a known export.",
+    "Compare corresponding values from two time periods.",
+    "Combine parallel lists before building structured records."
+  ],
+  "title": "Pair stock codes and quantities",
+  "problem": "Input has codes (strings) and quantities (integers). Return objects with code and quantity, pairing values by position and stopping at the shorter list.",
+  "goal": "Use zip() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Zip the two lists and construct a dictionary for each pair.",
+  "minutes": 12,
+  "starter": "def solve(value):\n    # Return your answer here.\n    return None\n",
+  "tests": [
+    {
+      "name": "Matching lists",
+      "input": {
+        "codes": [
+          "P1",
+          "S1"
+        ],
+        "quantities": [
+          2,
+          4
+        ]
+      },
+      "expected": [
+        {
+          "code": "P1",
+          "quantity": 2
+        },
+        {
+          "code": "S1",
+          "quantity": 4
+        }
+      ]
+    },
+    {
+      "name": "Shorter quantities",
+      "input": {
+        "codes": [
+          "P1",
+          "S1"
+        ],
+        "quantities": [
+          3
+        ]
+      },
+      "expected": [
+        {
+          "code": "P1",
+          "quantity": 3
+        }
+      ]
+    },
+    {
+      "name": "Empty codes",
+      "input": {
+        "codes": [],
+        "quantities": [
+          2
+        ]
+      },
+      "expected": []
+    }
+  ],
+  "category": "arrays",
+  "level": "beginner"
+}

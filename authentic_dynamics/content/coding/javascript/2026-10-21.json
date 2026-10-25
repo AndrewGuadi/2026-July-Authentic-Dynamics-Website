@@ -1,0 +1,44 @@
+{
+  "language": "javascript",
+  "date": "2026-10-21",
+  "method": "String.trim()",
+  "summary": "Remove whitespace around a value without changing its interior.",
+  "syntax": "text.trim()",
+  "documentation": "trim returns a new string after removing whitespace and line terminators from both ends. Text between those ends is preserved.",
+  "inputs": "The string on which the method is called; no arguments.",
+  "returns": "A new string with its edge whitespace removed.",
+  "caution": "trim is not HTML sanitization or validation. It does not collapse spaces between words.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Clean a customer name pasted into a contact form.",
+    "Remove padding from a product code read from a file.",
+    "Normalize a search term before comparing it with stored values."
+  ],
+  "title": "Clean a pasted business name",
+  "problem": "Return the input string with leading and trailing whitespace removed. Preserve case, punctuation and all internal spaces.",
+  "goal": "Use String.trim() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Call trim on the input string.",
+  "minutes": 12,
+  "starter": "function solve(value) {\n  // Return your answer here.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Padded business",
+      "input": "  West Shore Plumbing  ",
+      "expected": "West Shore Plumbing"
+    },
+    {
+      "name": "Internal spacing",
+      "input": "\tA  B\n",
+      "expected": "A  B"
+    },
+    {
+      "name": "Only padding",
+      "input": " \n\t",
+      "expected": ""
+    }
+  ],
+  "category": "strings",
+  "level": "beginner"
+}

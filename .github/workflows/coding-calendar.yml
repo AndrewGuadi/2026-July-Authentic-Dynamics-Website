@@ -1,0 +1,42 @@
+name: Coding Calendar
+on:
+  pull_request:
+    paths:
+      - 'authentic_dynamics/**'
+      - 'tests/**'
+      - 'scripts/test_coding_browser.py'
+      - 'scripts/coding_calendar_plan.py'
+      - 'tools/coding-editor/**'
+      - 'pyproject.toml'
+      - '.github/workflows/coding-calendar.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python -m pip install -e '.[dev]'
+      - run: pytest -q
+      - run: npm ci --prefix tools/coding-editor
+      - run: npm run build --prefix tools/coding-editor
+      - run: git diff --exit-code -- authentic_dynamics/static/js/coding/editor.bundle.js
+      - run: npm install --no-save --prefix /tmp/coding-browser playwright@1.62.1
+      - run: /tmp/coding-browser/node_modules/.bin/playwright install --with-deps chromium
+      - run: python scripts/test_coding_browser.py
+        env:
+          NODE_PATH: /tmp/coding-browser/node_modules
+      - name: Verify dates and keyboard navigation
+        run: python scripts/test_coding_browser.py
+        env:
+          NODE_PATH: /tmp/coding-browser/node_modules
+          CODING_BROWSER_SUITE: coding_calendar_navigation.cjs
+          CODING_TEST_DATE: '2026-10-24'

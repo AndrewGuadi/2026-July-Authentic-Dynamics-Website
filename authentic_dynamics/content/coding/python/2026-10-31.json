@@ -1,0 +1,68 @@
+{
+  "language": "python",
+  "date": "2026-10-31",
+  "method": "enumerate()",
+  "summary": "Keep each item together with its position.",
+  "syntax": "enumerate(iterable, start=0)",
+  "documentation": "enumerate produces pairs containing a running count and the corresponding item. The count starts at zero unless start is supplied.",
+  "inputs": "An iterable and an optional starting integer.",
+  "returns": "An iterator yielding count-and-item tuples.",
+  "caution": "enumerate is an iterator. Convert its items into the result structure your caller expects.",
+  "docs_url": "https://docs.python.org/3/library/functions.html#enumerate",
+  "docs_source": "Python",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Number invoice lines in a report.",
+    "Show row numbers beside validation errors.",
+    "Attach positions to an ordered task list."
+  ],
+  "title": "Number the checklist",
+  "problem": "Given a list of task-name strings, return a list of objects with line (starting at 1) and task. Preserve order and duplicate names.",
+  "goal": "Use enumerate() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Enumerate with start=1, then build one dictionary per pair.",
+  "minutes": 12,
+  "starter": "def solve(value):\n    # Return your answer here.\n    return None\n",
+  "tests": [
+    {
+      "name": "Two tasks",
+      "input": [
+        "Inspect",
+        "Repair"
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "task": "Inspect"
+        },
+        {
+          "line": 2,
+          "task": "Repair"
+        }
+      ]
+    },
+    {
+      "name": "Repeated tasks",
+      "input": [
+        "Check",
+        "Check"
+      ],
+      "expected": [
+        {
+          "line": 1,
+          "task": "Check"
+        },
+        {
+          "line": 2,
+          "task": "Check"
+        }
+      ]
+    },
+    {
+      "name": "No tasks",
+      "input": [],
+      "expected": []
+    }
+  ],
+  "category": "arrays",
+  "level": "beginner"
+}

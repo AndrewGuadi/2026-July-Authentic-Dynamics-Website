@@ -1,0 +1,58 @@
+{
+  "language": "javascript",
+  "date": "2026-10-28",
+  "method": "Array.some()",
+  "summary": "Ask whether at least one item meets a condition.",
+  "syntax": "array.some(item => condition)",
+  "documentation": "some returns true when any element passes the callback test. It stops at the first match and returns false for an empty array.",
+  "inputs": "An array and a predicate callback.",
+  "returns": "A boolean.",
+  "caution": "some answers a yes/no question. It does not return the matching item.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Show a warning when any invoice is overdue.",
+    "Check whether an order contains a restricted item.",
+    "Detect whether a roster has someone available."
+  ],
+  "title": "Raise an overdue flag",
+  "problem": "Given invoices with overdueDays, return true if at least one has overdueDays greater than 0; otherwise return false.",
+  "goal": "Use Array.some() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Check whether some invoice has a positive overdueDays value.",
+  "minutes": 12,
+  "starter": "function solve(value) {\n  // Return your answer here.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "One overdue",
+      "input": [
+        {
+          "overdueDays": 0
+        },
+        {
+          "overdueDays": 2
+        }
+      ],
+      "expected": true
+    },
+    {
+      "name": "None overdue",
+      "input": [
+        {
+          "overdueDays": 0
+        },
+        {
+          "overdueDays": -1
+        }
+      ],
+      "expected": false
+    },
+    {
+      "name": "No invoices",
+      "input": [],
+      "expected": false
+    }
+  ],
+  "category": "arrays",
+  "level": "beginner"
+}

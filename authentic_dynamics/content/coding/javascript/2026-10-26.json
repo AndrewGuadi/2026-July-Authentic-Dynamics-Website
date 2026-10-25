@@ -1,0 +1,52 @@
+{
+  "language": "javascript",
+  "date": "2026-10-26",
+  "method": "Array.reduce()",
+  "summary": "Turn many values into one result.",
+  "syntax": "array.reduce((accumulator, item) => nextAccumulator, initialValue)",
+  "documentation": "reduce passes a running accumulator through the array. Providing an initial value sets both its starting value and the result for an empty array.",
+  "inputs": "A reducer callback and an optional initial accumulator.",
+  "returns": "The final accumulator.",
+  "caution": "Reducing an empty array without an initial value throws. Pick a starting value that matches your result type.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-24",
+  "scenarios": [
+    "Add up invoice amounts in cents.",
+    "Group bookings by technician.",
+    "Count support requests by category."
+  ],
+  "title": "Total the cart",
+  "problem": "Given an array of integer line totals in cents, return their sum. Return 0 for an empty cart. Negative values represent credits.",
+  "goal": "Use Array.reduce() or an equivalent approach that demonstrates the same concept.",
+  "hint": "Start the accumulator at 0.",
+  "minutes": 12,
+  "starter": "function solve(value) {\n  // Return your answer here.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Normal cart",
+      "input": [
+        750,
+        2998,
+        250
+      ],
+      "expected": 3998
+    },
+    {
+      "name": "Empty cart",
+      "input": [],
+      "expected": 0
+    },
+    {
+      "name": "Credits",
+      "input": [
+        1000,
+        -250,
+        0
+      ],
+      "expected": 750
+    }
+  ],
+  "category": "arrays",
+  "level": "beginner"
+}

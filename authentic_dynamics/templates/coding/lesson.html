@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% block title %}{{ lesson.method }} — {{ languages[lesson.language] }} Daily Challenge | Authentic Dynamics{% endblock %}
+{% block description %}{{ lesson.summary }} Practice with a real coding challenge and browser-based tests.{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/coding.css', v='dates-20261024') }}">{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>{% include 'partials/header.html' %}
+<main id="main">
+  <section class="page-hero dark coding-hero" id="top"><div class="wrap">
+    <a class="calendar-back" href="{{ url_for('coding.index') }}">← Coding Calendar</a>
+    <p class="eyebrow">{{ languages[lesson.language] }} / <time datetime="{{ lesson.date }}">{{ lesson.date }}</time> / {{ lesson.minutes }} MINUTES</p>
+    <h1>{{ lesson.method }}</h1><p class="intro">{{ lesson.summary }}</p><div class="actions"><a class="button" href="#workbench">Try the challenge <span>↓</span></a></div>
+  </div></section>
+  <div class="wrap">
+    <nav class="lesson-date-nav" aria-label="Browse lesson dates">
+      {% if previous_day %}<a id="lesson-previous" href="{{ url_for('coding.lesson', language=lesson.language, day=previous_day.isoformat()) }}">← {{ previous_day }}</a>{% endif %}
+      <a id="calendar-today" href="{{ url_for('coding.index', language=lesson.language) }}">Today</a>
+      {% if next_day %}<a id="lesson-next" href="{{ url_for('coding.lesson', language=lesson.language, day=next_day.isoformat()) }}">{{ next_day }} →</a>{% endif %}
+      <form class="lesson-date-form" method="get" action="{{ url_for('coding.index') }}"><input type="hidden" name="language" value="{{ lesson.language }}"><label for="lesson-date">Jump to date<input type="date" id="lesson-date" name="date" value="{{ lesson.date }}" required></label><button class="button black" type="submit">Go</button></form>
+    </nav>
+    <nav class="lesson-language-links" aria-label="Languages for {{ lesson.date }}">{% for language in same_day_languages %}<a href="{{ url_for('coding.lesson', language=language, day=lesson.date) }}" {% if language == lesson.language %}aria-current="page"{% endif %}>{{ languages[language] }}</a>{% endfor %}</nav>
+    <p class="calendar-footnote">{{ categories[lesson.category] }} · {{ levels[lesson.level] }}</p>
+  </div>
+  <section class="section white"><div class="wrap coding-layout">
+    <article class="coding-guide">
+      <p class="eyebrow">01 / UNDERSTAND IT</p><h2>The reference.</h2>
+      <pre class="coding-syntax"><code>{{ lesson.syntax }}</code></pre>
+      <p>{{ lesson.documentation }}</p>
+      <dl class="coding-details"><dt>Inputs</dt><dd>{{ lesson.inputs }}</dd><dt>Returns</dt><dd>{{ lesson.returns }}</dd><dt>Watch out for</dt><dd>{{ lesson.caution }}</dd></dl>
+      <a class="coding-doc-link" href="{{ lesson.docs_url }}" target="_blank" rel="noopener noreferrer">Read the official {{ lesson.docs_source }} documentation ↗</a>
+      <p class="calendar-footnote">Original teaching summary above; the linked reference is the complete upstream documentation. Reference reviewed {{ lesson.reviewed }}.</p>
+      <p class="eyebrow">02 / PUT IT IN CONTEXT</p><h2>Where this earns its keep.</h2>
+      <ul class="coding-scenarios">{% for scenario in lesson.scenarios %}<li>{{ scenario }}</li>{% endfor %}</ul>
+      <div class="coding-problem"><p class="eyebrow">03 / YOUR CHALLENGE</p><h2>{{ lesson.title }}</h2><p>{{ lesson.problem }}</p><p><strong>Practice goal:</strong> {{ lesson.goal }}</p></div>
+      <details class="coding-hint"><summary>A little nudge</summary><p>{{ lesson.hint }}</p></details>
+      <h3>Examples &amp; edge cases</h3>
+      {% if lesson.language == 'sql' %}<p>Each test starts with its own fresh SQLite database. Query results must match the expected column names, values, and order.</p>{% else %}<p>Write <code>solve(value)</code> and return the result. Each example below becomes one test.</p>{% endif %}
+      {% for test in lesson.tests %}<details class="coding-case"><summary>{{ test.name }}</summary><p>{{ 'Database setup' if lesson.language == 'sql' else 'Input' }}</p><pre><code>{{ test.setup if lesson.language == 'sql' else test.input | tojson(indent=2) }}</code></pre><p>Expected result</p><pre><code>{{ test.expected | tojson(indent=2) }}</code></pre></details>{% endfor %}
+    </article>
+    <div class="coding-workbench" id="workbench">
+      <div class="coding-editor-bar"><span>{{ {'javascript':'solution.js','python':'solution.py','sql':'solution.sql'}[lesson.language] }}</span><span>BROWSER WORKSPACE</span></div>
+      <div class="coding-editor-shell"><label for="coding-source">Your {{ languages[lesson.language] }} solution</label><textarea id="coding-source" spellcheck="false" autocapitalize="off" autocomplete="off" rows="16" aria-describedby="editor-help">{{ lesson.starter }}</textarea><div id="coding-editor"></div></div>
+      <p id="editor-help" class="calendar-footnote">Ctrl/⌘ + Enter runs tests. Escape, then Tab leaves the code editor. Drafts and practice progress are saved on this device when browser storage is available.</p>
+      <div class="coding-actions"><button class="button black" id="coding-run" type="button">Run tests <span>▶</span></button><button class="button" id="coding-stop" type="button" disabled>Stop</button><button class="button" id="coding-reset" type="button">Reset code</button><button class="button" id="coding-download" type="button">Download code</button></div>
+      <p id="coding-status" role="status" aria-live="polite">Ready when you are. Runtime files download on your first run.</p>
+      <ol id="coding-results" class="coding-results" aria-label="Test results"></ol>
+      <details class="coding-console" open><summary>Console output</summary><pre id="coding-output">Your output will appear here.</pre></details>
+      <p class="calendar-footnote">Your solution executes inside an isolated browser worker with network access blocked. Python uses Pyodide; SQL uses a temporary SQLite database. First runs download integrity-checked runtime files from jsDelivr. No submitted code is sent to our server. {{ 'Python can take longer to download and start on phones.' if lesson.language == 'python' else '' }}</p>
+      <p class="calendar-footnote">Tests check the result of your solution. Equivalent approaches are accepted. This is local practice; results are visible and are not a verified certification or public ranking.</p>
+      <noscript><p>Enable JavaScript to edit and run code. You can still read the lesson and download or copy its examples.</p></noscript>
+    </div>
+  </div></section>
+</main>{% include 'partials/footer.html' %}
+<script type="application/json" id="coding-lesson">{{ lesson | tojson }}</script>
+{% endblock %}
+{% block scripts %}<script type="module" src="{{ url_for('static', filename='js/coding/calendar.js') }}"></script>{% endblock %}
