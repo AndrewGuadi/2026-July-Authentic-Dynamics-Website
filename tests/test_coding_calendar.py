@@ -30,12 +30,12 @@ def test_published_calendar_and_future_pages(app):
     assert client.get('/coding-calendar/ruby/2026-10-24/').status_code == 404
     assert client.get('/coding-calendar/python/2026-02-30/').status_code == 404
     assert client.get('/coding-calendar/python/20261024/').status_code == 404
-    assert client.get('/coding-calendar/python/2026-10-20/').status_code == 404
+    assert client.get('/coding-calendar/python/1900-01-01/').status_code == 404
     assert client.post('/coding-calendar/python/2026-10-24/', json={'code': 'bad'}).status_code in (400, 405)
 
 
 def test_expired_schedule_is_explicit(app, monkeypatch):
-    monkeypatch.setattr(coding, 'today', lambda: date(2026, 11, 20))
+    monkeypatch.setattr(coding, 'today', lambda: date(2099, 12, 31))
     page = app.test_client().get('/coding-calendar/').get_data(as_text=True)
     assert 'No lesson is scheduled for this date' in page
     assert 'LATEST PUBLISHED' not in page
@@ -82,10 +82,10 @@ def test_all_lesson_content_and_reference_solutions(app):
 
 
 def test_index_defaults_to_real_day_without_latest_fallback(app, monkeypatch):
-    monkeypatch.setattr(coding, 'today', lambda: date(2026, 11, 20))
+    monkeypatch.setattr(coding, 'today', lambda: date(2099, 12, 31))
     response = app.test_client().get('/coding-calendar/')
     page = response.get_data(as_text=True)
-    assert 'value="2026-11-20"' in page
+    assert 'value="2099-12-31"' in page
     assert 'No lesson is scheduled for this date' in page
     assert 'LATEST PUBLISHED' not in page
     assert 'no-store' in response.headers['Cache-Control']
