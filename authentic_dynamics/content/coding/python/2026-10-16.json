@@ -1,0 +1,73 @@
+{
+  "language": "python",
+  "date": "2026-10-16",
+  "method": "divmod()",
+  "summary": "Compute whole groups and a remainder together.",
+  "syntax": "divmod(a, b)",
+  "documentation": "divmod returns quotient and remainder together. For integers the pair corresponds to a // b and a % b. Division by zero raises ZeroDivisionError; floor division affects the sign behavior of negative inputs.",
+  "inputs": "Two numbers, with a nonzero divisor.",
+  "returns": "A two-item tuple: quotient and remainder.",
+  "caution": "The quotient uses floor division, not truncation toward zero. Restrict inputs or define negative-value behavior deliberately.",
+  "docs_url": "https://docs.python.org/3.12/library/functions.html#divmod",
+  "docs_source": "Python",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Calculate full cartons and leftover units.",
+    "Convert a duration into whole hours plus remaining minutes.",
+    "Split a budget into equal integer allocations and a remainder."
+  ],
+  "title": "Pack whole cartons",
+  "problem": "Input has integer fields units >= 0 and capacity > 0. Return a JSON-compatible list [fullCartons, leftoverUnits]. Do not round up partial cartons.",
+  "goal": "Use divmod() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use divmod(units, capacity), then convert its tuple to a list.",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Leftovers",
+      "input": {
+        "units": 26,
+        "capacity": 12
+      },
+      "expected": [
+        2,
+        2
+      ]
+    },
+    {
+      "name": "Exact",
+      "input": {
+        "units": 24,
+        "capacity": 12
+      },
+      "expected": [
+        2,
+        0
+      ]
+    },
+    {
+      "name": "Less than carton",
+      "input": {
+        "units": 5,
+        "capacity": 12
+      },
+      "expected": [
+        0,
+        5
+      ]
+    },
+    {
+      "name": "None",
+      "input": {
+        "units": 0,
+        "capacity": 8
+      },
+      "expected": [
+        0,
+        0
+      ]
+    }
+  ],
+  "category": "numbers",
+  "level": "beginner"
+}

@@ -1,0 +1,64 @@
+{
+  "language": "javascript",
+  "date": "2026-10-15",
+  "method": "Array.at()",
+  "summary": "Read an item using a positive or negative position.",
+  "syntax": "items.at(index)",
+  "documentation": "at returns the item at a zero-based index. Negative indices count backward from the end, so -1 selects the final item. An index outside the array yields undefined rather than wrapping around.",
+  "inputs": "An integer position, interpreted relative to array length when negative.",
+  "returns": "The selected item, or undefined when out of range.",
+  "caution": "Use an explicit missing-value policy when returning JSON: undefined cannot be represented as a normal JSON value.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/at",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Show the latest recorded stock movement.",
+    "Read the final status in an order history.",
+    "Compare a recent sensor reading with the previous one."
+  ],
+  "title": "Read the most recent event",
+  "problem": "Input is an array of JSON event objects. Return the final object, or null when there are no events. Preserve all fields on the returned object.",
+  "goal": "Use Array.at() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use index -1 and handle the empty array explicitly.",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Several events",
+      "input": [
+        {
+          "id": 1,
+          "status": "new"
+        },
+        {
+          "id": 2,
+          "status": "sent"
+        }
+      ],
+      "expected": {
+        "id": 2,
+        "status": "sent"
+      }
+    },
+    {
+      "name": "One event",
+      "input": [
+        {
+          "id": 0,
+          "note": null
+        }
+      ],
+      "expected": {
+        "id": 0,
+        "note": null
+      }
+    },
+    {
+      "name": "No events",
+      "input": [],
+      "expected": null
+    }
+  ],
+  "category": "arrays",
+  "level": "beginner"
+}

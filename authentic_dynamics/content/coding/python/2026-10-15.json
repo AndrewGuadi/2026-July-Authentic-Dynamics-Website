@@ -1,0 +1,54 @@
+{
+  "language": "python",
+  "date": "2026-10-15",
+  "method": "round()",
+  "summary": "Round a number with Python’s ties-to-even rule.",
+  "syntax": "round(number, ndigits=None)",
+  "documentation": "round rounds a number to a requested precision. With no ndigits, rounding a float yields an integer; exact halfway cases choose the even result. Binary floats cannot represent every decimal fraction exactly.",
+  "inputs": "A number and optional decimal precision.",
+  "returns": "A rounded value; an integer for float input when precision is omitted.",
+  "caution": "Do not assume every halfway value rounds upward. Use suitable decimal arithmetic and explicit policy for financial calculations.",
+  "docs_url": "https://docs.python.org/3.12/library/functions.html#round",
+  "docs_source": "Python",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Create a whole-number display estimate from a measured average.",
+    "Round survey measurements consistently for a summary.",
+    "Reduce precision in a public statistics table."
+  ],
+  "title": "Round a planning estimate",
+  "problem": "Input is a number. Return it rounded to the nearest integer using Python round semantics. Tests use integers and exactly representable half-integers; ties go to the even integer.",
+  "goal": "Use round() or an equivalent approach demonstrating the same premise.",
+  "hint": "Call round without ndigits; compare 2.5 and 3.5.",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Even lower",
+      "input": 2.5,
+      "expected": 2
+    },
+    {
+      "name": "Even upper",
+      "input": 3.5,
+      "expected": 4
+    },
+    {
+      "name": "Negative tie",
+      "input": -2.5,
+      "expected": -2
+    },
+    {
+      "name": "Whole",
+      "input": 7,
+      "expected": 7
+    },
+    {
+      "name": "Zero",
+      "input": 0,
+      "expected": 0
+    }
+  ],
+  "category": "numbers",
+  "level": "beginner"
+}

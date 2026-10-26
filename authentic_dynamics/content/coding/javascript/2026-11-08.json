@@ -1,0 +1,65 @@
+{
+  "language": "javascript",
+  "date": "2026-11-08",
+  "method": "Object.hasOwn()",
+  "summary": "Distinguish a present field from a missing field.",
+  "syntax": "Object.hasOwn(record, property)",
+  "documentation": "Object.hasOwn reports whether a property belongs directly to an object, even if its value is null, false or zero. It ignores inherited properties and does not call an object’s potentially overwritten hasOwnProperty method.",
+  "inputs": "An object and a property key.",
+  "returns": "A Boolean indicating direct property ownership.",
+  "caution": "Presence and truthiness answer different questions. Do not reject a present zero or null value merely because it is falsey.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Distinguish an omitted configuration option from an explicitly disabled one.",
+    "Validate whether an imported record supplied a required field.",
+    "Detect whether a patch intentionally clears a saved value."
+  ],
+  "title": "Check whether a discount was supplied",
+  "problem": "Input is a JSON object. Return true when it has its own discount property, even if that value is null, false or 0. Return false when the property is absent.",
+  "goal": "Use Object.hasOwn() or an equivalent approach demonstrating the same premise.",
+  "hint": "Test ownership rather than reading the value as a Boolean.",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Zero",
+      "input": {
+        "discount": 0
+      },
+      "expected": true
+    },
+    {
+      "name": "Explicit null",
+      "input": {
+        "discount": null
+      },
+      "expected": true
+    },
+    {
+      "name": "False",
+      "input": {
+        "discount": false
+      },
+      "expected": true
+    },
+    {
+      "name": "Missing",
+      "input": {
+        "price": 100
+      },
+      "expected": false
+    },
+    {
+      "name": "Shadowed method",
+      "input": {
+        "hasOwnProperty": "text",
+        "discount": 5
+      },
+      "expected": true
+    }
+  ],
+  "category": "objects",
+  "level": "intermediate"
+}

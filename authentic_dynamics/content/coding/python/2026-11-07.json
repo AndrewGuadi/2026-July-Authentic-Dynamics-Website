@@ -1,0 +1,66 @@
+{
+  "language": "python",
+  "date": "2026-11-07",
+  "method": "dict.fromkeys()",
+  "summary": "Build a lookup with a shared initial value.",
+  "syntax": "dict.fromkeys(iterable, value=None)",
+  "documentation": "fromkeys constructs a dictionary with keys from an iterable and the same initial value for each. Repeated keys collapse into one entry. Dictionary iteration retains the insertion order of distinct keys.",
+  "inputs": "An iterable of keys and optional initial value.",
+  "returns": "A new dictionary.",
+  "caution": "A mutable default is shared by every key. Use an immutable initial value or create separate mutable values with a comprehension.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#dict.fromkeys",
+  "docs_source": "Python",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Initialize attendance flags for an event roster.",
+    "Build a lookup of feature names awaiting review.",
+    "Create a starting inventory-count map for imported SKU names."
+  ],
+  "title": "Initialize a checklist",
+  "problem": "Input is a list of task-name strings, possibly repeated. Return an object containing each distinct task name mapped to False. An empty input yields an empty object.",
+  "goal": "Use dict.fromkeys() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use fromkeys with the immutable Boolean False.",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Tasks",
+      "input": [
+        "menu",
+        "hours"
+      ],
+      "expected": {
+        "menu": false,
+        "hours": false
+      }
+    },
+    {
+      "name": "Duplicates",
+      "input": [
+        "menu",
+        "menu",
+        "hours"
+      ],
+      "expected": {
+        "menu": false,
+        "hours": false
+      }
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": {}
+    },
+    {
+      "name": "Empty name",
+      "input": [
+        ""
+      ],
+      "expected": {
+        "": false
+      }
+    }
+  ],
+  "category": "objects",
+  "level": "beginner"
+}

@@ -1,0 +1,108 @@
+{
+  "language": "sql",
+  "date": "2026-11-08",
+  "method": "LAG()",
+  "summary": "Read the preceding row in an ordered group.",
+  "syntax": "LAG(expression, offset = 1, default = NULL) OVER (PARTITION BY ... ORDER BY ...)",
+  "documentation": "LAG reads an expression from an earlier row of its window partition. The default is used when that earlier row does not exist, not when its value is NULL. Window ordering and final display ordering are separate.",
+  "inputs": "An expression, optional nonnegative offset/default, and a window specification.",
+  "returns": "The earlier value, or default when the offset precedes the partition.",
+  "caution": "Add a deterministic tie-breaker to window ordering. Consecutive rows need not represent consecutive calendar days.",
+  "docs_url": "https://www.sqlite.org/windowfunctions.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Measure changes between recorded stock readings for each branch.",
+    "Compare each delivery time with the previous recorded trip.",
+    "Calculate differences between consecutive meter readings without a self-join."
+  ],
+  "title": "Compare branch readings",
+  "problem": "From readings(id INTEGER, branch TEXT, slot INTEGER, units INTEGER), return id, branch and units - LAG(units) OVER (PARTITION BY branch ORDER BY slot, id) as change. Display by branch, slot, id. First rows have NULL change; if a preceding units value is NULL, the difference is also NULL. id is unique; branch and slot are non-NULL.",
+  "goal": "Use LAG() or an equivalent approach demonstrating the same premise.",
+  "hint": "Partition each branch, break slot ties by id, and leave missing comparisons as NULL.",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query using the provided tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Branches and tied slots",
+      "setup": "CREATE TABLE readings(id INTEGER,branch TEXT,slot INTEGER,units INTEGER);INSERT INTO readings VALUES(3,'West',1,20),(2,'East',1,15),(1,'East',1,10),(4,'East',2,12);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "branch",
+            "change"
+          ],
+          "values": [
+            [
+              1,
+              "East",
+              null
+            ],
+            [
+              2,
+              "East",
+              5
+            ],
+            [
+              4,
+              "East",
+              -3
+            ],
+            [
+              3,
+              "West",
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Previous missing",
+      "setup": "CREATE TABLE readings(id INTEGER,branch TEXT,slot INTEGER,units INTEGER);INSERT INTO readings VALUES(1,'East',1,NULL),(2,'East',2,5),(3,'East',3,5);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "branch",
+            "change"
+          ],
+          "values": [
+            [
+              1,
+              "East",
+              null
+            ],
+            [
+              2,
+              "East",
+              null
+            ],
+            [
+              3,
+              "East",
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No readings",
+      "setup": "CREATE TABLE readings(id INTEGER,branch TEXT,slot INTEGER,units INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "branch",
+            "change"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "querying",
+  "level": "intermediate"
+}

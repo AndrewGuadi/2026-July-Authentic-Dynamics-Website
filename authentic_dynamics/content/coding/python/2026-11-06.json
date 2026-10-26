@@ -1,0 +1,66 @@
+{
+  "language": "python",
+  "date": "2026-11-06",
+  "method": "dict.setdefault()",
+  "summary": "Insert a default only when a key is absent.",
+  "syntax": "record.setdefault(key, default=None)",
+  "documentation": "setdefault returns an existing value when the key is present. Otherwise it inserts and returns the supplied default. Unlike get, it can change the dictionary. Existing falsey values are preserved.",
+  "inputs": "A key and optional default value.",
+  "returns": "The existing or newly inserted value.",
+  "caution": "A present None is not replaced. Copy the dictionary first when the caller’s original record must remain unchanged.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#dict.setdefault",
+  "docs_source": "Python",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Initialize a per-category collection before appending an item.",
+    "Fill absent configuration defaults without overriding explicit settings.",
+    "Keep a counter’s starting value for a newly encountered group."
+  ],
+  "title": "Default a missing shipping method",
+  "problem": "Input is an object. Return a copy with shipping set to pickup only when the shipping key is absent. Preserve every other field and keep an existing shipping value, including null or an empty string.",
+  "goal": "Use dict.setdefault() or an equivalent approach demonstrating the same premise.",
+  "hint": "Copy the record and apply setdefault to shipping.",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Absent",
+      "input": {
+        "order": 4
+      },
+      "expected": {
+        "order": 4,
+        "shipping": "pickup"
+      }
+    },
+    {
+      "name": "Present",
+      "input": {
+        "shipping": "delivery"
+      },
+      "expected": {
+        "shipping": "delivery"
+      }
+    },
+    {
+      "name": "Null",
+      "input": {
+        "shipping": null
+      },
+      "expected": {
+        "shipping": null
+      }
+    },
+    {
+      "name": "Empty value",
+      "input": {
+        "shipping": ""
+      },
+      "expected": {
+        "shipping": ""
+      }
+    }
+  ],
+  "category": "objects",
+  "level": "intermediate"
+}

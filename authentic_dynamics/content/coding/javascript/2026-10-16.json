@@ -1,0 +1,54 @@
+{
+  "language": "javascript",
+  "date": "2026-10-16",
+  "method": "String.padStart()",
+  "summary": "Give short identifiers a minimum display width.",
+  "syntax": "text.padStart(targetLength, padString = \" \")",
+  "documentation": "padStart returns a string padded at its beginning until it reaches the requested length. The padding repeats and is truncated as needed. Strings already long enough are returned without shortening.",
+  "inputs": "A target string length and optional padding text.",
+  "returns": "A padded string, or the original text when no padding is needed.",
+  "caution": "Padding formats display text; it does not validate identifiers. Empty padding cannot lengthen a string.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Print fixed-width pickup ticket numbers.",
+    "Align numeric text in a plain-text report.",
+    "Display consistently sized inventory labels."
+  ],
+  "title": "Format a pickup ticket",
+  "problem": "Input is a string of decimal digits. Return it padded on the left with zeroes to at least five characters. Never shorten longer identifiers and do not convert the string to a number.",
+  "goal": "Use String.padStart() or an equivalent approach demonstrating the same premise.",
+  "hint": "Choose target length 5 and padding text 0.",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Short",
+      "input": "42",
+      "expected": "00042"
+    },
+    {
+      "name": "Exact",
+      "input": "12345",
+      "expected": "12345"
+    },
+    {
+      "name": "Long",
+      "input": "123456",
+      "expected": "123456"
+    },
+    {
+      "name": "Existing zeroes",
+      "input": "007",
+      "expected": "00007"
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": "00000"
+    }
+  ],
+  "category": "strings",
+  "level": "beginner"
+}

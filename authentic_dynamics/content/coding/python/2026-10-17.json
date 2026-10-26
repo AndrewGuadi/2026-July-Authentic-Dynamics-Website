@@ -1,0 +1,59 @@
+{
+  "language": "python",
+  "date": "2026-10-17",
+  "method": "str.endswith()",
+  "summary": "Check one of several literal suffixes.",
+  "syntax": "text.endswith(suffix_or_tuple, start=0, end=len(text))",
+  "documentation": "endswith accepts either one suffix or a tuple of suffixes. It compares case-sensitively, optionally within a start/end slice. It returns a Boolean and does not inspect the contents represented by a filename.",
+  "inputs": "A suffix string or tuple of strings, with optional bounds.",
+  "returns": "True if an allowed suffix matches, otherwise False.",
+  "caution": "Matching a filename suffix does not validate file contents or prove that an upload is safe.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.endswith",
+  "docs_source": "Python",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Offer a local preview for several supported image-name suffixes.",
+    "Classify archived export names before opening them.",
+    "Recognize allowed endings on internal document references."
+  ],
+  "title": "Suggest an image preview",
+  "problem": "Input is a filename string. Return True when it ends with the exact lowercase suffix .png or .jpg. Do not accept .jpeg, uppercase suffixes or an allowed suffix followed by other text.",
+  "goal": "Use str.endswith() or an equivalent approach demonstrating the same premise.",
+  "hint": "Pass a tuple of the two allowed suffixes.",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "PNG",
+      "input": "menu.png",
+      "expected": true
+    },
+    {
+      "name": "JPG",
+      "input": "photo.jpg",
+      "expected": true
+    },
+    {
+      "name": "Other suffix",
+      "input": "photo.jpeg",
+      "expected": false
+    },
+    {
+      "name": "Case",
+      "input": "MENU.PNG",
+      "expected": false
+    },
+    {
+      "name": "False ending",
+      "input": "menu.png.zip",
+      "expected": false
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": false
+    }
+  ],
+  "category": "strings",
+  "level": "beginner"
+}

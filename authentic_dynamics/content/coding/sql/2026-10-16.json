@@ -1,0 +1,90 @@
+{
+  "language": "sql",
+  "date": "2026-10-16",
+  "method": "upper()",
+  "summary": "Normalize ASCII letter case in a report.",
+  "syntax": "upper(text)",
+  "documentation": "SQLite’s built-in upper changes lowercase ASCII letters to uppercase. It leaves other characters unchanged under the default build. NULL input remains NULL. Unicode-wide case conversion needs additional support.",
+  "inputs": "A text expression.",
+  "returns": "Text with ASCII lowercase letters converted, or NULL.",
+  "caution": "The default function does not provide full Unicode case mapping. Do not use it as a universal name-normalization policy.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#upper",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Display consistent internal status labels.",
+    "Normalize ASCII stock-family codes in an export.",
+    "Create comparable report headings from imported short codes."
+  ],
+  "title": "Display uppercase status labels",
+  "problem": "From jobs(id INTEGER, status TEXT), return id and upper(status) as label, ordered by id. Use SQLite’s built-in ASCII behavior, keeping NULL as NULL.",
+  "goal": "Use upper() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use upper for display and retain the original row identifier.",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query using the provided tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Mixed ASCII",
+      "setup": "CREATE TABLE jobs(id INTEGER,status TEXT);INSERT INTO jobs VALUES(2,'Ready'),(1,'new');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "label"
+          ],
+          "values": [
+            [
+              1,
+              "NEW"
+            ],
+            [
+              2,
+              "READY"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Non-ASCII and missing",
+      "setup": "CREATE TABLE jobs(id INTEGER,status TEXT);INSERT INTO jobs VALUES(1,'café'),(2,NULL),(3,'');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "label"
+          ],
+          "values": [
+            [
+              1,
+              "CAFé"
+            ],
+            [
+              2,
+              null
+            ],
+            [
+              3,
+              ""
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No jobs",
+      "setup": "CREATE TABLE jobs(id INTEGER,status TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "label"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "strings",
+  "level": "beginner"
+}

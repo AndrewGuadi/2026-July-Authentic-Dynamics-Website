@@ -1,0 +1,80 @@
+{
+  "language": "javascript",
+  "date": "2026-11-07",
+  "method": "Array.toReversed()",
+  "summary": "Create a reversed view without changing the source array.",
+  "syntax": "items.toReversed()",
+  "documentation": "toReversed returns a new array with elements in the opposite order. Unlike reverse, it leaves the receiver’s order intact. The copy is shallow: nested objects remain the same objects.",
+  "inputs": "The array receiver; no arguments.",
+  "returns": "A new array in reverse order.",
+  "caution": "Reversing a sequence does not sort it. A copied array still shares references to its nested objects.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toReversed",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Display a newest-first history while retaining chronological source data.",
+    "Prepare a reverse walking-route preview.",
+    "Show undo actions starting with the latest recorded change."
+  ],
+  "title": "Show both history directions",
+  "problem": "Input is an array of event labels in chronological order. Return {chronological: inputOrder, newestFirst: reversedOrder}. Preserve duplicates and leave the chronological order intact.",
+  "goal": "Use Array.toReversed() or an equivalent approach demonstrating the same premise.",
+  "hint": "Build a reversed copy, rather than reversing the shared source array.",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "History",
+      "input": [
+        "open",
+        "pack",
+        "send"
+      ],
+      "expected": {
+        "chronological": [
+          "open",
+          "pack",
+          "send"
+        ],
+        "newestFirst": [
+          "send",
+          "pack",
+          "open"
+        ]
+      }
+    },
+    {
+      "name": "Repeated",
+      "input": [
+        "a",
+        "b",
+        "a",
+        "c"
+      ],
+      "expected": {
+        "chronological": [
+          "a",
+          "b",
+          "a",
+          "c"
+        ],
+        "newestFirst": [
+          "c",
+          "a",
+          "b",
+          "a"
+        ]
+      }
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": {
+        "chronological": [],
+        "newestFirst": []
+      }
+    }
+  ],
+  "category": "arrays",
+  "level": "intermediate"
+}
