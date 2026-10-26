@@ -34,6 +34,10 @@ jobs:
       - run: python scripts/test_coding_browser.py
         env:
           NODE_PATH: /tmp/coding-browser/node_modules
+      - name: Verify public UI components and contact validation
+        run: python scripts/test_ui_components.py
+        env:
+          NODE_PATH: /tmp/coding-browser/node_modules
       - name: Verify dates and keyboard navigation
         run: python scripts/test_coding_browser.py
         env:

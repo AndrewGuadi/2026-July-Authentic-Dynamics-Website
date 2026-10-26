@@ -1,0 +1,4 @@
+{# Decorative arrows never become part of a control's accessible name. #}
+{% macro action_content(label) -%}
+<span class="ui-label">{{ label }}</span><span class="ui-arrow" aria-hidden="true">↗</span>
+{%- endmacro %}

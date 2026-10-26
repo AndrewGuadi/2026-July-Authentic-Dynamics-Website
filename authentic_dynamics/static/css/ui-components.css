@@ -1,0 +1,190 @@
+/* Uiverse adaptations, MIT. Full notices: ../licenses/uiverse-components.txt.
+ * alexruix/jolly-emu-80: scoped field feedback.
+ * adamgiebl/new-lionfish-4: gradient frame and inset content panel.
+ * cssbuttons-io/massive-mayfly-74: expanding arrow circle (bordered AD variant).
+ * nathAd17/heavy-warthog-57: contained sweep and circular rotating arrow.
+ * All links above are relative to https://uiverse.io/.
+ */
+
+/* Opt in only: no changes to admin/Hub fields or unrelated tool inputs. */
+:where(.contact-form, #tool-dialog .tool-form) :is(input:not([type="hidden"]), select, textarea),
+.ui-field {
+  min-height: 48px;
+  border-width: 2px;
+  transition: border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+:where(.contact-form, #tool-dialog .tool-form) :is(input:not([type="hidden"]), select, textarea):hover,
+.ui-field:hover { border-color: #63734f; }
+:where(.contact-form, #tool-dialog .tool-form) :is(input:not([type="hidden"]), select, textarea):focus,
+.ui-field:focus {
+  border-color: #315015;
+  outline: 2px solid #315015;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px #b8ff6326;
+}
+.contact-form :is(input:not([type="hidden"]), select, textarea):focus,
+.ui-showcase .ui-field:focus {
+  border-color: var(--lime);
+  outline-color: var(--lime);
+  background-color: #171e11;
+}
+.contact-form :is(input:not([type="hidden"]), select, textarea)[aria-invalid="true"] {
+  border-color: #ffb6a7;
+}
+.contact-form :is(input:not([type="hidden"]), select, textarea)[aria-invalid="true"]:focus {
+  outline-color: #ffb6a7;
+}
+
+.button.ui-explore,
+.textlink.ui-expand {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  max-width: 100%;
+  text-align: left;
+  text-decoration: none;
+  transform: none;
+}
+.button.ui-explore { gap: 20px; padding: 12px 18px 12px 24px; }
+.button.ui-explore::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: #d5ffac;
+  border-radius: inherit;
+  transform: translateX(-105%);
+  transition: transform 240ms ease;
+}
+.button.ui-explore:is(:hover, :focus-visible)::before { transform: translateX(0); }
+.button.ui-explore:is(:hover, :focus-visible) { color: var(--ink); border-color: var(--lime); }
+.button.ui-explore .ui-label,
+.textlink.ui-expand .ui-label { font-size: inherit; position: relative; line-height: 1.4; }
+.ui-arrow { display: grid; place-items: center; flex-shrink: 0; }
+.button.ui-explore .ui-arrow {
+  width: 32px;
+  height: 32px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 20px;
+  line-height: 1;
+  transition: transform 200ms ease, background-color 200ms ease;
+}
+.button.ui-explore:is(:hover, :focus-visible) .ui-arrow {
+  transform: rotate(45deg);
+  background: var(--paper);
+}
+.button.ui-explore.small { padding: 9px 14px 9px 20px; gap: 18px; }
+.button.ui-explore:disabled { cursor: wait; opacity: .7; }
+.button.ui-explore:disabled::before { transform: translateX(-105%); }
+.button.ui-explore:disabled .ui-arrow { transform: none; }
+
+/* Intrinsic width and wrapping replace the source's fixed 12rem width. */
+.textlink.ui-expand {
+  --expand-fill: var(--ink);
+  --expand-text: var(--paper);
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  min-height: 48px;
+  width: fit-content;
+  border: 1px solid #63734f;
+  border-radius: 30px;
+  padding: 5px 18px 5px 5px;
+  color: var(--ink);
+  background: transparent;
+  font-size: 14px;
+  line-height: 1.4;
+  transition: color 220ms ease, border-color 220ms ease;
+}
+.textlink.ui-expand::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 5px;
+  top: 5px;
+  bottom: 5px;
+  width: 36px;
+  border-radius: 30px;
+  background: var(--expand-fill);
+  transition: width 220ms cubic-bezier(.65, 0, .076, 1), left 220ms ease;
+}
+.textlink.ui-expand .ui-arrow {
+  order: -1;
+  width: 36px;
+  min-height: 36px;
+  color: var(--expand-text);
+  font-size: 20px;
+  transition: transform 220ms ease;
+}
+.textlink.ui-expand:is(:hover, :focus-visible) { color: var(--expand-text); border-color: var(--expand-fill); }
+.textlink.ui-expand:is(:hover, :focus-visible)::before { left: 0; width: 100%; }
+.textlink.ui-expand:is(:hover, :focus-visible) .ui-arrow { transform: rotate(45deg); }
+.dark .textlink.ui-expand {
+  --expand-fill: var(--lime);
+  --expand-text: var(--ink);
+  color: var(--paper);
+  border-color: #83986c;
+}
+.dark .textlink.ui-expand:is(:hover, :focus-visible) { color: var(--ink); border-color: var(--lime); }
+/* Home layout rules load later; opt-in dimensions must remain authoritative. */
+.home-page .textlink.ui-expand { padding: 5px 18px 5px 5px; min-height: 48px; }
+.home-page .industry-panel > .industry-proof.ui-expand { color: var(--ink); }
+.home-page .industry-panel > .industry-proof.ui-expand:is(:hover, :focus-visible) { color: var(--paper); }
+
+/* The original gradient frame is static; AD adds hover/focus/tap feedback. */
+.ui-showcase { border-block: 1px solid #ffffff24; }
+.ui-showcase-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.ui-frame {
+  min-width: 0;
+  padding: 2px;
+  border-radius: 22px;
+  background: linear-gradient(144deg, #b8ff63, #64734f 50%, #ced6c4);
+  box-shadow: 0 15px 30px -5px #b8ff6310;
+  transition: box-shadow 220ms ease, transform 220ms ease;
+}
+.ui-frame-content {
+  height: 100%;
+  min-width: 0;
+  border-radius: 20px;
+  padding: clamp(22px, 2.4vw, 32px);
+  background: #141710;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.ui-frame-content h3 { font-size: 27px; line-height: 1.15; margin-bottom: 18px; }
+.ui-frame-content p:not(.eyebrow) { font-size: 15px; color: #c4c7bd; }
+.ui-frame-content > :is(.button, .textlink, .ui-demo-field) { margin-top: auto; }
+.ui-frame-content .eyebrow { font-size: 10px; }
+.ui-demo-field { width: 100%; color: var(--paper); }
+.ui-showcase .ui-field { background: #0c0c0c; border-color: #71845b; color: var(--paper); }
+.ui-showcase .ui-field::placeholder { color: #a7afa0; opacity: 1; }
+.ui-frame-content small { font-size: 12px; color: #b2b9aa; margin-top: 10px; }
+.ui-frame:is(:focus-within, .is-highlighted) {
+  box-shadow: 0 0 0 1px var(--lime), 0 18px 50px -12px #b8ff634d;
+  transform: translateY(-4px);
+}
+@media (hover: hover) and (pointer: fine) {
+  .ui-frame:hover { box-shadow: 0 0 0 1px var(--lime), 0 18px 50px -12px #b8ff634d; transform: translateY(-4px); }
+}
+.ui-showcase-note { margin: 28px 0 0; font-size: 14px; }
+.ui-showcase-note a { color: var(--lime); text-decoration: underline; text-underline-offset: 4px; }
+@media (max-width: 1000px) { .ui-showcase-grid { grid-template-columns: 1fr; } .ui-frame-content { min-height: 260px; } }
+@media (max-width: 540px) { .ui-showcase-grid { gap: 18px; } .button.ui-explore { padding: 12px 16px; gap: 14px; } }
+@media (prefers-reduced-motion: reduce) {
+  :where(.contact-form, #tool-dialog .tool-form) :is(input, select, textarea),
+  .ui-field, .button.ui-explore, .button.ui-explore::before, .button.ui-explore .ui-arrow,
+  .textlink.ui-expand, .textlink.ui-expand::before, .textlink.ui-expand .ui-arrow,
+  .ui-frame { transition: none; }
+  .ui-frame:is(:hover, :focus-within, .is-highlighted) { transform: none; }
+}
+@media (forced-colors: active) {
+  .ui-frame { background: Canvas; border: 2px solid CanvasText; }
+  .ui-frame-content { background: Canvas; }
+  .ui-arrow { border: 1px solid ButtonText; border-radius: 50%; }
+  .textlink.ui-expand::before, .button.ui-explore::before { display: none; }
+  .textlink.ui-expand, .button.ui-explore { border-color: ButtonText; }
+  .textlink.ui-expand .ui-arrow { color: ButtonText; }
+}
