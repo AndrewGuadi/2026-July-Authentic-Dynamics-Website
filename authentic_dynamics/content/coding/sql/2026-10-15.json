@@ -1,0 +1,86 @@
+{
+  "language": "sql",
+  "date": "2026-10-15",
+  "method": "length()",
+  "summary": "Measure the character length of stored text.",
+  "syntax": "length(text)",
+  "documentation": "For text, SQLite length counts Unicode code points before any zero character, rather than UTF-8 bytes. NULL input produces NULL. Blob input instead measures bytes.",
+  "inputs": "A text, blob or numeric expression.",
+  "returns": "A length integer, or NULL for NULL input.",
+  "caution": "Code points are not always visible characters: a combining mark can add to the count without appearing as a separate symbol.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#length",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Check whether product labels fit a display field.",
+    "Find unusually long imported reference values.",
+    "Summarize text lengths before changing a form limit."
+  ],
+  "title": "Measure product label lengths",
+  "problem": "From labels(id INTEGER, name TEXT), return id and length(name) as characters for every row, ordered by id. Preserve NULL lengths. Test strings contain no embedded zero characters.",
+  "goal": "Use length() or an equivalent approach demonstrating the same premise.",
+  "hint": "Select the id beside length(name), with an explicit alias.",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query using the provided tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "ASCII and empty",
+      "setup": "CREATE TABLE labels(id INTEGER,name TEXT);INSERT INTO labels VALUES(2,''),(1,'Soap');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "characters"
+          ],
+          "values": [
+            [
+              1,
+              4
+            ],
+            [
+              2,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Unicode and null",
+      "setup": "CREATE TABLE labels(id INTEGER,name TEXT);INSERT INTO labels VALUES(1,'café'),(2,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "characters"
+          ],
+          "values": [
+            [
+              1,
+              4
+            ],
+            [
+              2,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No labels",
+      "setup": "CREATE TABLE labels(id INTEGER,name TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "characters"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "strings",
+  "level": "beginner"
+}

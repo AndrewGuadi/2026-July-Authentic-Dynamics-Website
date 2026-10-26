@@ -1,0 +1,77 @@
+{
+  "language": "javascript",
+  "date": "2026-11-06",
+  "method": "Array.toSorted()",
+  "summary": "Sort a copy while keeping the source order available.",
+  "syntax": "items.toSorted(compareFn)",
+  "documentation": "toSorted produces a new sorted array instead of changing the original array. A numeric comparison function is needed for numeric order; without one, values are compared using their string forms. Copies are shallow.",
+  "inputs": "An optional comparison callback returning negative, zero or positive.",
+  "returns": "A new array ordered by the comparison.",
+  "caution": "This method requires a modern JavaScript engine. sort mutates its receiver; copying first is an equivalent fallback.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toSorted",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Show price-ranked offers while preserving their arrival order.",
+    "Compare a sorted score list with the original submission sequence.",
+    "Create an ordered export without rearranging an active queue."
+  ],
+  "title": "Keep original and price order",
+  "problem": "Input is an array of integer prices in cents. Return an object with original containing the unchanged input order and sorted containing prices in numeric ascending order. Keep duplicates and negative adjustments.",
+  "goal": "Use Array.toSorted() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use a numeric comparator and a non-mutating sort, or sort a separate copy.",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Numeric order",
+      "input": [
+        20,
+        3,
+        100
+      ],
+      "expected": {
+        "original": [
+          20,
+          3,
+          100
+        ],
+        "sorted": [
+          3,
+          20,
+          100
+        ]
+      }
+    },
+    {
+      "name": "Credits and ties",
+      "input": [
+        0,
+        -5,
+        0
+      ],
+      "expected": {
+        "original": [
+          0,
+          -5,
+          0
+        ],
+        "sorted": [
+          -5,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": {
+        "original": [],
+        "sorted": []
+      }
+    }
+  ],
+  "category": "arrays",
+  "level": "intermediate"
+}

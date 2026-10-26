@@ -1,0 +1,73 @@
+{
+  "language": "sql",
+  "date": "2026-11-06",
+  "method": "EXISTS",
+  "summary": "Ask whether a related row exists without multiplying results.",
+  "syntax": "EXISTS (SELECT ... FROM related WHERE condition)",
+  "documentation": "EXISTS yields 1 if its subquery produces at least one row and 0 otherwise. The selected values do not matter, including NULL. A correlated subquery can test each row of an outer query.",
+  "inputs": "A subquery, optionally referring to an outer row.",
+  "returns": "Integer 1 or 0.",
+  "caution": "A join can duplicate outer records when several related rows match. EXISTS is appropriate when only presence matters.",
+  "docs_url": "https://www.sqlite.org/lang_expr.html#the_exists_operator",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "List customers with any unpaid invoice.",
+    "Find products that have at least one stock movement.",
+    "Select event registrants with an attendance record."
+  ],
+  "title": "Find customers with unpaid invoices",
+  "problem": "Tables customers(id INTEGER, name TEXT) and invoices(id INTEGER, customer_id INTEGER, paid INTEGER). Return customer id and name once per customer having at least one invoice with paid = 0. Ignore paid = 1 or NULL, unmatched invoices and customers without invoices. Order by customer id.",
+  "goal": "Use EXISTS or an equivalent approach demonstrating the same premise.",
+  "hint": "Correlate an EXISTS subquery on customer_id and require paid = 0.",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query using the provided tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Multiple matches",
+      "setup": "CREATE TABLE customers(id INTEGER,name TEXT); CREATE TABLE invoices(id INTEGER,customer_id INTEGER,paid INTEGER);INSERT INTO customers VALUES(2,'Bo'),(1,'Ava'); INSERT INTO invoices VALUES(1,1,0),(2,1,0),(3,2,1);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "name"
+          ],
+          "values": [
+            [
+              1,
+              "Ava"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Missing states",
+      "setup": "CREATE TABLE customers(id INTEGER,name TEXT); CREATE TABLE invoices(id INTEGER,customer_id INTEGER,paid INTEGER);INSERT INTO customers VALUES(1,'Ava'),(2,'Bo'); INSERT INTO invoices VALUES(1,1,NULL),(2,99,0);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "name"
+          ],
+          "values": []
+        }
+      ]
+    },
+    {
+      "name": "No data",
+      "setup": "CREATE TABLE customers(id INTEGER,name TEXT); CREATE TABLE invoices(id INTEGER,customer_id INTEGER,paid INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "name"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "joins",
+  "level": "intermediate"
+}

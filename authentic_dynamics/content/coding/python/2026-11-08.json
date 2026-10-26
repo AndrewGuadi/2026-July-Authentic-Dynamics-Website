@@ -1,0 +1,74 @@
+{
+  "language": "python",
+  "date": "2026-11-08",
+  "method": "str.partition()",
+  "summary": "Split once while retaining whether a separator was found.",
+  "syntax": "text.partition(separator)",
+  "documentation": "partition splits at the first occurrence of a nonempty separator and returns before, separator and after. When absent, the original text is first and the final two components are empty strings.",
+  "inputs": "One nonempty separator string.",
+  "returns": "A three-item tuple.",
+  "caution": "An empty separator raises ValueError. Later occurrences stay in the final component; this is not the same as splitting everywhere.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.partition",
+  "docs_source": "Python",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Parse a configuration assignment while keeping equals signs in its value.",
+    "Separate an internal record prefix from its remainder.",
+    "Inspect a header field whose value can contain the separator."
+  ],
+  "title": "Parse one configuration assignment",
+  "problem": "Input is a string. Return the three partition components as a list using the first = separator. Keep later equals signs in the last component and preserve whitespace.",
+  "goal": "Use str.partition() or an equivalent approach demonstrating the same premise.",
+  "hint": "Partition once, then turn the tuple into a list.",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Simple",
+      "input": "mode=pickup",
+      "expected": [
+        "mode",
+        "=",
+        "pickup"
+      ]
+    },
+    {
+      "name": "Repeated",
+      "input": "url=a=b",
+      "expected": [
+        "url",
+        "=",
+        "a=b"
+      ]
+    },
+    {
+      "name": "Absent",
+      "input": "mode",
+      "expected": [
+        "mode",
+        "",
+        ""
+      ]
+    },
+    {
+      "name": "Empty value",
+      "input": "mode=",
+      "expected": [
+        "mode",
+        "=",
+        ""
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": [
+        "",
+        "",
+        ""
+      ]
+    }
+  ],
+  "category": "strings",
+  "level": "intermediate"
+}

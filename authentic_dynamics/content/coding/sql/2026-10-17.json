@@ -1,0 +1,90 @@
+{
+  "language": "sql",
+  "date": "2026-10-17",
+  "method": "round()",
+  "summary": "Limit decimal precision in a numeric report.",
+  "syntax": "round(number, digits)",
+  "documentation": "SQLite round returns a floating-point value rounded to a requested number of decimal places. Omitting digits uses zero; negative precision is treated as zero. NULL arguments produce NULL.",
+  "inputs": "A numeric expression and optional decimal precision.",
+  "returns": "A rounded floating-point number, or NULL.",
+  "caution": "Floating-point rounding is not an exact decimal accounting system. Keep money in integer minor units when exact arithmetic is required.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#round",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Reduce precision of average trip durations in a report.",
+    "Format a measurement estimate for a dashboard.",
+    "Make summary percentages easier to scan."
+  ],
+  "title": "Round delivery duration estimates",
+  "problem": "From estimates(id INTEGER, hours REAL), return id and round(hours, 1) as rounded_hours, ordered by id. Keep NULL as NULL. Tests avoid ambiguous binary halfway values.",
+  "goal": "Use round() or an equivalent approach demonstrating the same premise.",
+  "hint": "Request one decimal place and give the result its required alias.",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query using the provided tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Nearest tenth",
+      "setup": "CREATE TABLE estimates(id INTEGER,hours REAL);INSERT INTO estimates VALUES(2,2.74),(1,1.26);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "rounded_hours"
+          ],
+          "values": [
+            [
+              1,
+              1.3
+            ],
+            [
+              2,
+              2.7
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Zero negative and null",
+      "setup": "CREATE TABLE estimates(id INTEGER,hours REAL);INSERT INTO estimates VALUES(1,0),(2,-1.26),(3,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "rounded_hours"
+          ],
+          "values": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              -1.3
+            ],
+            [
+              3,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE estimates(id INTEGER,hours REAL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "rounded_hours"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "numbers",
+  "level": "beginner"
+}

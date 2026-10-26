@@ -1,0 +1,54 @@
+{
+  "language": "javascript",
+  "date": "2026-10-17",
+  "method": "String.endsWith()",
+  "summary": "Check a literal suffix at the end of a string.",
+  "syntax": "text.endsWith(searchString, endPosition)",
+  "documentation": "endsWith compares a suffix case-sensitively. An optional endPosition treats that position as the string’s end for this comparison. It does not parse filenames, URLs, query strings or file contents.",
+  "inputs": "A literal suffix and optional ending position.",
+  "returns": "A Boolean indicating whether the suffix matches.",
+  "caution": "A suffix check is not secure file-type detection. A .csv name can contain arbitrary content.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Suggest an import workflow from a user-visible filename.",
+    "Recognize a documented suffix on an internal reference code.",
+    "Label archived exports before opening them."
+  ],
+  "title": "Suggest the CSV import flow",
+  "problem": "Input is a filename string. Return true only when it ends with the exact lowercase suffix .csv. Do not trim it or ignore case; .csv appearing in the middle does not qualify. This is a UI suggestion, not content validation.",
+  "goal": "Use String.endsWith() or an equivalent approach demonstrating the same premise.",
+  "hint": "Compare the final characters with a literal .csv suffix.",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "CSV",
+      "input": "sales.csv",
+      "expected": true
+    },
+    {
+      "name": "Uppercase",
+      "input": "sales.CSV",
+      "expected": false
+    },
+    {
+      "name": "Trailing extension",
+      "input": "sales.csv.backup",
+      "expected": false
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": false
+    },
+    {
+      "name": "Trailing space",
+      "input": "sales.csv ",
+      "expected": false
+    }
+  ],
+  "category": "strings",
+  "level": "beginner"
+}

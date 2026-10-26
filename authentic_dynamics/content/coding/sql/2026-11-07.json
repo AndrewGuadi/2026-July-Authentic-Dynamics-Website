@@ -1,0 +1,86 @@
+{
+  "language": "sql",
+  "date": "2026-11-07",
+  "method": "COUNT(DISTINCT expression)",
+  "summary": "Count unique nonmissing values in each group.",
+  "syntax": "COUNT(DISTINCT expression)",
+  "documentation": "DISTINCT inside this aggregate removes repeated input values before counting. COUNT(expression) ignores NULL, so a group containing only NULL values has a count of zero. Empty source data yields no grouped rows.",
+  "inputs": "One expression evaluated for rows in each aggregate group.",
+  "returns": "An integer count of distinct non-NULL values.",
+  "caution": "COUNT(*) counts rows instead. An empty string is a real value and is counted unless the query explicitly normalizes it.",
+  "docs_url": "https://www.sqlite.org/lang_aggfunc.html#count",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-26",
+  "scenarios": [
+    "Count unique customers visiting each branch.",
+    "Measure distinct product codes sold per market day.",
+    "Count unique nonmissing campaign sources in a lead report."
+  ],
+  "title": "Count branch visitors",
+  "problem": "From visits(id INTEGER, branch TEXT, customer TEXT), return branch and COUNT(DISTINCT customer) as visitors. Group by branch and order by branch. Keep branches whose customers are all NULL, giving them zero. Empty strings count as a distinct customer value.",
+  "goal": "Use COUNT(DISTINCT expression) or an equivalent approach demonstrating the same premise.",
+  "hint": "Apply DISTINCT to customer inside COUNT, not to the final grouped rows.",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query using the provided tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Repeated visitors",
+      "setup": "CREATE TABLE visits(id INTEGER,branch TEXT,customer TEXT);INSERT INTO visits VALUES(1,'East','Ava'),(2,'East','Ava'),(3,'East','Bo'),(4,'West','Bo');",
+      "expected": [
+        {
+          "columns": [
+            "branch",
+            "visitors"
+          ],
+          "values": [
+            [
+              "East",
+              2
+            ],
+            [
+              "West",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Null and empty",
+      "setup": "CREATE TABLE visits(id INTEGER,branch TEXT,customer TEXT);INSERT INTO visits VALUES(1,'East',NULL),(2,'West',''),(3,'West',NULL);",
+      "expected": [
+        {
+          "columns": [
+            "branch",
+            "visitors"
+          ],
+          "values": [
+            [
+              "East",
+              0
+            ],
+            [
+              "West",
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No visits",
+      "setup": "CREATE TABLE visits(id INTEGER,branch TEXT,customer TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "branch",
+            "visitors"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ],
+  "category": "aggregation",
+  "level": "intermediate"
+}
