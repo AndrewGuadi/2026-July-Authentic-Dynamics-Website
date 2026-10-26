@@ -1,3 +1,4 @@
+{% from 'partials/ui_actions.html' import action_content %}
 {% set values = form_values|default({}) %}
 {% set errors = form_errors|default({}) %}
 <form id="contact-form" class="contact-form" action="{{ url_for('main.submit_contact') }}#contact" method="post">
@@ -31,7 +32,7 @@
       {% if errors.get('message') %}<span class="field-error" id="message-error">{{ errors.message }}</span>{% endif %}
     </label>
   </div>
-  <button class="button" type="submit">Send my inquiry <span>↗</span></button>
+  <button class="button ui-explore" type="submit">{{ action_content('Send my inquiry') }}</button>
   <p class="form-help">You’ll hear directly from Authentic Dynamics by email. Tell us what you need; we’ll help you find a practical next step. <a href="{{ url_for('main.privacy_policy') }}#information">How we handle your inquiry</a>.</p>
   <p id="contact-status" role="status">{% for message in get_flashed_messages(category_filter=['success']) %}{{ message }}{% endfor %}</p>
 </form>

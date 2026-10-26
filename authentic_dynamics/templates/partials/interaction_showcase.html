@@ -1,0 +1,39 @@
+<section id="interaction-showcase" class="section ui-showcase dark" aria-labelledby="showcase-title">
+  <div class="wrap">
+    <div class="section-head">
+      <div><p class="eyebrow">SMALL DETAILS. REAL POSSIBILITIES.</p><h2 id="showcase-title">Built to be<br> interacted with.</h2></div>
+      <p>A little movement can make the next step feel natural. Try a few details we can shape around your business.</p>
+    </div>
+    <div class="ui-showcase-grid">
+      <article class="ui-frame">
+        <div class="ui-frame-content">
+          <p class="eyebrow">01 / INVITE ACTION</p>
+          <h3>A clear next step.</h3>
+          <p>An arrow, a little movement, and a useful place to go. Try it with our free Homepage Planner.</p>
+          <button type="button" class="button ui-explore" data-tool="planner">{{ action_content('Try the planner') }}</button>
+        </div>
+      </article>
+      <article class="ui-frame">
+        <div class="ui-frame-content">
+          <p class="eyebrow">02 / MAKE IT FEEL EASY</p>
+          <h3>Details you can feel.</h3>
+          <p>Select the field and try a business name. A clear focus state helps you keep your place.</p>
+          <label class="ui-demo-field" for="showcase-business">Try a business name
+            <input id="showcase-business" class="ui-field" type="text" maxlength="100" placeholder="Your next big idea" autocomplete="off" aria-describedby="showcase-input-note">
+          </label>
+          <small id="showcase-input-note">Just a demo. This field isn't submitted or saved.</small>
+        </div>
+      </article>
+      <article class="ui-frame" id="showcase-frame">
+        <div class="ui-frame-content">
+          <p class="eyebrow">03 / GIVE IT PRESENCE</p>
+          <h3>A frame worth noticing.</h3>
+          <p>A little color and depth can give a featured project or offer its own moment.</p>
+          <button type="button" class="textlink ui-expand" id="showcase-highlight" aria-pressed="false" aria-controls="showcase-frame" hidden>{{ action_content('Highlight this card') }}</button>
+          <noscript><p>Hover over a card or focus its controls to try the border effect.</p></noscript>
+        </div>
+      </article>
+    </div>
+    <p class="ui-showcase-note">Have something in mind? <a href="#contact" data-interest="Website rebuild or larger platform">Let's build it around your business ↗</a></p>
+  </div>
+</section>

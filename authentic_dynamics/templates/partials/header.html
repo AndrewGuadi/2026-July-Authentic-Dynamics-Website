@@ -1,3 +1,4 @@
+{% from 'partials/ui_actions.html' import action_content %}
 <header>
   <div class="wrap navrow">
     <a class="brand" href="{{ url_for('main.index') }}" aria-label="Authentic Dynamics home"><span class="mark">AD<span>↗</span></span><span>Authentic Dynamics<small>CENTRAL PENNSYLVANIA</small></span></a>
@@ -9,7 +10,7 @@
       <a href="{{ url_for('main.blog') }}" {% if active_page == 'blog' %}aria-current="page"{% endif %}>Blog</a>
       <a href="{{ url_for('main.about_community') }}" {% if active_page == 'about' %}aria-current="page"{% endif %}>About &amp; Community</a>
     </nav>
-    <a class="button small navcta" href="{{ url_for('main.index') if request.endpoint == 'main.index' or active_page == 'home' else url_for('main.about_community') }}#contact">Let’s talk <span>↗</span></a>
+    <a class="button small navcta ui-explore" href="{{ url_for('main.index') if request.endpoint == 'main.index' or active_page == 'home' else url_for('main.about_community') }}#contact">{{ action_content('Let’s talk') }}</a>
     <button class="menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav">Menu <span>☰</span></button>
   </div>
 </header>

@@ -22,6 +22,19 @@ const industryExamples = {
  community: ['/work#festival', 'Explore a community example'],
  platforms: ['/growth-technology', 'Explore practical technology']
 };
+// Match the shared Jinja action markup for panels rebuilt after a tab change.
+function expandingAction(label) {
+ return `<span class="ui-label">${escapeHTML(label)}</span><span class="ui-arrow" aria-hidden="true">↗</span>`;
+}
+const showcaseHighlight = document.querySelector('#showcase-highlight');
+if (showcaseHighlight) {
+ showcaseHighlight.hidden = false;
+ showcaseHighlight.addEventListener('click', () => {
+  const active = showcaseHighlight.getAttribute('aria-pressed') !== 'true';
+  showcaseHighlight.setAttribute('aria-pressed', String(active));
+  document.querySelector('#showcase-frame').classList.toggle('is-highlighted', active);
+ });
+}
 function selectIndustry(key, animate = false){
  const d=industries[key];
  if (!d) return;
@@ -29,7 +42,7 @@ function selectIndustry(key, animate = false){
  $$('[data-industry]').forEach(b=>{const active=b.dataset.industry===key;b.setAttribute('aria-selected',String(active));b.tabIndex=active?0:-1;});
  const panel=$('#industry-panel');panel.setAttribute('aria-labelledby','tab-'+key);
  const imageBase=panel.dataset.imageBase;
- panel.innerHTML=`<div class="industry-visuals${key==='platforms'?' industry-visuals-platforms':''}"><div class="industry-primary"><img loading="lazy" decoding="async" src="${imageBase}${d.images[0].file}" alt="${escapeHTML(d.images[0].alt)}"></div><div><img loading="lazy" decoding="async" src="${imageBase}${d.images[1].file}" alt="${escapeHTML(d.images[1].alt)}"></div><div class="industry-screen"><img loading="lazy" decoding="async" src="${imageBase}${d.images[2].file}" alt="${escapeHTML(d.images[2].alt)}"></div></div><p class="eyebrow">${d.label}</p><h3>${d.title}</h3><p>${d.copy}</p><div class="industry-details"><div><small>YOUR PRIORITY</small><strong>${d.priority}</strong></div><div><small>A SMART START</small><strong>${d.start}</strong></div></div><div class="industry-actions"><a class="textlink" href="#contact" data-industry-contact="${key}" data-interest="${d.interest}">Talk about your business <span>↗</span></a><button class="textlink" data-tool="${d.tool}">${d.toolLabel} <span>↗</span></button></div><a class="textlink industry-proof" href="${industryExamples[key][0]}">${industryExamples[key][1]} <span aria-hidden="true">↗</span></a>`;
+ panel.innerHTML=`<div class="industry-visuals${key==='platforms'?' industry-visuals-platforms':''}"><div class="industry-primary"><img loading="lazy" decoding="async" src="${imageBase}${d.images[0].file}" alt="${escapeHTML(d.images[0].alt)}"></div><div><img loading="lazy" decoding="async" src="${imageBase}${d.images[1].file}" alt="${escapeHTML(d.images[1].alt)}"></div><div class="industry-screen"><img loading="lazy" decoding="async" src="${imageBase}${d.images[2].file}" alt="${escapeHTML(d.images[2].alt)}"></div></div><p class="eyebrow">${d.label}</p><h3>${d.title}</h3><p>${d.copy}</p><div class="industry-details"><div><small>YOUR PRIORITY</small><strong>${d.priority}</strong></div><div><small>A SMART START</small><strong>${d.start}</strong></div></div><div class="industry-actions"><a class="textlink" href="#contact" data-industry-contact="${key}" data-interest="${d.interest}">Talk about your business <span>↗</span></a><button class="textlink ui-expand" data-tool="${d.tool}">${expandingAction(d.toolLabel)}</button></div><a class="textlink industry-proof ui-expand" href="${industryExamples[key][0]}">${expandingAction(industryExamples[key][1])}</a>`;
  if (animate && !homeMotionPreference.matches && panel.animate) {
   industryTransition = panel.animate([{opacity: .65, transform: 'translateY(5px)'}, {opacity: 1, transform: 'translateY(0)'}], {duration: 180, easing: 'ease-out'});
  }
