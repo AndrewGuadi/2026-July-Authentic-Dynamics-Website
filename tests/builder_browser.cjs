@@ -1,0 +1,52 @@
+/* Run with Flask on port 5055 and Playwright installed. */
+const { chromium } = require('playwright');
+const assert = require('node:assert/strict');
+(async () => {
+ const browser = await chromium.launch({headless:true, executablePath:process.env.CHROMIUM_PATH || undefined, args:['--no-sandbox']});
+ const page = await browser.newPage({viewport:{width:1440,height:1000}});
+ const errors=[]; page.on('pageerror',e=>errors.push(e.message));
+ await page.goto('http://127.0.0.1:5055/try-builder');
+ await page.waitForSelector('#template-grid .builder-card');
+ assert.equal(await page.locator('#template-grid .builder-card').count(),5);
+ assert.equal(await page.locator('#component-grid .builder-card').count(),48);
+ await page.fill('#business-name','<img src=x onerror=alert(1)> Andrew & Sons');
+ await page.fill('#business-location','Harrisburg, PA');
+ await page.fill('#business-tagline','Local help when you need it.');
+ await page.fill('#business-phone','717-555-0100');
+ for (const option of await page.locator('#industry option').evaluateAll(nodes=>nodes.map(n=>n.value))) {
+  await page.selectOption('#industry',option);
+  assert.equal(await page.locator('#template-grid .builder-card').count(),5);
+ }
+ await page.selectOption('#industry','home-services');
+ await page.locator('#component-grid .builder-card').first().getByRole('button',{name:'♡ Save'}).click();
+ const [popup]=await Promise.all([page.waitForEvent('popup'),page.locator('#template-grid .builder-card').first().getByRole('link',{name:'Try it on ↗'}).click()]);
+ popup.on('pageerror',e=>errors.push(e.message));
+ await popup.waitForFunction(()=>document.querySelector('#website-preview')?.contentDocument?.querySelector('.ad-preview-business'));
+ const frame=popup.frameLocator('#website-preview');
+ assert.match(await frame.locator('.ad-preview-business').textContent(),/Andrew & Sons/);
+ assert.match(await frame.locator('.ad-preview-business').textContent(),/Harrisburg/);
+ assert.equal(await frame.locator('h1').first().textContent(),'Local help when you need it.');
+ assert.equal(await frame.locator('script').count(),0);
+ assert.equal(await frame.locator('img[src="x"]').count(),0);
+ assert.equal(await popup.locator('#preview-button option').count(),2);
+ await popup.selectOption('#preview-button', {index:1});
+ await popup.waitForFunction(()=>document.querySelector('#website-preview')?.contentDocument?.querySelector('span') && [...document.querySelector('#website-preview').contentDocument.querySelectorAll('span')].some(n=>n.shadowRoot));
+ await popup.selectOption('#preview-font','Georgia, serif');
+ await popup.getByRole('button',{name:'Save this combination'}).click();
+ await popup.reload();
+ await popup.waitForFunction(()=>document.querySelector('#website-preview')?.contentDocument?.querySelector('.ad-preview-business'));
+ assert.equal(await popup.locator('#preview-font').inputValue(),'Georgia, serif');
+ await popup.selectOption('#preview-width','390px');
+ assert.equal(await popup.locator('#website-preview').evaluate(n=>Math.round(n.getBoundingClientRect().width)),390);
+ await popup.screenshot({path:'/tmp/ad-builder-preview.png',fullPage:true});
+ await page.screenshot({path:'/tmp/ad-builder-desktop.png',fullPage:false});
+ await page.setViewportSize({width:390,height:844});
+ await page.screenshot({path:'/tmp/ad-builder-mobile.png',fullPage:false});
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth),true);
+ await page.reload(); await page.waitForSelector('#template-grid .builder-card');
+ assert.match(await page.locator('#business-name').inputValue(),/Andrew & Sons/);
+ await page.getByRole('button',{name:'Clear my saved details & favorites'}).click();
+ assert.equal(await page.locator('#business-name').inputValue(),'');
+ assert.deepEqual(errors,[]);
+ await browser.close(); console.log('Builder browser checks passed: 50 choices, personalization, safe text, popup, favorites, persistence, size and mobile overflow.');
+})().catch(e=>{console.error(e);process.exit(1)});

@@ -2,4 +2,4 @@ from flask import Blueprint
 
 bp = Blueprint("main", __name__)
 
-from . import legacy, routes  # noqa: F401
+from . import builder, legacy, routes  # noqa: F401

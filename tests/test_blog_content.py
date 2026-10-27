@@ -41,7 +41,7 @@ def url_for(endpoint, **values):
         "main.index": "/", "main.blog": "/blog", "main.websites": "/websites",
         "main.growth_technology": "/growth-technology", "main.work": "/work",
         "main.about_community": "/about-community", "main.privacy_policy": "/privacy-policy",
-        "main.terms": "/terms",
+        "main.terms": "/terms", "main.try_builder": "/try-builder",
     }[endpoint]
 
 
