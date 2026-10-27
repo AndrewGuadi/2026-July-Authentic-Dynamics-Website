@@ -12,7 +12,7 @@ def test_showroom_routes_and_sources():
     client = create_app({'TESTING': True}).test_client()
     assert client.get('/try-builder').status_code == 200
     assert client.get('/try-builder/preview').status_code == 200
-    assert b'Try Builder' in client.get('/').data
+    assert b'href="/try-builder"' not in client.get('/').data
     catalog = json.loads((ROOT / 'catalog.json').read_text())
     templates = catalog['templates']
     assert len(templates) == 50

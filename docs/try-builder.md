@@ -1,6 +1,6 @@
 # Try Builder showroom
 
-Entry: `/try-builder`, with a shared main navigation link. Preview: `/try-builder/preview#<catalog-id>` opens in a new tab with `noopener noreferrer`. Business details are never put in a URL or submitted to Flask. The catalog and original design snapshots are served locally.
+Entry: `/try-builder`, available by direct URL only. The navigation link is intentionally omitted during the initial live testing period. Preview: `/try-builder/preview#<catalog-id>` opens in a new tab with `noopener noreferrer`. Business details are never put in a URL or submitted to Flask. The catalog and original design snapshots are served locally.
 
 ## Included
 

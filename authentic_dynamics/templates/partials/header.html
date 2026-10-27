@@ -9,7 +9,6 @@
       <a href="{{ url_for('main.work') }}" {% if active_page == 'work' %}aria-current="page"{% endif %}>Work</a>
       <a href="{{ url_for('main.blog') }}" {% if active_page == 'blog' %}aria-current="page"{% endif %}>Blog</a>
       <a href="{{ url_for('main.about_community') }}" {% if active_page == 'about' %}aria-current="page"{% endif %}>About &amp; Community</a>
-      <a href="{{ url_for('main.try_builder') }}" {% if active_page == 'builder' %}aria-current="page"{% endif %}>Try Builder</a>
     </nav>
     <a class="button small navcta ui-explore" href="{{ url_for('main.index') if request.endpoint == 'main.index' or active_page == 'home' else url_for('main.about_community') }}#contact">{{ action_content('Let’s talk') }}</a>
     <button class="menu" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav">Menu <span>☰</span></button>
