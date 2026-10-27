@@ -1,0 +1,78 @@
+{
+  "language": "sql",
+  "date": "2026-11-10",
+  "method": "NOT EXISTS",
+  "summary": "NOT EXISTS is true when a subquery produces no rows.",
+  "syntax": "NOT EXISTS (SELECT ... FROM related WHERE ...)",
+  "documentation": "NOT EXISTS is true when a subquery produces no rows. A correlated subquery can identify outer records without a matching related record. Selected NULL values still count as existing rows.",
+  "inputs": "A subquery, usually correlated with the outer row.",
+  "returns": "A truth value indicating that no row matched.",
+  "caution": "NOT IN can be affected by NULL values in its comparison set. An explicit correlated NOT EXISTS avoids that membership-list trap.",
+  "docs_url": "https://www.sqlite.org/lang_expr.html#the_exists_operator",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Find products that have never been ordered.",
+    "List customers with no contact attempts recorded.",
+    "Identify scheduled jobs without a completion record."
+  ],
+  "title": "Find products never ordered",
+  "problem": "Tables products(id INTEGER, name TEXT) and order_lines(id INTEGER, product_id INTEGER). Return product id and name only when no order_lines row references that product id. NULL product_id values do not reference any product. Order by product id.",
+  "goal": "Use NOT EXISTS or an equivalent approach demonstrating the same premise.",
+  "hint": "Correlate the inner product_id to the outer product id, then negate EXISTS.",
+  "category": "joins",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Matched and missing",
+      "setup": "CREATE TABLE products(id INTEGER,name TEXT); CREATE TABLE order_lines(id INTEGER,product_id INTEGER);INSERT INTO products VALUES(1,'Tea'),(2,'Soap'); INSERT INTO order_lines VALUES(1,1),(2,1);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "name"
+          ],
+          "values": [
+            [
+              2,
+              "Soap"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Null relationship",
+      "setup": "CREATE TABLE products(id INTEGER,name TEXT); CREATE TABLE order_lines(id INTEGER,product_id INTEGER);INSERT INTO products VALUES(1,'Tea'); INSERT INTO order_lines VALUES(1,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "name"
+          ],
+          "values": [
+            [
+              1,
+              "Tea"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No products",
+      "setup": "CREATE TABLE products(id INTEGER,name TEXT); CREATE TABLE order_lines(id INTEGER,product_id INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "name"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

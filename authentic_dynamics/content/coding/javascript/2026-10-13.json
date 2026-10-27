@@ -1,0 +1,61 @@
+{
+  "language": "javascript",
+  "date": "2026-10-13",
+  "method": "Math.ceil()",
+  "summary": "ceil returns the smallest integer greater than or equal to a number.",
+  "syntax": "Math.ceil(number)",
+  "documentation": "ceil returns the smallest integer greater than or equal to a number. For a positive quotient, it is useful when any remainder requires another whole resource unit.",
+  "inputs": "A numeric expression.",
+  "returns": "The least integer not smaller than the input.",
+  "caution": "For negative values, ceiling moves toward positive infinity, not away from zero. Define valid business inputs before dividing.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/ceil",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Determine buses needed for a group.",
+    "Allocate pages for an already counted result set.",
+    "Estimate containers when partially filled containers still count."
+  ],
+  "title": "Reserve enough vans",
+  "problem": "Input has integer passengers >= 0 and seats > 0. Return the number of vans needed when each van holds at most seats passengers. A partial van counts as one; zero passengers need zero vans.",
+  "goal": "Use Math.ceil() or an equivalent approach demonstrating the same premise.",
+  "hint": "Round the passengers/seats quotient upward.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Partial",
+      "input": {
+        "passengers": 13,
+        "seats": 6
+      },
+      "expected": 3
+    },
+    {
+      "name": "Exact",
+      "input": {
+        "passengers": 12,
+        "seats": 6
+      },
+      "expected": 2
+    },
+    {
+      "name": "One person",
+      "input": {
+        "passengers": 1,
+        "seats": 6
+      },
+      "expected": 1
+    },
+    {
+      "name": "Empty",
+      "input": {
+        "passengers": 0,
+        "seats": 6
+      },
+      "expected": 0
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "language": "javascript",
+  "date": "2026-11-10",
+  "method": "Array.findLast()",
+  "summary": "findLast visits items from the end until its predicate is truthy.",
+  "syntax": "items.findLast(predicate)",
+  "documentation": "findLast visits items from the end until its predicate is truthy. It returns that matching item, or undefined when none qualifies. It searches the existing sequence; it does not sort by timestamps.",
+  "inputs": "A predicate receiving item, index and array.",
+  "returns": "The last qualifying item in array order, or undefined.",
+  "caution": "Return an explicit null for a missing JSON result. If chronology matters, the input order must already represent it.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/findLast",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Find the latest approved change in a chronological history.",
+    "Read the last successful delivery attempt.",
+    "Select the most recent active price entry in an ordered import."
+  ],
+  "title": "Find the last approved change",
+  "problem": "Input is an array of objects in chronological order, each with id and approved. Return the last object whose approved value is exactly true, or null if none qualify. Preserve all fields.",
+  "goal": "Use Array.findLast() or an equivalent approach demonstrating the same premise.",
+  "hint": "Search backward with a strict Boolean predicate.",
+  "category": "arrays",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Last approved",
+      "input": [
+        {
+          "id": 1,
+          "approved": true
+        },
+        {
+          "id": 2,
+          "approved": true
+        },
+        {
+          "id": 3,
+          "approved": false
+        }
+      ],
+      "expected": {
+        "id": 2,
+        "approved": true
+      }
+    },
+    {
+      "name": "Strict Boolean",
+      "input": [
+        {
+          "id": 1,
+          "approved": "yes"
+        }
+      ],
+      "expected": null
+    },
+    {
+      "name": "First only",
+      "input": [
+        {
+          "id": 1,
+          "approved": true,
+          "note": null
+        },
+        {
+          "id": 2,
+          "approved": false
+        }
+      ],
+      "expected": {
+        "id": 1,
+        "approved": true,
+        "note": null
+      }
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": null
+    }
+  ]
+}

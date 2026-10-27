@@ -1,0 +1,73 @@
+{
+  "language": "python",
+  "date": "2026-10-13",
+  "method": "range()",
+  "summary": "range represents an integer arithmetic sequence without eagerly building a list.",
+  "syntax": "range(start, stop, step)",
+  "documentation": "range represents an integer arithmetic sequence without eagerly building a list. Its stop bound is excluded. Positive and negative steps work in opposite directions; zero step is invalid.",
+  "inputs": "Integer start, exclusive stop and nonzero step.",
+  "returns": "A range object representing the sequence.",
+  "caution": "A range is not itself a JSON list. Materialize only reasonably bounded sequences before returning them.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#range",
+  "docs_source": "Python",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Generate numbered ticket slots for a small event.",
+    "Build row positions for a bounded table preview.",
+    "Count down scheduled checklist positions."
+  ],
+  "title": "Generate a bounded sequence",
+  "problem": "Input has integer start, stop and nonzero step. Return the values represented by range(start, stop, step) as a list. Inputs produce at most 100 items. The stop value is excluded.",
+  "goal": "Use range() or an equivalent approach demonstrating the same premise.",
+  "hint": "Convert the range object to a list.",
+  "category": "arrays",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Ascending",
+      "input": {
+        "start": 2,
+        "stop": 8,
+        "step": 2
+      },
+      "expected": [
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "name": "Descending",
+      "input": {
+        "start": 5,
+        "stop": 0,
+        "step": -2
+      },
+      "expected": [
+        5,
+        3,
+        1
+      ]
+    },
+    {
+      "name": "Wrong direction",
+      "input": {
+        "start": 5,
+        "stop": 0,
+        "step": 1
+      },
+      "expected": []
+    },
+    {
+      "name": "Equal bounds",
+      "input": {
+        "start": 3,
+        "stop": 3,
+        "step": 1
+      },
+      "expected": []
+    }
+  ]
+}

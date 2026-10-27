@@ -1,0 +1,54 @@
+{
+  "language": "javascript",
+  "date": "2026-10-14",
+  "method": "String.indexOf()",
+  "summary": "indexOf returns the zero-based position of the first matching substring at or after a starting position.",
+  "syntax": "text.indexOf(searchString, position = 0)",
+  "documentation": "indexOf returns the zero-based position of the first matching substring at or after a starting position. It is case-sensitive and returns -1 when there is no match.",
+  "inputs": "A search string and optional starting position.",
+  "returns": "An index or -1.",
+  "caution": "Index zero is a valid match but is falsey. Check against -1; string indices count UTF-16 code units.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/indexOf",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Find where a pasted reference separates its prefix and number.",
+    "Highlight the first literal search match in a short label.",
+    "Locate a delimiter before extracting two fields."
+  ],
+  "title": "Locate the first separator",
+  "problem": "Input is a string containing ASCII text. Return the index of its first colon, or -1 when absent. Return only the first position even if there are multiple colons.",
+  "goal": "Use String.indexOf() or an equivalent approach demonstrating the same premise.",
+  "hint": "Search for the literal colon and preserve -1 when missing.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Middle",
+      "input": "INV:42",
+      "expected": 3
+    },
+    {
+      "name": "Beginning",
+      "input": ":42",
+      "expected": 0
+    },
+    {
+      "name": "Repeated",
+      "input": "a:b:c",
+      "expected": 1
+    },
+    {
+      "name": "Absent",
+      "input": "invoice",
+      "expected": -1
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": -1
+    }
+  ]
+}

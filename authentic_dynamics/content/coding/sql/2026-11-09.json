@@ -1,0 +1,77 @@
+{
+  "language": "sql",
+  "date": "2026-11-09",
+  "method": "WITH common table expression",
+  "summary": "An ordinary common table expression names an intermediate query for use within one statement.",
+  "syntax": "WITH name AS (SELECT ...) SELECT ... FROM name",
+  "documentation": "An ordinary common table expression names an intermediate query for use within one statement. It can separate aggregation from later filtering without creating a permanent database table.",
+  "inputs": "A named SELECT and the statement that uses its results.",
+  "returns": "The final query result; the CTE name exists only for that statement.",
+  "caution": "A CTE is not persistent storage. Do not assume that naming one guarantees a particular materialization or performance strategy.",
+  "docs_url": "https://www.sqlite.org/lang_with.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Separate per-customer invoice totals from follow-up rules.",
+    "Make a multi-stage sales report easier to inspect.",
+    "Reuse an intermediate classification within a single query."
+  ],
+  "title": "Find customers above a paid total",
+  "problem": "From payments(id INTEGER, customer TEXT, cents INTEGER, paid INTEGER), total cents only where paid = 1, grouped by customer. Return customer and total_cents for totals >= 1000, ordered by customer. cents are non-NULL integers. Unpaid rows must not affect totals.",
+  "goal": "Use WITH common table expression or an equivalent approach demonstrating the same premise.",
+  "hint": "Create a paid_totals CTE, then filter its total_cents column.",
+  "category": "aggregation",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Aggregate before filtering",
+      "setup": "CREATE TABLE payments(id INTEGER,customer TEXT,cents INTEGER,paid INTEGER);INSERT INTO payments VALUES(1,'Ava',600,1),(2,'Ava',500,1),(3,'Bo',1000,1),(4,'Cy',999,1);",
+      "expected": [
+        {
+          "columns": [
+            "customer",
+            "total_cents"
+          ],
+          "values": [
+            [
+              "Ava",
+              1100
+            ],
+            [
+              "Bo",
+              1000
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Exclude unpaid",
+      "setup": "CREATE TABLE payments(id INTEGER,customer TEXT,cents INTEGER,paid INTEGER);INSERT INTO payments VALUES(1,'Ava',1200,0),(2,'Bo',900,1),(3,'Bo',200,0);",
+      "expected": [
+        {
+          "columns": [
+            "customer",
+            "total_cents"
+          ],
+          "values": []
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE payments(id INTEGER,customer TEXT,cents INTEGER,paid INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "customer",
+            "total_cents"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

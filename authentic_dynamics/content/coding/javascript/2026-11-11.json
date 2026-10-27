@@ -1,0 +1,95 @@
+{
+  "language": "javascript",
+  "date": "2026-11-11",
+  "method": "Array.with()",
+  "summary": "with returns a new array replacing one indexed item while keeping the receiver unchanged.",
+  "syntax": "items.with(index, replacement)",
+  "documentation": "with returns a new array replacing one indexed item while keeping the receiver unchanged. Negative indices count from the end. An index outside the array throws RangeError instead of extending it.",
+  "inputs": "A valid positive or negative index and replacement value.",
+  "returns": "A shallow copy with one replacement.",
+  "caution": "This requires a modern engine. Nested objects remain shared; copying does not deeply clone them.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/with",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Preview an edited itinerary without committing its source order.",
+    "Replace a quantity in an immutable cart snapshot.",
+    "Compare a revised staffing slot with the original schedule."
+  ],
+  "title": "Preview a slot replacement",
+  "problem": "Input has items (a nonempty array), index (an integer valid for that array, possibly negative), and replacement. Return {original: unchangedItems, updated: copiedItemsWithReplacement}. Keep all other elements intact.",
+  "goal": "Use Array.with() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use with on items, or copy before assigning.",
+  "category": "arrays",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Middle",
+      "input": {
+        "items": [
+          "a",
+          "b",
+          "c"
+        ],
+        "index": 1,
+        "replacement": "x"
+      },
+      "expected": {
+        "original": [
+          "a",
+          "b",
+          "c"
+        ],
+        "updated": [
+          "a",
+          "x",
+          "c"
+        ]
+      }
+    },
+    {
+      "name": "Last",
+      "input": {
+        "items": [
+          1,
+          2
+        ],
+        "index": -1,
+        "replacement": 0
+      },
+      "expected": {
+        "original": [
+          1,
+          2
+        ],
+        "updated": [
+          1,
+          0
+        ]
+      }
+    },
+    {
+      "name": "First negative",
+      "input": {
+        "items": [
+          1,
+          2
+        ],
+        "index": -2,
+        "replacement": null
+      },
+      "expected": {
+        "original": [
+          1,
+          2
+        ],
+        "updated": [
+          null,
+          2
+        ]
+      }
+    }
+  ]
+}

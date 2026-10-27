@@ -1,0 +1,67 @@
+{
+  "language": "python",
+  "date": "2026-11-10",
+  "method": "itertools.accumulate()",
+  "summary": "accumulate lazily produces each successive accumulated result.",
+  "syntax": "accumulate(iterable, func=operator.add, *, initial=None)",
+  "documentation": "accumulate lazily produces each successive accumulated result. Addition is the default operation. Without an initial value, its first result is the first input item, and empty input produces no results.",
+  "inputs": "An iterable and optional combining function/initial value.",
+  "returns": "An iterator of running accumulated values.",
+  "caution": "Supplying initial adds an extra output item. Do not insert a starting zero unless the required output asks for one.",
+  "docs_url": "https://docs.python.org/3.12/library/itertools.html#itertools.accumulate",
+  "docs_source": "Python",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Show a running balance after each ledger adjustment.",
+    "Build cumulative daily attendance totals.",
+    "Track completed units as each production batch arrives."
+  ],
+  "title": "Compute running balance changes",
+  "problem": "Input is a list of integer adjustments in cents. Return cumulative sums after each adjustment, beginning with the first adjustment. Do not prepend a zero. Negative adjustments reduce the running amount.",
+  "goal": "Use itertools.accumulate() or an equivalent approach demonstrating the same premise.",
+  "hint": "Import accumulate and materialize its default addition results.",
+  "category": "aggregation",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Adjustments",
+      "input": [
+        100,
+        -30,
+        50
+      ],
+      "expected": [
+        100,
+        70,
+        120
+      ]
+    },
+    {
+      "name": "Zeroes",
+      "input": [
+        0,
+        0
+      ],
+      "expected": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "One",
+      "input": [
+        -5
+      ],
+      "expected": [
+        -5
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

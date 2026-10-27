@@ -1,0 +1,69 @@
+{
+  "language": "python",
+  "date": "2026-11-11",
+  "method": "math.isclose()",
+  "summary": "isclose compares the difference between two numbers with relative and absolute tolerances.",
+  "syntax": "isclose(a, b, *, rel_tol, abs_tol)",
+  "documentation": "isclose compares the difference between two numbers with relative and absolute tolerances. Absolute tolerance handles comparisons near zero, where a relative tolerance alone may be too strict.",
+  "inputs": "Two numbers plus nonnegative tolerances; rel_tol must be below 1.",
+  "returns": "A Boolean indicating whether the numbers are sufficiently close.",
+  "caution": "Closeness is a declared numerical policy, not exact equality. Choose tolerances appropriate to the units and intended use.",
+  "docs_url": "https://docs.python.org/3.12/library/math.html#math.isclose",
+  "docs_source": "Python",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Compare calculated measurements within a stated precision.",
+    "Check independent calculations without requiring identical binary floats.",
+    "Decide whether a sensor reading is close to a target near zero."
+  ],
+  "title": "Compare computed measurements",
+  "problem": "Input has finite numeric actual and expected. Return math.isclose(actual, expected, rel_tol=0.000001, abs_tol=0.000000001). Use these exact tolerances; do not round the numbers before comparing.",
+  "goal": "Use math.isclose() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use both relative and absolute tolerance keywords.",
+  "category": "numbers",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Relative match",
+      "input": {
+        "actual": 1000000,
+        "expected": 1000000.5
+      },
+      "expected": true
+    },
+    {
+      "name": "Relative miss",
+      "input": {
+        "actual": 1000000,
+        "expected": 1000002
+      },
+      "expected": false
+    },
+    {
+      "name": "Near zero match",
+      "input": {
+        "actual": 0,
+        "expected": 5e-10
+      },
+      "expected": true
+    },
+    {
+      "name": "Near zero miss",
+      "input": {
+        "actual": 0,
+        "expected": 2e-09
+      },
+      "expected": false
+    },
+    {
+      "name": "Equal negatives",
+      "input": {
+        "actual": -4,
+        "expected": -4
+      },
+      "expected": true
+    }
+  ]
+}

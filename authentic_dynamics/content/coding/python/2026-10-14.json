@@ -1,0 +1,61 @@
+{
+  "language": "python",
+  "date": "2026-10-14",
+  "method": "str.count()",
+  "summary": "count returns the number of non-overlapping substring occurrences.",
+  "syntax": "text.count(substring)",
+  "documentation": "count returns the number of non-overlapping substring occurrences. Matching is case-sensitive. An empty substring follows a special boundary-counting rule, so a nonempty search term is often clearer for business tasks.",
+  "inputs": "A substring, optionally restricted by start/end bounds.",
+  "returns": "An integer count.",
+  "caution": "Overlapping occurrences are not counted separately. For example, aa appears twice, not three times, in aaaa.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.count",
+  "docs_source": "Python",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Count repeated placeholders before filling a receipt.",
+    "Measure occurrences of a literal label in an imported note.",
+    "Check how often a delimiter token appears in a record."
+  ],
+  "title": "Count non-overlapping tokens",
+  "problem": "Input has text and token strings; token is nonempty. Return the number of non-overlapping exact token occurrences in text. Case matters.",
+  "goal": "Use str.count() or an equivalent approach demonstrating the same premise.",
+  "hint": "Count literal occurrences; do not slide into overlapping matches.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Repeated",
+      "input": {
+        "text": "aaaa",
+        "token": "aa"
+      },
+      "expected": 2
+    },
+    {
+      "name": "Adjacent",
+      "input": {
+        "text": "<x><x>",
+        "token": "<x>"
+      },
+      "expected": 2
+    },
+    {
+      "name": "Case",
+      "input": {
+        "text": "Go go GO",
+        "token": "go"
+      },
+      "expected": 1
+    },
+    {
+      "name": "Empty text",
+      "input": {
+        "text": "",
+        "token": "x"
+      },
+      "expected": 0
+    }
+  ]
+}

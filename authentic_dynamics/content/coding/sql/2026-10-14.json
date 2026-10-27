@@ -1,0 +1,86 @@
+{
+  "language": "sql",
+  "date": "2026-10-14",
+  "method": "trim()",
+  "summary": "SQLite trim removes characters from both ends of text.",
+  "syntax": "trim(text, characters)",
+  "documentation": "SQLite trim removes characters from both ends of text. The optional second argument is a set of removable characters, not a prefix or suffix substring. Interior characters remain unchanged.",
+  "inputs": "Text and optional edge-character set.",
+  "returns": "Text with matching edge characters removed, or NULL.",
+  "caution": "With one argument, SQLite trims ordinary spaces, not every Unicode whitespace character. Tabs are not removed by that default.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#trim",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Remove edge padding from imported product labels.",
+    "Clean padded ASCII search terms inside a report.",
+    "Normalize a known delimiter-padding convention without touching interior spaces."
+  ],
+  "title": "Remove ordinary edge spaces",
+  "problem": "From labels(id INTEGER, name TEXT), return id and trim(name) as cleaned, ordered by id. Remove ordinary spaces at both edges only; preserve interior spaces and tabs. NULL remains NULL.",
+  "goal": "Use trim() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use the one-argument SQLite trim behavior.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Padding",
+      "setup": "CREATE TABLE labels(id INTEGER,name TEXT);INSERT INTO labels VALUES(1,'  A  B  '),(2,'   ');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "cleaned"
+          ],
+          "values": [
+            [
+              1,
+              "A  B"
+            ],
+            [
+              2,
+              ""
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tabs and null",
+      "setup": "CREATE TABLE labels(id INTEGER,name TEXT);INSERT INTO labels VALUES(1,char(9)||' A '||char(9)),(2,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "cleaned"
+          ],
+          "values": [
+            [
+              1,
+              "\t A \t"
+            ],
+            [
+              2,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No rows",
+      "setup": "CREATE TABLE labels(id INTEGER,name TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "cleaned"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

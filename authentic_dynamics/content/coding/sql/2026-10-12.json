@@ -1,0 +1,86 @@
+{
+  "language": "sql",
+  "date": "2026-10-12",
+  "method": "abs()",
+  "summary": "SQLite abs returns a numeric value without its sign.",
+  "syntax": "abs(number)",
+  "documentation": "SQLite abs returns a numeric value without its sign. NULL input remains NULL. For an integer input it preserves integer form when the magnitude is representable.",
+  "inputs": "A numeric expression.",
+  "returns": "Its magnitude, or NULL.",
+  "caution": "The minimum signed 64-bit integer has no positive signed 64-bit counterpart and causes integer overflow. Tests exclude that value.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#abs",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Show the size of an invoice adjustment independently of its direction.",
+    "Measure a budget deviation from an expected integer balance.",
+    "Compare the magnitude of positive and negative stock changes."
+  ],
+  "title": "Report adjustment sizes",
+  "problem": "From adjustments(id INTEGER, cents INTEGER), return id and abs(cents) as magnitude for each row, ordered by id. Preserve NULL magnitudes. Inputs exclude the minimum signed 64-bit integer.",
+  "goal": "Use abs() or an equivalent approach demonstrating the same premise.",
+  "hint": "Keep the identifier and apply abs to cents.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Signed values",
+      "setup": "CREATE TABLE adjustments(id INTEGER,cents INTEGER);INSERT INTO adjustments VALUES(2,-50),(1,50);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "magnitude"
+          ],
+          "values": [
+            [
+              1,
+              50
+            ],
+            [
+              2,
+              50
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Zero and null",
+      "setup": "CREATE TABLE adjustments(id INTEGER,cents INTEGER);INSERT INTO adjustments VALUES(1,0),(2,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "magnitude"
+          ],
+          "values": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No rows",
+      "setup": "CREATE TABLE adjustments(id INTEGER,cents INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "magnitude"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}
