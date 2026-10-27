@@ -1,0 +1,104 @@
+{
+  "language": "sql",
+  "date": "2026-10-13",
+  "method": "substr()",
+  "summary": "substr extracts text using one-based positions.",
+  "syntax": "substr(text, start, length)",
+  "documentation": "substr extracts text using one-based positions. A negative start counts backward from the end. For text, positions refer to characters rather than UTF-8 bytes; NULL arguments yield NULL.",
+  "inputs": "Text, a start position and optional length.",
+  "returns": "The requested substring, or NULL.",
+  "caution": "SQLite positions begin at 1. Negative length has its own backwards-selection meaning; do not confuse it with a negative start.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#substr",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Display the tail of an internal reference in a compact report.",
+    "Extract fixed-position portions of a documented import format.",
+    "Show a shortened code while keeping the full value stored."
+  ],
+  "title": "Display reference tails",
+  "problem": "From references_list(id INTEGER, code TEXT), return id and substr(code, -4) as tail, ordered by id. Short strings remain whole, empty strings remain empty, and NULL remains NULL.",
+  "goal": "Use substr() or an equivalent approach demonstrating the same premise.",
+  "hint": "Start four characters back from the end and omit length.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Long and short",
+      "setup": "CREATE TABLE references_list(id INTEGER,code TEXT);INSERT INTO references_list VALUES(1,'INV-1234'),(2,'AB');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "tail"
+          ],
+          "values": [
+            [
+              1,
+              "1234"
+            ],
+            [
+              2,
+              "AB"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty and null",
+      "setup": "CREATE TABLE references_list(id INTEGER,code TEXT);INSERT INTO references_list VALUES(1,''),(2,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "tail"
+          ],
+          "values": [
+            [
+              1,
+              ""
+            ],
+            [
+              2,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Unicode",
+      "setup": "CREATE TABLE references_list(id INTEGER,code TEXT);INSERT INTO references_list VALUES(1,'pré-café');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "tail"
+          ],
+          "values": [
+            [
+              1,
+              "café"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No rows",
+      "setup": "CREATE TABLE references_list(id INTEGER,code TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "tail"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

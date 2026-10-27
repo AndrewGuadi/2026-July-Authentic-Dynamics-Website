@@ -1,0 +1,89 @@
+{
+  "language": "javascript",
+  "date": "2026-11-09",
+  "method": "Array.flat()",
+  "summary": "flat creates a new array by expanding nested arrays up to a specified depth.",
+  "syntax": "items.flat(depth = 1)",
+  "documentation": "flat creates a new array by expanding nested arrays up to a specified depth. The default removes one level, so deeper arrays remain nested. Ordinary non-array values are retained.",
+  "inputs": "An optional nonnegative flattening depth.",
+  "returns": "A new shallow flattened array.",
+  "caution": "It is not recursive by default. Sparse-array holes can disappear; JSON arrays used here have explicit elements.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Combine arrays of stop IDs collected from several routes.",
+    "Merge one level of grouped form-validation messages.",
+    "Collect product IDs from per-order item lists."
+  ],
+  "title": "Flatten one grouping level",
+  "problem": "Input is a JSON array. Flatten exactly one level of nested arrays, preserving order and all non-array values. Deeper arrays must remain arrays. Do not discard null, false or zero.",
+  "goal": "Use Array.flat() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use the default depth of one.",
+  "category": "arrays",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Groups",
+      "input": [
+        [
+          1,
+          2
+        ],
+        [
+          3
+        ]
+      ],
+      "expected": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "Deeper",
+      "input": [
+        [
+          1,
+          [
+            2
+          ]
+        ],
+        3
+      ],
+      "expected": [
+        1,
+        [
+          2
+        ],
+        3
+      ]
+    },
+    {
+      "name": "Empty groups",
+      "input": [
+        [],
+        []
+      ],
+      "expected": []
+    },
+    {
+      "name": "Falsey",
+      "input": [
+        0,
+        [
+          false,
+          null
+        ],
+        []
+      ],
+      "expected": [
+        0,
+        false,
+        null
+      ]
+    }
+  ]
+}

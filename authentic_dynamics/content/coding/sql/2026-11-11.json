@@ -1,0 +1,103 @@
+{
+  "language": "sql",
+  "date": "2026-11-11",
+  "method": "SUM() OVER with ROWS frame",
+  "summary": "A windowed SUM can attach a running total to each source row without collapsing rows into groups.",
+  "syntax": "SUM(amount) OVER (PARTITION BY branch ORDER BY slot, id ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW)",
+  "documentation": "A windowed SUM can attach a running total to each source row without collapsing rows into groups. An explicit ROWS frame includes all preceding ordered rows through the current row.",
+  "inputs": "A numeric expression and a window partition, order and frame.",
+  "returns": "A cumulative total alongside each source row.",
+  "caution": "The default ordered frame can include peers together. Specify ROWS and a unique tie-breaker when each individual row must advance the total.",
+  "docs_url": "https://www.sqlite.org/windowfunctions.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Show a branch balance after each ledger transaction.",
+    "Display cumulative sales while retaining individual invoices.",
+    "Track total processed units after each recorded batch."
+  ],
+  "title": "Compute per-branch running totals",
+  "problem": "From ledger(id INTEGER, branch TEXT, slot INTEGER, cents INTEGER), return id, branch and a running_cents sum within each branch, ordered by slot then id. Use an explicit ROWS frame from the beginning through the current row. Display by branch, slot, id. All fields are non-NULL, id is unique, and negative cents are allowed.",
+  "goal": "Use SUM() OVER with ROWS frame or an equivalent approach demonstrating the same premise.",
+  "hint": "Partition by branch, break slot ties with id, and explicitly bound the ROWS frame.",
+  "category": "aggregation",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Tied slots and branches",
+      "setup": "CREATE TABLE ledger(id INTEGER,branch TEXT,slot INTEGER,cents INTEGER);INSERT INTO ledger VALUES(3,'West',1,50),(2,'East',1,-20),(1,'East',1,100),(4,'East',2,5);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "branch",
+            "running_cents"
+          ],
+          "values": [
+            [
+              1,
+              "East",
+              100
+            ],
+            [
+              2,
+              "East",
+              80
+            ],
+            [
+              4,
+              "East",
+              85
+            ],
+            [
+              3,
+              "West",
+              50
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Zero",
+      "setup": "CREATE TABLE ledger(id INTEGER,branch TEXT,slot INTEGER,cents INTEGER);INSERT INTO ledger VALUES(1,'East',1,0),(2,'East',2,0);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "branch",
+            "running_cents"
+          ],
+          "values": [
+            [
+              1,
+              "East",
+              0
+            ],
+            [
+              2,
+              "East",
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE ledger(id INTEGER,branch TEXT,slot INTEGER,cents INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "branch",
+            "running_cents"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

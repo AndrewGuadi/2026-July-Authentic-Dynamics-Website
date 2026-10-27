@@ -1,0 +1,68 @@
+{
+  "language": "python",
+  "date": "2026-11-09",
+  "method": "collections.Counter",
+  "summary": "Counter counts hashable items into a dictionary-like collection.",
+  "syntax": "Counter(iterable)",
+  "documentation": "Counter counts hashable items into a dictionary-like collection. Counts can be read by item, and constructing it from an iterable counts each occurrence. Missing keys read as zero without inserting them.",
+  "inputs": "An iterable of hashable values, or a mapping of counts.",
+  "returns": "A Counter mapping items to counts.",
+  "caution": "Construction from a mapping treats values as counts. This task supplies a list, and keys must be hashable.",
+  "docs_url": "https://docs.python.org/3.12/library/collections.html#collections.Counter",
+  "docs_source": "Python",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Summarize item-name frequencies in an order list.",
+    "Count response categories in a survey export.",
+    "Build a distribution of status labels from a local log."
+  ],
+  "title": "Count request categories",
+  "problem": "Input is a list of category strings. Return a plain dictionary mapping each distinct exact string to its frequency. Treat case differences and an empty string as distinct categories.",
+  "goal": "Use collections.Counter or an equivalent approach demonstrating the same premise.",
+  "hint": "Import Counter from collections, then convert its result to dict.",
+  "category": "objects",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Repeated",
+      "input": [
+        "repair",
+        "quote",
+        "repair"
+      ],
+      "expected": {
+        "repair": 2,
+        "quote": 1
+      }
+    },
+    {
+      "name": "Case",
+      "input": [
+        "A",
+        "a",
+        "A"
+      ],
+      "expected": {
+        "A": 2,
+        "a": 1
+      }
+    },
+    {
+      "name": "Empty list",
+      "input": [],
+      "expected": {}
+    },
+    {
+      "name": "Empty labels",
+      "input": [
+        "",
+        ""
+      ],
+      "expected": {
+        "": 2
+      }
+    }
+  ]
+}

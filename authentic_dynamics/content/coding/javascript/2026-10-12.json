@@ -1,0 +1,64 @@
+{
+  "language": "javascript",
+  "date": "2026-10-12",
+  "method": "Number.isInteger()",
+  "summary": "Number.isInteger checks whether a value is a Number with no fractional part.",
+  "syntax": "Number.isInteger(value)",
+  "documentation": "Number.isInteger checks whether a value is a Number with no fractional part. It does not convert strings or Booleans to numbers. Nonfinite values are rejected.",
+  "inputs": "One value of any type.",
+  "returns": "A Boolean indicating an integer Number.",
+  "caution": "Large Numbers may have already lost precision. Use Number.isSafeInteger when exact integer representation matters.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isInteger",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Reject fractional item counts in an order form.",
+    "Check whole-seat reservations before applying capacity rules.",
+    "Validate an imported quantity without accepting numeric-looking text."
+  ],
+  "title": "Validate a whole-number quantity",
+  "problem": "Return true only when the input is a nonnegative integer Number. Do not accept numeric strings, null or Booleans. Inputs are JSON values with numbers inside the safe-integer range.",
+  "goal": "Use Number.isInteger() or an equivalent approach demonstrating the same premise.",
+  "hint": "Combine the integer type check with a nonnegative comparison.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Whole",
+      "input": 4,
+      "expected": true
+    },
+    {
+      "name": "Zero",
+      "input": 0,
+      "expected": true
+    },
+    {
+      "name": "Fraction",
+      "input": 2.5,
+      "expected": false
+    },
+    {
+      "name": "Negative",
+      "input": -1,
+      "expected": false
+    },
+    {
+      "name": "Text",
+      "input": "4",
+      "expected": false
+    },
+    {
+      "name": "Boolean",
+      "input": true,
+      "expected": false
+    },
+    {
+      "name": "Null",
+      "input": null,
+      "expected": false
+    }
+  ]
+}

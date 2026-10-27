@@ -1,0 +1,49 @@
+{
+  "language": "python",
+  "date": "2026-10-12",
+  "method": "int()",
+  "summary": "int converts a valid integer string to a whole number in a specified base.",
+  "syntax": "int(text, base=10)",
+  "documentation": "int converts a valid integer string to a whole number in a specified base. A sign and surrounding whitespace are accepted. Decimal-point text is not a valid base-10 integer string.",
+  "inputs": "An integer string and optional base.",
+  "returns": "An integer value.",
+  "caution": "Invalid text raises ValueError. Converting a float instead truncates toward zero; that is a different operation.",
+  "docs_url": "https://docs.python.org/3.12/library/functions.html#int",
+  "docs_source": "Python",
+  "reviewed": "2026-10-27",
+  "scenarios": [
+    "Convert validated quantity text from a CSV export.",
+    "Read a signed integer adjustment from a settings field.",
+    "Turn a textual page number into an integer before range checking."
+  ],
+  "title": "Parse a signed quantity",
+  "problem": "Input is a valid base-10 integer string with optional surrounding ASCII whitespace and a leading + or - sign. Return its integer value, discarding leading zeroes. No decimal points, separators or exponents are supplied.",
+  "goal": "Use int() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use base 10 explicitly.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Leading zeroes",
+      "input": "007",
+      "expected": 7
+    },
+    {
+      "name": "Negative",
+      "input": " -12 ",
+      "expected": -12
+    },
+    {
+      "name": "Plus",
+      "input": "+5",
+      "expected": 5
+    },
+    {
+      "name": "Zero",
+      "input": "000",
+      "expected": 0
+    }
+  ]
+}
