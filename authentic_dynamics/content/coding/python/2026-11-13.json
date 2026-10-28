@@ -1,0 +1,82 @@
+{
+  "language": "python",
+  "date": "2026-11-13",
+  "method": "operator.itemgetter()",
+  "summary": "itemgetter creates a callable that retrieves items using indexing.",
+  "syntax": "itemgetter(key1, key2, ...)(record)",
+  "documentation": "itemgetter creates a callable that retrieves items using indexing. With multiple requested keys it returns a tuple, making it useful as a compound sorting key. Dictionaries and sequences can both be indexed.",
+  "inputs": "One or more keys or indices.",
+  "returns": "A callable yielding one item or a tuple of items.",
+  "caution": "A missing dictionary key raises KeyError. Specify complete records and deterministic tie behavior for the intended sort.",
+  "docs_url": "https://docs.python.org/3.12/library/operator.html#operator.itemgetter",
+  "docs_source": "Python",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Sort job records by priority and a unique ticket number.",
+    "Order imported rows by several documented columns.",
+    "Extract a fixed combination of fields for comparison."
+  ],
+  "title": "Order work tickets",
+  "problem": "Input is a list of objects with integer priority and unique integer id, plus any extra fields. Return all objects sorted by priority ascending, then id ascending. Preserve every field.",
+  "goal": "Use operator.itemgetter() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use itemgetter(\"priority\", \"id\") as the key to sorted.",
+  "category": "objects",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Tie breaker",
+      "input": [
+        {
+          "id": 3,
+          "priority": 2
+        },
+        {
+          "id": 2,
+          "priority": 1
+        },
+        {
+          "id": 1,
+          "priority": 1
+        }
+      ],
+      "expected": [
+        {
+          "id": 1,
+          "priority": 1
+        },
+        {
+          "id": 2,
+          "priority": 1
+        },
+        {
+          "id": 3,
+          "priority": 2
+        }
+      ]
+    },
+    {
+      "name": "Extra fields",
+      "input": [
+        {
+          "id": 4,
+          "priority": 0,
+          "note": null
+        }
+      ],
+      "expected": [
+        {
+          "id": 4,
+          "priority": 0,
+          "note": null
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

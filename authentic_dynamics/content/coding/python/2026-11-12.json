@@ -1,0 +1,70 @@
+{
+  "language": "python",
+  "date": "2026-11-12",
+  "method": "statistics.median()",
+  "summary": "median returns the middle value of ordered data.",
+  "syntax": "statistics.median(data)",
+  "documentation": "median returns the middle value of ordered data. For an even number of items it returns the mean of the two middle values. It can accept unsorted input and does not require the caller to sort in place.",
+  "inputs": "An iterable of numeric data.",
+  "returns": "The middle value or mean of the middle pair.",
+  "caution": "Empty data raises StatisticsError. Decide on an empty-input policy separately, and exclude nonfinite values when a meaningful order is required.",
+  "docs_url": "https://docs.python.org/3.12/library/statistics.html#statistics.median",
+  "docs_source": "Python",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Summarize typical service durations without choosing the largest outlier.",
+    "Report a middle transaction amount from a small sample.",
+    "Compare median wait times between appointment groups."
+  ],
+  "title": "Find a typical service time",
+  "problem": "Input is a list of finite integer minute values. Return its median, or None for an empty list. For an even list, average the two middle values, including a fractional result when necessary.",
+  "goal": "Use statistics.median() or an equivalent approach demonstrating the same premise.",
+  "hint": "Handle an empty list before calling statistics.median.",
+  "category": "numbers",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Unsorted odd",
+      "input": [
+        90,
+        10,
+        20
+      ],
+      "expected": 20
+    },
+    {
+      "name": "Even",
+      "input": [
+        1,
+        2,
+        9,
+        10
+      ],
+      "expected": 5.5
+    },
+    {
+      "name": "One",
+      "input": [
+        0
+      ],
+      "expected": 0
+    },
+    {
+      "name": "Repeated",
+      "input": [
+        3,
+        3,
+        3,
+        100
+      ],
+      "expected": 3
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": null
+    }
+  ]
+}

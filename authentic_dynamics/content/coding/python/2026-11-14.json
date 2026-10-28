@@ -1,0 +1,93 @@
+{
+  "language": "python",
+  "date": "2026-11-14",
+  "method": "collections.defaultdict",
+  "summary": "defaultdict calls its default factory when indexing a missing key, inserts that new value and returns it.",
+  "syntax": "defaultdict(list)",
+  "documentation": "defaultdict calls its default factory when indexing a missing key, inserts that new value and returns it. A list factory creates a separate list for each new key, which supports straightforward grouping.",
+  "inputs": "A callable default factory and optional initial data.",
+  "returns": "A dictionary subclass with factory-backed missing-key indexing.",
+  "caution": "get does not trigger the factory. Pass the callable list, not an already-created shared list instance.",
+  "docs_url": "https://docs.python.org/3.12/library/collections.html#collections.defaultdict",
+  "docs_source": "Python",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Group appointment IDs by branch.",
+    "Collect filenames under their export category.",
+    "Organize product IDs by supplier while retaining row order."
+  ],
+  "title": "Group appointments by branch",
+  "problem": "Input is an array of [branchString, integerAppointmentId] pairs. Return a plain dictionary mapping each branch to its list of IDs in input order. Keep repeated IDs. Empty input yields an empty dictionary.",
+  "goal": "Use collections.defaultdict or an equivalent approach demonstrating the same premise.",
+  "hint": "Use defaultdict(list), append each ID, then convert the result to dict.",
+  "category": "objects",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Groups",
+      "input": [
+        [
+          "East",
+          3
+        ],
+        [
+          "West",
+          1
+        ],
+        [
+          "East",
+          2
+        ]
+      ],
+      "expected": {
+        "East": [
+          3,
+          2
+        ],
+        "West": [
+          1
+        ]
+      }
+    },
+    {
+      "name": "Repeated IDs",
+      "input": [
+        [
+          "East",
+          1
+        ],
+        [
+          "East",
+          1
+        ]
+      ],
+      "expected": {
+        "East": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": {}
+    },
+    {
+      "name": "Empty branch",
+      "input": [
+        [
+          "",
+          0
+        ]
+      ],
+      "expected": {
+        "": [
+          0
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "language": "javascript",
+  "date": "2026-10-10",
+  "method": "Math.trunc()",
+  "summary": "trunc removes a number’s fractional portion, moving toward zero.",
+  "syntax": "Math.trunc(number)",
+  "documentation": "trunc removes a number’s fractional portion, moving toward zero. This differs from floor for negative values and from rounding to the nearest integer.",
+  "inputs": "A numeric expression.",
+  "returns": "Its integer part, represented as a Number.",
+  "caution": "Bitwise integer conversions can overflow at 32 bits and are not equivalent. JSON represents negative zero as ordinary zero.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/trunc",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Display only completed whole units from a measured quantity.",
+    "Strip fractional parts from a temporary numeric preview.",
+    "Compare signed integer portions of imported measurements."
+  ],
+  "title": "Keep the signed whole portion",
+  "problem": "Input is a finite number inside the safe-integer range. Return its whole portion by discarding the fractional part toward zero. Treat a result of negative zero as JSON zero.",
+  "goal": "Use Math.trunc() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use trunc, not floor: -3.8 should become -3.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Positive",
+      "input": 3.8,
+      "expected": 3
+    },
+    {
+      "name": "Negative",
+      "input": -3.8,
+      "expected": -3
+    },
+    {
+      "name": "Small negative",
+      "input": -0.5,
+      "expected": 0
+    },
+    {
+      "name": "Whole",
+      "input": 9,
+      "expected": 9
+    },
+    {
+      "name": "Beyond bitwise",
+      "input": 4294967296.75,
+      "expected": 4294967296
+    }
+  ]
+}

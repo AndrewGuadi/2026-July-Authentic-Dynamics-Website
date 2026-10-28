@@ -1,0 +1,54 @@
+{
+  "language": "python",
+  "date": "2026-10-10",
+  "method": "str.removeprefix()",
+  "summary": "removeprefix removes one exact matching prefix and otherwise returns the original text.",
+  "syntax": "text.removeprefix(prefix)",
+  "documentation": "removeprefix removes one exact matching prefix and otherwise returns the original text. Unlike lstrip, it treats the argument as a whole substring rather than a set of removable characters.",
+  "inputs": "One literal prefix string.",
+  "returns": "A string with at most one matching prefix removed.",
+  "caution": "Matching is case-sensitive. Repeated prefixes are not all removed automatically.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.removeprefix",
+  "docs_source": "Python",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Remove a known export namespace from internal record IDs.",
+    "Strip a documented command marker from a local input.",
+    "Display a short invoice reference without its stored prefix."
+  ],
+  "title": "Remove one invoice marker",
+  "problem": "Input is a string. Remove one exact INV- prefix from its beginning, if present. Preserve case, all other characters and any second prefix.",
+  "goal": "Use str.removeprefix() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use removeprefix, not lstrip with the same characters.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Present",
+      "input": "INV-42",
+      "expected": "42"
+    },
+    {
+      "name": "Repeated",
+      "input": "INV-INV-42",
+      "expected": "INV-42"
+    },
+    {
+      "name": "Not a prefix",
+      "input": "XINV-42",
+      "expected": "XINV-42"
+    },
+    {
+      "name": "Case",
+      "input": "inv-42",
+      "expected": "inv-42"
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": ""
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "language": "javascript",
+  "date": "2026-11-14",
+  "method": "Set",
+  "summary": "Set keeps unique values and iterates in insertion order.",
+  "syntax": "new Set(iterable)",
+  "documentation": "Set keeps unique values and iterates in insertion order. For strings it distinguishes case; repeated occurrences do not create extra entries. Objects are compared by identity, not by their field contents.",
+  "inputs": "An iterable of values.",
+  "returns": "A Set of unique values.",
+  "caution": "Convert a Set to an array before returning JSON. Object deduplication needs an explicit key policy if equal-looking objects should count as duplicates.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Combine tag lists while retaining the first-seen order.",
+    "Remove repeated staff identifiers from a local selection.",
+    "Track unique category names encountered during an import."
+  ],
+  "title": "Merge unique tag lists",
+  "problem": "Input has first and second arrays of strings. Return a single array of unique tags, scanning first before second. Preserve first occurrence order, case and empty strings.",
+  "goal": "Use Set or an equivalent approach demonstrating the same premise.",
+  "hint": "Concatenate both lists, construct a Set, then materialize an array.",
+  "category": "arrays",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Overlap",
+      "input": {
+        "first": [
+          "a",
+          "b"
+        ],
+        "second": [
+          "b",
+          "c"
+        ]
+      },
+      "expected": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    {
+      "name": "Case",
+      "input": {
+        "first": [
+          "A",
+          "a"
+        ],
+        "second": [
+          "A"
+        ]
+      },
+      "expected": [
+        "A",
+        "a"
+      ]
+    },
+    {
+      "name": "Empty lists",
+      "input": {
+        "first": [],
+        "second": []
+      },
+      "expected": []
+    },
+    {
+      "name": "Empty tag",
+      "input": {
+        "first": [
+          "",
+          "x",
+          ""
+        ],
+        "second": [
+          ""
+        ]
+      },
+      "expected": [
+        "",
+        "x"
+      ]
+    }
+  ]
+}

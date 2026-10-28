@@ -1,0 +1,69 @@
+{
+  "language": "javascript",
+  "date": "2026-10-09",
+  "method": "Array.isArray()",
+  "summary": "Array.isArray determines whether a value is an actual array.",
+  "syntax": "Array.isArray(value)",
+  "documentation": "Array.isArray determines whether a value is an actual array. It distinguishes arrays from ordinary objects, null and strings without relying on typeof, which reports arrays as objects.",
+  "inputs": "Any value.",
+  "returns": "A Boolean indicating array membership.",
+  "caution": "An object with a length property is not necessarily an array. This check does not validate the types of array elements.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Validate that an imported JSON field contains a list.",
+    "Choose a list renderer only for actual array data.",
+    "Reject malformed batch input before iterating over it."
+  ],
+  "title": "Accept only list-shaped data",
+  "problem": "Return true when the input is a JSON array, including an empty array. Return false for objects, strings, numbers, Booleans and null.",
+  "goal": "Use Array.isArray() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use Array.isArray rather than typeof or a length-property check.",
+  "category": "arrays",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "List",
+      "input": [
+        1,
+        2
+      ],
+      "expected": true
+    },
+    {
+      "name": "Empty list",
+      "input": [],
+      "expected": true
+    },
+    {
+      "name": "Array-like",
+      "input": {
+        "length": 2
+      },
+      "expected": false
+    },
+    {
+      "name": "Text",
+      "input": "abc",
+      "expected": false
+    },
+    {
+      "name": "Null",
+      "input": null,
+      "expected": false
+    },
+    {
+      "name": "Number",
+      "input": 2,
+      "expected": false
+    },
+    {
+      "name": "Boolean",
+      "input": false,
+      "expected": false
+    }
+  ]
+}
