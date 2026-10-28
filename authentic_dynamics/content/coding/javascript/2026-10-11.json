@@ -1,0 +1,49 @@
+{
+  "language": "javascript",
+  "date": "2026-10-11",
+  "method": "String.toUpperCase()",
+  "summary": "toUpperCase returns a new string using Unicode uppercase mappings.",
+  "syntax": "text.toUpperCase()",
+  "documentation": "toUpperCase returns a new string using Unicode uppercase mappings. It does not change the original string, trim spaces or validate the resulting text. Some mappings change the string’s length.",
+  "inputs": "The string receiver; no arguments.",
+  "returns": "An uppercase string.",
+  "caution": "Case conversion is not a universal identity comparison. Locale-sensitive rules can differ, and output length may increase.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toUpperCase",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Display standardized promotion codes.",
+    "Prepare uppercase headings in a local export.",
+    "Normalize case for a documented ASCII-only internal code."
+  ],
+  "title": "Display an uppercase label",
+  "problem": "Input is a string. Return its uppercase form without removing spaces or punctuation. Use JavaScript’s normal Unicode mapping, so straße becomes STRASSE.",
+  "goal": "Use String.toUpperCase() or an equivalent approach demonstrating the same premise.",
+  "hint": "Call toUpperCase on the input string.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "ASCII",
+      "input": "pickup",
+      "expected": "PICKUP"
+    },
+    {
+      "name": "Spacing",
+      "input": " a-b ",
+      "expected": " A-B "
+    },
+    {
+      "name": "Expanding mapping",
+      "input": "straße",
+      "expected": "STRASSE"
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": ""
+    }
+  ]
+}

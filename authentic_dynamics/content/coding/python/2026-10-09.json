@@ -1,0 +1,59 @@
+{
+  "language": "python",
+  "date": "2026-10-09",
+  "method": "str.isdecimal()",
+  "summary": "isdecimal returns True only for a nonempty string consisting entirely of Unicode decimal digits.",
+  "syntax": "text.isdecimal()",
+  "documentation": "isdecimal returns True only for a nonempty string consisting entirely of Unicode decimal digits. Signs, decimal points and whitespace are not decimal-digit characters.",
+  "inputs": "The string receiver; no arguments.",
+  "returns": "A Boolean.",
+  "caution": "Unicode decimal digits include more than ASCII 0–9. Use a different explicit rule when an external format requires ASCII only.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.isdecimal",
+  "docs_source": "Python",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Check whether a supplied label contains decimal digits only.",
+    "Recognize Unicode decimal text before a separate conversion step.",
+    "Separate digit-only reference values from references with signs or letters."
+  ],
+  "title": "Recognize decimal-digit text",
+  "problem": "Input is a string. Return True exactly when Python isdecimal returns True. Accept Unicode decimal digits, but reject an empty string, signs, spaces, decimal points and superscript digits.",
+  "goal": "Use str.isdecimal() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use isdecimal; isdigit accepts some extra digit characters.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "ASCII",
+      "input": "012",
+      "expected": true
+    },
+    {
+      "name": "Arabic digits",
+      "input": "١٢",
+      "expected": true
+    },
+    {
+      "name": "Superscript",
+      "input": "²",
+      "expected": false
+    },
+    {
+      "name": "Sign",
+      "input": "-2",
+      "expected": false
+    },
+    {
+      "name": "Padding",
+      "input": " 2",
+      "expected": false
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": false
+    }
+  ]
+}

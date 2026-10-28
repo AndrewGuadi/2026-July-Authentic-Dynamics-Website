@@ -1,0 +1,86 @@
+{
+  "language": "sql",
+  "date": "2026-10-11",
+  "method": "CAST(... AS INTEGER)",
+  "summary": "CAST explicitly converts an expression to a named SQLite storage type.",
+  "syntax": "CAST(expression AS INTEGER)",
+  "documentation": "CAST explicitly converts an expression to a named SQLite storage type. Converting integer text to INTEGER removes textual formatting such as leading zeroes. NULL remains NULL.",
+  "inputs": "An expression and target type name.",
+  "returns": "A converted value.",
+  "caution": "SQLite conversions are permissive: invalid or partly numeric text can yield a numeric result instead of an error. CAST is not input validation.",
+  "docs_url": "https://www.sqlite.org/lang_expr.html#cast_expressions",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Convert already validated integer text for a numeric report.",
+    "Normalize numeric export fields before comparing totals.",
+    "Make a conversion explicit instead of relying on column affinity."
+  ],
+  "title": "Convert validated count text",
+  "problem": "From imports(id INTEGER, count_text TEXT), return id and CAST(count_text AS INTEGER) as quantity, ordered by id. Non-NULL values are valid signed base-10 integer strings within the signed 32-bit range, possibly padded with spaces or zeroes. NULL remains NULL.",
+  "goal": "Use CAST(... AS INTEGER) or an equivalent approach demonstrating the same premise.",
+  "hint": "Convert only after the problem’s stated validation assumption.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Padded signed text",
+      "setup": "CREATE TABLE imports(id INTEGER,count_text TEXT);INSERT INTO imports VALUES(1,'007'),(2,' -05 ');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "quantity"
+          ],
+          "values": [
+            [
+              1,
+              7
+            ],
+            [
+              2,
+              -5
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Zero and null",
+      "setup": "CREATE TABLE imports(id INTEGER,count_text TEXT);INSERT INTO imports VALUES(1,'000'),(2,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "quantity"
+          ],
+          "values": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE imports(id INTEGER,count_text TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "quantity"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

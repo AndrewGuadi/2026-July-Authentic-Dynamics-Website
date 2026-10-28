@@ -1,0 +1,73 @@
+{
+  "language": "sql",
+  "date": "2026-11-14",
+  "method": "INTERSECT",
+  "summary": "INTERSECT returns distinct rows present in both SELECT results.",
+  "syntax": "SELECT column FROM first_source INTERSECT SELECT column FROM second_source",
+  "documentation": "INTERSECT returns distinct rows present in both SELECT results. Compatible branches must produce the same number of columns. A final ORDER BY controls display of the common rows.",
+  "inputs": "Two compatible SELECT result sets.",
+  "returns": "Their distinct common rows.",
+  "caution": "Repeated source rows appear once. Compound-query duplicate comparison treats NULLs as equal; tests here use non-NULL text.",
+  "docs_url": "https://www.sqlite.org/lang_select.html#compound_select_statements",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Find products offered by two selected suppliers.",
+    "Identify staff IDs present on two required training lists.",
+    "Compare shared customer identifiers across two local exports."
+  ],
+  "title": "Find shared supplier products",
+  "problem": "Tables supplier_a(sku TEXT) and supplier_b(sku TEXT) contain non-NULL ASCII SKU strings. Return one sku column with distinct values found in both tables, ordered by SQLite’s default binary text order. Keep case differences distinct.",
+  "goal": "Use INTERSECT or an equivalent approach demonstrating the same premise.",
+  "hint": "Intersect the two single-column selections and add a final ORDER BY.",
+  "category": "querying",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Duplicates",
+      "setup": "CREATE TABLE supplier_a(sku TEXT); CREATE TABLE supplier_b(sku TEXT);INSERT INTO supplier_a VALUES('B'),('A'),('A'); INSERT INTO supplier_b VALUES('A'),('A'),('C');",
+      "expected": [
+        {
+          "columns": [
+            "sku"
+          ],
+          "values": [
+            [
+              "A"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Case",
+      "setup": "CREATE TABLE supplier_a(sku TEXT); CREATE TABLE supplier_b(sku TEXT);INSERT INTO supplier_a VALUES('A'),('a'); INSERT INTO supplier_b VALUES('a');",
+      "expected": [
+        {
+          "columns": [
+            "sku"
+          ],
+          "values": [
+            [
+              "a"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No intersection",
+      "setup": "CREATE TABLE supplier_a(sku TEXT); CREATE TABLE supplier_b(sku TEXT);INSERT INTO supplier_a VALUES('X');",
+      "expected": [
+        {
+          "columns": [
+            "sku"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

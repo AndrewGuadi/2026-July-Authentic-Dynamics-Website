@@ -1,0 +1,86 @@
+{
+  "language": "sql",
+  "date": "2026-10-10",
+  "method": "replace()",
+  "summary": "SQLite replace substitutes every occurrence of a literal search string.",
+  "syntax": "replace(text, search, replacement)",
+  "documentation": "SQLite replace substitutes every occurrence of a literal search string. It uses binary matching for the search rather than case-insensitive pattern matching. An empty search leaves the input unchanged.",
+  "inputs": "Text, literal search text and replacement text.",
+  "returns": "A replacement string, or NULL when an argument is NULL.",
+  "caution": "This is not a regular-expression operation or HTML sanitization. Replacing a marker does not validate the resulting content.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#replace",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Update repeated literal placeholders in an exported label.",
+    "Change a known delimiter in a report field.",
+    "Replace an obsolete internal category marker in a local view."
+  ],
+  "title": "Fill a repeated branch marker",
+  "problem": "From notes(id INTEGER, body TEXT), return id and replace(body, '{branch}', 'East') as rendered, ordered by id. Replace all exact lowercase markers. Preserve NULL and differently cased text.",
+  "goal": "Use replace() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use a literal marker as the search string.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Repeated",
+      "setup": "CREATE TABLE notes(id INTEGER,body TEXT);INSERT INTO notes VALUES(1,'{branch} / {branch}');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "rendered"
+          ],
+          "values": [
+            [
+              1,
+              "East / East"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Case and null",
+      "setup": "CREATE TABLE notes(id INTEGER,body TEXT);INSERT INTO notes VALUES(1,'{Branch}'),(2,NULL),(3,'');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "rendered"
+          ],
+          "values": [
+            [
+              1,
+              "{Branch}"
+            ],
+            [
+              2,
+              null
+            ],
+            [
+              3,
+              ""
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE notes(id INTEGER,body TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "rendered"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "language": "sql",
+  "date": "2026-10-09",
+  "method": "instr()",
+  "summary": "instr returns the one-based position of the first matching substring, or zero if it is absent.",
+  "syntax": "instr(text, substring)",
+  "documentation": "instr returns the one-based position of the first matching substring, or zero if it is absent. Text matching is literal; NULL arguments produce NULL.",
+  "inputs": "A text value and a literal search substring.",
+  "returns": "A one-based integer position, zero, or NULL.",
+  "caution": "SQLite positions differ from JavaScript indexOf: the first position is 1, and the missing marker is 0 rather than -1.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#instr",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Locate a separator in an imported reference.",
+    "Find the first literal token in a report field.",
+    "Check whether a documented marker appears before extracting text."
+  ],
+  "title": "Locate a stored separator",
+  "problem": "From records(id INTEGER, label TEXT), return id and instr(label, ':') as position, ordered by id. Preserve NULL for a NULL label; return zero when no colon exists.",
+  "goal": "Use instr() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use instr and its one-based convention.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Positions",
+      "setup": "CREATE TABLE records(id INTEGER,label TEXT);INSERT INTO records VALUES(1,'A:2'),(2,':3'),(3,'x:y:z');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "position"
+          ],
+          "values": [
+            [
+              1,
+              2
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Absent and null",
+      "setup": "CREATE TABLE records(id INTEGER,label TEXT);INSERT INTO records VALUES(1,''),(2,'abc'),(3,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "position"
+          ],
+          "values": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE records(id INTEGER,label TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "position"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

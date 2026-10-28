@@ -1,0 +1,116 @@
+{
+  "language": "javascript",
+  "date": "2026-11-12",
+  "method": "Array.toSpliced()",
+  "summary": "toSpliced creates a new array with a range removed or replaced.",
+  "syntax": "items.toSpliced(start, deleteCount, ...insertions)",
+  "documentation": "toSpliced creates a new array with a range removed or replaced. It leaves its receiver unchanged and returns the whole revised array, unlike splice, which mutates and returns removed items.",
+  "inputs": "A start position, deletion count and replacement items.",
+  "returns": "A new array containing the revised sequence.",
+  "caution": "This requires a modern engine. A copy is shallow; nested objects are still shared references.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/toSpliced",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Preview a route adjustment before saving its original itinerary.",
+    "Insert new shift slots into a proposed schedule.",
+    "Replace several cart rows in an immutable editing state."
+  ],
+  "title": "Preview a schedule edit",
+  "problem": "Input has items, start, deleteCount and insertions arrays/integers. start is between 0 and items.length; deleteCount is nonnegative. Return {original: unchangedItems, updated: revisedItems}, removing up to deleteCount items at start and inserting every element from insertions there.",
+  "goal": "Use Array.toSpliced() or an equivalent approach demonstrating the same premise.",
+  "hint": "Spread insertions into toSpliced and retain the original array.",
+  "category": "arrays",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Replace",
+      "input": {
+        "items": [
+          "a",
+          "b",
+          "c"
+        ],
+        "start": 1,
+        "deleteCount": 1,
+        "insertions": [
+          "x",
+          "y"
+        ]
+      },
+      "expected": {
+        "original": [
+          "a",
+          "b",
+          "c"
+        ],
+        "updated": [
+          "a",
+          "x",
+          "y",
+          "c"
+        ]
+      }
+    },
+    {
+      "name": "Append",
+      "input": {
+        "items": [
+          1
+        ],
+        "start": 1,
+        "deleteCount": 0,
+        "insertions": [
+          2
+        ]
+      },
+      "expected": {
+        "original": [
+          1
+        ],
+        "updated": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "name": "Delete past end",
+      "input": {
+        "items": [
+          1,
+          2
+        ],
+        "start": 0,
+        "deleteCount": 9,
+        "insertions": []
+      },
+      "expected": {
+        "original": [
+          1,
+          2
+        ],
+        "updated": []
+      }
+    },
+    {
+      "name": "Empty",
+      "input": {
+        "items": [],
+        "start": 0,
+        "deleteCount": 0,
+        "insertions": [
+          0
+        ]
+      },
+      "expected": {
+        "original": [],
+        "updated": [
+          0
+        ]
+      }
+    }
+  ]
+}

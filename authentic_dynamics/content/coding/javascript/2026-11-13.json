@@ -1,0 +1,103 @@
+{
+  "language": "javascript",
+  "date": "2026-11-13",
+  "method": "Map.get() and Map.set()",
+  "summary": "Map stores key/value pairs and iterates in first-insertion order.",
+  "syntax": "map.set(key, value); map.get(key)",
+  "documentation": "Map stores key/value pairs and iterates in first-insertion order. Updating a key changes its value without moving its position. Unlike ordinary object property lookup, keys do not collide with inherited method names.",
+  "inputs": "Keys and values of any supported JavaScript types.",
+  "returns": "set returns the Map; get returns its value or undefined when absent.",
+  "caution": "Map is not directly represented by JSON.stringify as entries. Convert the final entries to an array for a JSON result.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Accumulate sales by category while preserving arrival order.",
+    "Index product details without accidental prototype-property collisions.",
+    "Build an ordered lookup for imported status labels."
+  ],
+  "title": "Total categories in arrival order",
+  "problem": "Input is an array of [categoryString, integerCents] pairs. Return [categoryString, summedCents] pairs in first-seen category order. Include categories with a zero total and accept negative adjustments. Names such as __proto__ are ordinary categories.",
+  "goal": "Use Map.get() and Map.set() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use a Map, add to each existing total, then return its entries as an array.",
+  "category": "objects",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Repeated",
+      "input": [
+        [
+          "tea",
+          100
+        ],
+        [
+          "soap",
+          50
+        ],
+        [
+          "tea",
+          -20
+        ]
+      ],
+      "expected": [
+        [
+          "tea",
+          80
+        ],
+        [
+          "soap",
+          50
+        ]
+      ]
+    },
+    {
+      "name": "Zero total",
+      "input": [
+        [
+          "x",
+          3
+        ],
+        [
+          "x",
+          -3
+        ]
+      ],
+      "expected": [
+        [
+          "x",
+          0
+        ]
+      ]
+    },
+    {
+      "name": "Special names",
+      "input": [
+        [
+          "__proto__",
+          5
+        ],
+        [
+          "toString",
+          2
+        ]
+      ],
+      "expected": [
+        [
+          "__proto__",
+          5
+        ],
+        [
+          "toString",
+          2
+        ]
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

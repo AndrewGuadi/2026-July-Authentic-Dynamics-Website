@@ -1,0 +1,54 @@
+{
+  "language": "python",
+  "date": "2026-10-11",
+  "method": "math.ceil()",
+  "summary": "ceil returns the smallest integer that is greater than or equal to its argument.",
+  "syntax": "math.ceil(number)",
+  "documentation": "ceil returns the smallest integer that is greater than or equal to its argument. For Python floats its result is an integer, including when the input already represents a whole number.",
+  "inputs": "A real number or an object implementing the ceiling protocol.",
+  "returns": "An integer ceiling.",
+  "caution": "For negative inputs, ceiling moves toward positive infinity. It is not truncation or rounding away from zero.",
+  "docs_url": "https://docs.python.org/3.12/library/math.html#math.ceil",
+  "docs_source": "Python",
+  "reviewed": "2026-10-28",
+  "scenarios": [
+    "Determine whole resource units for a positive estimate.",
+    "Convert a fractional page count into a required page count.",
+    "Apply an explicitly upward rounding rule to a planning estimate."
+  ],
+  "title": "Round a planning value upward",
+  "problem": "Input is a finite number. Return its mathematical ceiling as an integer. In particular, -2.7 becomes -2, not -3. Tests use exactly or unambiguously represented values.",
+  "goal": "Use math.ceil() or an equivalent approach demonstrating the same premise.",
+  "hint": "Import math and use ceil.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Positive",
+      "input": 2.7,
+      "expected": 3
+    },
+    {
+      "name": "Negative",
+      "input": -2.7,
+      "expected": -2
+    },
+    {
+      "name": "Whole",
+      "input": 4,
+      "expected": 4
+    },
+    {
+      "name": "Zero",
+      "input": 0,
+      "expected": 0
+    },
+    {
+      "name": "Small negative",
+      "input": -0.5,
+      "expected": 0
+    }
+  ]
+}
