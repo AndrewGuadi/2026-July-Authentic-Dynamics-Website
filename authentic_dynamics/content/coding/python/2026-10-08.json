@@ -1,0 +1,54 @@
+{
+  "language": "python",
+  "date": "2026-10-08",
+  "method": "math.floor()",
+  "summary": "floor returns the greatest integer less than or equal to a real value.",
+  "syntax": "math.floor(number)",
+  "documentation": "floor returns the greatest integer less than or equal to a real value. It moves toward negative infinity, which differs from truncation toward zero for negative numbers.",
+  "inputs": "A real number or an object implementing the floor protocol.",
+  "returns": "An integer floor.",
+  "caution": "int(float_value) truncates rather than floors. Do not substitute it when negative inputs are meaningful.",
+  "docs_url": "https://docs.python.org/3.12/library/math.html#math.floor",
+  "docs_source": "Python",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Find the lower integer boundary of a measurement interval.",
+    "Assign a signed position to a unit-width numeric bin.",
+    "Compute completed units under an explicitly downward rounding rule."
+  ],
+  "title": "Find the lower integer boundary",
+  "problem": "Input is a finite number. Return its mathematical floor. In particular, -2.3 becomes -3. Tests avoid ambiguous floating-point boundaries.",
+  "goal": "Use math.floor() or an equivalent approach demonstrating the same premise.",
+  "hint": "Import math and call floor, rather than int.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Positive",
+      "input": 2.3,
+      "expected": 2
+    },
+    {
+      "name": "Negative",
+      "input": -2.3,
+      "expected": -3
+    },
+    {
+      "name": "Whole",
+      "input": 4,
+      "expected": 4
+    },
+    {
+      "name": "Zero",
+      "input": 0,
+      "expected": 0
+    },
+    {
+      "name": "Small negative",
+      "input": -0.2,
+      "expected": -1
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "language": "javascript",
+  "date": "2026-11-15",
+  "method": "JSON.parse()",
+  "summary": "JSON.parse converts valid JSON text into JavaScript values.",
+  "syntax": "JSON.parse(text)",
+  "documentation": "JSON.parse converts valid JSON text into JavaScript values. JSON supports objects, arrays, strings, numbers, Booleans and null. Invalid JSON raises SyntaxError instead of returning a partial result.",
+  "inputs": "JSON text and an optional reviver callback.",
+  "returns": "The JavaScript value represented by the text.",
+  "caution": "Parsing does not validate application structure or make later object merges safe. Never use eval to parse JSON.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Read a saved local configuration snapshot.",
+    "Decode a downloaded JSON report before validating its fields.",
+    "Restore structured settings stored as text."
+  ],
+  "title": "Decode a saved JSON value",
+  "problem": "Input is a valid JSON string representing any JSON value. Return the parsed value. Numbers are finite and within the safe-integer range when integral. Do not return the input text unchanged.",
+  "goal": "Use JSON.parse() or an equivalent approach demonstrating the same premise.",
+  "hint": "Parse the text directly with JSON.parse.",
+  "category": "objects",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Object",
+      "input": "{\"active\":true,\"count\":0}",
+      "expected": {
+        "active": true,
+        "count": 0
+      }
+    },
+    {
+      "name": "Array",
+      "input": "[1,null,\"x\"]",
+      "expected": [
+        1,
+        null,
+        "x"
+      ]
+    },
+    {
+      "name": "Null",
+      "input": "null",
+      "expected": null
+    },
+    {
+      "name": "String",
+      "input": "\"hello\"",
+      "expected": "hello"
+    },
+    {
+      "name": "Padding",
+      "input": " 42 ",
+      "expected": 42
+    }
+  ]
+}

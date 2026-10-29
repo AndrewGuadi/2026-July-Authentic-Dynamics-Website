@@ -1,0 +1,54 @@
+{
+  "language": "python",
+  "date": "2026-10-07",
+  "method": "str.zfill()",
+  "summary": "zfill pads a string with ASCII zeroes to a minimum width.",
+  "syntax": "text.zfill(width)",
+  "documentation": "zfill pads a string with ASCII zeroes to a minimum width. A leading plus or minus sign stays at the front, with padding inserted after it. Strings already wide enough are not shortened.",
+  "inputs": "An integer minimum width.",
+  "returns": "A padded string.",
+  "caution": "The method does not validate the input as a number. It formats text, including an empty string.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.zfill",
+  "docs_source": "Python",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Display signed adjustment codes in a fixed-width report.",
+    "Format short numeric ticket labels.",
+    "Align signed integer text without moving the sign."
+  ],
+  "title": "Pad signed adjustment text",
+  "problem": "Input is a string containing optional leading + or - and decimal digits, or an empty string. Return its zfill(5) form. Keep a sign at the beginning, preserve longer text and do not parse it as an integer.",
+  "goal": "Use str.zfill() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use zfill so padding follows a leading sign.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Unsigned",
+      "input": "42",
+      "expected": "00042"
+    },
+    {
+      "name": "Negative",
+      "input": "-42",
+      "expected": "-0042"
+    },
+    {
+      "name": "Positive sign",
+      "input": "+7",
+      "expected": "+0007"
+    },
+    {
+      "name": "Long",
+      "input": "123456",
+      "expected": "123456"
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": "00000"
+    }
+  ]
+}

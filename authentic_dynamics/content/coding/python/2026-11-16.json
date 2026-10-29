@@ -1,0 +1,93 @@
+{
+  "language": "python",
+  "date": "2026-11-16",
+  "method": "itertools.groupby()",
+  "summary": "groupby groups consecutive items with equal keys.",
+  "syntax": "groupby(iterable, key=None)",
+  "documentation": "groupby groups consecutive items with equal keys. It does not collect every occurrence of a key across the whole input. Each group iterator shares the underlying input, so consume it before advancing.",
+  "inputs": "An iterable and optional key function.",
+  "returns": "An iterator of key/group-iterator pairs.",
+  "caution": "Sorting first changes the meaning when the task concerns runs in the original sequence. Materialize or consume each group immediately.",
+  "docs_url": "https://docs.python.org/3.12/library/itertools.html#itertools.groupby",
+  "docs_source": "Python",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Summarize consecutive machine states as runs.",
+    "Compress repeated status labels in an ordered activity history.",
+    "Count contiguous batches in a production log."
+  ],
+  "title": "Count consecutive status runs",
+  "problem": "Input is an array of status strings in recorded order. Return [status, runLength] for each consecutive run. The same status appearing again later must form a separate run. Preserve original order.",
+  "goal": "Use itertools.groupby() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use groupby without sorting, and count each group before moving on.",
+  "category": "aggregation",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Separated runs",
+      "input": [
+        "open",
+        "open",
+        "closed",
+        "open"
+      ],
+      "expected": [
+        [
+          "open",
+          2
+        ],
+        [
+          "closed",
+          1
+        ],
+        [
+          "open",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Single run",
+      "input": [
+        "a",
+        "a",
+        "a"
+      ],
+      "expected": [
+        [
+          "a",
+          3
+        ]
+      ]
+    },
+    {
+      "name": "Alternating",
+      "input": [
+        "a",
+        "b",
+        "a"
+      ],
+      "expected": [
+        [
+          "a",
+          1
+        ],
+        [
+          "b",
+          1
+        ],
+        [
+          "a",
+          1
+        ]
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "language": "sql",
+  "date": "2026-10-07",
+  "method": "lower()",
+  "summary": "SQLite’s built-in lower converts uppercase ASCII letters to lowercase.",
+  "syntax": "lower(text)",
+  "documentation": "SQLite’s built-in lower converts uppercase ASCII letters to lowercase. Other characters are unchanged in the default build. NULL input remains NULL.",
+  "inputs": "A text expression.",
+  "returns": "Text with ASCII uppercase converted, or NULL.",
+  "caution": "This is not full Unicode case folding. Do not use it as a universal policy for matching people’s names.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#lower",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Normalize documented ASCII status labels in an export.",
+    "Create lowercase internal category codes for a report.",
+    "Compare ASCII-only command labels after case normalization."
+  ],
+  "title": "Lowercase status text",
+  "problem": "From jobs(id INTEGER, status TEXT), return id and lower(status) as normalized, ordered by id. Use the default ASCII behavior and preserve NULL.",
+  "goal": "Use lower() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use SQLite lower directly.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "ASCII",
+      "setup": "CREATE TABLE jobs(id INTEGER,status TEXT);INSERT INTO jobs VALUES(1,'READY'),(2,'New');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "normalized"
+          ],
+          "values": [
+            [
+              1,
+              "ready"
+            ],
+            [
+              2,
+              "new"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Non-ASCII and null",
+      "setup": "CREATE TABLE jobs(id INTEGER,status TEXT);INSERT INTO jobs VALUES(1,'CAFÉ'),(2,NULL),(3,'');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "normalized"
+          ],
+          "values": [
+            [
+              1,
+              "cafÉ"
+            ],
+            [
+              2,
+              null
+            ],
+            [
+              3,
+              ""
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE jobs(id INTEGER,status TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "normalized"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

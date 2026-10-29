@@ -1,0 +1,59 @@
+{
+  "language": "javascript",
+  "date": "2026-11-16",
+  "method": "RegExp.test()",
+  "summary": "test searches text for a regular-expression match and returns a Boolean.",
+  "syntax": "pattern.test(text)",
+  "documentation": "test searches text for a regular-expression match and returns a Boolean. Anchors can constrain a pattern, while global and sticky expressions keep state through lastIndex between calls.",
+  "inputs": "A string to test against a regular expression.",
+  "returns": "True when a match is found, otherwise false.",
+  "caution": "Avoid a global flag for independent validation. The $ anchor can match before a final line break, so enforce the full input length for this fixed-width format.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/test",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Validate the documented shape of an internal reference.",
+    "Check a local form field before displaying a preview.",
+    "Classify an imported code by an explicitly defined pattern."
+  ],
+  "title": "Check a fixed invoice reference",
+  "problem": "Input is a string. Return true only for exactly INV- followed by exactly three ASCII digits, with no extra characters or line breaks. Case matters.",
+  "goal": "Use RegExp.test() or an equivalent approach demonstrating the same premise.",
+  "hint": "Combine a non-global anchored pattern with an exact length of seven.",
+  "category": "strings",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Valid",
+      "input": "INV-007",
+      "expected": true
+    },
+    {
+      "name": "Wrong case",
+      "input": "inv-007",
+      "expected": false
+    },
+    {
+      "name": "Too long",
+      "input": "INV-1234",
+      "expected": false
+    },
+    {
+      "name": "Trailing newline",
+      "input": "INV-123\n",
+      "expected": false
+    },
+    {
+      "name": "Unicode digits",
+      "input": "INV-١٢٣",
+      "expected": false
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": false
+    }
+  ]
+}

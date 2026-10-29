@@ -1,0 +1,90 @@
+{
+  "language": "sql",
+  "date": "2026-10-08",
+  "method": "ltrim()",
+  "summary": "ltrim removes characters only from the beginning of text.",
+  "syntax": "ltrim(text, characters)",
+  "documentation": "ltrim removes characters only from the beginning of text. Its second argument is a set of removable characters, not one exact prefix. Without it, SQLite removes ordinary leading spaces.",
+  "inputs": "Text and an optional character set.",
+  "returns": "Text with matching leading characters removed, or NULL.",
+  "caution": "All consecutive leading characters from the set are removed in any order. Trailing and interior matches remain unchanged.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#ltrim",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Remove a known leading padding convention from imported codes.",
+    "Strip several allowed separator characters from a report label.",
+    "Clean leading spaces while preserving right-hand formatting."
+  ],
+  "title": "Remove leading padding characters",
+  "problem": "From codes(id INTEGER, code TEXT), return id and ltrim(code, '0-') as cleaned, ordered by id. Remove any run of leading zeroes and hyphens; keep all trailing or interior zeroes and hyphens. NULL remains NULL.",
+  "goal": "Use ltrim() or an equivalent approach demonstrating the same premise.",
+  "hint": "Treat 0- as a character set, not an exact two-character prefix.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Mixed prefix",
+      "setup": "CREATE TABLE codes(id INTEGER,code TEXT);INSERT INTO codes VALUES(1,'--00-ABC-0'),(2,'0-0');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "cleaned"
+          ],
+          "values": [
+            [
+              1,
+              "ABC-0"
+            ],
+            [
+              2,
+              ""
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Interior and null",
+      "setup": "CREATE TABLE codes(id INTEGER,code TEXT);INSERT INTO codes VALUES(1,'A-00'),(2,NULL),(3,'');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "cleaned"
+          ],
+          "values": [
+            [
+              1,
+              "A-00"
+            ],
+            [
+              2,
+              null
+            ],
+            [
+              3,
+              ""
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE codes(id INTEGER,code TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "cleaned"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

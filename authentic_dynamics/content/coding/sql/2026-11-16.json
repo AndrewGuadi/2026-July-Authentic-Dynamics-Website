@@ -1,0 +1,73 @@
+{
+  "language": "sql",
+  "date": "2026-11-16",
+  "method": "EXCEPT",
+  "summary": "EXCEPT returns distinct rows from the first SELECT that do not occur in the second SELECT.",
+  "syntax": "SELECT ... EXCEPT SELECT ...",
+  "documentation": "EXCEPT returns distinct rows from the first SELECT that do not occur in the second SELECT. Both branches need compatible column counts. A final ORDER BY defines result display order.",
+  "inputs": "Two compatible SELECT results.",
+  "returns": "The distinct first-source rows absent from the second source.",
+  "caution": "This is directional: reversing the two sources changes the result. Duplicate source rows are removed.",
+  "docs_url": "https://www.sqlite.org/lang_select.html#compound_select_statements",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Find inventory SKUs absent from a published catalog.",
+    "Compare expected attendee IDs against checked-in IDs.",
+    "Identify exported records missing from a second snapshot."
+  ],
+  "title": "Find unpublished product codes",
+  "problem": "Tables inventory(sku TEXT) and published(sku TEXT) contain non-NULL ASCII codes. Return distinct inventory codes absent from published as one sku column, ordered by SQLite binary text order. Matching is case-sensitive.",
+  "goal": "Use EXCEPT or an equivalent approach demonstrating the same premise.",
+  "hint": "Put inventory on the left of EXCEPT and published on the right.",
+  "category": "querying",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Difference and duplicates",
+      "setup": "CREATE TABLE inventory(sku TEXT); CREATE TABLE published(sku TEXT);INSERT INTO inventory VALUES('B'),('A'),('B'); INSERT INTO published VALUES('A'),('C');",
+      "expected": [
+        {
+          "columns": [
+            "sku"
+          ],
+          "values": [
+            [
+              "B"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Case",
+      "setup": "CREATE TABLE inventory(sku TEXT); CREATE TABLE published(sku TEXT);INSERT INTO inventory VALUES('A'),('a'); INSERT INTO published VALUES('A');",
+      "expected": [
+        {
+          "columns": [
+            "sku"
+          ],
+          "values": [
+            [
+              "a"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No inventory",
+      "setup": "CREATE TABLE inventory(sku TEXT); CREATE TABLE published(sku TEXT);INSERT INTO published VALUES('A');",
+      "expected": [
+        {
+          "columns": [
+            "sku"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

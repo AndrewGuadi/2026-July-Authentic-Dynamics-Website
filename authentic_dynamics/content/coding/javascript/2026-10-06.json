@@ -1,0 +1,60 @@
+{
+  "language": "javascript",
+  "date": "2026-10-06",
+  "method": "Math.max()",
+  "summary": "Math.max returns the greatest of its numeric arguments.",
+  "syntax": "Math.max(...numbers)",
+  "documentation": "Math.max returns the greatest of its numeric arguments. It accepts individual arguments rather than an array; spreading a small array supplies those arguments. With no arguments it returns negative infinity.",
+  "inputs": "Zero or more numeric arguments.",
+  "returns": "The greatest number; negative infinity for no arguments.",
+  "caution": "Handle empty input before returning JSON. Spreading a very large array can exceed an engine’s argument limit.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Find the largest stock adjustment in a small import.",
+    "Display the highest daily visitor count.",
+    "Identify a peak measured temperature in a bounded sample."
+  ],
+  "title": "Find a peak reading",
+  "problem": "Input is an array of at most 100 finite numbers. Return its greatest value, or null when empty. Negative values are valid, so do not use zero as an empty-array substitute.",
+  "goal": "Use Math.max() or an equivalent approach demonstrating the same premise.",
+  "hint": "Check for an empty array before spreading it into Math.max.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Mixed",
+      "input": [
+        3,
+        12,
+        5
+      ],
+      "expected": 12
+    },
+    {
+      "name": "All negative",
+      "input": [
+        -5,
+        -2,
+        -9
+      ],
+      "expected": -2
+    },
+    {
+      "name": "Zero",
+      "input": [
+        0,
+        -1
+      ],
+      "expected": 0
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": null
+    }
+  ]
+}
