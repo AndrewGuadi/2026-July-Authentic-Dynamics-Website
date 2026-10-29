@@ -1,0 +1,93 @@
+{
+  "language": "sql",
+  "date": "2026-11-17",
+  "method": "MIN() and MAX() aggregates",
+  "summary": "With one argument, MIN and MAX aggregate the smallest and largest non-NULL values in each group.",
+  "syntax": "MIN(expression), MAX(expression)",
+  "documentation": "With one argument, MIN and MAX aggregate the smallest and largest non-NULL values in each group. A group containing only NULL values yields NULL for both. Grouped results retain one row per group.",
+  "inputs": "One expression evaluated for each group row.",
+  "returns": "The smallest and largest non-NULL values.",
+  "caution": "SQLite also has multi-argument scalar min/max functions. This lesson uses the single-argument aggregate forms, not the scalar comparison forms.",
+  "docs_url": "https://www.sqlite.org/lang_aggfunc.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Show a branch’s observed low and high stock readings.",
+    "Summarize minimum and maximum invoice amounts by category.",
+    "Display the range of recorded delivery durations for each route."
+  ],
+  "title": "Report category price ranges",
+  "problem": "From prices(id INTEGER, category TEXT, cents INTEGER), return category, MIN(cents) as lowest and MAX(cents) as highest. Group by category and order by category. Keep groups with only NULL cents, reporting NULL for both bounds. category is non-NULL.",
+  "goal": "Use MIN() and MAX() aggregates or an equivalent approach demonstrating the same premise.",
+  "hint": "Select both single-argument aggregates beside the grouped category.",
+  "category": "aggregation",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Range and repeated",
+      "setup": "CREATE TABLE prices(id INTEGER,category TEXT,cents INTEGER);INSERT INTO prices VALUES(1,'A',500),(2,'A',200),(3,'A',500),(4,'B',0);",
+      "expected": [
+        {
+          "columns": [
+            "category",
+            "lowest",
+            "highest"
+          ],
+          "values": [
+            [
+              "A",
+              200,
+              500
+            ],
+            [
+              "B",
+              0,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Null groups and negative",
+      "setup": "CREATE TABLE prices(id INTEGER,category TEXT,cents INTEGER);INSERT INTO prices VALUES(1,'A',NULL),(2,'B',-5),(3,'B',NULL);",
+      "expected": [
+        {
+          "columns": [
+            "category",
+            "lowest",
+            "highest"
+          ],
+          "values": [
+            [
+              "A",
+              null,
+              null
+            ],
+            [
+              "B",
+              -5,
+              -5
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE prices(id INTEGER,category TEXT,cents INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "category",
+            "lowest",
+            "highest"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

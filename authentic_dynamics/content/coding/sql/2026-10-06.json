@@ -1,0 +1,90 @@
+{
+  "language": "sql",
+  "date": "2026-10-06",
+  "method": "typeof()",
+  "summary": "SQLite typeof reports a value’s storage class as text: null, integer, real, text or blob.",
+  "syntax": "typeof(expression)",
+  "documentation": "SQLite typeof reports a value’s storage class as text: null, integer, real, text or blob. The result describes the value, which can differ from a column’s declared type because SQLite uses dynamic typing.",
+  "inputs": "Any SQL expression.",
+  "returns": "A storage-class name string.",
+  "caution": "Declared column affinity and actual stored value are different concepts. Use a column without affinity in this exercise to preserve the inserted storage classes.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#typeof",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Inspect mixed types in an imported staging table.",
+    "Diagnose why numeric-looking text behaves differently from a number.",
+    "Audit a data-cleaning step before choosing conversions."
+  ],
+  "title": "Inspect stored value types",
+  "problem": "From samples(id INTEGER, value) where value has no declared affinity, return id and typeof(value) as storage_class, ordered by id. Report the actual inserted storage class.",
+  "goal": "Use typeof() or an equivalent approach demonstrating the same premise.",
+  "hint": "Apply typeof to the value itself rather than inspecting schema metadata.",
+  "category": "conditions",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Integer and text",
+      "setup": "CREATE TABLE samples(id INTEGER,value);INSERT INTO samples VALUES(1,5),(2,'5');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "storage_class"
+          ],
+          "values": [
+            [
+              1,
+              "integer"
+            ],
+            [
+              2,
+              "text"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Real null and blob",
+      "setup": "CREATE TABLE samples(id INTEGER,value);INSERT INTO samples VALUES(1,2.5),(2,NULL),(3,x'41');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "storage_class"
+          ],
+          "values": [
+            [
+              1,
+              "real"
+            ],
+            [
+              2,
+              "null"
+            ],
+            [
+              3,
+              "blob"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE samples(id INTEGER,value);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "storage_class"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "language": "python",
+  "date": "2026-11-17",
+  "method": "bisect.bisect_left()",
+  "summary": "bisect_left finds the insertion position before existing equal values in an ascending sequence.",
+  "syntax": "bisect_left(sorted_values, target)",
+  "documentation": "bisect_left finds the insertion position before existing equal values in an ascending sequence. Items before that position are less than the target; later items are greater than or equal to it.",
+  "inputs": "A sorted sequence and a target.",
+  "returns": "A zero-based insertion index.",
+  "caution": "The sequence must already be sorted. Finding the index does not insert anything, and list insertion still requires moving items.",
+  "docs_url": "https://docs.python.org/3.12/library/bisect.html#bisect.bisect_left",
+  "docs_source": "Python",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Locate the first position of a repeated price in a sorted list.",
+    "Find where a new measurement belongs in an ordered sample.",
+    "Determine a threshold boundary without scanning every prior value."
+  ],
+  "title": "Find a left insertion point",
+  "problem": "Input has values (an ascending list of integers) and target (an integer). Return the insertion index before any equal values. Do not change the list.",
+  "goal": "Use bisect.bisect_left() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use bisect_left on the existing sorted values.",
+  "category": "arrays",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Between",
+      "input": {
+        "values": [
+          1,
+          3,
+          5
+        ],
+        "target": 4
+      },
+      "expected": 2
+    },
+    {
+      "name": "Duplicates",
+      "input": {
+        "values": [
+          1,
+          3,
+          3,
+          5
+        ],
+        "target": 3
+      },
+      "expected": 1
+    },
+    {
+      "name": "Before all",
+      "input": {
+        "values": [
+          2,
+          4
+        ],
+        "target": 0
+      },
+      "expected": 0
+    },
+    {
+      "name": "After all",
+      "input": {
+        "values": [
+          2,
+          4
+        ],
+        "target": 7
+      },
+      "expected": 2
+    },
+    {
+      "name": "Empty",
+      "input": {
+        "values": [],
+        "target": 3
+      },
+      "expected": 0
+    }
+  ]
+}

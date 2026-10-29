@@ -1,0 +1,114 @@
+{
+  "language": "sql",
+  "date": "2026-11-15",
+  "method": "NTILE()",
+  "summary": "NTILE divides ordered rows into a requested number of buckets.",
+  "syntax": "NTILE(bucket_count) OVER (ORDER BY ...)",
+  "documentation": "NTILE divides ordered rows into a requested number of buckets. Bucket sizes differ by at most one, with larger buckets occurring first. Its output is a one-based bucket number, not a rank with tied scores grouped together.",
+  "inputs": "A positive bucket count and window ordering.",
+  "returns": "An integer bucket number for each row.",
+  "caution": "A deterministic tie-breaker is needed for stable assignments. Equal scores may fall into different buckets.",
+  "docs_url": "https://www.sqlite.org/windowfunctions.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Divide an ordered review queue into balanced work batches.",
+    "Assign report rows to roughly equal score bands.",
+    "Split ordered customer accounts into fixed-number analysis groups."
+  ],
+  "title": "Split a review queue into thirds",
+  "problem": "From scores(id INTEGER, amount INTEGER), return id and NTILE(3) OVER (ORDER BY amount DESC, id) as bucket. Display by amount descending then id ascending. All fields are non-NULL, id is unique. Earlier buckets receive extra rows when needed.",
+  "goal": "Use NTILE() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use a fixed bucket count of three and the same deterministic ordering for the window and final display.",
+  "category": "querying",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Seven rows",
+      "setup": "CREATE TABLE scores(id INTEGER,amount INTEGER);INSERT INTO scores VALUES(1,70),(2,60),(3,50),(4,40),(5,30),(6,20),(7,10);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "bucket"
+          ],
+          "values": [
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ],
+            [
+              4,
+              2
+            ],
+            [
+              5,
+              2
+            ],
+            [
+              6,
+              3
+            ],
+            [
+              7,
+              3
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tied amounts",
+      "setup": "CREATE TABLE scores(id INTEGER,amount INTEGER);INSERT INTO scores VALUES(4,10),(2,10),(1,10),(3,10);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "bucket"
+          ],
+          "values": [
+            [
+              1,
+              1
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              4,
+              3
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE scores(id INTEGER,amount INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "bucket"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

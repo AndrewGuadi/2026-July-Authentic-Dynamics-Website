@@ -1,0 +1,69 @@
+{
+  "language": "javascript",
+  "date": "2026-10-08",
+  "method": "Object.values()",
+  "summary": "Object.values collects an object’s own enumerable string-keyed property values.",
+  "syntax": "Object.values(record)",
+  "documentation": "Object.values collects an object’s own enumerable string-keyed property values. It does not include inherited values or symbol-keyed properties. Its ordering follows object property enumeration rules.",
+  "inputs": "An object.",
+  "returns": "An array of its own enumerable values.",
+  "caution": "Numeric-looking keys have special enumeration order. Sort the returned values explicitly when output order is part of a report.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Collect numeric stock counts from a product lookup.",
+    "Build a list of configured display labels.",
+    "Inspect local settings without needing their field names."
+  ],
+  "title": "Sort stored quantities",
+  "problem": "Input is an object mapping names to integer quantities. Return all its values sorted in numeric ascending order. Keep duplicates, zeroes and negative adjustments.",
+  "goal": "Use Object.values() or an equivalent approach demonstrating the same premise.",
+  "hint": "Collect values, then use a numeric sorting comparator.",
+  "category": "objects",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Named quantities",
+      "input": {
+        "tea": 10,
+        "soap": 2
+      },
+      "expected": [
+        2,
+        10
+      ]
+    },
+    {
+      "name": "Repeated and signed",
+      "input": {
+        "a": 0,
+        "b": -1,
+        "c": 0
+      },
+      "expected": [
+        -1,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": {},
+      "expected": []
+    },
+    {
+      "name": "Numeric keys",
+      "input": {
+        "2": 20,
+        "10": 3
+      },
+      "expected": [
+        3,
+        20
+      ]
+    }
+  ]
+}

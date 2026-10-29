@@ -1,0 +1,61 @@
+{
+  "language": "python",
+  "date": "2026-10-06",
+  "method": "bool()",
+  "summary": "bool applies Python’s truth-value rules.",
+  "syntax": "bool(value)",
+  "documentation": "bool applies Python’s truth-value rules. Empty built-in containers, zero, None and False are falsey. A nonempty string remains truthy even when its text looks like the word false.",
+  "inputs": "Any value supporting truth testing.",
+  "returns": "True or False.",
+  "caution": "This is not a parser for textual Boolean labels. For example, bool(\"false\") is True.",
+  "docs_url": "https://docs.python.org/3.12/library/functions.html#bool",
+  "docs_source": "Python",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Check whether a local result list has any items.",
+    "Choose a display fallback for an empty collection.",
+    "Convert a truth-test result into an explicit Boolean."
+  ],
+  "title": "Apply Python truth-value rules",
+  "problem": "Input is any JSON value. Return bool(input) using Python semantics. Empty lists and objects are falsey in Python, unlike JavaScript’s empty-array and empty-object truthiness.",
+  "goal": "Use bool() or an equivalent approach demonstrating the same premise.",
+  "hint": "Call bool directly; do not parse the contents of a string.",
+  "category": "conditions",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Empty list",
+      "input": [],
+      "expected": false
+    },
+    {
+      "name": "Empty object",
+      "input": {},
+      "expected": false
+    },
+    {
+      "name": "Text false",
+      "input": "false",
+      "expected": true
+    },
+    {
+      "name": "Zero",
+      "input": 0,
+      "expected": false
+    },
+    {
+      "name": "Nonempty list",
+      "input": [
+        0
+      ],
+      "expected": true
+    },
+    {
+      "name": "Null",
+      "input": null,
+      "expected": false
+    }
+  ]
+}

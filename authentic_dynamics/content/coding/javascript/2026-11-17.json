@@ -1,0 +1,49 @@
+{
+  "language": "javascript",
+  "date": "2026-11-17",
+  "method": "Intl.NumberFormat",
+  "summary": "Intl.NumberFormat formats numbers according to a chosen locale and options, including currency conventions.",
+  "syntax": "new Intl.NumberFormat(locale, options).format(number)",
+  "documentation": "Intl.NumberFormat formats numbers according to a chosen locale and options, including currency conventions. The formatter produces display text; it does not change the underlying stored amount or perform accounting calculations.",
+  "inputs": "A locale, formatting options and a numeric value.",
+  "returns": "A localized display string.",
+  "caution": "Specify the locale and currency explicitly for deterministic examples. Do arithmetic in suitable numeric units before formatting.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Display an invoice total using a consistent currency style.",
+    "Show a localized price in a checkout preview.",
+    "Format dashboard amounts without manually inserting separators."
+  ],
+  "title": "Display cents as US dollars",
+  "problem": "Input is an integer number of cents from -100000000 through 100000000. Return an en-US USD currency string using exactly two fractional digits and standard grouping. Examples: 123450 becomes $1,234.50; -500 becomes -$5.00.",
+  "goal": "Use Intl.NumberFormat or an equivalent approach demonstrating the same premise.",
+  "hint": "Divide cents by 100, then format with locale en-US, style currency and currency USD.",
+  "category": "numbers",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Grouped",
+      "input": 123450,
+      "expected": "$1,234.50"
+    },
+    {
+      "name": "Negative",
+      "input": -500,
+      "expected": "-$5.00"
+    },
+    {
+      "name": "Zero",
+      "input": 0,
+      "expected": "$0.00"
+    },
+    {
+      "name": "One cent",
+      "input": 1,
+      "expected": "$0.01"
+    }
+  ]
+}

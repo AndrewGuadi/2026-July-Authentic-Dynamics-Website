@@ -1,0 +1,61 @@
+{
+  "language": "python",
+  "date": "2026-11-15",
+  "method": "functools.reduce()",
+  "summary": "reduce combines values from left to right, feeding each intermediate result into the next call.",
+  "syntax": "reduce(function, iterable, initial)",
+  "documentation": "reduce combines values from left to right, feeding each intermediate result into the next call. Supplying an initial value also defines the result for an empty iterable.",
+  "inputs": "A two-argument combining function, an iterable and optional initial value.",
+  "returns": "One accumulated result.",
+  "caution": "The initial value must match the operation. Multiplication uses an identity of 1, not 0.",
+  "docs_url": "https://docs.python.org/3.12/library/functools.html#functools.reduce",
+  "docs_source": "Python",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Combine bounded packaging multipliers into a total capacity.",
+    "Apply an ordered series of state transformations.",
+    "Reduce a list of exact integer factors to one product."
+  ],
+  "title": "Multiply packaging factors",
+  "problem": "Input is a list of integers. Return their product. The empty product is 1, a zero factor makes the result 0, and negative factors retain their mathematical signs.",
+  "goal": "Use functools.reduce() or an equivalent approach demonstrating the same premise.",
+  "hint": "Import reduce and use 1 as the initial multiplication value.",
+  "category": "numbers",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Factors",
+      "input": [
+        2,
+        3,
+        4
+      ],
+      "expected": 24
+    },
+    {
+      "name": "Zero",
+      "input": [
+        2,
+        0,
+        5
+      ],
+      "expected": 0
+    },
+    {
+      "name": "Signs",
+      "input": [
+        -2,
+        3,
+        -1
+      ],
+      "expected": 6
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": 1
+    }
+  ]
+}

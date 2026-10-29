@@ -1,0 +1,49 @@
+{
+  "language": "javascript",
+  "date": "2026-10-07",
+  "method": "String.repeat()",
+  "summary": "repeat constructs a new string by concatenating the receiver the requested number of times.",
+  "syntax": "text.repeat(count)",
+  "documentation": "repeat constructs a new string by concatenating the receiver the requested number of times. Zero produces an empty string. Negative or infinite counts raise RangeError.",
+  "inputs": "A repetition count, converted to an integer.",
+  "returns": "The repeated string.",
+  "caution": "Large counts can allocate too much memory. This exercise bounds the count; repetition is not a substitute for a safe rendering limit.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/repeat",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-29",
+  "scenarios": [
+    "Generate a short plain-text progress marker.",
+    "Build a fixed-width separator in a receipt preview.",
+    "Repeat a template fragment in a bounded local display."
+  ],
+  "title": "Build a progress marker",
+  "problem": "Input is an integer from 0 through 20. Return that many # characters as one string, with no spaces.",
+  "goal": "Use String.repeat() or an equivalent approach demonstrating the same premise.",
+  "hint": "Repeat the one-character string # by the input count.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Several",
+      "input": 4,
+      "expected": "####"
+    },
+    {
+      "name": "One",
+      "input": 1,
+      "expected": "#"
+    },
+    {
+      "name": "Zero",
+      "input": 0,
+      "expected": ""
+    },
+    {
+      "name": "Upper bound",
+      "input": 20,
+      "expected": "####################"
+    }
+  ]
+}
