@@ -1,0 +1,88 @@
+{
+  "language": "python",
+  "date": "2026-11-20",
+  "method": "itertools.chain.from_iterable()",
+  "summary": "chain.from_iterable yields every item of the first iterable, then every item of the next, and so on.",
+  "syntax": "chain.from_iterable(iterables)",
+  "documentation": "chain.from_iterable yields every item of the first iterable, then every item of the next, and so on. It traverses one level lazily without building intermediate concatenations. Converting the iterator to a list creates a JSON-compatible result.",
+  "inputs": "A list of lists containing JSON values.",
+  "returns": "One flattened list in original order.",
+  "caution": "This flattens only one level. A nested list encountered as an item remains a list; strings would be iterated character by character if supplied as inner iterables.",
+  "docs_url": "https://docs.python.org/3.12/library/itertools.html#itertools.chain.from_iterable",
+  "docs_source": "Python",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Combine pages of locally loaded search results.",
+    "Flatten daily groups of checklist items into one work queue.",
+    "Join batches of imported identifiers while keeping order."
+  ],
+  "title": "Flatten batches once",
+  "problem": "Input is a list of lists. Flatten exactly one level, preserving values, duplicates, order and any deeper nested lists.",
+  "goal": "Use itertools.chain.from_iterable() or an equivalent approach demonstrating the same premise.",
+  "hint": "Import chain and wrap chain.from_iterable(value) with list.",
+  "category": "arrays",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Batches",
+      "input": [
+        [
+          1,
+          2
+        ],
+        [],
+        [
+          3
+        ]
+      ],
+      "expected": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "One level",
+      "input": [
+        [
+          [
+            1
+          ]
+        ],
+        [
+          "x",
+          null
+        ]
+      ],
+      "expected": [
+        [
+          1
+        ],
+        "x",
+        null
+      ]
+    },
+    {
+      "name": "Duplicates",
+      "input": [
+        [
+          2
+        ],
+        [
+          2
+        ]
+      ],
+      "expected": [
+        2,
+        2
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

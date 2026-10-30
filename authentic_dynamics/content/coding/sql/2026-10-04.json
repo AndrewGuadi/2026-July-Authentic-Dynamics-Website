@@ -1,0 +1,98 @@
+{
+  "language": "sql",
+  "date": "2026-10-04",
+  "method": "Remainder operator (%)",
+  "summary": "The remainder operator casts its operands to integers and computes the remainder after division.",
+  "syntax": "integer_expression % integer_expression",
+  "documentation": "The remainder operator casts its operands to integers and computes the remainder after division. A divisor of zero produces NULL. Negative dividends can produce negative remainders; remainder is not the same as a nonnegative modulo operation.",
+  "inputs": "jobs(id INTEGER, batch_no INTEGER).",
+  "returns": "id and slot, ordered by id.",
+  "caution": "For portable nonnegative slots across signed input, normalize the remainder with a second remainder operation. This exercise uses a fixed positive divisor.",
+  "docs_url": "https://www.sqlite.org/lang_expr.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Assign imported batch numbers to four rotating review queues.",
+    "Distribute signed sequence identifiers across local buckets.",
+    "Cycle a repeating four-position display from integer counters."
+  ],
+  "title": "Normalize four queue slots",
+  "problem": "For every job, return id and ((batch_no % 4) + 4) % 4 AS slot, ordered by id. Negative batch numbers must still produce slots 0..3; NULL stays NULL.",
+  "goal": "Use Remainder operator (%) or an equivalent approach demonstrating the same premise.",
+  "hint": "The extra addition and remainder normalize a negative remainder.",
+  "category": "numbers",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Positive",
+      "setup": "CREATE TABLE jobs(id INTEGER,batch_no INTEGER);INSERT INTO jobs VALUES(1,0),(2,5),(3,8);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "slot"
+          ],
+          "values": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Signed and null",
+      "setup": "CREATE TABLE jobs(id INTEGER,batch_no INTEGER);INSERT INTO jobs VALUES(1,-1),(2,-4),(3,-6),(4,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "slot"
+          ],
+          "values": [
+            [
+              1,
+              3
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              4,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE jobs(id INTEGER,batch_no INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "slot"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

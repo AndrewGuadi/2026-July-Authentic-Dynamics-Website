@@ -1,0 +1,61 @@
+{
+  "language": "javascript",
+  "date": "2026-10-03",
+  "method": "Math.min()",
+  "summary": "Math.min selects the smallest numeric argument.",
+  "syntax": "Math.min(value1, value2, ...)",
+  "documentation": "Math.min selects the smallest numeric argument. Comparing a request with a fixed upper bound implements a cap without sorting or changing the original value. With no arguments it returns Infinity; a NaN argument propagates NaN.",
+  "inputs": "An object with requested and limit, both finite nonnegative numbers.",
+  "returns": "The smaller number.",
+  "caution": "This applies an upper bound only. Validate negative requests separately in a real ordering system.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/min",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Cap a booking at the remaining seat count.",
+    "Limit a requested download batch to an API page limit.",
+    "Clamp a discount to its approved maximum."
+  ],
+  "title": "Respect a request limit",
+  "problem": "Input is {requested, limit}, both finite nonnegative numbers. Return the requested quantity capped at limit. Fractional quantities are allowed.",
+  "goal": "Use Math.min() or an equivalent approach demonstrating the same premise.",
+  "hint": "Pass the request and limit as separate arguments.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Over limit",
+      "input": {
+        "requested": 12,
+        "limit": 5
+      },
+      "expected": 5
+    },
+    {
+      "name": "Below limit",
+      "input": {
+        "requested": 2.5,
+        "limit": 8
+      },
+      "expected": 2.5
+    },
+    {
+      "name": "Zero capacity",
+      "input": {
+        "requested": 7,
+        "limit": 0
+      },
+      "expected": 0
+    },
+    {
+      "name": "Equal",
+      "input": {
+        "requested": 4,
+        "limit": 4
+      },
+      "expected": 4
+    }
+  ]
+}

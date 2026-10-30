@@ -1,0 +1,103 @@
+{
+  "language": "sql",
+  "date": "2026-11-19",
+  "method": "LEAD()",
+  "summary": "LEAD reads a value from a later row in the same ordered partition without a self join.",
+  "syntax": "LEAD(value, offset, default) OVER (PARTITION BY group_key ORDER BY sequence)",
+  "documentation": "LEAD reads a value from a later row in the same ordered partition without a self join. The default offset is one. Its default argument is used when that row does not exist, not when an existing next row contains NULL.",
+  "inputs": "readings(id INTEGER, device TEXT, value INTEGER).",
+  "returns": "id, device and next_value, ordered by device then id.",
+  "caution": "Order must be deterministic. A default of -1 is only a missing-next-row marker here; stored NULL values remain NULL.",
+  "docs_url": "https://www.sqlite.org/windowfunctions.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Compare a device reading with its next observation.",
+    "Preview the next scheduled item within each team.",
+    "Measure gaps between adjacent imported events."
+  ],
+  "title": "Look ahead within each device",
+  "problem": "Return id, device, LEAD(value,1,-1) OVER (PARTITION BY device ORDER BY id) AS next_value, ordered by device, id. Preserve NULL in an existing next row.",
+  "goal": "Use LEAD() or an equivalent approach demonstrating the same premise.",
+  "hint": "Partition by device; the default belongs inside LEAD.",
+  "category": "aggregation",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Partitions",
+      "setup": "CREATE TABLE readings(id INTEGER,device TEXT,value INTEGER);INSERT INTO readings VALUES(1,'A',10),(2,'B',5),(3,'A',20);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "next_value"
+          ],
+          "values": [
+            [
+              1,
+              "A",
+              20
+            ],
+            [
+              3,
+              "A",
+              -1
+            ],
+            [
+              2,
+              "B",
+              -1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Next is null",
+      "setup": "CREATE TABLE readings(id INTEGER,device TEXT,value INTEGER);INSERT INTO readings VALUES(1,'A',2),(2,'A',NULL),(3,'A',0);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "next_value"
+          ],
+          "values": [
+            [
+              1,
+              "A",
+              null
+            ],
+            [
+              2,
+              "A",
+              0
+            ],
+            [
+              3,
+              "A",
+              -1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE readings(id INTEGER,device TEXT,value INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "next_value"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

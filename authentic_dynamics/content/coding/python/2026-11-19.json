@@ -1,0 +1,61 @@
+{
+  "language": "python",
+  "date": "2026-11-19",
+  "method": "math.prod()",
+  "summary": "prod multiplies numeric items together, beginning with start.",
+  "syntax": "math.prod(iterable, start=1)",
+  "documentation": "prod multiplies numeric items together, beginning with start. Its default identity is one, so the product of an empty iterable is one. A zero factor makes the entire product zero.",
+  "inputs": "A list of small integers.",
+  "returns": "The integer product of all items, or 1 for an empty list.",
+  "caution": "An empty product is mathematically one, not zero. Validate domain-specific bounds before using large products in application logic.",
+  "docs_url": "https://docs.python.org/3.12/library/math.html#math.prod",
+  "docs_source": "Python",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Compute the number of combinations across independent option counts.",
+    "Multiply package dimensions for a volume calculation.",
+    "Combine integer multipliers in a manufacturing bill of materials."
+  ],
+  "title": "Multiply independent factors",
+  "problem": "Return the product of the input integer list. Return 1 for no factors. Values and products stay within the exact JSON integer range.",
+  "goal": "Use math.prod() or an equivalent approach demonstrating the same premise.",
+  "hint": "Import prod; an accumulator must start at one.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Ordinary",
+      "input": [
+        2,
+        3,
+        4
+      ],
+      "expected": 24
+    },
+    {
+      "name": "Zero",
+      "input": [
+        7,
+        0,
+        2
+      ],
+      "expected": 0
+    },
+    {
+      "name": "Signs",
+      "input": [
+        -2,
+        3,
+        -4
+      ],
+      "expected": 24
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": 1
+    }
+  ]
+}

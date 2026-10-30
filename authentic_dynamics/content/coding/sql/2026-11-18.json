@@ -1,0 +1,118 @@
+{
+  "language": "sql",
+  "date": "2026-11-18",
+  "method": "RANK()",
+  "summary": "RANK assigns the same rank to peer rows with equal window-order values.",
+  "syntax": "RANK() OVER (ORDER BY score DESC)",
+  "documentation": "RANK assigns the same rank to peer rows with equal window-order values. After a tie it leaves gaps, so two rows tied for first make the next rank three. A separate output ordering can make tied rows deterministic without breaking the peer groups.",
+  "inputs": "scores(id INTEGER, score INTEGER NOT NULL).",
+  "returns": "id, score and placement, ordered by score descending then id.",
+  "caution": "Adding id to the window ORDER BY would break score ties. Use id only in the final presentation order.",
+  "docs_url": "https://www.sqlite.org/windowfunctions.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Create competition rankings for a local leaderboard.",
+    "Show tied bid positions without inventing a tie-break winner.",
+    "Rank review priorities while preserving equal scores."
+  ],
+  "title": "Rank with competition gaps",
+  "problem": "Return id, score and RANK() OVER (ORDER BY score DESC) AS placement. Present rows by score DESC, id ASC. Equal scores share rank, and later ranks contain gaps.",
+  "goal": "Use RANK() or an equivalent approach demonstrating the same premise.",
+  "hint": "Window ranking and final row sorting serve different purposes.",
+  "category": "aggregation",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Tie gap",
+      "setup": "CREATE TABLE scores(id INTEGER,score INTEGER NOT NULL);INSERT INTO scores VALUES(2,90),(1,90),(3,70);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "score",
+            "placement"
+          ],
+          "values": [
+            [
+              1,
+              90,
+              1
+            ],
+            [
+              2,
+              90,
+              1
+            ],
+            [
+              3,
+              70,
+              3
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "All tied",
+      "setup": "CREATE TABLE scores(id INTEGER,score INTEGER NOT NULL);INSERT INTO scores VALUES(2,-1),(1,-1);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "score",
+            "placement"
+          ],
+          "values": [
+            [
+              1,
+              -1,
+              1
+            ],
+            [
+              2,
+              -1,
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Single",
+      "setup": "CREATE TABLE scores(id INTEGER,score INTEGER NOT NULL);INSERT INTO scores VALUES(8,0);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "score",
+            "placement"
+          ],
+          "values": [
+            [
+              8,
+              0,
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE scores(id INTEGER,score INTEGER NOT NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "score",
+            "placement"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

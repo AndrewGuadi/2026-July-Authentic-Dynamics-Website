@@ -1,0 +1,94 @@
+{
+  "language": "sql",
+  "date": "2026-10-05",
+  "method": "NOT IN with NULL filtering",
+  "summary": "NOT IN tests whether a value is absent from a set.",
+  "syntax": "expression NOT IN (SELECT expression FROM table WHERE expression IS NOT NULL)",
+  "documentation": "NOT IN tests whether a value is absent from a set. SQL uses three-valued logic: a NULL on the right can make a nonmatching comparison unknown rather than true. Filtering NULLs from the subquery makes an exclusion list useful for known identifiers.",
+  "inputs": "products(id INTEGER) and blocked(product_id INTEGER).",
+  "returns": "Unblocked non-NULL product ids in ascending order.",
+  "caution": "Decide the intended treatment of NULL on both sides explicitly. A NULL left operand needs its own exclusion condition, including when the right-hand set is empty.",
+  "docs_url": "https://www.sqlite.org/lang_expr.html#the_in_and_not_in_operators",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Exclude suppressed product identifiers from a local catalog export.",
+    "Remove blocked customer ids from a report preview.",
+    "Filter a staging list against an exclusion list with missing values."
+  ],
+  "title": "Exclude known blocked identifiers",
+  "problem": "Return non-NULL products.id absent from blocked.product_id. Ignore NULL entries in blocked. Preserve product duplicates and sort ascending by id.",
+  "goal": "Use NOT IN with NULL filtering or an equivalent approach demonstrating the same premise.",
+  "hint": "Filter NULLs in the subquery and guard products.id explicitly.",
+  "category": "conditions",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "NULL exclusion",
+      "setup": "CREATE TABLE products(id INTEGER);CREATE TABLE blocked(product_id INTEGER);INSERT INTO products VALUES(1),(2),(3),(NULL);INSERT INTO blocked VALUES(2),(NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id"
+          ],
+          "values": [
+            [
+              1
+            ],
+            [
+              3
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty blocked",
+      "setup": "CREATE TABLE products(id INTEGER);CREATE TABLE blocked(product_id INTEGER);INSERT INTO products VALUES(2),(1),(2),(NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id"
+          ],
+          "values": [
+            [
+              1
+            ],
+            [
+              2
+            ],
+            [
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "All blocked",
+      "setup": "CREATE TABLE products(id INTEGER);CREATE TABLE blocked(product_id INTEGER);INSERT INTO products VALUES(1);INSERT INTO blocked VALUES(1),(NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id"
+          ],
+          "values": []
+        }
+      ]
+    },
+    {
+      "name": "Empty products",
+      "setup": "CREATE TABLE products(id INTEGER);CREATE TABLE blocked(product_id INTEGER);INSERT INTO blocked VALUES(NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}
