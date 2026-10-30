@@ -1,0 +1,98 @@
+{
+  "language": "sql",
+  "date": "2026-11-20",
+  "method": "FIRST_VALUE()",
+  "summary": "FIRST_VALUE returns the expression from the first row in the current window frame.",
+  "syntax": "FIRST_VALUE(value) OVER (PARTITION BY group_key ORDER BY sequence ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)",
+  "documentation": "FIRST_VALUE returns the expression from the first row in the current window frame. A full-partition frame repeats the earliest ordered value for every row in that partition. Unlike MIN, it selects by row order rather than by the smallest measured value.",
+  "inputs": "readings(id INTEGER, device TEXT, value INTEGER).",
+  "returns": "id, device and baseline, ordered by device then id.",
+  "caution": "FIRST_VALUE respects NULL: a NULL earliest reading remains the baseline. Choose a deterministic ordering and an explicit frame.",
+  "docs_url": "https://www.sqlite.org/windowfunctions.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Repeat an opening balance beside each later record.",
+    "Compare sensor readings with their first recorded baseline.",
+    "Attach the initial estimate to each ordered project revision."
+  ],
+  "title": "Carry the first device reading",
+  "problem": "Return id, device and the earliest value by id within each device AS baseline. Repeat it on every row. Include an explicit full-partition ROWS frame and order output by device, id.",
+  "goal": "Use FIRST_VALUE() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use FIRST_VALUE(value), not MIN(value).",
+  "category": "aggregation",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Not minimum",
+      "setup": "CREATE TABLE readings(id INTEGER,device TEXT,value INTEGER);INSERT INTO readings VALUES(1,'A',9),(2,'A',2),(3,'B',7);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "baseline"
+          ],
+          "values": [
+            [
+              1,
+              "A",
+              9
+            ],
+            [
+              2,
+              "A",
+              9
+            ],
+            [
+              3,
+              "B",
+              7
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "NULL baseline",
+      "setup": "CREATE TABLE readings(id INTEGER,device TEXT,value INTEGER);INSERT INTO readings VALUES(1,'A',NULL),(2,'A',5);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "baseline"
+          ],
+          "values": [
+            [
+              1,
+              "A",
+              null
+            ],
+            [
+              2,
+              "A",
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE readings(id INTEGER,device TEXT,value INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "baseline"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

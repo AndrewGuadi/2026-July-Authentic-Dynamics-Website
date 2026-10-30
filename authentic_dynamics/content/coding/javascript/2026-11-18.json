@@ -1,0 +1,71 @@
+{
+  "language": "javascript",
+  "date": "2026-11-18",
+  "method": "Array.lastIndexOf()",
+  "summary": "lastIndexOf searches backward for the last strictly equal element and returns its zero-based index.",
+  "syntax": "array.lastIndexOf(searchElement)",
+  "documentation": "lastIndexOf searches backward for the last strictly equal element and returns its zero-based index. If there is no match the result is -1. Unlike findLast, it returns a position and takes a value rather than a predicate.",
+  "inputs": "An object with events (array of strings) and target (string).",
+  "returns": "The last matching index, or -1.",
+  "caution": "Strict equality does not match NaN. Objects compare by identity, so this problem uses strings.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Locate the latest retry marker in a local event list.",
+    "Find the last occurrence of a repeated navigation label.",
+    "Resume processing after the final matching checkpoint."
+  ],
+  "title": "Locate the last checkpoint",
+  "problem": "Input is {events, target}. Return the last index whose event equals target, or -1 when it never occurs.",
+  "goal": "Use Array.lastIndexOf() or an equivalent approach demonstrating the same premise.",
+  "hint": "Do not reverse the array: its original indices are the required output.",
+  "category": "arrays",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Repeated",
+      "input": {
+        "events": [
+          "start",
+          "retry",
+          "done",
+          "retry"
+        ],
+        "target": "retry"
+      },
+      "expected": 3
+    },
+    {
+      "name": "Missing",
+      "input": {
+        "events": [
+          "start"
+        ],
+        "target": "done"
+      },
+      "expected": -1
+    },
+    {
+      "name": "At zero",
+      "input": {
+        "events": [
+          "done",
+          "start"
+        ],
+        "target": "done"
+      },
+      "expected": 0
+    },
+    {
+      "name": "Empty",
+      "input": {
+        "events": [],
+        "target": "retry"
+      },
+      "expected": -1
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "language": "python",
+  "date": "2026-10-03",
+  "method": "str.find()",
+  "summary": "find searches for the first occurrence of a substring and returns its zero-based starting position.",
+  "syntax": "text.find(substring)",
+  "documentation": "find searches for the first occurrence of a substring and returns its zero-based starting position. It returns -1 when there is no occurrence. The optional start and end parameters can restrict the search without changing returned indices.",
+  "inputs": "An object with text and needle strings.",
+  "returns": "An integer position, or -1.",
+  "caution": "Index zero is a successful match and is falsey in a Boolean context. Compare with -1 rather than testing the index directly.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.find",
+  "docs_source": "Python",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Locate a separator before splitting a legacy record.",
+    "Highlight the first search result in a preview.",
+    "Find an expected marker in a local import line."
+  ],
+  "title": "Locate a substring",
+  "problem": "Input is {text, needle}. Return the first position of needle in text, or -1 if absent. An empty needle matches at position zero, including in empty text.",
+  "goal": "Use str.find() or an equivalent approach demonstrating the same premise.",
+  "hint": "Return text.find(needle) without converting the result to bool.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "At zero",
+      "input": {
+        "text": "AD-AD",
+        "needle": "AD"
+      },
+      "expected": 0
+    },
+    {
+      "name": "Inside",
+      "input": {
+        "text": "invoice: paid",
+        "needle": ":"
+      },
+      "expected": 7
+    },
+    {
+      "name": "Missing",
+      "input": {
+        "text": "AD",
+        "needle": "x"
+      },
+      "expected": -1
+    },
+    {
+      "name": "Empty needle",
+      "input": {
+        "text": "",
+        "needle": ""
+      },
+      "expected": 0
+    }
+  ]
+}

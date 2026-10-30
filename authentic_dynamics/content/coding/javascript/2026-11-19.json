@@ -1,0 +1,55 @@
+{
+  "language": "javascript",
+  "date": "2026-11-19",
+  "method": "String.match()",
+  "summary": "With a global regular expression, match returns an array containing every full match in text order.",
+  "syntax": "text.match(regexp)",
+  "documentation": "With a global regular expression, match returns an array containing every full match in text order. If there is no match it returns null. Global matching does not return capture-group details; matchAll is appropriate when those are needed.",
+  "inputs": "A string containing arbitrary text.",
+  "returns": "An array of ASCII ticket tokens.",
+  "caution": "The pattern in this exercise finds tokens inside larger strings, including inside longer digit runs. It does not validate word boundaries or Unicode digits.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Collect ticket references from support notes.",
+    "Extract known-format markers from a pasted log.",
+    "Build a local checklist of identifiers in a handoff document."
+  ],
+  "title": "Extract ticket tokens",
+  "problem": "Return every substring matching T- followed by exactly three ASCII digits, using non-overlapping left-to-right matches. For example T-1234 contains the match T-123. Return [] when none occur.",
+  "goal": "Use String.match() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use /T-[0-9]{3}/g and replace a null match result with [].",
+  "category": "strings",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Several",
+      "input": "See T-123 and T-007.",
+      "expected": [
+        "T-123",
+        "T-007"
+      ]
+    },
+    {
+      "name": "Long run",
+      "input": "T-1234 T-99 T-000",
+      "expected": [
+        "T-123",
+        "T-000"
+      ]
+    },
+    {
+      "name": "Case matters",
+      "input": "t-123 T-ABC",
+      "expected": []
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": []
+    }
+  ]
+}

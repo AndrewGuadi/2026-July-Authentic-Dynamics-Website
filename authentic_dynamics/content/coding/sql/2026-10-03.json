@@ -1,0 +1,90 @@
+{
+  "language": "sql",
+  "date": "2026-10-03",
+  "method": "rtrim()",
+  "summary": "rtrim removes characters from the right end while each belongs to the supplied character set.",
+  "syntax": "rtrim(text, characters)",
+  "documentation": "rtrim removes characters from the right end while each belongs to the supplied character set. It does not remove an exact suffix string, and it leaves internal occurrences untouched. NULL input yields NULL.",
+  "inputs": "labels(id INTEGER, code TEXT).",
+  "returns": "id and cleaned code, ordered by id.",
+  "caution": "The second argument is a set of characters, not an ordered suffix. Default whitespace trimming only targets ordinary spaces.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#rtrim",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Clean padding from fixed-width export fields.",
+    "Remove trailing marker characters from a local staging code.",
+    "Normalize suffix padding before comparing inventory identifiers."
+  ],
+  "title": "Remove trailing marker characters",
+  "problem": "Return id and rtrim(code, ' -*') AS cleaned from labels, ordered by id. Remove any trailing combination of spaces, hyphens and asterisks; keep leading and interior markers.",
+  "goal": "Use rtrim() or an equivalent approach demonstrating the same premise.",
+  "hint": "Use the second argument as a character set.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Mixed",
+      "setup": "CREATE TABLE labels(id INTEGER,code TEXT);INSERT INTO labels VALUES(2,'-A-B*- '),(1,'X***');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "cleaned"
+          ],
+          "values": [
+            [
+              1,
+              "X"
+            ],
+            [
+              2,
+              "-A-B"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "All and null",
+      "setup": "CREATE TABLE labels(id INTEGER,code TEXT);INSERT INTO labels VALUES(1,' -*'),(2,NULL),(3,'');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "cleaned"
+          ],
+          "values": [
+            [
+              1,
+              ""
+            ],
+            [
+              2,
+              null
+            ],
+            [
+              3,
+              ""
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE labels(id INTEGER,code TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "cleaned"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

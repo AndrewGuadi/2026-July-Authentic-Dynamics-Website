@@ -1,0 +1,85 @@
+{
+  "language": "javascript",
+  "date": "2026-11-20",
+  "method": "Object.assign()",
+  "summary": "Object.assign copies enumerable own properties from each source into a target object.",
+  "syntax": "Object.assign(target, ...sources)",
+  "documentation": "Object.assign copies enumerable own properties from each source into a target object. Later sources overwrite earlier values for a shared key. Using a new empty target keeps the original top-level objects unchanged, but the copy is shallow.",
+  "inputs": "An array of plain JSON settings objects, with ordinary keys only.",
+  "returns": "One object containing the merged settings.",
+  "caution": "Nested objects are replaced rather than recursively merged. Do not use arbitrary untrusted property names for application configuration without a key allowlist.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Combine documented defaults with per-page display settings.",
+    "Apply a sequence of approved report-format overrides.",
+    "Build a one-level options object for a reusable component."
+  ],
+  "title": "Layer settings in order",
+  "problem": "Input is an array of plain settings objects without special prototype-related keys. Merge them left to right into a new object. Later keys win; nested objects replace whole earlier nested objects.",
+  "goal": "Use Object.assign() or an equivalent approach demonstrating the same premise.",
+  "hint": "Start with {} as the target and spread the sources.",
+  "category": "objects",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Override",
+      "input": [
+        {
+          "theme": "light",
+          "size": 2
+        },
+        {
+          "size": 4
+        }
+      ],
+      "expected": {
+        "theme": "light",
+        "size": 4
+      }
+    },
+    {
+      "name": "Shallow",
+      "input": [
+        {
+          "panel": {
+            "x": 1,
+            "y": 2
+          }
+        },
+        {
+          "panel": {
+            "x": 3
+          }
+        }
+      ],
+      "expected": {
+        "panel": {
+          "x": 3
+        }
+      }
+    },
+    {
+      "name": "No sources",
+      "input": [],
+      "expected": {}
+    },
+    {
+      "name": "Null value",
+      "input": [
+        {
+          "x": 4
+        },
+        {
+          "x": null
+        }
+      ],
+      "expected": {
+        "x": null
+      }
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+{
+  "language": "python",
+  "date": "2026-11-18",
+  "method": "heapq.nlargest()",
+  "summary": "nlargest returns up to n largest items as a list in descending order.",
+  "syntax": "heapq.nlargest(n, iterable, key=None)",
+  "documentation": "nlargest returns up to n largest items as a list in descending order. For a small requested count relative to a large iterable, heap selection avoids sorting the entire collection. An optional key selects the comparison value.",
+  "inputs": "An object with scores (list of integers) and n (integer 0..100).",
+  "returns": "Up to n scores in descending order, retaining duplicates.",
+  "caution": "This does not deduplicate equal values. Sorting may be simpler or faster when n is large relative to the data.",
+  "docs_url": "https://docs.python.org/3.12/library/heapq.html#heapq.nlargest",
+  "docs_source": "Python",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Show a short leaderboard from a larger local score list.",
+    "Choose the largest outstanding job sizes for review.",
+    "Extract the most expensive quote amounts from an import."
+  ],
+  "title": "Select the top scores",
+  "problem": "Input is {scores, n}, with integer scores and n 0..100. Return up to n largest scores in descending order, preserving duplicate values.",
+  "goal": "Use heapq.nlargest() or an equivalent approach demonstrating the same premise.",
+  "hint": "Import nlargest from heapq and pass n before scores.",
+  "category": "arrays",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Duplicates",
+      "input": {
+        "scores": [
+          4,
+          9,
+          9,
+          2
+        ],
+        "n": 3
+      },
+      "expected": [
+        9,
+        9,
+        4
+      ]
+    },
+    {
+      "name": "Too many",
+      "input": {
+        "scores": [
+          -5,
+          -1
+        ],
+        "n": 9
+      },
+      "expected": [
+        -1,
+        -5
+      ]
+    },
+    {
+      "name": "Zero",
+      "input": {
+        "scores": [
+          9,
+          1
+        ],
+        "n": 0
+      },
+      "expected": []
+    },
+    {
+      "name": "Empty",
+      "input": {
+        "scores": [],
+        "n": 2
+      },
+      "expected": []
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "language": "python",
+  "date": "2026-10-05",
+  "method": "str.rjust()",
+  "summary": "rjust returns a string padded on the left until it reaches a minimum width.",
+  "syntax": "text.rjust(width, fillchar=\" \")",
+  "documentation": "rjust returns a string padded on the left until it reaches a minimum width. If text is already at least that wide it is returned without truncation. The fill character must be exactly one character.",
+  "inputs": "An object with text (string) and width (integer from 0 to 30).",
+  "returns": "Text left-padded with spaces to the requested minimum width.",
+  "caution": "Width counts Python string characters, not terminal display columns; combining marks and wide glyphs can display differently. This exercise uses ASCII.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.rjust",
+  "docs_source": "Python",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Align quantities in a plain-text inventory export.",
+    "Format right-aligned totals in a fixed-width receipt.",
+    "Prepare a column of ASCII labels for an older printer."
+  ],
+  "title": "Align a report column",
+  "problem": "Input is {text, width}, using ASCII text and width 0..30. Return text right-aligned to that minimum width using spaces. Never cut off longer text.",
+  "goal": "Use str.rjust() or an equivalent approach demonstrating the same premise.",
+  "hint": "Call rjust with its default space fill.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Pad",
+      "input": {
+        "text": "42",
+        "width": 5
+      },
+      "expected": "   42"
+    },
+    {
+      "name": "Longer",
+      "input": {
+        "text": "12345",
+        "width": 2
+      },
+      "expected": "12345"
+    },
+    {
+      "name": "Empty",
+      "input": {
+        "text": "",
+        "width": 3
+      },
+      "expected": "   "
+    },
+    {
+      "name": "Zero",
+      "input": {
+        "text": "AD",
+        "width": 0
+      },
+      "expected": "AD"
+    }
+  ]
+}

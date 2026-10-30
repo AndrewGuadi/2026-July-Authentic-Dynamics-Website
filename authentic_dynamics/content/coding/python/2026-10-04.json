@@ -1,0 +1,54 @@
+{
+  "language": "python",
+  "date": "2026-10-04",
+  "method": "str.isascii()",
+  "summary": "isascii reports whether a string is empty or contains only ASCII code points U+0000 through U+007F.",
+  "syntax": "text.isascii()",
+  "documentation": "isascii reports whether a string is empty or contains only ASCII code points U+0000 through U+007F. It checks the character repertoire rather than the visual appearance or whether characters are letters.",
+  "inputs": "A string.",
+  "returns": "True for an ASCII-only or empty string, otherwise False.",
+  "caution": "ASCII includes control characters, spaces and punctuation. Use additional validation when only printable characters or a narrower identifier grammar is acceptable.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.isascii",
+  "docs_source": "Python",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Check compatibility with an ASCII-only export format.",
+    "Identify text needing encoding review before a legacy upload.",
+    "Flag unexpected non-ASCII characters in machine-generated codes."
+  ],
+  "title": "Check legacy encoding compatibility",
+  "problem": "Return whether every character in the input string is ASCII. An empty string is compatible. Include ASCII control characters as valid for this specific check.",
+  "goal": "Use str.isascii() or an equivalent approach demonstrating the same premise.",
+  "hint": "Call isascii; do not replace it with isalpha or isalnum.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Ordinary",
+      "input": "AD-42",
+      "expected": true
+    },
+    {
+      "name": "Accent",
+      "input": "café",
+      "expected": false
+    },
+    {
+      "name": "Control",
+      "input": "line\n",
+      "expected": true
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": true
+    },
+    {
+      "name": "Emoji",
+      "input": "ok🙂",
+      "expected": false
+    }
+  ]
+}

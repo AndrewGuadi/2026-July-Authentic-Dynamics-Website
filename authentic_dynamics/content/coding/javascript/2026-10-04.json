@@ -1,0 +1,73 @@
+{
+  "language": "javascript",
+  "date": "2026-10-04",
+  "method": "Number.isNaN()",
+  "summary": "Number.isNaN reports whether an already evaluated value is the numeric NaN value.",
+  "syntax": "Number.isNaN(value)",
+  "documentation": "Number.isNaN reports whether an already evaluated value is the numeric NaN value. It does not coerce strings. A separate Number conversion lets you distinguish failed numeric conversions from valid zero values.",
+  "inputs": "An array of strings to convert with Number.",
+  "returns": "A Boolean for each string: true when conversion produces NaN.",
+  "caution": "Empty and whitespace-only strings convert to zero. Infinity is not NaN, so this is not a complete finite-number validator.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-30",
+  "scenarios": [
+    "Flag nonnumeric CSV cells before aggregation.",
+    "Distinguish a failed calculator conversion from a valid zero.",
+    "Explain numeric conversion errors in a form preview."
+  ],
+  "title": "Find failed numeric conversions",
+  "problem": "Convert each input string with Number and return a Boolean array indicating which results are NaN. Preserve order. Do not treat Infinity or whitespace as failed conversions.",
+  "goal": "Use Number.isNaN() or an equivalent approach demonstrating the same premise.",
+  "hint": "Convert first, then apply Number.isNaN to the result.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Mixed",
+      "input": [
+        "12",
+        "abc",
+        "0"
+      ],
+      "expected": [
+        false,
+        true,
+        false
+      ]
+    },
+    {
+      "name": "Whitespace and infinity",
+      "input": [
+        "",
+        "  ",
+        "Infinity"
+      ],
+      "expected": [
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "name": "Invalid notation",
+      "input": [
+        "NaN",
+        "3x",
+        "-2.5"
+      ],
+      "expected": [
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}
