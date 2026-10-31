@@ -1,0 +1,76 @@
+{
+  "language": "python",
+  "date": "2026-11-23",
+  "method": "collections.deque(maxlen=...)",
+  "syntax": "deque(iterable, maxlen=capacity)",
+  "summary": "A deque supports efficient insertion and removal at either end.",
+  "documentation": "A deque supports efficient insertion and removal at either end. With maxlen set, appending to a full deque discards an item from the opposite end. Constructing one from a sequence retains the newest capacity items.",
+  "inputs": "An object with events (list of JSON values) and capacity (integer 0..100).",
+  "returns": "The retained events in arrival order.",
+  "caution": "A bounded deque deliberately loses old entries and is inappropriate as the only audit log. A capacity of zero accepts input but retains nothing.",
+  "docs_url": "https://docs.python.org/3.12/library/collections.html#collections.deque",
+  "docs_source": "Python",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Keep a short recent-message preview in memory.",
+    "Retain the latest local diagnostic events for a small status panel.",
+    "Maintain a rolling sample of recently observed values."
+  ],
+  "title": "Keep a bounded recent history",
+  "problem": "Input is {events, capacity}. Process events in arrival order and return only the most recent capacity events, still ordered oldest to newest within the retained window. Capacity zero returns [].",
+  "hint": "Construct a deque with maxlen and convert it to a list.",
+  "goal": "Use collections.deque(maxlen=...) or an equivalent approach demonstrating the same premise.",
+  "category": "arrays",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Eviction",
+      "input": {
+        "events": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "capacity": 2
+      },
+      "expected": [
+        "c",
+        "d"
+      ]
+    },
+    {
+      "name": "Zero",
+      "input": {
+        "events": [
+          1,
+          2
+        ],
+        "capacity": 0
+      },
+      "expected": []
+    },
+    {
+      "name": "Room left",
+      "input": {
+        "events": [
+          1
+        ],
+        "capacity": 4
+      },
+      "expected": [
+        1
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": {
+        "events": [],
+        "capacity": 3
+      },
+      "expected": []
+    }
+  ]
+}

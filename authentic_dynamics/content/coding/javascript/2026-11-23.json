@@ -1,0 +1,60 @@
+{
+  "language": "javascript",
+  "date": "2026-11-23",
+  "method": "JSON.stringify()",
+  "syntax": "JSON.stringify(value, replacer, space)",
+  "summary": "JSON.stringify serializes a supported JavaScript value into JSON text.",
+  "documentation": "JSON.stringify serializes a supported JavaScript value into JSON text. A replacer array restricts the object property names that can be included, and a space argument formats the output. This can produce a small explicit export schema.",
+  "inputs": "A plain JSON record with ordinary keys; id, status and extra fields may be present.",
+  "returns": "Compact JSON text including only id and status when present.",
+  "caution": "This is serialization, not encryption or sanitization for HTML. Circular references and BigInt are unsupported, and replacer arrays also affect nested objects. This problem uses flat records.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Export a small status summary with an explicit field allowlist.",
+    "Generate a compact fixture for a local integration test.",
+    "Copy a limited diagnostic record while excluding unrelated form fields."
+  ],
+  "title": "Serialize an allowed summary",
+  "problem": "Input is a flat record with JSON scalar values. Return compact JSON text containing only id and status, in that order, when those keys are present. Ignore all other keys. Preserve null and false values.",
+  "hint": "Use the replacer array [\"id\", \"status\"] and omit the space argument.",
+  "goal": "Use JSON.stringify() or an equivalent approach demonstrating the same premise.",
+  "category": "objects",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Reorder and exclude",
+      "input": {
+        "status": "ready",
+        "note": "private",
+        "id": 7
+      },
+      "expected": "{\"id\":7,\"status\":\"ready\"}"
+    },
+    {
+      "name": "Null and false",
+      "input": {
+        "id": null,
+        "status": false
+      },
+      "expected": "{\"id\":null,\"status\":false}"
+    },
+    {
+      "name": "Missing",
+      "input": {
+        "note": "x"
+      },
+      "expected": "{}"
+    },
+    {
+      "name": "Escaping",
+      "input": {
+        "status": "say \"hi\""
+      },
+      "expected": "{\"status\":\"say \\\"hi\\\"\"}"
+    }
+  ]
+}

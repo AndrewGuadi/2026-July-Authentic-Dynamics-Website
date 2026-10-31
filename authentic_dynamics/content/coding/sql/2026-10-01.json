@@ -1,0 +1,94 @@
+{
+  "language": "sql",
+  "date": "2026-10-01",
+  "method": "unicode()",
+  "syntax": "unicode(text)",
+  "summary": "unicode returns the numeric Unicode code point of the first character of its text argument.",
+  "documentation": "unicode returns the numeric Unicode code point of the first character of its text argument. It examines one character rather than encoding the entire string or returning its byte sequence.",
+  "inputs": "labels(id INTEGER, text TEXT).",
+  "returns": "id and codepoint, ordered by id.",
+  "caution": "SQLite does not define a useful portable result for every non-text or empty input. The exercise explicitly returns NULL for empty or NULL text instead of relying on those cases.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#unicode",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Diagnose a leading nonbreaking space in imported text.",
+    "Distinguish visually similar leading characters in a staging report.",
+    "Inspect the first character of an identifier during an encoding audit."
+  ],
+  "title": "Inspect a leading code point",
+  "problem": "Return id and CASE WHEN text IS NULL OR text = '' THEN NULL ELSE unicode(text) END AS codepoint from labels, ordered by id.",
+  "hint": "Guard the missing-character cases before calling unicode.",
+  "goal": "Use unicode() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "ASCII",
+      "setup": "CREATE TABLE labels(id INTEGER,text TEXT);INSERT INTO labels VALUES(1,'AD'),(2,' space');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "codepoint"
+          ],
+          "values": [
+            [
+              1,
+              65
+            ],
+            [
+              2,
+              32
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Unicode and missing",
+      "setup": "CREATE TABLE labels(id INTEGER,text TEXT);INSERT INTO labels VALUES(1,'éclair'),(2,'🙂'),(3,''),(4,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "codepoint"
+          ],
+          "values": [
+            [
+              1,
+              233
+            ],
+            [
+              2,
+              128578
+            ],
+            [
+              3,
+              null
+            ],
+            [
+              4,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE labels(id INTEGER,text TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "codepoint"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

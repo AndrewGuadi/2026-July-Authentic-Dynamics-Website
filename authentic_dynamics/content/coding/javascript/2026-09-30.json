@@ -1,0 +1,61 @@
+{
+  "language": "javascript",
+  "date": "2026-09-30",
+  "method": "String.slice()",
+  "syntax": "text.slice(start, end)",
+  "summary": "String.slice copies a range of UTF-16 code units without modifying the string.",
+  "documentation": "String.slice copies a range of UTF-16 code units without modifying the string. A negative start counts backward from the end; an omitted end includes the remainder. End is exclusive and out-of-range bounds are clamped.",
+  "inputs": "An object with text (ASCII string) and count (integer 0..100).",
+  "returns": "At most count trailing characters.",
+  "caution": "slice(-0) means slice(0), which returns the whole string. Handle a requested count of zero explicitly. UTF-16 positions are not grapheme boundaries.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/slice",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Show the final four characters of a support reference.",
+    "Preview the tail of a long ASCII filename.",
+    "Display a short identifier suffix in a compact activity list."
+  ],
+  "title": "Take a reference suffix",
+  "problem": "Input is {text, count}. Return the last count characters of the ASCII string, or the entire string when count exceeds its length. Return an empty string when count is zero.",
+  "hint": "Handle zero before calling slice with a negative start.",
+  "goal": "Use String.slice() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Suffix",
+      "input": {
+        "text": "ORDER-1234",
+        "count": 4
+      },
+      "expected": "1234"
+    },
+    {
+      "name": "Oversize",
+      "input": {
+        "text": "AD",
+        "count": 8
+      },
+      "expected": "AD"
+    },
+    {
+      "name": "Zero",
+      "input": {
+        "text": "AD",
+        "count": 0
+      },
+      "expected": ""
+    },
+    {
+      "name": "Empty",
+      "input": {
+        "text": "",
+        "count": 3
+      },
+      "expected": ""
+    }
+  ]
+}

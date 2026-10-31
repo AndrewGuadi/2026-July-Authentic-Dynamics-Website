@@ -1,0 +1,90 @@
+{
+  "language": "sql",
+  "date": "2026-09-30",
+  "method": "quote()",
+  "syntax": "quote(value)",
+  "summary": "quote returns SQL literal text representing a value.",
+  "documentation": "quote returns SQL literal text representing a value. Text is single-quoted with internal apostrophes doubled; NULL becomes the text NULL. A blob becomes a hexadecimal literal. It is useful for inspecting values rather than constructing executable application queries.",
+  "inputs": "samples(id INTEGER, value), with no declared affinity for value.",
+  "returns": "id and literal text, ordered by id.",
+  "caution": "Use bound parameters for real database input. quote is not a replacement for parameter binding, and embedded NUL characters in text have special truncation behavior excluded here.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#quote",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Inspect literal representations in a database debugging report.",
+    "Explain how text and NULL differ in a SQL teaching example.",
+    "Preview blob and number values in a local export audit."
+  ],
+  "title": "Inspect SQL literal representations",
+  "problem": "Return id and quote(value) AS literal from samples, ordered by id. Text contains no NUL characters. Preserve the distinction between text NULL and SQL NULL.",
+  "hint": "quote returns text even for a SQL NULL value.",
+  "goal": "Use quote() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Text escaping",
+      "setup": "CREATE TABLE samples(id INTEGER,value);INSERT INTO samples VALUES(1,'O''Brien'),(2,'NULL');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "literal"
+          ],
+          "values": [
+            [
+              1,
+              "'O''Brien'"
+            ],
+            [
+              2,
+              "'NULL'"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Types",
+      "setup": "CREATE TABLE samples(id INTEGER,value);INSERT INTO samples VALUES(1,NULL),(2,42),(3,x'AB');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "literal"
+          ],
+          "values": [
+            [
+              1,
+              "NULL"
+            ],
+            [
+              2,
+              "42"
+            ],
+            [
+              3,
+              "X'AB'"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE samples(id INTEGER,value);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "literal"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

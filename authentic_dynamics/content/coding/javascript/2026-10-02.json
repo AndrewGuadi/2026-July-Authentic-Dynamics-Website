@@ -1,0 +1,71 @@
+{
+  "language": "javascript",
+  "date": "2026-10-02",
+  "method": "Math.round()",
+  "syntax": "Math.round(number)",
+  "summary": "Math.round returns the nearest integer.",
+  "documentation": "Math.round returns the nearest integer. An exact halfway value rounds toward positive infinity, so 2.5 becomes 3 while -2.5 becomes -2. Values between -0.5 and zero can produce negative zero.",
+  "inputs": "An array of finite numbers with magnitude below one million.",
+  "returns": "Nearest integers, with zero represented as ordinary JSON zero.",
+  "caution": "This is not the same tie rule as Python round or rounding halfway away from zero. Floating-point decimal arithmetic can introduce representation error; this exercise rounds supplied values directly.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/round",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Snap a drag position to an integer grid coordinate.",
+    "Display a measured duration as a nearest whole second.",
+    "Assign an approximate distance to its nearest whole-unit bucket."
+  ],
+  "title": "Round signed measurements",
+  "problem": "Round each finite input number with JavaScript Math.round semantics. Treat negative zero and zero as the same JSON result. Preserve order.",
+  "hint": "Halfway values go toward positive infinity, including negative inputs.",
+  "goal": "Use Math.round() or an equivalent approach demonstrating the same premise.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Halfway",
+      "input": [
+        2.5,
+        -2.5
+      ],
+      "expected": [
+        3,
+        -2
+      ]
+    },
+    {
+      "name": "Near zero",
+      "input": [
+        -0.5,
+        -0.1,
+        0.5
+      ],
+      "expected": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "name": "Ordinary",
+      "input": [
+        1.2,
+        -1.8,
+        4
+      ],
+      "expected": [
+        1,
+        -2,
+        4
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

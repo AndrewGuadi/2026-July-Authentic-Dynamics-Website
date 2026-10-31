@@ -1,0 +1,98 @@
+{
+  "language": "sql",
+  "date": "2026-11-21",
+  "method": "LAST_VALUE()",
+  "syntax": "LAST_VALUE(value) OVER (PARTITION BY device ORDER BY id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)",
+  "summary": "LAST_VALUE reads the value from the last row of the window frame.",
+  "documentation": "LAST_VALUE reads the value from the last row of the window frame. To repeat a final observation on every row, the frame must include rows after the current row. A default frame often stops at the current peer group and therefore does not mean the whole partition.",
+  "inputs": "readings(id INTEGER, device TEXT, value INTEGER).",
+  "returns": "id, device and final_value, ordered by device and id.",
+  "caution": "The last row is defined by ordering, not by the largest measured value. A final NULL remains NULL; this does not search backward for a non-NULL value.",
+  "docs_url": "https://www.sqlite.org/windowfunctions.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Attach a final reading to each observation for comparison.",
+    "Repeat the latest recorded estimate alongside earlier revisions.",
+    "Show a closing value across all rows of a reporting group."
+  ],
+  "title": "Repeat the final observation",
+  "problem": "Return id, device and LAST_VALUE(value) over each device ordered by id AS final_value. Use a full-partition ROWS frame, and order output by device, id.",
+  "hint": "The frame must end at UNBOUNDED FOLLOWING.",
+  "goal": "Use LAST_VALUE() or an equivalent approach demonstrating the same premise.",
+  "category": "aggregation",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Not maximum",
+      "setup": "CREATE TABLE readings(id INTEGER,device TEXT,value INTEGER);INSERT INTO readings VALUES(1,'A',9),(2,'A',2),(3,'B',5);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "final_value"
+          ],
+          "values": [
+            [
+              1,
+              "A",
+              2
+            ],
+            [
+              2,
+              "A",
+              2
+            ],
+            [
+              3,
+              "B",
+              5
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Final null",
+      "setup": "CREATE TABLE readings(id INTEGER,device TEXT,value INTEGER);INSERT INTO readings VALUES(1,'A',3),(2,'A',NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "final_value"
+          ],
+          "values": [
+            [
+              1,
+              "A",
+              null
+            ],
+            [
+              2,
+              "A",
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE readings(id INTEGER,device TEXT,value INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "final_value"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

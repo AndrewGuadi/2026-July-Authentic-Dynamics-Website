@@ -1,0 +1,54 @@
+{
+  "language": "python",
+  "date": "2026-09-30",
+  "method": "str.isdigit()",
+  "syntax": "text.isdigit()",
+  "summary": "isdigit is true when a nonempty string consists entirely of Unicode digit characters.",
+  "documentation": "isdigit is true when a nonempty string consists entirely of Unicode digit characters. It includes decimal digits and some digit characters such as superscripts, making it broader than isdecimal. Whitespace or signs make the result false.",
+  "inputs": "A string.",
+  "returns": "A Boolean indicating a nonempty digit-only string.",
+  "caution": "A true result does not guarantee int(text) can parse the string. For example a superscript digit passes isdigit but not ordinary integer conversion.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.isdigit",
+  "docs_source": "Python",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Classify numeric-looking imported labels before choosing a parser.",
+    "Explain why a Unicode digit label differs from an ASCII identifier.",
+    "Separate digit-only strings from signed or punctuated text in a preview."
+  ],
+  "title": "Classify Unicode digit text",
+  "problem": "Return text.isdigit() for the input. Superscript digits count as digits, but empty text, signs and spaces do not.",
+  "hint": "Use isdigit rather than isdecimal or a numeric conversion.",
+  "goal": "Use str.isdigit() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "ASCII",
+      "input": "012",
+      "expected": true
+    },
+    {
+      "name": "Superscript",
+      "input": "²",
+      "expected": true
+    },
+    {
+      "name": "Signed",
+      "input": "-12",
+      "expected": false
+    },
+    {
+      "name": "Spaces",
+      "input": " 12",
+      "expected": false
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": false
+    }
+  ]
+}

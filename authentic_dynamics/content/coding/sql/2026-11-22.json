@@ -1,0 +1,103 @@
+{
+  "language": "sql",
+  "date": "2026-11-22",
+  "method": "CUME_DIST()",
+  "syntax": "CUME_DIST() OVER (ORDER BY score)",
+  "summary": "CUME_DIST gives the fraction of rows whose ordering values are less than or equal to the current peer group.",
+  "documentation": "CUME_DIST gives the fraction of rows whose ordering values are less than or equal to the current peer group. Ties receive the same fraction, and the last peer group reaches one. It describes the position of observations in the empirical ordered distribution.",
+  "inputs": "scores(id INTEGER, score INTEGER NOT NULL).",
+  "returns": "id, score and fraction, ordered by score then id.",
+  "caution": "Use score alone in the window ORDER BY to preserve ties. Adding id there changes peer groups; id belongs only in the final output order.",
+  "docs_url": "https://www.sqlite.org/windowfunctions.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Show a measurement position within an observed distribution.",
+    "Report the share of orders at or below a given size.",
+    "Explain tied score positions in a local assessment report."
+  ],
+  "title": "Measure cumulative score position",
+  "problem": "Return id, score and CUME_DIST() OVER (ORDER BY score) AS fraction. Present rows by score, id. Equal scores share a fraction.",
+  "hint": "Count through the end of the tied group, divided by the partition size.",
+  "goal": "Use CUME_DIST() or an equivalent approach demonstrating the same premise.",
+  "category": "aggregation",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Ties",
+      "setup": "CREATE TABLE scores(id INTEGER,score INTEGER NOT NULL);INSERT INTO scores VALUES(1,10),(2,20),(3,20),(4,30);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "score",
+            "fraction"
+          ],
+          "values": [
+            [
+              1,
+              10,
+              0.25
+            ],
+            [
+              2,
+              20,
+              0.75
+            ],
+            [
+              3,
+              20,
+              0.75
+            ],
+            [
+              4,
+              30,
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "All tied",
+      "setup": "CREATE TABLE scores(id INTEGER,score INTEGER NOT NULL);INSERT INTO scores VALUES(2,-1),(1,-1);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "score",
+            "fraction"
+          ],
+          "values": [
+            [
+              1,
+              -1,
+              1
+            ],
+            [
+              2,
+              -1,
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE scores(id INTEGER,score INTEGER NOT NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "score",
+            "fraction"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}
