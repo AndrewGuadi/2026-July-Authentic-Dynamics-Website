@@ -1,0 +1,86 @@
+{
+  "language": "sql",
+  "date": "2026-10-02",
+  "method": "hex()",
+  "syntax": "hex(value)",
+  "summary": "hex returns uppercase hexadecimal text for the bytes of a blob.",
+  "documentation": "hex returns uppercase hexadecimal text for the bytes of a blob. For non-blob arguments SQLite first treats the value as text, so the hex of an integer describes its decimal text bytes rather than its binary integer representation.",
+  "inputs": "payloads(id INTEGER, data BLOB).",
+  "returns": "id and hex_text, ordered by id.",
+  "caution": "Hexadecimal encoding is reversible representation, not encryption. NULL produces an empty string in SQLite; this exercise uses only blobs and NULL.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#hex",
+  "docs_source": "SQLite",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Display binary import payloads safely in a debugging table.",
+    "Compare byte sequences in a file-format audit.",
+    "Render a short binary identifier as printable text in an export preview."
+  ],
+  "title": "Render payload bytes",
+  "problem": "Return id and hex(data) AS hex_text from payloads, ordered by id. Use uppercase hex with two digits per byte. Empty blobs and NULL both yield an empty string.",
+  "hint": "Apply hex directly to the blob, without casting it to a number.",
+  "goal": "Use hex() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Bytes",
+      "setup": "CREATE TABLE payloads(id INTEGER,data BLOB);INSERT INTO payloads VALUES(1,x'0041FF'),(2,x'abcdef');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "hex_text"
+          ],
+          "values": [
+            [
+              1,
+              "0041FF"
+            ],
+            [
+              2,
+              "ABCDEF"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty and null",
+      "setup": "CREATE TABLE payloads(id INTEGER,data BLOB);INSERT INTO payloads VALUES(1,x''),(2,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "hex_text"
+          ],
+          "values": [
+            [
+              1,
+              ""
+            ],
+            [
+              2,
+              ""
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE payloads(id INTEGER,data BLOB);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "hex_text"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

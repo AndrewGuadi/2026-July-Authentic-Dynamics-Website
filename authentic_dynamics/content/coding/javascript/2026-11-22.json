@@ -1,0 +1,49 @@
+{
+  "language": "javascript",
+  "date": "2026-11-22",
+  "method": "String.search()",
+  "syntax": "text.search(regexp)",
+  "summary": "search locates the first regular-expression match and returns its zero-based starting index.",
+  "documentation": "search locates the first regular-expression match and returns its zero-based starting index. No match returns -1. It reports a position rather than the full matching text, and it does not use a regex lastIndex as a starting offset.",
+  "inputs": "A string of ASCII text.",
+  "returns": "The first marker position or -1.",
+  "caution": "A pattern can match inside a larger token unless boundaries are specified. The marker grammar here deliberately permits substring matches.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/search",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Jump to the first structured error marker in a pasted log.",
+    "Highlight the first ticket reference in a support note.",
+    "Find the first expected code pattern during an import preview."
+  ],
+  "title": "Locate the first ticket marker",
+  "problem": "Return the starting index of the first substring matching uppercase T- followed by three ASCII digits. T-1234 contains a valid match T-123. Return -1 when no match exists.",
+  "hint": "Search for /T-[0-9]{3}/ without a global flag.",
+  "goal": "Use String.search() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "At start",
+      "input": "T-007 done",
+      "expected": 0
+    },
+    {
+      "name": "Later",
+      "input": "See T-1234",
+      "expected": 4
+    },
+    {
+      "name": "Invalid",
+      "input": "t-123 T-12",
+      "expected": -1
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": -1
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "language": "javascript",
+  "date": "2026-10-01",
+  "method": "String.toLowerCase()",
+  "syntax": "text.toLowerCase()",
+  "summary": "toLowerCase returns a new string with letters converted using Unicode default lowercase mappings.",
+  "documentation": "toLowerCase returns a new string with letters converted using Unicode default lowercase mappings. The source string stays unchanged. It is useful for agreed case-insensitive identifiers when the identifier grammar is defined separately.",
+  "inputs": "An array of ASCII tag strings.",
+  "returns": "Lowercase strings in the original order.",
+  "caution": "Lowercasing does not trim text, remove punctuation or perform Unicode normalization. Locale-sensitive naming may need toLocaleLowerCase and a clear locale policy.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/toLowerCase",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Normalize agreed ASCII status labels before comparison.",
+    "Create uniform internal tag labels from imported rows.",
+    "Make case-insensitive local search keys for ASCII codes."
+  ],
+  "title": "Normalize ASCII tags",
+  "problem": "Return a new array with each ASCII input string lowercased. Keep whitespace, punctuation, duplicates and ordering unchanged.",
+  "hint": "Map the method over the strings without adding trim.",
+  "goal": "Use String.toLowerCase() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Mixed",
+      "input": [
+        "Ready",
+        "AD-42"
+      ],
+      "expected": [
+        "ready",
+        "ad-42"
+      ]
+    },
+    {
+      "name": "Keep spaces",
+      "input": [
+        " A ",
+        "B!"
+      ],
+      "expected": [
+        " a ",
+        "b!"
+      ]
+    },
+    {
+      "name": "Already lower",
+      "input": [
+        "ok",
+        "ok"
+      ],
+      "expected": [
+        "ok",
+        "ok"
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

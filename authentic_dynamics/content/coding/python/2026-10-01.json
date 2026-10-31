@@ -1,0 +1,63 @@
+{
+  "language": "python",
+  "date": "2026-10-01",
+  "method": "str.upper()",
+  "syntax": "text.upper()",
+  "summary": "upper returns a new Unicode string with cased characters converted to uppercase.",
+  "documentation": "upper returns a new Unicode string with cased characters converted to uppercase. Nonletters generally remain unchanged. Unicode case mappings can change length, so the result need not have the same number of characters as the input.",
+  "inputs": "A list of strings.",
+  "returns": "An uppercase string for every input item.",
+  "caution": "Do not assume character positions are preserved: sharp s becomes SS. Uppercasing alone is not a complete policy for human-name matching or locale-sensitive identifiers.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.upper",
+  "docs_source": "Python",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Format approved status labels in a plain-text report.",
+    "Normalize agreed product-code letters before display.",
+    "Render consistent headings for an export preview."
+  ],
+  "title": "Uppercase report labels",
+  "problem": "Return every input string uppercased using Python Unicode semantics. Keep order, spaces and punctuation.",
+  "hint": "Apply upper to each string without trimming.",
+  "goal": "Use str.upper() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "ASCII",
+      "input": [
+        "ready",
+        "Ad-42"
+      ],
+      "expected": [
+        "READY",
+        "AD-42"
+      ]
+    },
+    {
+      "name": "Length change",
+      "input": [
+        "straße"
+      ],
+      "expected": [
+        "STRASSE"
+      ]
+    },
+    {
+      "name": "Keep whitespace",
+      "input": [
+        " a "
+      ],
+      "expected": [
+        " A "
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

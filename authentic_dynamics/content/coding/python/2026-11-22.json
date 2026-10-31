@@ -1,0 +1,82 @@
+{
+  "language": "python",
+  "date": "2026-11-22",
+  "method": "itertools.islice()",
+  "syntax": "islice(iterable, start, stop, step=1)",
+  "summary": "islice yields selected items from an iterable without first materializing the entire input.",
+  "documentation": "islice yields selected items from an iterable without first materializing the entire input. Start is inclusive and stop is exclusive. It consumes skipped items from an iterator, and negative indices are not supported.",
+  "inputs": "An object with items (list), start and stop (nonnegative integers).",
+  "returns": "Selected items as a JSON list.",
+  "caution": "islice advances its source iterator while consuming the result. It is not a reusable random-access view, and negative indexing requires another approach.",
+  "docs_url": "https://docs.python.org/3.12/library/itertools.html#itertools.islice",
+  "docs_source": "Python",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Take a page from a streamed local import.",
+    "Preview a limited range of generated report rows.",
+    "Skip a header segment before reading a small sample from an iterator."
+  ],
+  "title": "Take an iterator page",
+  "problem": "Input is {items, start, stop}, with nonnegative integer bounds. Return the items at positions start through stop-1. Return [] when start is at or beyond stop, and stop naturally at the end of items.",
+  "hint": "Convert islice(items, start, stop) to a list.",
+  "goal": "Use itertools.islice() or an equivalent approach demonstrating the same premise.",
+  "category": "arrays",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Middle",
+      "input": {
+        "items": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "start": 1,
+        "stop": 3
+      },
+      "expected": [
+        "b",
+        "c"
+      ]
+    },
+    {
+      "name": "Past end",
+      "input": {
+        "items": [
+          1,
+          2
+        ],
+        "start": 1,
+        "stop": 9
+      },
+      "expected": [
+        2
+      ]
+    },
+    {
+      "name": "Reversed bounds",
+      "input": {
+        "items": [
+          1,
+          2,
+          3
+        ],
+        "start": 2,
+        "stop": 1
+      },
+      "expected": []
+    },
+    {
+      "name": "Empty",
+      "input": {
+        "items": [],
+        "start": 0,
+        "stop": 3
+      },
+      "expected": []
+    }
+  ]
+}

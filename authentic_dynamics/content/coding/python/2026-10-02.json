@@ -1,0 +1,67 @@
+{
+  "language": "python",
+  "date": "2026-10-02",
+  "method": "float()",
+  "syntax": "float(text)",
+  "summary": "float converts supported numeric text to a binary floating-point number.",
+  "documentation": "float converts supported numeric text to a binary floating-point number. Surrounding whitespace and scientific notation are accepted. Invalid numeric text raises ValueError, while special strings can produce infinity or NaN.",
+  "inputs": "An array of strings representing finite numeric values of magnitude below one million.",
+  "returns": "A list of converted finite numbers.",
+  "caution": "Binary floating point is approximate and is unsuitable for exact decimal currency arithmetic without a deliberate representation policy. This problem excludes invalid and nonfinite text.",
+  "docs_url": "https://docs.python.org/3.12/library/functions.html#float",
+  "docs_source": "Python",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Import approximate sensor measurements from CSV text.",
+    "Convert duration fields in a local report preview.",
+    "Read scientific-notation measurements from an instrument export."
+  ],
+  "title": "Parse finite measurements",
+  "problem": "Convert each input string to a float and return the list. Inputs are valid finite numeric text, including surrounding spaces and exponent notation; no currency symbols or separators are supplied.",
+  "hint": "Use float on every string; do not strip exponent notation.",
+  "goal": "Use float() or an equivalent approach demonstrating the same premise.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Decimal",
+      "input": [
+        "2.5",
+        "-0.25"
+      ],
+      "expected": [
+        2.5,
+        -0.25
+      ]
+    },
+    {
+      "name": "Exponent",
+      "input": [
+        "1e2",
+        "-2E-1"
+      ],
+      "expected": [
+        100,
+        -0.2
+      ]
+    },
+    {
+      "name": "Whitespace",
+      "input": [
+        " 3 ",
+        "0"
+      ],
+      "expected": [
+        3,
+        0
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "language": "javascript",
+  "date": "2026-11-21",
+  "method": "Array.concat()",
+  "syntax": "array.concat(...values)",
+  "summary": "concat returns a new array containing the receiver followed by the supplied arguments.",
+  "documentation": "concat returns a new array containing the receiver followed by the supplied arguments. Array arguments contribute their elements one level deep; non-array arguments become single elements. It does not recursively flatten deeper nested arrays.",
+  "inputs": "An object with first and second arrays of JSON values.",
+  "returns": "A combined array, preserving nested items.",
+  "caution": "The copy is shallow: referenced objects remain shared. Unlike push, concat does not mutate the input array.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/concat",
+  "docs_source": "MDN",
+  "reviewed": "2026-10-31",
+  "scenarios": [
+    "Combine two locally fetched result pages.",
+    "Append a separate group of checklist items to a working list.",
+    "Join ordered batches of invoice-line previews without editing either batch."
+  ],
+  "title": "Combine two batches",
+  "problem": "Input is {first, second}. Return first followed by second. Preserve duplicates, objects, null values and nested arrays exactly as elements; do not recursively flatten.",
+  "hint": "Pass second as one array argument to first.concat.",
+  "goal": "Use Array.concat() or an equivalent approach demonstrating the same premise.",
+  "category": "arrays",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Ordinary",
+      "input": {
+        "first": [
+          1,
+          2
+        ],
+        "second": [
+          3
+        ]
+      },
+      "expected": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "name": "Nested",
+      "input": {
+        "first": [
+          [
+            1
+          ]
+        ],
+        "second": [
+          [
+            2
+          ],
+          null
+        ]
+      },
+      "expected": [
+        [
+          1
+        ],
+        [
+          2
+        ],
+        null
+      ]
+    },
+    {
+      "name": "Duplicates",
+      "input": {
+        "first": [
+          "a"
+        ],
+        "second": [
+          "a"
+        ]
+      },
+      "expected": [
+        "a",
+        "a"
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": {
+        "first": [],
+        "second": []
+      },
+      "expected": []
+    }
+  ]
+}
