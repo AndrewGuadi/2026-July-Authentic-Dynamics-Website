@@ -1,0 +1,86 @@
+{
+  "language": "sql",
+  "date": "2026-09-29",
+  "method": "julianday()",
+  "syntax": "julianday(time_value)",
+  "summary": "julianday converts a supported date or time value to a fractional day count in the Julian day system.",
+  "documentation": "julianday converts a supported date or time value to a fractional day count in the Julian day system. Subtracting two values gives an elapsed number of days, making signed calendar-date intervals straightforward.",
+  "inputs": "spans(id INTEGER, starts TEXT, ends TEXT), containing valid YYYY-MM-DD dates or NULL.",
+  "returns": "id and days, ordered by id.",
+  "caution": "The result is a floating-point count of days, not a human calendar description. Local daylight-saving hours are not represented by these date-only intervals.",
+  "docs_url": "https://www.sqlite.org/lang_datefunc.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Calculate the calendar-day span of a rental report.",
+    "Measure signed schedule slippage between two explicit dates.",
+    "Compare dated project milestones across leap days and year boundaries."
+  ],
+  "title": "Measure signed date intervals",
+  "problem": "Return id and julianday(ends)-julianday(starts) AS days from spans, ordered by id. Equal dates yield zero, reversed dates yield a negative interval, and a missing endpoint yields NULL.",
+  "hint": "Convert both endpoints before subtracting; do not subtract their text.",
+  "goal": "Use julianday() or an equivalent approach demonstrating the same premise.",
+  "category": "numbers",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Leap interval",
+      "setup": "CREATE TABLE spans(id INTEGER,starts TEXT,ends TEXT);INSERT INTO spans VALUES(1,'2024-02-28','2024-03-01');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "days"
+          ],
+          "values": [
+            [
+              1,
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Signed and null",
+      "setup": "CREATE TABLE spans(id INTEGER,starts TEXT,ends TEXT);INSERT INTO spans VALUES(1,'2026-11-03','2026-11-01'),(2,'2026-11-01','2026-11-01'),(3,NULL,'2026-11-01');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "days"
+          ],
+          "values": [
+            [
+              1,
+              -2
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              3,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE spans(id INTEGER,starts TEXT,ends TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "days"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

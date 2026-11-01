@@ -1,0 +1,81 @@
+{
+  "language": "javascript",
+  "date": "2026-09-27",
+  "method": "String.includes()",
+  "syntax": "text.includes(searchString)",
+  "summary": "String.includes tests whether a literal substring occurs in a string and returns a Boolean.",
+  "documentation": "String.includes tests whether a literal substring occurs in a string and returns a Boolean. The search is case-sensitive and does not interpret regular-expression characters. The empty string is included in every string.",
+  "inputs": "An object with texts (array of strings) and needle (string).",
+  "returns": "One Boolean per text in input order.",
+  "caution": "This checks substrings, not whole words or array membership. Passing a regular expression is an error; this exercise always supplies a string.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/includes",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Flag notes containing an agreed literal status marker.",
+    "Check filenames for a particular embedded label.",
+    "Preview substring matches while a user types in a local filter."
+  ],
+  "title": "Find literal markers",
+  "problem": "Input is {texts, needle}. Return a Boolean for each string indicating whether it contains needle. Keep matching case-sensitive and treat punctuation literally; an empty needle matches every text.",
+  "hint": "Map text.includes(needle) over texts.",
+  "goal": "Use String.includes() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Literal",
+      "input": {
+        "texts": [
+          "a.b",
+          "axb",
+          "."
+        ],
+        "needle": "."
+      },
+      "expected": [
+        true,
+        false,
+        true
+      ]
+    },
+    {
+      "name": "Case",
+      "input": {
+        "texts": [
+          "READY",
+          "ready"
+        ],
+        "needle": "ready"
+      },
+      "expected": [
+        false,
+        true
+      ]
+    },
+    {
+      "name": "Empty needle",
+      "input": {
+        "texts": [
+          "",
+          "a"
+        ],
+        "needle": ""
+      },
+      "expected": [
+        true,
+        true
+      ]
+    },
+    {
+      "name": "No texts",
+      "input": {
+        "texts": [],
+        "needle": "x"
+      },
+      "expected": []
+    }
+  ]
+}

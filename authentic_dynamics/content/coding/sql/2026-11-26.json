@@ -1,0 +1,103 @@
+{
+  "language": "sql",
+  "date": "2026-11-26",
+  "method": "EXCLUDE CURRENT ROW",
+  "syntax": "SUM(points) OVER (PARTITION BY team ORDER BY id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING EXCLUDE CURRENT ROW)",
+  "summary": "A window frame can exclude the current row after its boundaries are established.",
+  "documentation": "A window frame can exclude the current row after its boundaries are established. Summing a full team partition with EXCLUDE CURRENT ROW gives each row the total of other rows, without a self join or subtracting its own possibly NULL value.",
+  "inputs": "scores(id INTEGER, team TEXT NOT NULL, points INTEGER).",
+  "returns": "id, team and other_points, ordered by team then id.",
+  "caution": "SUM ignores NULL points and returns NULL when no contributing numeric rows remain. Excluding the current row differs from excluding all tied peers.",
+  "docs_url": "https://www.sqlite.org/windowfunctions.html#the_exclude_clause",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Compare an individual contribution with the rest of a team.",
+    "Show the total value of other items in a grouped quote.",
+    "Calculate leave-one-out totals in a local analysis report."
+  ],
+  "title": "Sum the other contributions",
+  "problem": "For each score, return id, team and the sum of all other rows in that team AS other_points. Use a full-partition ROWS frame with EXCLUDE CURRENT ROW. Preserve SUM’s NULL behavior and order by team, id.",
+  "hint": "Exclude the row in the frame; subtracting from a total mishandles NULL points.",
+  "goal": "Use EXCLUDE CURRENT ROW or an equivalent approach demonstrating the same premise.",
+  "category": "aggregation",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Teams",
+      "setup": "CREATE TABLE scores(id INTEGER,team TEXT NOT NULL,points INTEGER);INSERT INTO scores VALUES(1,'A',2),(2,'A',5),(3,'B',9);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "team",
+            "other_points"
+          ],
+          "values": [
+            [
+              1,
+              "A",
+              5
+            ],
+            [
+              2,
+              "A",
+              2
+            ],
+            [
+              3,
+              "B",
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Null points",
+      "setup": "CREATE TABLE scores(id INTEGER,team TEXT NOT NULL,points INTEGER);INSERT INTO scores VALUES(1,'A',NULL),(2,'A',4),(3,'A',NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "team",
+            "other_points"
+          ],
+          "values": [
+            [
+              1,
+              "A",
+              4
+            ],
+            [
+              2,
+              "A",
+              null
+            ],
+            [
+              3,
+              "A",
+              4
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE scores(id INTEGER,team TEXT NOT NULL,points INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "team",
+            "other_points"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

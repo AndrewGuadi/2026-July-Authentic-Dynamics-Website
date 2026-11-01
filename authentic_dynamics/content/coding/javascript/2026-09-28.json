@@ -1,0 +1,85 @@
+{
+  "language": "javascript",
+  "date": "2026-09-28",
+  "method": "Math.abs()",
+  "syntax": "Math.abs(number)",
+  "summary": "Math.abs returns a number’s absolute value, removing its sign.",
+  "documentation": "Math.abs returns a number’s absolute value, removing its sign. Subtracting two measurements and taking the absolute value gives their nonnegative distance on a number line without requiring a particular input order.",
+  "inputs": "An array of pairs of small finite numbers.",
+  "returns": "The absolute difference for each pair.",
+  "caution": "Math.abs can coerce nonnumeric inputs. This task supplies numbers only; real form input needs deliberate parsing and finite-value validation.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/abs",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Compare a measured dimension with its target tolerance.",
+    "Report the magnitude of a signed stock-count discrepancy.",
+    "Show a coordinate distance along one axis in a layout tool."
+  ],
+  "title": "Measure absolute differences",
+  "problem": "For each pair [actual, target], return the nonnegative difference magnitude. Values and differences are finite, with magnitude below one million. Preserve pair order.",
+  "hint": "Subtract the pair’s values before applying Math.abs.",
+  "goal": "Use Math.abs() or an equivalent approach demonstrating the same premise.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Either order",
+      "input": [
+        [
+          8,
+          3
+        ],
+        [
+          3,
+          8
+        ]
+      ],
+      "expected": [
+        5,
+        5
+      ]
+    },
+    {
+      "name": "Signed",
+      "input": [
+        [
+          -4,
+          2
+        ],
+        [
+          -4,
+          -1
+        ]
+      ],
+      "expected": [
+        6,
+        3
+      ]
+    },
+    {
+      "name": "Equal",
+      "input": [
+        [
+          0,
+          0
+        ],
+        [
+          2.5,
+          2.5
+        ]
+      ],
+      "expected": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

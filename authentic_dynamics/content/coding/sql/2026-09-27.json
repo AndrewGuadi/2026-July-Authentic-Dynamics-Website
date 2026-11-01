@@ -1,0 +1,86 @@
+{
+  "language": "sql",
+  "date": "2026-09-27",
+  "method": "date() with day modifiers",
+  "syntax": "date(text, '+7 days')",
+  "summary": "date returns an ISO calendar-date string after applying modifiers from left to right.",
+  "documentation": "date returns an ISO calendar-date string after applying modifiers from left to right. Adding a fixed number of days can cross month, year and leap-day boundaries without manually changing the day-of-month field.",
+  "inputs": "tasks(id INTEGER, opened TEXT), with valid YYYY-MM-DD dates or NULL.",
+  "returns": "id and follow_up, ordered by id.",
+  "caution": "A fixed day offset is different from adding a calendar month. This task uses explicit dates and no now or localtime dependency.",
+  "docs_url": "https://www.sqlite.org/lang_datefunc.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Generate a seven-day follow-up date from an opening date.",
+    "Compute a fixed return deadline in a local report.",
+    "Shift a dated checklist reminder across a month boundary."
+  ],
+  "title": "Schedule a seven-day follow-up",
+  "problem": "Return id and date(opened,'+7 days') AS follow_up from tasks, ordered by id. NULL opened dates stay NULL.",
+  "hint": "Use a day modifier rather than adding seven to a text value.",
+  "goal": "Use date() with day modifiers or an equivalent approach demonstrating the same premise.",
+  "category": "querying",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Boundaries",
+      "setup": "CREATE TABLE tasks(id INTEGER,opened TEXT);INSERT INTO tasks VALUES(1,'2026-12-28'),(2,'2024-02-23');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "follow_up"
+          ],
+          "values": [
+            [
+              1,
+              "2027-01-04"
+            ],
+            [
+              2,
+              "2024-03-01"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Ordinary and null",
+      "setup": "CREATE TABLE tasks(id INTEGER,opened TEXT);INSERT INTO tasks VALUES(1,'2026-11-01'),(2,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "follow_up"
+          ],
+          "values": [
+            [
+              1,
+              "2026-11-08"
+            ],
+            [
+              2,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE tasks(id INTEGER,opened TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "follow_up"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

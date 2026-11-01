@@ -1,0 +1,63 @@
+{
+  "language": "python",
+  "date": "2026-11-26",
+  "method": "date.weekday()",
+  "syntax": "date.weekday()",
+  "summary": "weekday returns an integer from zero through six, with Monday as zero and Sunday as six.",
+  "documentation": "weekday returns an integer from zero through six, with Monday as zero and Sunday as six. It operates on a calendar date rather than a time instant, so there is no timezone conversion involved in classifying a supplied date.",
+  "inputs": "A list of valid YYYY-MM-DD calendar-date strings.",
+  "returns": "Weekday numbers, Monday=0 through Sunday=6.",
+  "caution": "isoweekday uses one through seven instead. A calendar date has no time zone; converting timestamps to local dates should happen separately before using this method.",
+  "docs_url": "https://docs.python.org/3.12/library/datetime.html#datetime.date.weekday",
+  "docs_source": "Python",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Assign dated tasks to weekday columns in a planner.",
+    "Separate weekday and weekend service dates in a report.",
+    "Generate local scheduling labels from explicit business dates."
+  ],
+  "title": "Classify calendar weekdays",
+  "problem": "Parse each valid YYYY-MM-DD string as a date, then return its weekday number using Monday=0 and Sunday=6. Preserve order; invalid strings are outside this problem.",
+  "hint": "Use date.fromisoformat(text).weekday().",
+  "goal": "Use date.weekday() or an equivalent approach demonstrating the same premise.",
+  "category": "numbers",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Week boundary",
+      "input": [
+        "2026-11-01",
+        "2026-11-02"
+      ],
+      "expected": [
+        6,
+        0
+      ]
+    },
+    {
+      "name": "Leap day",
+      "input": [
+        "2024-02-29"
+      ],
+      "expected": [
+        3
+      ]
+    },
+    {
+      "name": "Weekend",
+      "input": [
+        "2026-09-26"
+      ],
+      "expected": [
+        5
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

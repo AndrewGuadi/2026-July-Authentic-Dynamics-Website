@@ -1,0 +1,54 @@
+{
+  "language": "javascript",
+  "date": "2026-09-29",
+  "method": "encodeURIComponent()",
+  "syntax": "encodeURIComponent(text)",
+  "summary": "encodeURIComponent percent-encodes a string as a URI component using UTF-8.",
+  "documentation": "encodeURIComponent percent-encodes a string as a URI component using UTF-8. Reserved URL separators such as slash, question mark and ampersand are encoded, so the result can represent one value rather than changing URL structure.",
+  "inputs": "A well-formed Unicode string, with no lone surrogate code units.",
+  "returns": "An encoded component string.",
+  "caution": "This encodes a component rather than a complete URL. It is not HTML escaping, encryption or validation of a destination; spaces become %20 rather than the plus used by some form encodings.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Encode one search value when constructing a documented URL.",
+    "Represent a filename as one path segment.",
+    "Preserve ampersands inside a filter value instead of starting another parameter."
+  ],
+  "title": "Encode one URL component",
+  "problem": "Return encodeURIComponent(input). Encode reserved separators and spaces, keep JavaScript’s standard unescaped component characters, and support well-formed Unicode. Do not encode an entire assembled URL.",
+  "hint": "Apply the global encodeURIComponent function once to the raw value.",
+  "goal": "Use encodeURIComponent() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Separators",
+      "input": "a/b?x=1&y=2",
+      "expected": "a%2Fb%3Fx%3D1%26y%3D2"
+    },
+    {
+      "name": "Space and plus",
+      "input": "a b+c",
+      "expected": "a%20b%2Bc"
+    },
+    {
+      "name": "Unicode",
+      "input": "café",
+      "expected": "caf%C3%A9"
+    },
+    {
+      "name": "Unescaped",
+      "input": "AZ-_.!~*'()",
+      "expected": "AZ-_.!~*'()"
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": ""
+    }
+  ]
+}

@@ -1,0 +1,106 @@
+{
+  "language": "javascript",
+  "date": "2026-11-24",
+  "method": "Map.has()",
+  "syntax": "map.has(key)",
+  "summary": "Map.has checks whether a key exists independently of the value stored there.",
+  "documentation": "Map.has checks whether a key exists independently of the value stored there. This distinguishes an absent setting from a present key whose value is null, false or zero. Map keys use SameValueZero equality and object keys compare by identity.",
+  "inputs": "An object with pairs (string-key/value pairs) and queries (array of string keys).",
+  "returns": "A Boolean for each queried key.",
+  "caution": "Testing get(key) for truthiness confuses presence with a falsey value. This exercise uses strings as keys and plain JSON values.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/has",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Distinguish an explicitly disabled feature from an unconfigured option.",
+    "Check whether a local cache has an entry even when the cached result is null.",
+    "Identify known imported keys before choosing a fallback value."
+  ],
+  "title": "Check key presence",
+  "problem": "Build a Map from input.pairs. For each string in input.queries, return whether that key exists, regardless of its stored value. Preserve query order.",
+  "hint": "Use has rather than Boolean(get(key)).",
+  "goal": "Use Map.has() or an equivalent approach demonstrating the same premise.",
+  "category": "objects",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Falsey values",
+      "input": {
+        "pairs": [
+          [
+            "a",
+            0
+          ],
+          [
+            "b",
+            false
+          ],
+          [
+            "c",
+            null
+          ]
+        ],
+        "queries": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ]
+      },
+      "expected": [
+        true,
+        true,
+        true,
+        false
+      ]
+    },
+    {
+      "name": "Inherited-looking keys",
+      "input": {
+        "pairs": [
+          [
+            "toString",
+            null
+          ]
+        ],
+        "queries": [
+          "toString",
+          "constructor"
+        ]
+      },
+      "expected": [
+        true,
+        false
+      ]
+    },
+    {
+      "name": "Case",
+      "input": {
+        "pairs": [
+          [
+            "A",
+            1
+          ]
+        ],
+        "queries": [
+          "a",
+          "A"
+        ]
+      },
+      "expected": [
+        false,
+        true
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": {
+        "pairs": [],
+        "queries": []
+      },
+      "expected": []
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "language": "sql",
+  "date": "2026-11-25",
+  "method": "IS DISTINCT FROM",
+  "syntax": "left_value IS DISTINCT FROM right_value",
+  "summary": "IS DISTINCT FROM compares values while treating NULL as a comparable missing value.",
+  "documentation": "IS DISTINCT FROM compares values while treating NULL as a comparable missing value. Two NULL values are not distinct; exactly one NULL is distinct. The result is always a Boolean integer rather than an unknown NULL comparison result.",
+  "inputs": "changes(id INTEGER, before TEXT, after TEXT), containing text or NULL.",
+  "returns": "id and changed, ordered by id.",
+  "caution": "Ordinary != produces NULL when either operand is NULL, which can hide changes in filters. Collations and type affinity affect other comparisons; this exercise uses the default text collation.",
+  "docs_url": "https://www.sqlite.org/lang_expr.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Detect edits from a missing value to a filled value.",
+    "Audit imported before/after text including cleared fields.",
+    "Compare nullable staging columns without silently losing NULL transitions."
+  ],
+  "title": "Compare nullable field changes",
+  "problem": "Return id and before IS DISTINCT FROM after AS changed from changes, ordered by id. Return 1 for different text or a one-sided NULL, and 0 for equal text or two NULLs.",
+  "hint": "Use the NULL-aware distinctness operator rather than !=.",
+  "goal": "Use IS DISTINCT FROM or an equivalent approach demonstrating the same premise.",
+  "category": "conditions",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Ordinary",
+      "setup": "CREATE TABLE changes(id INTEGER,before TEXT,after TEXT);INSERT INTO changes VALUES(1,'a','a'),(2,'a','b');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "changed"
+          ],
+          "values": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Missing",
+      "setup": "CREATE TABLE changes(id INTEGER,before TEXT,after TEXT);INSERT INTO changes VALUES(1,NULL,NULL),(2,NULL,''),(3,'a',NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "changed"
+          ],
+          "values": [
+            [
+              1,
+              0
+            ],
+            [
+              2,
+              1
+            ],
+            [
+              3,
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE changes(id INTEGER,before TEXT,after TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "changed"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

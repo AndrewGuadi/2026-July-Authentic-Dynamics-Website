@@ -1,0 +1,67 @@
+{
+  "language": "python",
+  "date": "2026-09-29",
+  "method": "str.removesuffix()",
+  "syntax": "text.removesuffix(suffix)",
+  "summary": "removesuffix returns the string without one exact matching suffix, or returns the original content when the suffix is absent.",
+  "documentation": "removesuffix returns the string without one exact matching suffix, or returns the original content when the suffix is absent. It compares the complete suffix rather than treating its characters as a set.",
+  "inputs": "A list of filename strings.",
+  "returns": "Names with one exact lowercase .csv suffix removed when present.",
+  "caution": "Matching is case-sensitive. rstrip(\".csv\") removes any trailing combination of those characters and can damage a filename; removesuffix does not.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.removesuffix",
+  "docs_source": "Python",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Turn approved CSV filenames into report labels.",
+    "Remove one documented marker from an export name.",
+    "Strip a known filename extension before displaying a local import group."
+  ],
+  "title": "Remove an exact export suffix",
+  "problem": "For each filename, remove exactly one trailing lowercase .csv if present. Keep uppercase .CSV, interior .csv text, and all other characters unchanged.",
+  "hint": "Map removesuffix(\".csv\") over the names.",
+  "goal": "Use str.removesuffix() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Matching",
+      "input": [
+        "orders.csv",
+        "backup.csv.csv"
+      ],
+      "expected": [
+        "orders",
+        "backup.csv"
+      ]
+    },
+    {
+      "name": "Case and interior",
+      "input": [
+        "A.CSV",
+        "x.csv.tmp"
+      ],
+      "expected": [
+        "A.CSV",
+        "x.csv.tmp"
+      ]
+    },
+    {
+      "name": "Exact",
+      "input": [
+        ".csv",
+        "csv"
+      ],
+      "expected": [
+        "",
+        "csv"
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}
