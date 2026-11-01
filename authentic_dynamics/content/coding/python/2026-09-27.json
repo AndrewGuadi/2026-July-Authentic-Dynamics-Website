@@ -1,0 +1,54 @@
+{
+  "language": "python",
+  "date": "2026-09-27",
+  "method": "str.isalpha()",
+  "syntax": "text.isalpha()",
+  "summary": "isalpha checks whether a string is nonempty and every character is classified as an alphabetic letter by Python’s Unicode rules.",
+  "documentation": "isalpha checks whether a string is nonempty and every character is classified as an alphabetic letter by Python’s Unicode rules. It accepts letters beyond ASCII but rejects spaces, digits and punctuation.",
+  "inputs": "A string.",
+  "returns": "True for a nonempty letter-only string, otherwise False.",
+  "caution": "Human names often contain spaces, apostrophes and hyphens, so this is not a suitable general name validator. Decomposed combining marks can also make the result false.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.isalpha",
+  "docs_source": "Python",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Classify letter-only tokens in an import preview.",
+    "Separate alphabetic prefixes from numeric or punctuated labels.",
+    "Teach the difference between Unicode letters and ASCII-only checks."
+  ],
+  "title": "Classify letter-only tokens",
+  "problem": "Return whether input is a nonempty string containing only Unicode letters according to str.isalpha. Do not trim, normalize or remove punctuation.",
+  "hint": "Apply isalpha directly to the original string.",
+  "goal": "Use str.isalpha() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "ASCII",
+      "input": "Ready",
+      "expected": true
+    },
+    {
+      "name": "Unicode",
+      "input": "café",
+      "expected": true
+    },
+    {
+      "name": "Combining mark",
+      "input": "é",
+      "expected": false
+    },
+    {
+      "name": "Space",
+      "input": "two words",
+      "expected": false
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": false
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+{
+  "language": "sql",
+  "date": "2026-11-24",
+  "method": "group_concat()",
+  "syntax": "group_concat(value, separator) OVER (PARTITION BY team ORDER BY id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)",
+  "summary": "group_concat joins non-NULL values with a separator.",
+  "documentation": "group_concat joins non-NULL values with a separator. An explicitly ordered full-partition window gives every row in a team the same deterministic concatenation, after which DISTINCT can return one summary per team.",
+  "inputs": "members(id INTEGER, team TEXT NOT NULL, name TEXT), with distinct ids and names containing no pipe character.",
+  "returns": "team and names, one row per team, ordered by team.",
+  "caution": "Concatenation order is not guaranteed without ordering the aggregate input or window. NULL names are skipped; a team with only NULL names gets NULL. This is not a lossless format when names can contain the separator.",
+  "docs_url": "https://www.sqlite.org/lang_aggfunc.html#group_concat",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Create an ordered team roster label for a report.",
+    "Preview a sequence of approved category names in one cell.",
+    "Build a compact list of imported labels while skipping missing values."
+  ],
+  "title": "Join ordered team names",
+  "problem": "Return one row per team with names joined by | in ascending id order, skipping NULL names. Name the columns team and names, and order teams alphabetically. Use a full-partition ordered window and DISTINCT to retain teams with all NULL names.",
+  "hint": "Apply group_concat as an ordered window before selecting distinct team summaries.",
+  "goal": "Use group_concat() or an equivalent approach demonstrating the same premise.",
+  "category": "aggregation",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Order and skip",
+      "setup": "CREATE TABLE members(id INTEGER,team TEXT NOT NULL,name TEXT);INSERT INTO members VALUES(3,'A','Ben'),(1,'A','Ann'),(2,'A',NULL),(4,'B','Cal');",
+      "expected": [
+        {
+          "columns": [
+            "team",
+            "names"
+          ],
+          "values": [
+            [
+              "A",
+              "Ann|Ben"
+            ],
+            [
+              "B",
+              "Cal"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Null and empty",
+      "setup": "CREATE TABLE members(id INTEGER,team TEXT NOT NULL,name TEXT);INSERT INTO members VALUES(1,'A',NULL),(2,'B',''),(3,'B','Z');",
+      "expected": [
+        {
+          "columns": [
+            "team",
+            "names"
+          ],
+          "values": [
+            [
+              "A",
+              null
+            ],
+            [
+              "B",
+              "|Z"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE members(id INTEGER,team TEXT NOT NULL,name TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "team",
+            "names"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

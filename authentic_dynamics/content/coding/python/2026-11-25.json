@@ -1,0 +1,54 @@
+{
+  "language": "python",
+  "date": "2026-11-25",
+  "method": "re.fullmatch()",
+  "syntax": "re.fullmatch(pattern, text)",
+  "summary": "fullmatch returns a match object only when the entire string matches the pattern.",
+  "documentation": "fullmatch returns a match object only when the entire string matches the pattern. Otherwise it returns None. Converting the result to bool gives an explicit validation outcome without depending on partial matches or anchor conventions.",
+  "inputs": "A string.",
+  "returns": "True only for the complete agreed code format.",
+  "caution": "Use [0-9] when the grammar requires ASCII digits; Unicode-aware \\d is broader. This is format validation, not proof that a code exists or is authorized.",
+  "docs_url": "https://docs.python.org/3.12/library/re.html#re.fullmatch",
+  "docs_source": "Python",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Check a documented reference-code format in an import preview.",
+    "Validate a local form’s agreed ASCII identifier grammar.",
+    "Detect accidental leading or trailing text around an inventory code."
+  ],
+  "title": "Validate a complete code",
+  "problem": "Return whether the entire input matches two uppercase ASCII letters, a hyphen, and exactly three ASCII digits, such as AB-007. Reject spaces, lowercase letters, Unicode digits and trailing newlines.",
+  "hint": "Use fullmatch with [A-Z]{2}-[0-9]{3}, then return bool(result).",
+  "goal": "Use re.fullmatch() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Valid",
+      "input": "AB-007",
+      "expected": true
+    },
+    {
+      "name": "Trailing newline",
+      "input": "AB-007\n",
+      "expected": false
+    },
+    {
+      "name": "Lowercase",
+      "input": "Ab-007",
+      "expected": false
+    },
+    {
+      "name": "Unicode digits",
+      "input": "AB-１２３",
+      "expected": false
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": false
+    }
+  ]
+}

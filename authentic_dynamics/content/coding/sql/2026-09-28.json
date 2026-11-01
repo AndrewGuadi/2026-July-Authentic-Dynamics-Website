@@ -1,0 +1,86 @@
+{
+  "language": "sql",
+  "date": "2026-09-28",
+  "method": "strftime()",
+  "syntax": "strftime(format, time_value)",
+  "summary": "strftime formats a supported SQLite time value according to conversion codes.",
+  "documentation": "strftime formats a supported SQLite time value according to conversion codes. With %Y-%m it returns a sortable year-month label, suitable for grouping explicit calendar dates by reporting period.",
+  "inputs": "events(id INTEGER, occurred TEXT), containing valid YYYY-MM-DD dates or NULL.",
+  "returns": "id and month_key, ordered by id.",
+  "caution": "The returned month key is text, not a complete date. Timezone modifiers can change timestamp boundaries; this exercise supplies dates only and applies none.",
+  "docs_url": "https://www.sqlite.org/lang_datefunc.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Attach reporting-month labels to imported event dates.",
+    "Build sortable month keys for a local archive.",
+    "Prepare monthly grouping fields without discarding the original dates."
+  ],
+  "title": "Build calendar-month keys",
+  "problem": "Return id and strftime('%Y-%m',occurred) AS month_key from events, ordered by id. NULL dates produce NULL.",
+  "hint": "Use the four-digit year and two-digit month conversion codes.",
+  "goal": "Use strftime() or an equivalent approach demonstrating the same premise.",
+  "category": "querying",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Year boundary",
+      "setup": "CREATE TABLE events(id INTEGER,occurred TEXT);INSERT INTO events VALUES(1,'2026-12-31'),(2,'2027-01-01');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "month_key"
+          ],
+          "values": [
+            [
+              1,
+              "2026-12"
+            ],
+            [
+              2,
+              "2027-01"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Leap and null",
+      "setup": "CREATE TABLE events(id INTEGER,occurred TEXT);INSERT INTO events VALUES(1,'2024-02-29'),(2,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "month_key"
+          ],
+          "values": [
+            [
+              1,
+              "2024-02"
+            ],
+            [
+              2,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE events(id INTEGER,occurred TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "month_key"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "language": "javascript",
+  "date": "2026-11-26",
+  "method": "Array.from()",
+  "syntax": "Array.from(arrayLike, mapFn)",
+  "summary": "Array.from creates an array from an iterable or an array-like object.",
+  "documentation": "Array.from creates an array from an iterable or an array-like object. With a length-only object, its mapping callback is called for each index, making it convenient to generate a bounded sequence without creating a sparse array.",
+  "inputs": "An object with integer start, step and count; count is 0..20 and outputs are small integers.",
+  "returns": "Exactly count generated numbers.",
+  "caution": "new Array(count).map skips unfilled slots, unlike Array.from with a mapping callback. Bound the length before accepting arbitrary external input.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Generate tick values for a small chart axis.",
+    "Produce a numbered checklist preview starting at a chosen offset.",
+    "Build a sequence of ordered page offsets for a local paginator."
+  ],
+  "title": "Generate a bounded sequence",
+  "problem": "Input is {start, step, count}. Return count numbers, where item i equals start + i * step. A negative step descends; step zero repeats the start; count zero returns [].",
+  "hint": "Use an array-like length object and the mapping callback’s index.",
+  "goal": "Use Array.from() or an equivalent approach demonstrating the same premise.",
+  "category": "arrays",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Ascending",
+      "input": {
+        "start": 3,
+        "step": 2,
+        "count": 4
+      },
+      "expected": [
+        3,
+        5,
+        7,
+        9
+      ]
+    },
+    {
+      "name": "Descending",
+      "input": {
+        "start": 2,
+        "step": -2,
+        "count": 3
+      },
+      "expected": [
+        2,
+        0,
+        -2
+      ]
+    },
+    {
+      "name": "Repeated",
+      "input": {
+        "start": 5,
+        "step": 0,
+        "count": 3
+      },
+      "expected": [
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "name": "Zero",
+      "input": {
+        "start": 3,
+        "step": 1,
+        "count": 0
+      },
+      "expected": []
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "language": "python",
+  "date": "2026-09-28",
+  "method": "math.trunc()",
+  "syntax": "math.trunc(number)",
+  "summary": "trunc removes the fractional part of a finite number by moving toward zero.",
+  "documentation": "trunc removes the fractional part of a finite number by moving toward zero. For positive values it agrees with floor, while for negative values it agrees with ceil. Its result is an integer for the numeric inputs used here.",
+  "inputs": "A list of finite numbers with magnitude below one million.",
+  "returns": "A list of integers truncated toward zero.",
+  "caution": "Truncation is not rounding to the nearest integer and is not floor for negative values. NaN and infinity require different handling and are excluded.",
+  "docs_url": "https://docs.python.org/3.12/library/math.html#math.trunc",
+  "docs_source": "Python",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Count whole signed units from a fractional measurement.",
+    "Display an elapsed whole-unit count without rounding upward.",
+    "Separate the integer part of imported signed data during a preview."
+  ],
+  "title": "Remove fractional parts",
+  "problem": "Return each finite input number truncated toward zero. Preserve order. For example -2.9 becomes -2, not -3.",
+  "hint": "Import trunc from math; do not substitute floor.",
+  "goal": "Use math.trunc() or an equivalent approach demonstrating the same premise.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Signed",
+      "input": [
+        2.9,
+        -2.9
+      ],
+      "expected": [
+        2,
+        -2
+      ]
+    },
+    {
+      "name": "Near zero",
+      "input": [
+        -0.9,
+        0.9
+      ],
+      "expected": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "Integers",
+      "input": [
+        0,
+        -4,
+        7
+      ],
+      "expected": [
+        0,
+        -4,
+        7
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

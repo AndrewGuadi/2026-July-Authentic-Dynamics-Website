@@ -1,0 +1,63 @@
+{
+  "language": "javascript",
+  "date": "2026-11-25",
+  "method": "String.normalize()",
+  "syntax": "text.normalize(\"NFC\")",
+  "summary": "normalize converts a string to a chosen Unicode normalization form.",
+  "documentation": "normalize converts a string to a chosen Unicode normalization form. NFC composes canonically equivalent sequences when possible, allowing a precomposed accent and its decomposed letter-plus-mark representation to share the same representation.",
+  "inputs": "An array of well-formed Unicode strings.",
+  "returns": "An array normalized to NFC in the same order.",
+  "caution": "Normalization is not lowercasing, accent removal or a complete name-matching policy. NFC preserves compatibility distinctions that NFKC may fold, including presentation ligatures.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/normalize",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Normalize imported text before comparing canonical spellings.",
+    "Avoid duplicate local tags caused only by decomposed accents.",
+    "Prepare consistent string representations before storing agreed text keys."
+  ],
+  "title": "Normalize canonical spellings",
+  "problem": "Return each input string normalized to NFC. Preserve order, case and accents; do not apply compatibility normalization or trim whitespace.",
+  "hint": "Call normalize with the explicit form NFC.",
+  "goal": "Use String.normalize() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Accent forms",
+      "input": [
+        "é",
+        "é"
+      ],
+      "expected": [
+        "é",
+        "é"
+      ]
+    },
+    {
+      "name": "Case and whitespace",
+      "input": [
+        " É "
+      ],
+      "expected": [
+        " É "
+      ]
+    },
+    {
+      "name": "Compatibility retained",
+      "input": [
+        "ﬀ"
+      ],
+      "expected": [
+        "ﬀ"
+      ]
+    },
+    {
+      "name": "Empty list",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

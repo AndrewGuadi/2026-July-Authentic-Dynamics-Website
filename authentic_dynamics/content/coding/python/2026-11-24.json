@@ -1,0 +1,65 @@
+{
+  "language": "python",
+  "date": "2026-11-24",
+  "method": "itertools.pairwise()",
+  "syntax": "pairwise(iterable)",
+  "summary": "pairwise yields overlapping adjacent pairs: positions zero and one, then one and two, and so on.",
+  "documentation": "pairwise yields overlapping adjacent pairs: positions zero and one, then one and two, and so on. The output contains one fewer item than a nonempty input, and inputs shorter than two items produce no pairs.",
+  "inputs": "A list of small integers.",
+  "returns": "The signed change between each item and its immediate predecessor.",
+  "caution": "Pairs overlap; this is not disjoint grouping or a Cartesian product. Materialize the calculated differences into a list for JSON output.",
+  "docs_url": "https://docs.python.org/3.12/library/itertools.html#itertools.pairwise",
+  "docs_source": "Python",
+  "reviewed": "2026-11-01",
+  "scenarios": [
+    "Calculate changes between consecutive meter readings.",
+    "Measure gaps between ordered event counters.",
+    "Build a local sequence of day-to-day balance changes."
+  ],
+  "title": "Calculate adjacent changes",
+  "problem": "For input [a,b,c,...], return [b-a,c-b,...]. Preserve signs. Empty input and a single value return [].",
+  "hint": "Import pairwise and subtract the first member of each pair from the second.",
+  "goal": "Use itertools.pairwise() or an equivalent approach demonstrating the same premise.",
+  "category": "arrays",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Mixed changes",
+      "input": [
+        10,
+        13,
+        8
+      ],
+      "expected": [
+        3,
+        -5
+      ]
+    },
+    {
+      "name": "Repeated",
+      "input": [
+        4,
+        4,
+        4
+      ],
+      "expected": [
+        0,
+        0
+      ]
+    },
+    {
+      "name": "One",
+      "input": [
+        7
+      ],
+      "expected": []
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}
