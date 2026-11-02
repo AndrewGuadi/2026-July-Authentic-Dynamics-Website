@@ -7,8 +7,18 @@ const keys = ['booth', 'labor', 'other', 'sale', 'cost', 'fee', 'transactions', 
 const money = cents => (cents / 100).toLocaleString('en-US', {style: 'currency', currency: 'USD'});
 const count = value => value === null ? 'Not reachable' : value.toLocaleString('en-US');
 let report = '';
+let revision = 0;
+const copyFallback = document.getElementById('copy-fallback');
+const copyText = document.getElementById('copy-text');
+
+function clearCopyFallback() {
+  revision += 1;
+  copyFallback.hidden = true;
+  copyText.value = '';
+}
 
 function invalidate(message) {
+  clearCopyFallback();
   result.hidden = true;
   report = '';
   status.textContent = message;
@@ -17,6 +27,7 @@ form.addEventListener('input', () => invalidate('Numbers changed. Calculate to u
 form.addEventListener('reset', () => invalidate('Cleared. Enter your numbers or load the illustrative example.'));
 form.addEventListener('submit', event => {
   event.preventDefault();
+  clearCopyFallback();
   if (!form.reportValidity()) return;
   const values = Object.fromEntries(keys.map(key => [key, document.getElementById(key).valueAsNumber]));
   try {
@@ -54,6 +65,24 @@ document.getElementById('example').addEventListener('click', () => {
   const sample = [150, 200, 50, 15, 5, 3, 100, 300];
   keys.forEach((key, index) => { document.getElementById(key).value = sample[index]; });
   invalidate('Illustrative example loaded, not a local market forecast. Adjust the numbers, then calculate.');
+});
+document.getElementById('copy-estimate').addEventListener('click', async () => {
+  if (!report) return;
+  clearCopyFallback();
+  const currentRevision = revision;
+  const currentReport = report;
+  try {
+    await navigator.clipboard.writeText(currentReport);
+    if (revision !== currentRevision) return;
+    status.textContent = 'Estimate copied, including your inputs and limitations. Paste it into a message or note.';
+  } catch {
+    if (revision !== currentRevision) return;
+    copyText.value = currentReport;
+    copyFallback.hidden = false;
+    copyText.focus();
+    copyText.select();
+    status.textContent = 'Automatic copying is unavailable. Copy the selected text below using your device’s Copy command, or download the estimate.';
+  }
 });
 document.getElementById('download').addEventListener('click', () => {
   if (!report) return;
