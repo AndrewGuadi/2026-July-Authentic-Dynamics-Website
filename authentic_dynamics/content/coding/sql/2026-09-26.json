@@ -1,0 +1,73 @@
+{
+  "language": "sql",
+  "date": "2026-09-26",
+  "method": "GLOB",
+  "syntax": "text GLOB pattern",
+  "summary": "GLOB performs case-sensitive Unix-style wildcard matching.",
+  "documentation": "GLOB performs case-sensitive Unix-style wildcard matching. A bracket class such as [0-9] matches one character from a range, and the pattern describes the whole string unless wildcard characters extend it. It is not a regular expression or SQL LIKE pattern.",
+  "inputs": "files(id INTEGER, name TEXT).",
+  "returns": "Matching ids, ordered by id.",
+  "caution": "GLOB uses * and ? rather than LIKE’s % and _. NULL input does not pass a WHERE predicate, and case sensitivity is intentional here.",
+  "docs_url": "https://www.sqlite.org/lang_expr.html#the_like_glob_regexp_match_and_extract_operators",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Filter documented import filenames by an ASCII code shape.",
+    "Select a local staging subset with a case-sensitive naming convention.",
+    "Find two-digit export references without relying on a regex extension."
+  ],
+  "title": "Filter an exact filename shape",
+  "problem": "Return ids whose name matches exactly INV- followed by two ASCII digits. Use GLOB 'INV-[0-9][0-9]' and order by id. Reject extra characters, lowercase prefixes and NULL.",
+  "hint": "Bracket ranges match one character each; do not add * to the pattern.",
+  "goal": "Use GLOB or an equivalent approach demonstrating the same premise.",
+  "category": "conditions",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Exact",
+      "setup": "CREATE TABLE files(id INTEGER,name TEXT);INSERT INTO files VALUES(1,'INV-07'),(2,'INV-7'),(3,'INV-007');",
+      "expected": [
+        {
+          "columns": [
+            "id"
+          ],
+          "values": [
+            [
+              1
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Case and null",
+      "setup": "CREATE TABLE files(id INTEGER,name TEXT);INSERT INTO files VALUES(1,'inv-07'),(2,NULL),(3,'INV-99'),(4,'INV-１２');",
+      "expected": [
+        {
+          "columns": [
+            "id"
+          ],
+          "values": [
+            [
+              3
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE files(id INTEGER,name TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

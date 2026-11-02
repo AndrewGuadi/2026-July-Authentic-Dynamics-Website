@@ -1,0 +1,73 @@
+{
+  "language": "javascript",
+  "date": "2026-09-25",
+  "method": "Boolean()",
+  "syntax": "Boolean(value)",
+  "summary": "Boolean applies JavaScript truthiness rules and returns a primitive Boolean.",
+  "documentation": "Boolean applies JavaScript truthiness rules and returns a primitive Boolean. Zero, empty strings, null and false are falsey among JSON values. Arrays and objects are truthy even when empty, unlike Python’s empty-container rules.",
+  "inputs": "A list of JSON values.",
+  "returns": "One truth-value Boolean for each input item.",
+  "caution": "Boolean(\"false\") is true because the string is nonempty. This does not parse textual configuration labels, and new Boolean creates an object rather than the primitive used here.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean/Boolean",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Convert a local expression result into an explicit flag.",
+    "Explain why empty collections still pass a JavaScript truth check.",
+    "Audit form-preview logic that mixes string labels and Boolean values."
+  ],
+  "title": "Apply JavaScript truth-value rules",
+  "problem": "Return Boolean(item) for every input value in order. Empty arrays and objects must be true; the string false is also true. Do not interpret text labels.",
+  "hint": "Call Boolean as a function, without new.",
+  "goal": "Use Boolean() or an equivalent approach demonstrating the same premise.",
+  "category": "conditions",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Falsey",
+      "input": [
+        0,
+        "",
+        null,
+        false
+      ],
+      "expected": [
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "name": "Empty containers",
+      "input": [
+        [],
+        {}
+      ],
+      "expected": [
+        true,
+        true
+      ]
+    },
+    {
+      "name": "Nonempty text",
+      "input": [
+        "false",
+        "0",
+        " "
+      ],
+      "expected": [
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "name": "Empty list",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "language": "javascript",
+  "date": "2026-11-27",
+  "method": "Object.groupBy()",
+  "syntax": "Object.groupBy(items, callback)",
+  "summary": "Object.groupBy calls a grouping callback for each iterable item and collects original items into arrays under the returned property keys.",
+  "documentation": "Object.groupBy calls a grouping callback for each iterable item and collects original items into arrays under the returned property keys. Group members preserve input order. The returned object has a null prototype, avoiding inherited object-property names.",
+  "inputs": "A list of records with string team and integer id.",
+  "returns": "An object mapping team names to arrays of complete records.",
+  "caution": "The groups contain the original object references, not deep copies. A null-prototype result does not have an inherited hasOwnProperty method; use Object.hasOwn when checking keys.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/groupBy",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Group locally loaded jobs by assigned team.",
+    "Organize imported tasks into status sections without sorting each group.",
+    "Build a report preview containing all records for each category."
+  ],
+  "title": "Group records without losing order",
+  "problem": "Group the input records by team. Keep every complete record and preserve order within each team, including duplicates. Return an empty object for no records.",
+  "hint": "Return Object.groupBy(value, item => item.team).",
+  "goal": "Use Object.groupBy() or an equivalent approach demonstrating the same premise.",
+  "category": "objects",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Interleaved",
+      "input": [
+        {
+          "team": "A",
+          "id": 1
+        },
+        {
+          "team": "B",
+          "id": 2
+        },
+        {
+          "team": "A",
+          "id": 3
+        }
+      ],
+      "expected": {
+        "A": [
+          {
+            "team": "A",
+            "id": 1
+          },
+          {
+            "team": "A",
+            "id": 3
+          }
+        ],
+        "B": [
+          {
+            "team": "B",
+            "id": 2
+          }
+        ]
+      }
+    },
+    {
+      "name": "Duplicate",
+      "input": [
+        {
+          "team": "A",
+          "id": 1
+        },
+        {
+          "team": "A",
+          "id": 1
+        }
+      ],
+      "expected": {
+        "A": [
+          {
+            "team": "A",
+            "id": 1
+          },
+          {
+            "team": "A",
+            "id": 1
+          }
+        ]
+      }
+    },
+    {
+      "name": "Empty key",
+      "input": [
+        {
+          "team": "",
+          "id": 0
+        }
+      ],
+      "expected": {
+        "": [
+          {
+            "team": "",
+            "id": 0
+          }
+        ]
+      }
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": {}
+    }
+  ]
+}

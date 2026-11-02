@@ -1,0 +1,69 @@
+{
+  "language": "javascript",
+  "date": "2026-09-24",
+  "method": "String.trimStart()",
+  "syntax": "text.trimStart()",
+  "summary": "trimStart returns a copy with leading ECMAScript whitespace and line terminators removed.",
+  "documentation": "trimStart returns a copy with leading ECMAScript whitespace and line terminators removed. Whitespace inside the string and at its end remains intact, which is useful when only an imported left margin should be discarded.",
+  "inputs": "A list of strings.",
+  "returns": "Strings with leading whitespace removed, in input order.",
+  "caution": "trim removes both ends and would lose intentional trailing spaces. Whitespace includes more than the ordinary space character; this is not a method for removing an arbitrary prefix.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trimStart",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Remove accidental leading whitespace from pasted labels while retaining suffix padding.",
+    "Clean left margins in imported fixed-width notes.",
+    "Prepare a preview of text with meaningful trailing separators or spaces."
+  ],
+  "title": "Remove only the left margin",
+  "problem": "For each input string, remove leading whitespace using JavaScript trimStart rules. Preserve all internal and trailing whitespace.",
+  "hint": "Map trimStart rather than trim over the strings.",
+  "goal": "Use String.trimStart() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Preserve right",
+      "input": [
+        "  A  ",
+        " B C "
+      ],
+      "expected": [
+        "A  ",
+        "B C "
+      ]
+    },
+    {
+      "name": "Line and tab",
+      "input": [
+        "\n\tX\t"
+      ],
+      "expected": [
+        "X\t"
+      ]
+    },
+    {
+      "name": "Unicode space",
+      "input": [
+        " X "
+      ],
+      "expected": [
+        "X "
+      ]
+    },
+    {
+      "name": "Only whitespace",
+      "input": [
+        " \t",
+        ""
+      ],
+      "expected": [
+        "",
+        ""
+      ]
+    }
+  ]
+}

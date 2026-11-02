@@ -1,0 +1,73 @@
+{
+  "language": "javascript",
+  "date": "2026-09-26",
+  "method": "Number.isSafeInteger()",
+  "syntax": "Number.isSafeInteger(value)",
+  "summary": "isSafeInteger requires a numeric integer within the inclusive range from -(2^53-1) to 2^53-1.",
+  "documentation": "isSafeInteger requires a numeric integer within the inclusive range from -(2^53-1) to 2^53-1. Within this range, integers have an unambiguous exact Number representation; the method also rejects fractional values and nonnumbers without coercion.",
+  "inputs": "A list of JSON values.",
+  "returns": "A Boolean indicating whether each value is a safe integer.",
+  "caution": "JSON numeric parsing may already have rounded a larger identifier before this check. Preserve oversized identifiers as strings rather than assuming a false result can recover lost digits.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isSafeInteger",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Check integer counters before exact arithmetic in a browser tool.",
+    "Flag imported numeric identifiers that should use a string representation.",
+    "Validate a numeric quantity before passing it to an integer-only operation."
+  ],
+  "title": "Check exact integer representation",
+  "problem": "Return Number.isSafeInteger for each input value. Numeric strings, Booleans, null and fractional numbers are not safe integers for this problem.",
+  "hint": "Use the non-coercing Number method, not a conversion followed by an integer test.",
+  "goal": "Use Number.isSafeInteger() or an equivalent approach demonstrating the same premise.",
+  "category": "numbers",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Bounds",
+      "input": [
+        9007199254740991,
+        9007199254740992
+      ],
+      "expected": [
+        true,
+        false
+      ]
+    },
+    {
+      "name": "Negative bounds",
+      "input": [
+        -9007199254740991,
+        -9007199254740992
+      ],
+      "expected": [
+        true,
+        false
+      ]
+    },
+    {
+      "name": "Types",
+      "input": [
+        4,
+        4.5,
+        "4",
+        true,
+        null
+      ],
+      "expected": [
+        true,
+        false,
+        false,
+        false,
+        false
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

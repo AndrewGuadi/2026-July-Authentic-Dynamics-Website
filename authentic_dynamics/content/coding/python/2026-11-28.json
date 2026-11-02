@@ -1,0 +1,69 @@
+{
+  "language": "python",
+  "date": "2026-11-28",
+  "method": "Decimal.quantize()",
+  "syntax": "Decimal(text).quantize(Decimal(\"0.01\"), rounding=ROUND_HALF_UP)",
+  "summary": "Decimal constructed from a string preserves its decimal digits without first converting through binary floating point.",
+  "documentation": "Decimal constructed from a string preserves its decimal digits without first converting through binary floating point. quantize rounds to a chosen exponent; an explicit ROUND_HALF_UP rule resolves exact halfway cases away from zero.",
+  "inputs": "A list of finite decimal strings with small magnitudes and at most six fractional digits.",
+  "returns": "Two-decimal-place strings after half-up rounding.",
+  "caution": "Use the application’s agreed rounding policy rather than assuming all systems share this rule. Constructing Decimal from a float carries the float’s approximation. Decimal can preserve a negative zero sign.",
+  "docs_url": "https://docs.python.org/3.12/library/decimal.html#decimal.Decimal.quantize",
+  "docs_source": "Python",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Format an imported decimal amount under an explicitly agreed rounding rule.",
+    "Compare exact halfway cases in a billing preview.",
+    "Generate reproducible decimal fixtures without binary-float conversion."
+  ],
+  "title": "Round decimal text explicitly",
+  "problem": "Convert each decimal string directly to Decimal, quantize to 0.01 with ROUND_HALF_UP, and return fixed-point strings with exactly two decimal places. Preserve a negative-zero sign if rounding produces one.",
+  "hint": "Import Decimal and ROUND_HALF_UP; format each quantized result with f.",
+  "goal": "Use Decimal.quantize() or an equivalent approach demonstrating the same premise.",
+  "category": "numbers",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Halfway",
+      "input": [
+        "2.345",
+        "-2.345"
+      ],
+      "expected": [
+        "2.35",
+        "-2.35"
+      ]
+    },
+    {
+      "name": "Padding",
+      "input": [
+        "1",
+        "1.2",
+        "0"
+      ],
+      "expected": [
+        "1.00",
+        "1.20",
+        "0.00"
+      ]
+    },
+    {
+      "name": "Signed zero",
+      "input": [
+        "-0.001",
+        "0.004"
+      ],
+      "expected": [
+        "-0.00",
+        "0.00"
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": []
+    }
+  ]
+}

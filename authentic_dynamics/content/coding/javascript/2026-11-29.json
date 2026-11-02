@@ -1,0 +1,65 @@
+{
+  "language": "javascript",
+  "date": "2026-11-29",
+  "method": "String.replace()",
+  "syntax": "text.replace(searchString, replacement)",
+  "summary": "With a string search value, replace substitutes only the first matching occurrence and returns a new string.",
+  "documentation": "With a string search value, replace substitutes only the first matching occurrence and returns a new string. A replacement function can return literal text without interpreting dollar-sign substitution patterns in the replacement value.",
+  "inputs": "An object with text, needle and replacement strings; needle is nonempty.",
+  "returns": "The string after one literal replacement, or the original when absent.",
+  "caution": "A replacement string interprets tokens such as $&. This exercise treats replacement text literally by returning it from a function. replaceAll would change too many occurrences.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Replace one placeholder in a preview while leaving later copies visible.",
+    "Edit the first occurrence of a label in a local template.",
+    "Apply one literal substitution supplied by a user without dollar-token expansion."
+  ],
+  "title": "Replace one occurrence literally",
+  "problem": "Replace only the first exact, case-sensitive occurrence of needle in text with the literal replacement value. Treat dollar signs and backslashes as ordinary replacement characters. Needle is nonempty.",
+  "hint": "Pass a function returning replacement as the second argument.",
+  "goal": "Use String.replace() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Return the requested result.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Only first",
+      "input": {
+        "text": "x-x-x",
+        "needle": "x",
+        "replacement": "A"
+      },
+      "expected": "A-x-x"
+    },
+    {
+      "name": "Dollar text",
+      "input": {
+        "text": "one two",
+        "needle": "one",
+        "replacement": "$&"
+      },
+      "expected": "$& two"
+    },
+    {
+      "name": "Missing",
+      "input": {
+        "text": "AD",
+        "needle": "ad",
+        "replacement": "x"
+      },
+      "expected": "AD"
+    },
+    {
+      "name": "Empty replacement",
+      "input": {
+        "text": "aab",
+        "needle": "a",
+        "replacement": ""
+      },
+      "expected": "ab"
+    }
+  ]
+}

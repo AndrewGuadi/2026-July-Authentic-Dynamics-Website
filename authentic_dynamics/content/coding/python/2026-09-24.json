@@ -1,0 +1,61 @@
+{
+  "language": "python",
+  "date": "2026-09-24",
+  "method": "str.rfind()",
+  "syntax": "text.rfind(substring)",
+  "summary": "rfind returns the starting index of the last matching substring.",
+  "documentation": "rfind returns the starting index of the last matching substring. A missing substring returns -1, and an empty substring matches at the end. It reports a position without changing the string or reversing its characters.",
+  "inputs": "An object with text and needle strings.",
+  "returns": "The final matching position, or -1.",
+  "caution": "The returned index is in the original string. A result of zero is a successful match, so do not treat truthiness as a presence check.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.rfind",
+  "docs_source": "Python",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Find the final separator in an imported path-like label.",
+    "Locate the last marker in a local diagnostic line.",
+    "Identify the trailing occurrence of a repeated token in a preview."
+  ],
+  "title": "Locate the final substring",
+  "problem": "Input is {text, needle}. Return the start index of the last occurrence of needle, or -1 when missing. An empty needle returns len(text).",
+  "hint": "Return text.rfind(needle) directly.",
+  "goal": "Use str.rfind() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Repeated",
+      "input": {
+        "text": "a-b-a",
+        "needle": "a"
+      },
+      "expected": 4
+    },
+    {
+      "name": "At zero",
+      "input": {
+        "text": "ab",
+        "needle": "a"
+      },
+      "expected": 0
+    },
+    {
+      "name": "Missing",
+      "input": {
+        "text": "ab",
+        "needle": "z"
+      },
+      "expected": -1
+    },
+    {
+      "name": "Empty needle",
+      "input": {
+        "text": "abc",
+        "needle": ""
+      },
+      "expected": 3
+    }
+  ]
+}

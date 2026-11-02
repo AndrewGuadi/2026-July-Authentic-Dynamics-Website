@@ -1,0 +1,59 @@
+{
+  "language": "python",
+  "date": "2026-09-26",
+  "method": "str.splitlines()",
+  "syntax": "text.splitlines()",
+  "summary": "splitlines separates text at recognized line boundaries and, by default, removes the boundary characters.",
+  "documentation": "splitlines separates text at recognized line boundaries and, by default, removes the boundary characters. It understands LF, CR and CRLF, among other Unicode boundaries. A final line break does not add an extra trailing empty item.",
+  "inputs": "A text string.",
+  "returns": "A list of lines without their line-ending characters.",
+  "caution": "Internal blank lines remain empty strings. Empty text returns [], unlike splitting an empty string on a literal newline. This is not whitespace-token splitting.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.splitlines",
+  "docs_source": "Python",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Read pasted notes with mixed operating-system line endings.",
+    "Preview imported line-oriented identifiers without trailing terminators.",
+    "Preserve blank lines when displaying a local multiline message."
+  ],
+  "title": "Split mixed line endings",
+  "problem": "Return input.splitlines() with line endings removed. Preserve internal blank lines, but do not add an extra empty line solely because the text ends in a line break.",
+  "hint": "Use splitlines rather than split(\"\\n\") or split().",
+  "goal": "Use str.splitlines() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Mixed",
+      "input": "a\r\nb\nc\r",
+      "expected": [
+        "a",
+        "b",
+        "c"
+      ]
+    },
+    {
+      "name": "Blank line",
+      "input": "a\n\nb",
+      "expected": [
+        "a",
+        "",
+        "b"
+      ]
+    },
+    {
+      "name": "Final break",
+      "input": "a\n",
+      "expected": [
+        "a"
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": "",
+      "expected": []
+    }
+  ]
+}
