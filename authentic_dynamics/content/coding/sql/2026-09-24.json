@@ -1,0 +1,90 @@
+{
+  "language": "sql",
+  "date": "2026-09-24",
+  "method": "|| concatenation",
+  "syntax": "left_text || right_text",
+  "summary": "The || operator concatenates two values as text.",
+  "documentation": "The || operator concatenates two values as text. If either operand is NULL, the combined result is NULL, making a missing component visible rather than silently producing a partial display key.",
+  "inputs": "refs(id INTEGER, prefix TEXT, number TEXT).",
+  "returns": "id and display_key, ordered by id.",
+  "caution": "Delimiter-based display keys are not automatically unique or suitable database primary keys. Use COALESCE deliberately if a different missing-value policy is needed.",
+  "docs_url": "https://www.sqlite.org/lang_expr.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Build a display reference from an approved prefix and local number.",
+    "Combine code parts in a staging report while retaining missing-value signals.",
+    "Show a complete composite label only when both required parts exist."
+  ],
+  "title": "Combine required text components",
+  "problem": "Return id and prefix || ':' || number AS display_key from refs, ordered by id. Missing either component yields NULL. Keep empty strings and numeric-looking text unchanged.",
+  "hint": "Join all three parts with || and allow NULL to propagate.",
+  "goal": "Use || concatenation or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Ordinary",
+      "setup": "CREATE TABLE refs(id INTEGER,prefix TEXT,number TEXT);INSERT INTO refs VALUES(1,'AD','007'),(2,'X','0');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "display_key"
+          ],
+          "values": [
+            [
+              1,
+              "AD:007"
+            ],
+            [
+              2,
+              "X:0"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Missing and empty",
+      "setup": "CREATE TABLE refs(id INTEGER,prefix TEXT,number TEXT);INSERT INTO refs VALUES(1,NULL,'2'),(2,'A',NULL),(3,'','');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "display_key"
+          ],
+          "values": [
+            [
+              1,
+              null
+            ],
+            [
+              2,
+              null
+            ],
+            [
+              3,
+              ":"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE refs(id INTEGER,prefix TEXT,number TEXT);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "display_key"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

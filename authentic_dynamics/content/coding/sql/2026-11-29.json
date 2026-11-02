@@ -1,0 +1,113 @@
+{
+  "language": "sql",
+  "date": "2026-11-29",
+  "method": "Moving AVG() with a ROWS frame",
+  "syntax": "AVG(value) OVER (PARTITION BY device ORDER BY id ROWS BETWEEN 1 PRECEDING AND CURRENT ROW)",
+  "summary": "An aggregate window with a bounded ROWS frame can summarize a moving set of neighboring records without collapsing rows.",
+  "documentation": "An aggregate window with a bounded ROWS frame can summarize a moving set of neighboring records without collapsing rows. A one-preceding frame averages the current row and at most one previous row within the device partition.",
+  "inputs": "readings(id INTEGER, device TEXT NOT NULL, value INTEGER), with distinct ids.",
+  "returns": "id, device and moving_average, ordered by device then id.",
+  "caution": "ROWS counts records, not elapsed days or a numeric distance in the ordering key. AVG ignores NULL values and returns NULL when every value in the current frame is NULL.",
+  "docs_url": "https://www.sqlite.org/windowfunctions.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Smooth a local sequence of sensor observations over two records.",
+    "Show a small moving average beside ordered report rows.",
+    "Compare recent measurements without merging separate devices."
+  ],
+  "title": "Average the latest two records",
+  "problem": "Return id, device and AVG(value) over the current and immediately preceding row of each device AS moving_average. Order device rows by id and output by device, id. Preserve AVG’s NULL behavior.",
+  "hint": "Use ROWS BETWEEN 1 PRECEDING AND CURRENT ROW rather than an unbounded frame.",
+  "goal": "Use Moving AVG() with a ROWS frame or an equivalent approach demonstrating the same premise.",
+  "category": "aggregation",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Partitions and gaps",
+      "setup": "CREATE TABLE readings(id INTEGER,device TEXT NOT NULL,value INTEGER);INSERT INTO readings VALUES(1,'A',2),(9,'A',6),(10,'A',10),(11,'B',5);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "moving_average"
+          ],
+          "values": [
+            [
+              1,
+              "A",
+              2
+            ],
+            [
+              9,
+              "A",
+              4
+            ],
+            [
+              10,
+              "A",
+              8
+            ],
+            [
+              11,
+              "B",
+              5
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Null frames",
+      "setup": "CREATE TABLE readings(id INTEGER,device TEXT NOT NULL,value INTEGER);INSERT INTO readings VALUES(1,'A',NULL),(2,'A',4),(3,'A',NULL),(4,'A',NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "moving_average"
+          ],
+          "values": [
+            [
+              1,
+              "A",
+              null
+            ],
+            [
+              2,
+              "A",
+              4
+            ],
+            [
+              3,
+              "A",
+              4
+            ],
+            [
+              4,
+              "A",
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE readings(id INTEGER,device TEXT NOT NULL,value INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "moving_average"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

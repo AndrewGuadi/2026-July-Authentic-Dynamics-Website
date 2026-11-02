@@ -1,0 +1,65 @@
+{
+  "language": "python",
+  "date": "2026-09-25",
+  "method": "pow() with modulus",
+  "syntax": "pow(base, exponent, modulus)",
+  "summary": "The three-argument form of pow computes a modular power without constructing the full potentially huge integer power first.",
+  "documentation": "The three-argument form of pow computes a modular power without constructing the full potentially huge integer power first. For nonnegative integer exponents and a positive modulus, the result is the remainder in the range zero through modulus minus one.",
+  "inputs": "An object with integer base, nonnegative integer exponent and positive integer modulus, all small enough for exact JSON input.",
+  "returns": "The modular-power integer result.",
+  "caution": "This arithmetic primitive alone is not a secure cryptographic protocol. The exercise excludes zero or negative moduli and negative exponents, whose rules differ.",
+  "docs_url": "https://docs.python.org/3.12/library/functions.html#pow",
+  "docs_source": "Python",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Compute a cyclic counter’s repeated multiplier under a fixed modulus.",
+    "Explore a small modular-arithmetic teaching example.",
+    "Verify bounded modular results in a local number-theory exercise."
+  ],
+  "title": "Compute a modular power",
+  "problem": "Return pow(base, exponent, modulus). Exponent is 0..100 and modulus is 1..1000. Base may be negative. Avoid constructing a giant intermediate power.",
+  "hint": "Use all three arguments of pow.",
+  "goal": "Use pow() with modulus or an equivalent approach demonstrating the same premise.",
+  "category": "numbers",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Ordinary",
+      "input": {
+        "base": 3,
+        "exponent": 4,
+        "modulus": 7
+      },
+      "expected": 4
+    },
+    {
+      "name": "Negative base",
+      "input": {
+        "base": -2,
+        "exponent": 3,
+        "modulus": 5
+      },
+      "expected": 2
+    },
+    {
+      "name": "Zero exponent",
+      "input": {
+        "base": 0,
+        "exponent": 0,
+        "modulus": 7
+      },
+      "expected": 1
+    },
+    {
+      "name": "Modulus one",
+      "input": {
+        "base": 8,
+        "exponent": 20,
+        "modulus": 1
+      },
+      "expected": 0
+    }
+  ]
+}

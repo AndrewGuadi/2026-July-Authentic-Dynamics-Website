@@ -1,0 +1,103 @@
+{
+  "language": "sql",
+  "date": "2026-11-27",
+  "method": "NTH_VALUE()",
+  "syntax": "NTH_VALUE(value, n) OVER (PARTITION BY team ORDER BY id ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING)",
+  "summary": "NTH_VALUE returns the expression from the nth row of the current window frame, counting from one.",
+  "documentation": "NTH_VALUE returns the expression from the nth row of the current window frame, counting from one. A full-partition frame can repeat a selected observation beside every row, and a missing nth row produces NULL.",
+  "inputs": "readings(id INTEGER, team TEXT NOT NULL, value INTEGER), with distinct ids.",
+  "returns": "id, team and second_value, ordered by team then id.",
+  "caution": "The chosen row follows the window ordering, not numeric value order. A NULL value in an existing second row stays NULL, just like a missing second row.",
+  "docs_url": "https://www.sqlite.org/windowfunctions.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Repeat a second baseline observation beside later readings.",
+    "Attach a chosen ordered checkpoint to each row in a report.",
+    "Compare records with a fixed position in their local group."
+  ],
+  "title": "Repeat the second observation",
+  "problem": "For every row, return id, team and the second value by ascending id within its team AS second_value. Use a full-partition ROWS frame and order output by team, id.",
+  "hint": "Pass 2 to NTH_VALUE and end the frame at UNBOUNDED FOLLOWING.",
+  "goal": "Use NTH_VALUE() or an equivalent approach demonstrating the same premise.",
+  "category": "aggregation",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Second and singleton",
+      "setup": "CREATE TABLE readings(id INTEGER,team TEXT NOT NULL,value INTEGER);INSERT INTO readings VALUES(1,'A',9),(2,'A',4),(3,'A',7),(4,'B',2);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "team",
+            "second_value"
+          ],
+          "values": [
+            [
+              1,
+              "A",
+              4
+            ],
+            [
+              2,
+              "A",
+              4
+            ],
+            [
+              3,
+              "A",
+              4
+            ],
+            [
+              4,
+              "B",
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Second null",
+      "setup": "CREATE TABLE readings(id INTEGER,team TEXT NOT NULL,value INTEGER);INSERT INTO readings VALUES(1,'A',1),(2,'A',NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "team",
+            "second_value"
+          ],
+          "values": [
+            [
+              1,
+              "A",
+              null
+            ],
+            [
+              2,
+              "A",
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE readings(id INTEGER,team TEXT NOT NULL,value INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "team",
+            "second_value"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

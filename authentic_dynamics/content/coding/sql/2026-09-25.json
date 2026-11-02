@@ -1,0 +1,86 @@
+{
+  "language": "sql",
+  "date": "2026-09-25",
+  "method": "printf()",
+  "syntax": "printf(format, value, ...)",
+  "summary": "SQLite printf formats values using a documented format string and returns text.",
+  "documentation": "SQLite printf formats values using a documented format string and returns text. A decimal integer format can include zero padding and a minimum field width, allowing numeric values to be displayed as consistent short codes.",
+  "inputs": "items(id INTEGER, serial INTEGER NOT NULL), with serial in 0..99999.",
+  "returns": "id and code, ordered by id.",
+  "caution": "Field width is a minimum, not a truncation limit. Formatting does not validate the identifier or change its stored numeric value. This task uses nonnegative integers only.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#printf",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Format a serial number in a local inventory report.",
+    "Produce a consistent short numeric label for a print preview.",
+    "Align exported integer codes without changing their stored values."
+  ],
+  "title": "Format minimum-width serials",
+  "problem": "Return id and printf('%04d',serial) AS code from items, ordered by id. Use at least four decimal digits, padding with zeroes on the left; larger values remain complete.",
+  "hint": "Use the format string %04d.",
+  "goal": "Use printf() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Padding",
+      "setup": "CREATE TABLE items(id INTEGER,serial INTEGER NOT NULL);INSERT INTO items VALUES(1,7),(2,42);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "code"
+          ],
+          "values": [
+            [
+              1,
+              "0007"
+            ],
+            [
+              2,
+              "0042"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Zero and longer",
+      "setup": "CREATE TABLE items(id INTEGER,serial INTEGER NOT NULL);INSERT INTO items VALUES(1,0),(2,12345);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "code"
+          ],
+          "values": [
+            [
+              1,
+              "0000"
+            ],
+            [
+              2,
+              "12345"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE items(id INTEGER,serial INTEGER NOT NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "code"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

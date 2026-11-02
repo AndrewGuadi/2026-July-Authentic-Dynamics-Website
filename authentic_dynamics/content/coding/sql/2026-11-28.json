@@ -1,0 +1,93 @@
+{
+  "language": "sql",
+  "date": "2026-11-28",
+  "method": "PERCENT_RANK()",
+  "syntax": "PERCENT_RANK() OVER (ORDER BY score)",
+  "summary": "PERCENT_RANK computes (rank-1)/(partition_size-1) for a row’s peer group.",
+  "documentation": "PERCENT_RANK computes (rank-1)/(partition_size-1) for a row’s peer group. Tied values share a result, and a one-row partition returns zero. It differs from CUME_DIST, which counts through the end of a peer group.",
+  "inputs": "scores(id INTEGER, score INTEGER NOT NULL), with distinct ids.",
+  "returns": "id, score and position, ordered by score then id.",
+  "caution": "Keep id out of the window ORDER BY so equal scores remain peers. The result measures relative rank within the observed sample, not a probability or a percentile interpolation formula.",
+  "docs_url": "https://www.sqlite.org/windowfunctions.html",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Show a score’s relative rank within a local sample.",
+    "Compare ordered bid positions while preserving ties.",
+    "Explain how tied observations differ under two distribution functions."
+  ],
+  "title": "Measure relative competition rank",
+  "problem": "Return id, score and PERCENT_RANK() OVER (ORDER BY score) AS position. Present rows by score, id. Tied scores share position; a singleton gets zero.",
+  "hint": "Use score for ranking and id only for final output ordering.",
+  "goal": "Use PERCENT_RANK() or an equivalent approach demonstrating the same premise.",
+  "category": "aggregation",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Ties",
+      "setup": "CREATE TABLE scores(id INTEGER,score INTEGER NOT NULL);INSERT INTO scores VALUES(1,10),(2,20),(3,20);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "score",
+            "position"
+          ],
+          "values": [
+            [
+              1,
+              10,
+              0
+            ],
+            [
+              2,
+              20,
+              0.5
+            ],
+            [
+              3,
+              20,
+              0.5
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Singleton",
+      "setup": "CREATE TABLE scores(id INTEGER,score INTEGER NOT NULL);INSERT INTO scores VALUES(7,-1);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "score",
+            "position"
+          ],
+          "values": [
+            [
+              7,
+              -1,
+              0
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE scores(id INTEGER,score INTEGER NOT NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "score",
+            "position"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

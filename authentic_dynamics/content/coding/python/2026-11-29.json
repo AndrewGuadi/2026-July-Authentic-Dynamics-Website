@@ -1,0 +1,68 @@
+{
+  "language": "python",
+  "date": "2026-11-29",
+  "method": "math.gcd()",
+  "syntax": "math.gcd(*integers)",
+  "summary": "gcd returns the greatest common divisor of its integer arguments as a nonnegative integer.",
+  "documentation": "gcd returns the greatest common divisor of its integer arguments as a nonnegative integer. Zeros and negative inputs are supported; all-zero inputs return zero, and calling it without arguments also returns zero.",
+  "inputs": "A list of small integers.",
+  "returns": "The nonnegative greatest common divisor.",
+  "caution": "A greatest common divisor is not the least common multiple. Zero has special identity behavior, so retain it rather than dividing by the result without a separate guard.",
+  "docs_url": "https://docs.python.org/3.12/library/math.html#math.gcd",
+  "docs_source": "Python",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Find a common whole-unit package size dividing several stock counts.",
+    "Reduce an integer fraction by its common divisor.",
+    "Find a shared grid unit for several integer dimensions."
+  ],
+  "title": "Find a common integer divisor",
+  "problem": "Return math.gcd(*input). Support negative integers and zeros. An empty list and an all-zero list both return zero.",
+  "hint": "Import gcd and unpack the list into its arguments.",
+  "goal": "Use math.gcd() or an equivalent approach demonstrating the same premise.",
+  "category": "numbers",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Common",
+      "input": [
+        12,
+        18,
+        30
+      ],
+      "expected": 6
+    },
+    {
+      "name": "Signs and zero",
+      "input": [
+        -8,
+        0,
+        12
+      ],
+      "expected": 4
+    },
+    {
+      "name": "All zero",
+      "input": [
+        0,
+        0
+      ],
+      "expected": 0
+    },
+    {
+      "name": "Coprime",
+      "input": [
+        8,
+        15
+      ],
+      "expected": 1
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": 0
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "language": "python",
+  "date": "2026-11-27",
+  "method": "itertools.zip_longest()",
+  "syntax": "zip_longest(left, right, fillvalue=None)",
+  "summary": "zip_longest pairs iterable items until the longest input is exhausted.",
+  "documentation": "zip_longest pairs iterable items until the longest input is exhausted. Missing positions receive fillvalue, so trailing items are retained rather than silently dropped as they are with ordinary zip.",
+  "inputs": "An object with left and right lists of JSON values.",
+  "returns": "A list of two-item lists, using null for a missing position.",
+  "caution": "Padding with None cannot distinguish a missing position from an actual None value. Choose a separate sentinel in an application that needs that distinction.",
+  "docs_url": "https://docs.python.org/3.12/library/itertools.html#itertools.zip_longest",
+  "docs_source": "Python",
+  "reviewed": "2026-11-02",
+  "scenarios": [
+    "Align unequal imported columns in a preview.",
+    "Compare two lists without dropping unmatched trailing rows.",
+    "Pair optional checklist sections while keeping all entries visible."
+  ],
+  "title": "Align unequal lists",
+  "problem": "Pair left and right by position until both are exhausted. Use null for an exhausted side and return each pair as a JSON list.",
+  "hint": "Import zip_longest and convert its tuples into lists.",
+  "goal": "Use itertools.zip_longest() or an equivalent approach demonstrating the same premise.",
+  "category": "arrays",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "def solve(value):\n    # Return the requested result.\n    return None\n",
+  "tests": [
+    {
+      "name": "Left longer",
+      "input": {
+        "left": [
+          1,
+          2
+        ],
+        "right": [
+          "a"
+        ]
+      },
+      "expected": [
+        [
+          1,
+          "a"
+        ],
+        [
+          2,
+          null
+        ]
+      ]
+    },
+    {
+      "name": "Right longer",
+      "input": {
+        "left": [],
+        "right": [
+          "a",
+          "b"
+        ]
+      },
+      "expected": [
+        [
+          null,
+          "a"
+        ],
+        [
+          null,
+          "b"
+        ]
+      ]
+    },
+    {
+      "name": "Actual null",
+      "input": {
+        "left": [
+          null
+        ],
+        "right": [
+          0
+        ]
+      },
+      "expected": [
+        [
+          null,
+          0
+        ]
+      ]
+    },
+    {
+      "name": "Both empty",
+      "input": {
+        "left": [],
+        "right": []
+      },
+      "expected": []
+    }
+  ]
+}
