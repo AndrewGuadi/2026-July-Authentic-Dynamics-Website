@@ -1,0 +1,65 @@
+{
+  "language": "python",
+  "date": "2026-09-22",
+  "method": "str.center()",
+  "syntax": "text.center(width, fillchar)",
+  "summary": "Pad both sides of text to a minimum width.",
+  "documentation": "center returns a padded string when width exceeds the string length. The optional fill character must contain exactly one character; the default is a space. Widths at or below the existing length leave the text unchanged.",
+  "inputs": "An object with text, a nonnegative integer width, and a one-character fill string.",
+  "returns": "A centered string at least width characters long.",
+  "caution": "Width counts Python string characters, not terminal display columns. Wide glyphs and combining marks may look misaligned even when their string length is correct; center does not truncate long text.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.center",
+  "docs_source": "Python",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Center a heading in a plain-text export with decorative padding.",
+    "Make small fixed-width labels in a local report preview.",
+    "Create aligned text fixtures when display width is known to be simple."
+  ],
+  "title": "Pad a plain-text heading",
+  "problem": "Return text.center(width, fill). Preserve text when it already meets or exceeds width, and use the provided single-character fill. Apply Python’s standard centering behavior.",
+  "hint": "Pass width and fill directly; do not slice text to make it fit.",
+  "goal": "Use str.center() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Center the text without truncation.\n    return None\n",
+  "tests": [
+    {
+      "name": "Even padding",
+      "input": {
+        "text": "Hi",
+        "width": 6,
+        "fill": "-"
+      },
+      "expected": "--Hi--"
+    },
+    {
+      "name": "Too narrow",
+      "input": {
+        "text": "Report",
+        "width": 2,
+        "fill": " "
+      },
+      "expected": "Report"
+    },
+    {
+      "name": "Empty text",
+      "input": {
+        "text": "",
+        "width": 4,
+        "fill": "*"
+      },
+      "expected": "****"
+    },
+    {
+      "name": "Unicode character",
+      "input": {
+        "text": "猫",
+        "width": 3,
+        "fill": "*"
+      },
+      "expected": "*猫*"
+    }
+  ]
+}

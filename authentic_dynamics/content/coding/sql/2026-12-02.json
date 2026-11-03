@@ -1,0 +1,108 @@
+{
+  "language": "sql",
+  "date": "2026-12-02",
+  "method": "Correlated scalar subquery",
+  "syntax": "SELECT o.id, (SELECT ... WHERE p.product = o.product ORDER BY ... LIMIT 1) AS cents FROM orders AS o",
+  "summary": "Look up one related value separately for each row of an outer query.",
+  "documentation": "A correlated subquery refers to columns of the outer row. Used as a scalar expression, it supplies one column from its first result row, or NULL if no row qualifies. Explicit ordering and LIMIT 1 make an as-of lookup deterministic.",
+  "inputs": "orders(id, product, day) and prices(id, product, effective_day, cents); ids are distinct integer primary keys, all other columns are NOT NULL.",
+  "returns": "order_id and the applicable cents, ordered by order_id; absent prices yield NULL.",
+  "caution": "Filter by product and effective day before choosing the latest row. A scalar subquery that accidentally returns several rows silently uses the first in SQLite. Large production lookups need suitable indexes and a reviewed query plan.",
+  "docs_url": "https://www.sqlite.org/lang_expr.html#subquery_expressions",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Show the price that applied on each historical order day.",
+    "Preview an effective-dated rate alongside imported transactions.",
+    "Attach the latest eligible configuration value while preserving rows with no match."
+  ],
+  "title": "Find each order’s as-of price",
+  "problem": "For each order, return its id AS order_id and the price cents from the same product with effective_day <= order day. Choose greatest effective_day, then greatest price id to break a tie. If none qualifies return NULL. Output by order_id.",
+  "hint": "Correlate the product and day conditions to o, then order eligible prices descending and take one row.",
+  "goal": "Use Correlated scalar subquery or an equivalent approach demonstrating the same premise.",
+  "category": "querying",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "As-of and product match",
+      "setup": "CREATE TABLE orders(id INTEGER PRIMARY KEY, product TEXT NOT NULL, day INTEGER NOT NULL);CREATE TABLE prices(id INTEGER PRIMARY KEY, product TEXT NOT NULL, effective_day INTEGER NOT NULL, cents INTEGER NOT NULL);INSERT INTO orders VALUES(1,'A',2),(2,'A',5),(3,'B',5);INSERT INTO prices VALUES(1,'A',1,100),(2,'A',4,120),(3,'B',0,70);",
+      "expected": [
+        {
+          "columns": [
+            "order_id",
+            "cents"
+          ],
+          "values": [
+            [
+              1,
+              100
+            ],
+            [
+              2,
+              120
+            ],
+            [
+              3,
+              70
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tie chooses greatest id",
+      "setup": "CREATE TABLE orders(id INTEGER PRIMARY KEY, product TEXT NOT NULL, day INTEGER NOT NULL);CREATE TABLE prices(id INTEGER PRIMARY KEY, product TEXT NOT NULL, effective_day INTEGER NOT NULL, cents INTEGER NOT NULL);INSERT INTO orders VALUES(1,'A',3);INSERT INTO prices VALUES(2,'A',3,100),(8,'A',3,125);",
+      "expected": [
+        {
+          "columns": [
+            "order_id",
+            "cents"
+          ],
+          "values": [
+            [
+              1,
+              125
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "No eligible price",
+      "setup": "CREATE TABLE orders(id INTEGER PRIMARY KEY, product TEXT NOT NULL, day INTEGER NOT NULL);CREATE TABLE prices(id INTEGER PRIMARY KEY, product TEXT NOT NULL, effective_day INTEGER NOT NULL, cents INTEGER NOT NULL);INSERT INTO orders VALUES(1,'A',1),(2,'B',9);INSERT INTO prices VALUES(1,'A',2,100);",
+      "expected": [
+        {
+          "columns": [
+            "order_id",
+            "cents"
+          ],
+          "values": [
+            [
+              1,
+              null
+            ],
+            [
+              2,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty orders",
+      "setup": "CREATE TABLE orders(id INTEGER PRIMARY KEY, product TEXT NOT NULL, day INTEGER NOT NULL);CREATE TABLE prices(id INTEGER PRIMARY KEY, product TEXT NOT NULL, effective_day INTEGER NOT NULL, cents INTEGER NOT NULL);INSERT INTO prices VALUES(1,'A',1,50);",
+      "expected": [
+        {
+          "columns": [
+            "order_id",
+            "cents"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

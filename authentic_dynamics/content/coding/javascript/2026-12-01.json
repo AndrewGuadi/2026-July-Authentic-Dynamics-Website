@@ -1,0 +1,72 @@
+{
+  "language": "javascript",
+  "date": "2026-12-01",
+  "method": "String.matchAll()",
+  "syntax": "text.matchAll(globalRegExp)",
+  "summary": "Iterate over every regex match while keeping capture groups and match positions.",
+  "documentation": "matchAll returns an iterator of match arrays, each containing the full match, capture groups and its UTF-16 index. Materializing that iterator lets a parser return structured occurrences instead of only matching text.",
+  "inputs": "A string containing zero or more double-braced placeholders. Valid names consist of one or more lowercase ASCII letters.",
+  "returns": "An ordered list of objects with name and index for each valid placeholder occurrence.",
+  "caution": "A RegExp passed here must have the g flag. Matches are non-overlapping, and index is a UTF-16 offset rather than a user-perceived character count. Regex matching is not a complete template-language parser.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/matchAll",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "List editable placeholders in a local message-template preview.",
+    "Highlight every supported token with its source position.",
+    "Detect repeated field references before exporting a template."
+  ],
+  "title": "Locate every supported placeholder",
+  "problem": "Find all non-overlapping substrings matching /\\{\\{([a-z]+)\\}\\}/g. Return {name, index} for each, in source order. Keep repeated names; ignore uppercase, numeric and empty names. Use UTF-16 match offsets.",
+  "hint": "Spread matchAll into an array and map each match to its first capture and index.",
+  "goal": "Use String.matchAll() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  const pattern = /\\{\\{([a-z]+)\\}\\}/g;\n  // Return names and positions for all matches.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Multiple fields",
+      "input": "Hi {{name}}, {{city}}!",
+      "expected": [
+        {
+          "name": "name",
+          "index": 3
+        },
+        {
+          "name": "city",
+          "index": 13
+        }
+      ]
+    },
+    {
+      "name": "Repeated adjacent",
+      "input": "{{x}}{{x}}",
+      "expected": [
+        {
+          "name": "x",
+          "index": 0
+        },
+        {
+          "name": "x",
+          "index": 5
+        }
+      ]
+    },
+    {
+      "name": "UTF-16 offset",
+      "input": "😀{{a}}",
+      "expected": [
+        {
+          "name": "a",
+          "index": 2
+        }
+      ]
+    },
+    {
+      "name": "Unsupported names",
+      "input": "{{}} {{A}} {{a1}}",
+      "expected": []
+    }
+  ]
+}

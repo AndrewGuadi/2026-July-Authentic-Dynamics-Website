@@ -1,0 +1,80 @@
+{
+  "language": "python",
+  "date": "2026-11-30",
+  "method": "itertools.takewhile()",
+  "syntax": "takewhile(predicate, iterable)",
+  "summary": "Yield the leading run of items that satisfy a condition, stopping at the first failure.",
+  "documentation": "takewhile returns a lazy iterator. It tests successive items and yields them only until the first false predicate result. Later matching items are not visited as output, so this models a contiguous prefix rather than a general filter.",
+  "inputs": "An object with readings (a list of integers) and an integer limit.",
+  "returns": "A list of the initial readings strictly below limit, stopping at the first value at or above it.",
+  "caution": "The first failing item is consumed from the input iterator. If the iterator must be reused afterward, account for losing that boundary item. Convert the returned iterator to a list for this JSON-based challenge.",
+  "docs_url": "https://docs.python.org/3.12/library/itertools.html#itertools.takewhile",
+  "docs_source": "Python",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Collect measurements only until an alarm threshold is first reached.",
+    "Read an ordered log prefix before the first boundary marker.",
+    "Take queued items up to the first one blocked by a condition."
+  ],
+  "title": "Stop at the first threshold crossing",
+  "problem": "Return the longest prefix of readings where every item is strictly less than limit. Stop permanently at the first reading greater than or equal to limit, even if later readings are smaller.",
+  "hint": "Use takewhile with a strict comparison and materialize the iterator.",
+  "goal": "Use itertools.takewhile() or an equivalent approach demonstrating the same premise.",
+  "category": "arrays",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "from itertools import takewhile\n\ndef solve(value):\n    # Keep a prefix rather than filtering the whole list.\n    return None\n",
+  "tests": [
+    {
+      "name": "Do not resume",
+      "input": {
+        "readings": [
+          1,
+          3,
+          5,
+          2
+        ],
+        "limit": 5
+      },
+      "expected": [
+        1,
+        3
+      ]
+    },
+    {
+      "name": "First fails",
+      "input": {
+        "readings": [
+          0,
+          -2
+        ],
+        "limit": 0
+      },
+      "expected": []
+    },
+    {
+      "name": "All pass",
+      "input": {
+        "readings": [
+          -3,
+          -2,
+          -1
+        ],
+        "limit": 0
+      },
+      "expected": [
+        -3,
+        -2,
+        -1
+      ]
+    },
+    {
+      "name": "Empty",
+      "input": {
+        "readings": [],
+        "limit": 10
+      },
+      "expected": []
+    }
+  ]
+}
