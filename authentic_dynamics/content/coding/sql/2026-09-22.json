@@ -1,0 +1,116 @@
+{
+  "language": "sql",
+  "date": "2026-09-22",
+  "method": "COLLATE NOCASE",
+  "syntax": "ORDER BY name COLLATE NOCASE, id",
+  "summary": "Compare ASCII text without case distinctions while retaining its original spelling.",
+  "documentation": "A COLLATE clause selects the comparison rule for an expression. SQLite’s built-in NOCASE folds ASCII A through Z during comparison, so mixed-case ASCII names can sort together without rewriting the selected text.",
+  "inputs": "labels(id INTEGER PRIMARY KEY, name TEXT NOT NULL).",
+  "returns": "id and the original name, ordered with NOCASE comparison and id as tie-breaker.",
+  "caution": "Built-in NOCASE is not full Unicode case folding or locale-aware sorting. Accented uppercase and lowercase letters can still compare differently. A collation changes comparison, not stored or displayed spelling.",
+  "docs_url": "https://www.sqlite.org/datatype3.html#collating_sequences",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Sort an ASCII-oriented internal code list with mixed case.",
+    "Keep original customer-entered label spelling in an export.",
+    "Apply a documented comparison rule to a local report without updating rows."
+  ],
+  "title": "Sort labels without changing spelling",
+  "problem": "Select id and name. Sort name ascending using COLLATE NOCASE, then id ascending when names compare equal. Preserve the original text. Follow SQLite’s ASCII-only case folding.",
+  "hint": "Put COLLATE NOCASE on the name expression in ORDER BY.",
+  "goal": "Use COLLATE NOCASE or an equivalent approach demonstrating the same premise.",
+  "category": "querying",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Mixed ASCII case",
+      "setup": "CREATE TABLE labels(id INTEGER PRIMARY KEY, name TEXT NOT NULL);INSERT INTO labels VALUES(1,'zebra'),(2,'Apple'),(3,'banana');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "name"
+          ],
+          "values": [
+            [
+              2,
+              "Apple"
+            ],
+            [
+              3,
+              "banana"
+            ],
+            [
+              1,
+              "zebra"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Equivalent case tie",
+      "setup": "CREATE TABLE labels(id INTEGER PRIMARY KEY, name TEXT NOT NULL);INSERT INTO labels VALUES(9,'apple'),(2,'APPLE');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "name"
+          ],
+          "values": [
+            [
+              2,
+              "APPLE"
+            ],
+            [
+              9,
+              "apple"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Unicode remains distinct",
+      "setup": "CREATE TABLE labels(id INTEGER PRIMARY KEY, name TEXT NOT NULL);INSERT INTO labels VALUES(1,'é'),(2,'É'),(3,'z');",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "name"
+          ],
+          "values": [
+            [
+              3,
+              "z"
+            ],
+            [
+              2,
+              "É"
+            ],
+            [
+              1,
+              "é"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE labels(id INTEGER PRIMARY KEY, name TEXT NOT NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "name"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

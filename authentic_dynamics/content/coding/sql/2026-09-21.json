@@ -1,0 +1,116 @@
+{
+  "language": "sql",
+  "date": "2026-09-21",
+  "method": "ORDER BY ... NULLS LAST",
+  "syntax": "ORDER BY due_day ASC NULLS LAST, id ASC",
+  "summary": "Keep missing values after known values in an ascending sort.",
+  "documentation": "SQLite normally sorts NULL before non-NULL values in ascending order. NULLS LAST changes that placement without substituting a made-up value. A second ordering key gives deterministic results when dates tie or are missing.",
+  "inputs": "jobs(id INTEGER PRIMARY KEY, due_day INTEGER), where a NULL due_day means unscheduled.",
+  "returns": "id and due_day ordered by ascending known day, then unscheduled jobs; id breaks ties.",
+  "caution": "NULL placement belongs to each ordering expression. Without a tie-breaker, equal sort values have no guaranteed relative order. Numeric day values here are relative offsets, not date strings.",
+  "docs_url": "https://www.sqlite.org/lang_select.html#orderby",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Put scheduled jobs before unscheduled work in a queue.",
+    "Show known delivery offsets first without inventing a far-future date.",
+    "Sort imported records while keeping missing due dates visible at the end."
+  ],
+  "title": "Put unscheduled jobs last",
+  "problem": "Select id and due_day from jobs. Order due_day ascending with NULLS LAST, then id ascending for equal day values including NULL.",
+  "hint": "Specify NULLS LAST on the due_day ordering term, then append id.",
+  "goal": "Use ORDER BY ... NULLS LAST or an equivalent approach demonstrating the same premise.",
+  "category": "querying",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Known and missing",
+      "setup": "CREATE TABLE jobs(id INTEGER PRIMARY KEY, due_day INTEGER);INSERT INTO jobs VALUES(1,NULL),(2,4),(3,-1);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "due_day"
+          ],
+          "values": [
+            [
+              3,
+              -1
+            ],
+            [
+              2,
+              4
+            ],
+            [
+              1,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tied dates",
+      "setup": "CREATE TABLE jobs(id INTEGER PRIMARY KEY, due_day INTEGER);INSERT INTO jobs VALUES(9,2),(3,2),(7,1);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "due_day"
+          ],
+          "values": [
+            [
+              7,
+              1
+            ],
+            [
+              3,
+              2
+            ],
+            [
+              9,
+              2
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "All missing",
+      "setup": "CREATE TABLE jobs(id INTEGER PRIMARY KEY, due_day INTEGER);INSERT INTO jobs VALUES(8,NULL),(2,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "due_day"
+          ],
+          "values": [
+            [
+              2,
+              null
+            ],
+            [
+              8,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE jobs(id INTEGER PRIMARY KEY, due_day INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "due_day"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}
