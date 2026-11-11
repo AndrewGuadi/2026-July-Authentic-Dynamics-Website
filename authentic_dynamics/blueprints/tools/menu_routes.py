@@ -1,11 +1,9 @@
-"""Photo to Menu demo and restricted extraction endpoint."""
+"""Photo to Menu demo and public extraction endpoint."""
 
 import sqlite3
 
-from flask import current_app, render_template, request, session
+from flask import current_app, render_template, request
 from werkzeug.exceptions import RequestEntityTooLarge
-
-from authentic_dynamics.blueprints.admin.routes import get_session_admin
 
 from . import bp, menu_limits, menu_scan
 
@@ -31,17 +29,9 @@ SAMPLE_MENU = {
 }
 
 
-def _scan_available():
-    if not current_app.config["MENU_OPENAI_API_KEY"].strip():
-        return False
-    if current_app.debug and request.remote_addr in {"127.0.0.1", "::1"}:
-        return True
-    return bool(session.get("admin_token") and get_session_admin())
-
-
 @bp.get("/photo-to-menu")
 def photo_to_menu():
-    scan_available = _scan_available()
+    scan_available = bool(current_app.config["MENU_OPENAI_API_KEY"].strip())
     if scan_available:
         menu_limits.browser_identity()
     return render_template(
@@ -54,8 +44,9 @@ def photo_to_menu():
 
 @bp.post("/photo-to-menu/scan")
 def scan_menu():
-    if not _scan_available():
-        return {"error": "Photo scanning is available to pilot testers."}, 403
+    api_key = current_app.config["MENU_OPENAI_API_KEY"].strip()
+    if not api_key:
+        return {"error": "Photo scanning is temporarily unavailable."}, 503
     try:
         photos = request.files.getlist("photo")
         if len(photos) != 1 or len(request.files) != 1 or not photos[0].filename:
@@ -76,7 +67,7 @@ def scan_menu():
         return {"error": "The scanner is temporarily unavailable. Try again shortly."}, 503
 
     try:
-        menu, cost = menu_scan.extract_menu(photo, current_app.config["MENU_OPENAI_API_KEY"].strip())
+        menu, cost = menu_scan.extract_menu(photo, api_key)
     except menu_scan.MenuScanError as error:
         return {"error": str(error), "estimated_cost_usd": error.estimated_cost_usd}, error.status
     return {"menu": menu, "estimated_cost_usd": cost}

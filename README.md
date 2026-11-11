@@ -154,7 +154,7 @@ Run `node tests/event_break_even_core.mjs` for arithmetic checks. Optional brows
 checks: `NODE_PATH=/path/to/node_modules node tests/event_break_even_browser.cjs`
 with Flask running at `http://127.0.0.1:5055` (`EVENT_BASE_URL` overrides it).
 
-## Photo to Menu pilot
+## Photo to Menu
 
 Open `/tools/photo-to-menu` to view and edit the sample. To test scanning locally,
 activate the project's virtual environment and run the following in Bash:
@@ -172,9 +172,9 @@ prices, and flagged text against **View source photo**. Select **Edit menu**
 to make corrections. The preview stays in the tab and resets when reloaded.
 
 The server sends the normalized photo to the OpenAI Responses API using
-`gpt-6.1-terra`. Scanning requires a configured key and either a loopback
-request to the debug app or a valid site admin session. The public sample
-and editor work with no key. The preview shows the estimated OpenAI API cost
+`gpt-6.1-terra`. A configured server key enables scanning for any visitor.
+The sample and editor are available even when scanning is disabled.
+The preview shows the estimated OpenAI API cost
 in USD from reported token usage and standard Terra rates. After testing,
 stop Flask and run `unset AD_MENU_OPENAI_API_KEY` in that shell.
 
@@ -191,7 +191,7 @@ do not consume attempts. The app keeps hashed identifiers, counters, and
 recent scan timestamps in `instance/photo-menu-limits.sqlite3`. It creates
 that file automatically and keeps the counters across restarts. Browser
 limits use a signed cookie. Browsers on a shared IP also share that IP's
-quota. The pilot adds no menu storage or application database migration.
+quota.
 
 ### Deploy Photo to Menu on PythonAnywhere
 
@@ -204,31 +204,26 @@ quota. The pilot adds no menu storage or application database migration.
    git pull --ff-only origin main
    ```
 
-   Photo to Menu adds no packages or application database migrations. The
-   first scan creates the quota database in the existing `instance/` directory.
-2. Add these settings to the checkout's private `instance/config.py`, keeping
-   the existing configuration and using an active OpenAI project key:
+   The first scan creates the quota database in the existing `instance/` directory.
+2. Add these settings to the site's existing private `.env` and use an
+   active OpenAI project key:
 
-   ```python
-   MENU_OPENAI_API_KEY = "YOUR_OPENAI_PROJECT_KEY"
-   MENU_SCAN_MAX_TESTS = 10
-   MENU_SCAN_TRUST_X_REAL_IP = True
+   ```dotenv
+   AD_MENU_OPENAI_API_KEY=YOUR_OPENAI_PROJECT_KEY
+   AD_MENU_SCAN_MAX_TESTS=10
+   AD_MENU_SCAN_TRUST_X_REAL_IP=true
    ```
 
-   If the Web app already loads its own `.env`, you can set
-   `AD_MENU_OPENAI_API_KEY`, `AD_MENU_SCAN_MAX_TESTS`, and
-   `AD_MENU_SCAN_TRUST_X_REAL_IP=true` there instead. Flask gives `AD_`
-   environment variables precedence over `instance/config.py`. Load the
-   environment before the WSGI file imports `wsgi.app`. The IP setting uses
+   Load the environment before the WSGI file imports `wsgi.app`. The IP setting uses
    the load balancer's `X-Real-IP` header. [PythonAnywhere environment setup](https://help.pythonanywhere.com/pages/EnvironmentVariables) · [Client IP addresses](https://help.pythonanywhere.com/pages/WebAppClientIPAddresses)
 3. In **Web**, confirm the site uses the existing project virtualenv and
    its WSGI file points to the same checkout. The repository entry point
    is `from wsgi import app as application`. Click **Reload** for the
    Authentic Dynamics web app.
    [Flask setup](https://help.pythonanywhere.com/pages/Flask) · [Reloading](https://help.pythonanywhere.com/pages/ReloadWebApp/)
-4. On the live domain, open `/tools/photo-to-menu` signed out and confirm
-   the sample menu and top section selector appear. Sign in at `/admin/login`,
-   return to the tool, and scan a small JPEG. Confirm the imported section
+4. On the live domain, open `/tools/photo-to-menu` in a private browser window.
+   Confirm the sample menu and top section selector appear, then scan a small
+   JPEG. Confirm the imported section
    names replace the sample links, the links jump to the right sections, and
    the estimated cost appears. A second immediate scan should show the
    five-minute limit. For server or provider errors, check **Web → Error log**.
