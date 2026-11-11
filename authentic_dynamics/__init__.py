@@ -48,6 +48,11 @@ def create_app(test_config: dict | None = None) -> Flask:
     app.config.from_prefixed_env(prefix="AD")
     if test_config is not None:
         app.config.update(test_config)
+    menu_scan_max_tests = app.config["MENU_SCAN_MAX_TESTS"]
+    if type(menu_scan_max_tests) is not int or menu_scan_max_tests < 0:
+        raise ValueError("AD_MENU_SCAN_MAX_TESTS must be a nonnegative integer")
+    if type(app.config["MENU_SCAN_TRUST_X_REAL_IP"]) is not bool:
+        raise ValueError("AD_MENU_SCAN_TRUST_X_REAL_IP must be true or false")
     canonical_host = app.config["CANONICAL_HOST"].strip().lower()
     if canonical_host and not re.fullmatch(r"[a-z0-9-]+(?:\.[a-z0-9-]+)+", canonical_host):
         raise ValueError("CANONICAL_HOST must be a hostname without a scheme or port")
@@ -66,13 +71,18 @@ def create_app(test_config: dict | None = None) -> Flask:
         if canonical_host and request.host.lower().rstrip(".") != canonical_host:
             return redirect(f"https://{canonical_host}{request.full_path.rstrip('?')}", code=308)
 
-    # Apply the larger video-only limit before CSRF protection can parse a request.
+    # Apply tool-specific limits before CSRF protection can parse a request.
     @app.before_request
-    def video_request_limit():
-        from flask import request
-
+    def tool_request_limits():
         if request.endpoint == "tools.video_server":
             request.max_content_length = app.config["VIDEO_MAX_BYTES"] + 1024 * 1024
+        elif request.endpoint == "tools.scan_menu":
+            from .blueprints.tools.menu_scan import MAX_REQUEST_BYTES
+
+            site_limit = request.max_content_length
+            request.max_content_length = (
+                min(site_limit, MAX_REQUEST_BYTES) if site_limit is not None else MAX_REQUEST_BYTES
+            )
 
     csrf.init_app(app)
 

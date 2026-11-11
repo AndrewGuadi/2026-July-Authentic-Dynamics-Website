@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% block title %}Photo to Menu | Authentic Dynamics{% endblock %}
+{% block description %}Turn a menu photo into an editable, mobile-friendly web menu. Review items, descriptions and prices against the original photo.{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/photo-to-menu.css', v='menu-sections-20261111') }}">
+{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main" data-menu-tool>
+  <section class="page-hero dark tool-hero photo-menu-hero"><div class="wrap">
+    <a class="tool-back" href="{{ url_for('tools.catalog') }}">← All tools</a>
+    <h1>Photo to <em>menu.</em></h1>
+    <p class="intro">Turn a photo of a printed menu into a web menu you can read and edit.</p>
+  </div></section>
+  <nav id="photo-menu-section-bar" class="photo-menu-section-bar" aria-label="Menu sections">
+    <div class="wrap photo-menu-nav">
+      <span class="photo-menu-nav-label" aria-hidden="true">Jump to</span>
+      <div id="photo-menu-section-links" class="photo-menu-section-links">
+        {% for section in sample.sections %}
+        <a href="#photo-menu-section-{{ loop.index }}">{{ section.name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </nav>
+  <section class="section white photo-menu-section"><div class="wrap photo-menu-layout">
+    <section class="photo-menu-source" aria-labelledby="photo-menu-import-heading">
+      <h2 id="photo-menu-import-heading">Import a menu photo</h2>
+      {% if scan_available %}
+      <p id="photo-menu-help">Take a straight-on photo of one page in good light. JPEG, PNG or WebP, up to 12 MB.</p>
+      <form id="photo-menu-upload" method="post" action="{{ url_for('tools.scan_menu') }}"
+            enctype="multipart/form-data" data-max-bytes="{{ max_image_bytes }}" hidden>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="photo-menu-actions">
+          <button class="button black" type="button" id="photo-menu-camera-button">Take photo</button>
+          <button class="button photo-menu-secondary" type="button" id="photo-menu-file-button">Choose file</button>
+        </div>
+        <input type="file" id="photo-menu-camera" accept="image/jpeg,image/png,image/webp" capture="environment" aria-label="Take menu photo" hidden>
+        <input type="file" id="photo-menu-file" accept="image/jpeg,image/png,image/webp" aria-label="Choose menu photo" hidden>
+        <p id="photo-menu-filename" class="photo-menu-filename" hidden></p>
+        <details id="photo-menu-source-photo" hidden>
+          <summary>View source photo</summary>
+          <img id="photo-menu-image" alt="Your original menu photo">
+        </details>
+        <p class="tool-note" id="photo-menu-disclosure">When you select Read menu, Authentic Dynamics sends your photo to OpenAI for processing. Authentic Dynamics does not save the photo or draft.</p>
+        <p class="tool-note" id="photo-menu-limits">
+          Each browser and IP address can start {{ hourly_limit }} scans per hour, at least
+          {{ cooldown_minutes }} minutes apart.{% if max_tests %} The pilot allows
+          {{ max_tests }} scans total per browser and IP address.{% endif %}
+          The estimated OpenAI cost appears after each scan.
+        </p>
+        <button class="button black photo-menu-scan" type="submit" disabled
+                aria-describedby="photo-menu-help photo-menu-disclosure photo-menu-limits">Read menu</button>
+      </form>
+      {% else %}
+      <p>Photo scanning is available during the pilot. You can explore and edit the sample menu on this page.</p>
+      {% endif %}
+      <p class="tool-status photo-menu-status" id="photo-menu-status" role="status" aria-atomic="true" hidden></p>
+      <noscript><p>Enable JavaScript to import a photo or edit the sample.</p></noscript>
+    </section>
+
+    <div class="photo-menu-workspace">
+      <div class="photo-menu-toolbar">
+        <h2 id="photo-menu-preview-heading" tabindex="-1">Sample menu</h2>
+        <div class="photo-menu-actions" id="photo-menu-edit-actions" hidden>
+          <button class="button photo-menu-secondary" type="button" id="photo-menu-edit"
+                  aria-expanded="false" aria-controls="photo-menu-editor">Edit menu</button>
+          <button class="button photo-menu-secondary" type="button" id="photo-menu-reset" hidden>Reset sample</button>
+        </div>
+      </div>
+      <p id="photo-menu-cost" class="photo-menu-cost" aria-live="polite" hidden></p>
+      <div id="photo-menu-review" class="photo-menu-review" hidden></div>
+      <section class="photo-menu-editor" id="photo-menu-editor" aria-label="Menu editor" hidden>
+        <p>Changes appear in the preview as you edit. This draft stays in this tab.</p>
+        <div id="photo-menu-fields"></div>
+      </section>
+      <article class="photo-menu-sheet" id="photo-menu-preview" aria-label="Customer menu preview">
+        <header class="photo-menu-masthead"><p>Menu</p><h3>{{ sample.name }}</h3></header>
+        {% for section in sample.sections %}
+        <section class="photo-menu-category" id="photo-menu-section-{{ loop.index }}" tabindex="-1">
+          <h4>{{ section.name }}</h4>
+          <ul class="photo-menu-items">
+            {% for item in section['items'] %}
+            <li class="photo-menu-item">
+              <div><h5>{{ item.name }}</h5><p>{{ item.description }}</p></div>
+              <ul class="photo-menu-prices" aria-label="Prices">
+                {% for price in item.prices %}
+                <li>{% if price.label %}<span>{{ price.label }}</span> {% endif %}{{ price.text }}</li>
+                {% endfor %}
+              </ul>
+            </li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endfor %}
+        <footer class="photo-menu-notes">{% for note in sample.notes %}<p>{{ note }}</p>{% endfor %}</footer>
+      </article>
+    </div>
+  </div></section>
+</main>
+{% include 'partials/footer.html' %}
+<script type="application/json" id="photo-menu-sample">{{ sample | tojson }}</script>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/photo-to-menu.js', v='menu-sections-20261111') }}" defer></script>
+{% endblock %}

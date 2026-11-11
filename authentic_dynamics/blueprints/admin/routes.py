@@ -39,16 +39,20 @@ def start_session(user):
     session["admin_token"] = token
 
 
-@bp.before_request
-def authenticate():
-    g.admin_user = None
+def get_session_admin():
     token = session.get("admin_token")
     if token:
         record = db.session.get(AdminSession, digest(token))
         if record and record.expires_at.replace(tzinfo=UTC) > datetime.now(UTC):
-            g.admin_user = db.session.get(AdminUser, record.user_id)
-        if not g.admin_user:
-            session.clear()
+            return db.session.get(AdminUser, record.user_id)
+    return None
+
+
+@bp.before_request
+def authenticate():
+    g.admin_user = get_session_admin()
+    if session.get("admin_token") and not g.admin_user:
+        session.clear()
     if request.endpoint != "admin.login" and not g.admin_user:
         return redirect(url_for("admin.login"), code=303)
 

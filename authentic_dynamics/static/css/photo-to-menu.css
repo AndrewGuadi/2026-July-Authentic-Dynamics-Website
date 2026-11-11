@@ -1,0 +1,168 @@
+.photo-menu-hero { padding-block: clamp(2rem, 6vw, 4.5rem); }
+.photo-menu-section { padding-block: clamp(1.5rem, 5vw, 4rem); }
+
+.photo-menu-layout {
+  display: grid;
+  grid-template-columns: minmax(16rem, .8fr) minmax(0, 1.65fr);
+  align-items: start;
+  gap: clamp(1.5rem, 5vw, 4rem);
+}
+
+.photo-menu-layout [hidden] { display: none !important; }
+.photo-menu-source, .photo-menu-editor {
+  padding: clamp(1rem, 3vw, 1.6rem);
+  border: 1px solid #dddacf;
+  border-radius: 12px;
+  background: #faf9f5;
+}
+
+.photo-menu-source h2, .photo-menu-toolbar h2 {
+  margin: 0 0 .55rem;
+  font-size: 1.32rem;
+  letter-spacing: -.025em;
+}
+
+.photo-menu-source p, .photo-menu-editor > p { margin: 0 0 1rem; }
+.photo-menu-source form .tool-note { margin: .9rem 0; }
+.photo-menu-actions { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; }
+.photo-menu-layout .button { min-height: 44px; padding: .55rem .85rem; font-size: .88rem; }
+.photo-menu-layout .photo-menu-secondary { background: white; color: #252a23; border: 1px solid #a8aa9c; }
+.photo-menu-layout .photo-menu-secondary:hover { background: #edede4; color: #252a23; }
+.photo-menu-layout button:disabled { opacity: .55; cursor: default; }
+.photo-menu-layout button:focus-visible, .photo-menu-layout summary:focus-visible,
+.photo-menu-section-bar a:focus-visible, .photo-menu-layout input:focus-visible,
+.photo-menu-layout textarea:focus-visible { outline: 2px solid #34583c; outline-offset: 3px; }
+
+.photo-menu-filename { margin-top: .8rem !important; overflow-wrap: anywhere; font-size: .88rem; }
+.photo-menu-source details { margin-block: .6rem; }
+.photo-menu-source summary { cursor: pointer; font-weight: 650; }
+.photo-menu-source img { display: block; max-width: 100%; max-height: 25rem; margin: .65rem auto 0; }
+.photo-menu-source .photo-menu-status { margin: .75rem 0 0; }
+.photo-menu-source .is-error { color: #8a321e; }
+
+.photo-menu-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .55rem 1rem;
+  margin-bottom: .8rem;
+}
+.photo-menu-toolbar h2 { margin: 0; }
+.photo-menu-cost { margin: 0 0 .8rem; color: #475447; font-size: .88rem; font-variant-numeric: tabular-nums; }
+.photo-menu-review { margin-bottom: .85rem; padding: .8rem 1rem; background: #fff5d9; border-left: 3px solid #8a671b; overflow-wrap: anywhere; }
+.photo-menu-review p, .photo-menu-review ul { margin: 0; }
+.photo-menu-review ul { padding-left: 1.2rem; }
+.photo-menu-review ul + p, .photo-menu-review p + ul { margin-top: .35rem; }
+.photo-menu-editor { margin-bottom: 1rem; }
+.photo-menu-editor label { display: grid; gap: .25rem; font-size: .88rem; font-weight: 650; min-width: 0; }
+.photo-menu-editor input, .photo-menu-editor textarea {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid #a8aa9c;
+  border-radius: 5px;
+  padding: .55rem;
+  font: inherit;
+  font-weight: 400;
+  color: #252a23;
+  background: white;
+}
+.photo-menu-editor textarea { resize: vertical; }
+.photo-menu-editor fieldset { min-width: 0; margin: 0; padding: .8rem; border: 1px solid #dddacf; border-radius: 6px; }
+.photo-menu-editor legend { padding-inline: .25rem; font-weight: 700; }
+.photo-menu-editor .photo-menu-fields { display: grid; gap: .75rem; }
+.photo-menu-editor .photo-menu-price-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.photo-menu-editor .photo-menu-price-fields button { grid-column: 1 / -1; justify-self: start; }
+.photo-menu-editor .photo-menu-flag { margin: 0; color: #805319; font-size: .9rem; overflow-wrap: anywhere; }
+
+.photo-menu-sheet {
+  border: 1px solid #d8dccf;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fcfbf6;
+  color: #202a20;
+  box-shadow: 0 12px 30px #282b2210;
+  overflow-wrap: anywhere;
+}
+.photo-menu-masthead { position: static; padding: clamp(1.2rem, 4vw, 2.4rem); background: #233c2c; color: #fffaf0; }
+.photo-menu-masthead p { margin: 0 0 .25rem; font-size: .76rem; font-weight: 700; text-transform: uppercase; letter-spacing: .15em; }
+.photo-menu-masthead h3 {
+  margin: 0;
+  font-family: Georgia, serif;
+  font-size: clamp(1.9rem, 4vw, 3.5rem);
+  line-height: 1.08;
+  font-weight: 500;
+}
+.photo-menu-section-bar {
+  position: sticky;
+  top: var(--photo-menu-header-height, auto);
+  z-index: 15;
+  display: block;
+  background: #f8f8f2;
+  border-bottom: 1px solid #d8dccf;
+}
+.photo-menu-section-bar[hidden] { display: none; }
+.photo-menu-nav {
+  display: flex;
+  align-items: center;
+  gap: clamp(.5rem, 2vw, 1rem);
+}
+.photo-menu-nav-label { flex: none; font-size: .8rem; font-weight: 700; color: #475447; }
+.photo-menu-section-links {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  padding: .35rem .25rem;
+  scrollbar-width: thin;
+}
+.photo-menu-section-links a {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  min-height: 44px;
+  max-width: min(21rem, 58vw);
+  padding: .28rem .8rem;
+  border: 1px solid #c8d1c5;
+  border-radius: 8px;
+  background: #fff;
+  color: #31543b;
+  font-size: .88rem;
+  font-weight: 650;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+.photo-menu-section-links a:hover { background: #e7ede2; }
+.photo-menu-category {
+  margin-inline: clamp(1.2rem, 4vw, 2.4rem);
+  padding-top: 1.45rem;
+}
+.photo-menu-category, .photo-menu-toolbar h2 {
+  scroll-margin-top: calc(var(--photo-menu-header-height, 8rem) + var(--photo-menu-bar-height, 0px) + .5rem);
+}
+.photo-menu-category:last-child { padding-bottom: 1.1rem; }
+.photo-menu-category h4 { margin: 0; font-family: Georgia, serif; font-size: 1.55rem; font-weight: 500; }
+.photo-menu-category > p { margin: .35rem 0 0; color: #475447; }
+.photo-menu-items, .photo-menu-prices { list-style: none; margin: 0; padding: 0; }
+.photo-menu-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) fit-content(42%);
+  gap: .6rem 1rem;
+  border-bottom: 1px solid #dedfd5;
+  padding-block: .75rem;
+}
+.photo-menu-item:last-child { border-bottom: 0; }
+.photo-menu-item h5 { margin: 0; font-size: 1rem; }
+.photo-menu-item p { margin: .25rem 0 0; font-size: .9rem; color: #475447; }
+.photo-menu-prices { text-align: right; font-size: .88rem; font-weight: 750; font-variant-numeric: tabular-nums; }
+.photo-menu-prices li + li { margin-top: .25rem; }
+.photo-menu-prices span { font-weight: 450; color: #475447; }
+.photo-menu-notes { margin: .65rem clamp(1.2rem, 4vw, 2.4rem) 0; padding: .7rem 0 1.2rem; border-top: 1px solid #d8dccf; font-size: .85rem; }
+.photo-menu-notes p { margin: 0; }
+.photo-menu-notes p + p { margin-top: .35rem; }
+
+@media (max-width: 760px) {
+  .photo-menu-layout { grid-template-columns: minmax(0, 1fr); }
+}
