@@ -183,10 +183,7 @@ attempts allowed for each IP address and browser. The default is 10, and
 `0` removes the total cap. The rolling limit of 3 attempts per hour and
 the 5-minute cooldown still apply to both identifiers. Load your `.env`
 into the shell before starting Flask, for example with
-`set -a; . ./.env; set +a`. Apply settings in the WSGI environment on
-PythonAnywhere and reload the app. On PythonAnywhere, set
-`AD_MENU_SCAN_TRUST_X_REAL_IP=true` so the limit uses the load balancer's
-`X-Real-IP` header. Leave it off on servers where clients can set that header.
+`set -a; . ./.env; set +a`.
 
 A valid upload counts once it is sent for scanning, even if OpenAI cannot
 read it or the request times out. Invalid files and rate-limited requests
@@ -195,3 +192,44 @@ recent scan timestamps in `instance/photo-menu-limits.sqlite3`. It creates
 that file automatically and keeps the counters across restarts. Browser
 limits use a signed cookie. Browsers on a shared IP also share that IP's
 quota. The pilot adds no menu storage or application database migration.
+
+### Deploy Photo to Menu on PythonAnywhere
+
+1. After merging the PR, open a PythonAnywhere Bash console in the checkout
+   used by the existing Web app. Confirm it is on `main` and pull:
+
+   ```bash
+   cd ~/2026-July-Authentic-Dynamics-Website
+   git status --short --branch
+   git pull --ff-only origin main
+   ```
+
+   Photo to Menu adds no packages or application database migrations. The
+   first scan creates the quota database in the existing `instance/` directory.
+2. Add these settings to the checkout's private `instance/config.py`, keeping
+   the existing configuration and using an active OpenAI project key:
+
+   ```python
+   MENU_OPENAI_API_KEY = "YOUR_OPENAI_PROJECT_KEY"
+   MENU_SCAN_MAX_TESTS = 10
+   MENU_SCAN_TRUST_X_REAL_IP = True
+   ```
+
+   If the Web app already loads its own `.env`, you can set
+   `AD_MENU_OPENAI_API_KEY`, `AD_MENU_SCAN_MAX_TESTS`, and
+   `AD_MENU_SCAN_TRUST_X_REAL_IP=true` there instead. Flask gives `AD_`
+   environment variables precedence over `instance/config.py`. Load the
+   environment before the WSGI file imports `wsgi.app`. The IP setting uses
+   the load balancer's `X-Real-IP` header. [PythonAnywhere environment setup](https://help.pythonanywhere.com/pages/EnvironmentVariables) · [Client IP addresses](https://help.pythonanywhere.com/pages/WebAppClientIPAddresses)
+3. In **Web**, confirm the site uses the existing project virtualenv and
+   its WSGI file points to the same checkout. The repository entry point
+   is `from wsgi import app as application`. Click **Reload** for the
+   Authentic Dynamics web app.
+   [Flask setup](https://help.pythonanywhere.com/pages/Flask) · [Reloading](https://help.pythonanywhere.com/pages/ReloadWebApp/)
+4. On the live domain, open `/tools/photo-to-menu` signed out and confirm
+   the sample menu and top section selector appear. Sign in at `/admin/login`,
+   return to the tool, and scan a small JPEG. Confirm the imported section
+   names replace the sample links, the links jump to the right sections, and
+   the estimated cost appears. A second immediate scan should show the
+   five-minute limit. For server or provider errors, check **Web → Error log**.
+   [PythonAnywhere error logs](https://help.pythonanywhere.com/pages/InternalServerError)

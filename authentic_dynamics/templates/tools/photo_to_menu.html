@@ -3,7 +3,7 @@
 {% block description %}Turn a menu photo into an editable, mobile-friendly web menu. Review items, descriptions and prices against the original photo.{% endblock %}
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/photo-to-menu.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/photo-to-menu.css', v='menu-sections-20261111') }}">
 {% endblock %}
 {% block content %}
 <a class="skip" href="#main">Skip to content</a>
@@ -14,6 +14,16 @@
     <h1>Photo to <em>menu.</em></h1>
     <p class="intro">Turn a photo of a printed menu into a web menu you can read and edit.</p>
   </div></section>
+  <nav id="photo-menu-section-bar" class="photo-menu-section-bar" aria-label="Menu sections">
+    <div class="wrap photo-menu-nav">
+      <span class="photo-menu-nav-label" aria-hidden="true">Jump to</span>
+      <div id="photo-menu-section-links" class="photo-menu-section-links">
+        {% for section in sample.sections %}
+        <a href="#photo-menu-section-{{ loop.index }}">{{ section.name }}</a>
+        {% endfor %}
+      </div>
+    </div>
+  </nav>
   <section class="section white photo-menu-section"><div class="wrap photo-menu-layout">
     <section class="photo-menu-source" aria-labelledby="photo-menu-import-heading">
       <h2 id="photo-menu-import-heading">Import a menu photo</h2>
@@ -67,13 +77,8 @@
       </section>
       <article class="photo-menu-sheet" id="photo-menu-preview" aria-label="Customer menu preview">
         <header class="photo-menu-masthead"><p>Menu</p><h3>{{ sample.name }}</h3></header>
-        <nav class="photo-menu-nav" aria-label="Menu sections">
-          {% for section in sample.sections %}
-          <a href="#photo-menu-section-{{ loop.index }}">{{ section.name }}</a>
-          {% endfor %}
-        </nav>
         {% for section in sample.sections %}
-        <section class="photo-menu-category" id="photo-menu-section-{{ loop.index }}">
+        <section class="photo-menu-category" id="photo-menu-section-{{ loop.index }}" tabindex="-1">
           <h4>{{ section.name }}</h4>
           <ul class="photo-menu-items">
             {% for item in section['items'] %}
@@ -98,5 +103,5 @@
 <script type="application/json" id="photo-menu-sample">{{ sample | tojson }}</script>
 {% endblock %}
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/photo-to-menu.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/photo-to-menu.js', v='menu-sections-20261111') }}" defer></script>
 {% endblock %}

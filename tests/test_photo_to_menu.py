@@ -58,6 +58,14 @@ def test_sample_renders_and_hosted_guest_cannot_scan(tmp_path):
     assert b"Juniper &amp; Main" in page.data
     assert b"Maple Cold Brew" in page.data
     assert b"Photo scanning is available during the pilot." in page.data
+    assert page.data.index(b'id="photo-menu-section-bar"') < page.data.index(
+        b'class="photo-menu-source"'
+    )
+    assert page.data.count(b'aria-label="Menu sections"') == 1
+    for index in range(1, len(SAMPLE_MENU["sections"]) + 1):
+        section_id = f"photo-menu-section-{index}".encode()
+        assert b'href="#' + section_id + b'"' in page.data
+        assert b'id="' + section_id + b'" tabindex="-1"' in page.data
     assert page.headers["Cache-Control"] == "no-store"
 
     app.config["WTF_CSRF_ENABLED"] = False

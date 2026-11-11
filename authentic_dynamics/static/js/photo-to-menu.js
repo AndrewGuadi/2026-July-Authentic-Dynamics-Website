@@ -1,6 +1,8 @@
 (() => {
   const byId = (id) => document.getElementById(`photo-menu-${id}`);
   const sample = JSON.parse(byId('sample').textContent);
+  const sectionBar = byId('section-bar');
+  const sectionLinks = byId('section-links');
   const preview = byId('preview');
   const review = byId('review');
   const heading = byId('preview-heading');
@@ -16,6 +18,21 @@
     style: 'currency', currency: 'USD', maximumFractionDigits: 8,
   });
 
+  const siteHeader = document.querySelector('body > header');
+  const workspace = sectionBar.closest('main');
+  function updateScrollOffsets() {
+    workspace.style.setProperty('--photo-menu-header-height', `${siteHeader?.offsetHeight ?? 0}px`);
+    workspace.style.setProperty('--photo-menu-bar-height', `${sectionBar.offsetHeight}px`);
+  }
+  updateScrollOffsets();
+  if ('ResizeObserver' in window) {
+    const observer = new ResizeObserver(updateScrollOffsets);
+    if (siteHeader) observer.observe(siteHeader);
+    observer.observe(sectionBar);
+  } else {
+    window.addEventListener('resize', updateScrollOffsets);
+  }
+
   function element(tag, text, className) {
     const node = document.createElement(tag);
     if (text) node.textContent = text;
@@ -28,17 +45,17 @@
     if (menu.name) masthead.append(element('p', 'Menu'));
     masthead.append(element('h3', menu.name || 'Menu'));
 
-    const nav = element('nav', '', 'photo-menu-nav');
-    nav.setAttribute('aria-label', 'Menu sections');
+    const links = document.createDocumentFragment();
     const sections = menu.sections.map((section, index) => {
       const id = `photo-menu-section-${index + 1}`;
       const title = section.name || 'Untitled section';
       const link = element('a', title);
       link.href = `#${id}`;
-      nav.append(link);
+      links.append(link);
 
       const category = element('section', '', 'photo-menu-category');
       category.id = id;
+      category.tabIndex = -1;
       category.append(element('h4', title));
       if (section.note) category.append(element('p', section.note));
       const items = element('ul', '', 'photo-menu-items');
@@ -63,8 +80,10 @@
       return category;
     });
 
-    preview.replaceChildren(masthead);
-    if (sections.length) preview.append(nav, ...sections);
+    sectionLinks.replaceChildren(links);
+    sectionBar.hidden = !sections.length;
+    updateScrollOffsets();
+    preview.replaceChildren(masthead, ...sections);
     if (menu.notes.length) {
       const notes = element('footer', '', 'photo-menu-notes');
       notes.append(...menu.notes.map((note) => element('p', note)));
