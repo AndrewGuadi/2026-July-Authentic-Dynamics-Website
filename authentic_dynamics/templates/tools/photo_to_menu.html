@@ -46,15 +46,15 @@
         <p class="tool-note" id="photo-menu-disclosure">When you select Read menu, Authentic Dynamics sends your photo to OpenAI for processing. Authentic Dynamics does not save the photo or draft.</p>
         <p class="tool-note" id="photo-menu-limits">
           Each browser and IP address can start {{ hourly_limit }} scans per hour, at least
-          {{ cooldown_minutes }} minutes apart.{% if max_tests %} The pilot allows
-          {{ max_tests }} scans total per browser and IP address.{% endif %}
+          {{ cooldown_minutes }} minutes apart.{% if max_tests %} The total limit is
+          {{ max_tests }} scans per browser and IP address.{% endif %}
           The estimated OpenAI cost appears after each scan.
         </p>
         <button class="button black photo-menu-scan" type="submit" disabled
                 aria-describedby="photo-menu-help photo-menu-disclosure photo-menu-limits">Read menu</button>
       </form>
       {% else %}
-      <p>Photo scanning is available during the pilot. You can explore and edit the sample menu on this page.</p>
+      <p>Photo scanning is temporarily unavailable. You can still explore and edit the sample menu.</p>
       {% endif %}
       <p class="tool-status photo-menu-status" id="photo-menu-status" role="status" aria-atomic="true" hidden></p>
       <noscript><p>Enable JavaScript to import a photo or edit the sample.</p></noscript>
