@@ -66,13 +66,18 @@ def create_app(test_config: dict | None = None) -> Flask:
         if canonical_host and request.host.lower().rstrip(".") != canonical_host:
             return redirect(f"https://{canonical_host}{request.full_path.rstrip('?')}", code=308)
 
-    # Apply the larger video-only limit before CSRF protection can parse a request.
+    # Apply tool-specific limits before CSRF protection can parse a request.
     @app.before_request
-    def video_request_limit():
-        from flask import request
-
+    def tool_request_limits():
         if request.endpoint == "tools.video_server":
             request.max_content_length = app.config["VIDEO_MAX_BYTES"] + 1024 * 1024
+        elif request.endpoint == "tools.scan_menu":
+            from .blueprints.tools.menu_scan import MAX_REQUEST_BYTES
+
+            site_limit = request.max_content_length
+            request.max_content_length = (
+                min(site_limit, MAX_REQUEST_BYTES) if site_limit is not None else MAX_REQUEST_BYTES
+            )
 
     csrf.init_app(app)
 

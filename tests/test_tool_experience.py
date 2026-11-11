@@ -64,7 +64,7 @@ def test_csv_preview_response_size_is_bounded():
 
 def test_tool_catalog_retains_all_links_without_javascript(client):
     page = client.get("/tools/").get_data(as_text=True)
-    assert page.count('data-tool-job="') == 12
+    assert page.count('data-tool-job="') == 13
     assert 'data-tool-filters hidden' in page
     for slug in ["csv-converter", "pdf-to-image", "json-converter", "video-converter",
                  "list-cleaner", "free-invoice-maker", "local-ai", "qr-code-maker"]:
@@ -75,3 +75,4 @@ def test_tool_catalog_retains_all_links_without_javascript(client):
     assert 'href="/blog"' in page
 
     assert 'href="/tools/event-break-even"' in page
+    assert 'href="/tools/photo-to-menu"' in page

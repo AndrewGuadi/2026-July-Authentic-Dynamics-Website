@@ -153,3 +153,27 @@ illustrative, not Central PA market data.
 Run `node tests/event_break_even_core.mjs` for arithmetic checks. Optional browser
 checks: `NODE_PATH=/path/to/node_modules node tests/event_break_even_browser.cjs`
 with Flask running at `http://127.0.0.1:5055` (`EVENT_BASE_URL` overrides it).
+
+## Photo to Menu pilot
+
+Open `/tools/photo-to-menu` to view and edit the sample. To test scanning locally,
+activate the project's virtual environment and run the following in Bash:
+
+```bash
+read -rsp 'OpenAI API key: ' AD_MENU_OPENAI_API_KEY
+printf '\n'
+export AD_MENU_OPENAI_API_KEY
+flask --app wsgi run --debug --no-debugger --no-reload
+```
+
+Visit `http://127.0.0.1:5000/tools/photo-to-menu`. Choose one JPEG, PNG, or
+WebP menu photo up to 12 MB, select **Read menu**, and check the item names,
+prices, and flagged text against **View source photo**. Select **Edit menu**
+to make corrections. The preview stays in the tab and resets when reloaded.
+
+The server sends the normalized photo to the OpenAI Responses API using
+`gpt-6.1-terra`. Scanning requires a configured key and either a loopback
+request to the debug app or a valid site admin session. The public sample
+and editor work with no key. This pilot adds no database migration or
+server-side menu storage. After testing, stop Flask and run
+`unset AD_MENU_OPENAI_API_KEY` in that shell.
