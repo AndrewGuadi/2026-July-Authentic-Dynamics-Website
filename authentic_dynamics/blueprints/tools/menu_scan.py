@@ -4,6 +4,7 @@ import base64
 import io
 import json
 import logging
+from decimal import Decimal
 from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
 
@@ -21,9 +22,10 @@ LOGGER = logging.getLogger(__name__)
 
 
 class MenuScanError(Exception):
-    def __init__(self, message, status):
+    def __init__(self, message, status, estimated_cost_usd=None):
         super().__init__(message)
         self.status = status
+        self.estimated_cost_usd = estimated_cost_usd
 
 
 def _record(**fields):
@@ -118,8 +120,36 @@ def _validate(value, schema):
             return value or None
 
 
+def estimate_cost_usd(usage):
+    """Estimate standard Terra charges from the Responses API usage object."""
+    if not isinstance(usage, dict):
+        return None
+    input_tokens = usage.get("input_tokens")
+    output_tokens = usage.get("output_tokens")
+    details = usage.get("input_tokens_details") or {}
+    if not isinstance(details, dict):
+        return None
+    cached_tokens = details.get("cached_tokens", 0)
+    cache_writes = details.get("cache_write_tokens", 0)
+    write_details = details.get("cache_write_tokens_details") or {}
+    if not isinstance(write_details, dict):
+        return None
+    writes_12h = write_details.get("ttl_12h_tokens", 0)
+    counts = (input_tokens, output_tokens, cached_tokens, cache_writes, writes_12h)
+    if any(type(count) is not int or count < 0 for count in counts):
+        return None
+    uncached = input_tokens - cached_tokens - cache_writes
+    if uncached < 0 or writes_12h > cache_writes:
+        return None
+    writes_30m = cache_writes - writes_12h
+    # https://developers.openai.com/api/docs/models/gpt-6.1-terra
+    cost = (uncached + cached_tokens * Decimal("0.05") + writes_30m * Decimal("1.25")
+            + writes_12h * Decimal("2.50") + output_tokens * 5) / 1_000_000
+    return f"{cost:.8f}"
+
+
 def extract_menu(photo, api_key):
-    """Call Terra once and return a validated draft, without storing the image."""
+    """Call Terra once and return the validated draft and estimated API cost."""
     encoded = base64.b64encode(photo).decode("ascii")
     payload = {
         "model": MODEL,
@@ -133,6 +163,7 @@ def extract_menu(photo, api_key):
                             "strict": True, "schema": MENU_SCHEMA}},
         "reasoning": {"effort": "low"},
         "max_output_tokens": 8000,
+        "service_tier": "default",
         "store": False,
     }
     request = Request(
@@ -141,15 +172,19 @@ def extract_menu(photo, api_key):
         method="POST",
     )
     request.add_unredirected_header("Authorization", f"Bearer {api_key}")
+    cost = None
     try:
         with urlopen(request, timeout=TIMEOUT_SECONDS) as response:
             data = json.loads(response.read(MAX_RESPONSE_BYTES))
+        if not isinstance(data, dict):
+            raise TypeError("Unexpected OpenAI response")
+        cost = estimate_cost_usd(data.get("usage"))
         if data["status"] != "completed":
-            raise MenuScanError("The scan did not finish. Try a closer photo of one page.", 422)
+            raise MenuScanError("The scan did not finish. Try a closer photo of one page.", 422, cost)
         messages = [part for item in data["output"] if item["type"] == "message"
                     for part in item["content"] if part["type"] == "output_text"]
         if len(messages) != 1:
-            raise MenuScanError("This photo could not be read as a menu.", 422)
+            raise MenuScanError("This photo could not be read as a menu.", 422, cost)
         menu = _validate(json.loads(messages[0]["text"]), MENU_SCHEMA)
     except HTTPError as error:
         with error:
@@ -160,8 +195,10 @@ def extract_menu(photo, api_key):
     except (TimeoutError, URLError, OSError):
         raise MenuScanError("The scanner did not respond. Try again in a moment.", 502) from None
     except (KeyError, TypeError, ValueError, RecursionError):
-        raise MenuScanError("The scan returned an unreadable result. Try a clearer photo.", 502) from None
+        raise MenuScanError(
+            "The scan returned an unreadable result. Try a clearer photo.", 502, cost,
+        ) from None
 
     if not any(section["items"] for section in menu["sections"]):
-        raise MenuScanError("No menu items were readable. Try a clearer photo of one page.", 422)
-    return menu
+        raise MenuScanError("No menu items were readable. Try a clearer photo of one page.", 422, cost)
+    return menu, cost

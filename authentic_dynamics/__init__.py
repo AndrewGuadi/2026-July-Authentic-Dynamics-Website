@@ -48,6 +48,11 @@ def create_app(test_config: dict | None = None) -> Flask:
     app.config.from_prefixed_env(prefix="AD")
     if test_config is not None:
         app.config.update(test_config)
+    menu_scan_max_tests = app.config["MENU_SCAN_MAX_TESTS"]
+    if type(menu_scan_max_tests) is not int or menu_scan_max_tests < 0:
+        raise ValueError("AD_MENU_SCAN_MAX_TESTS must be a nonnegative integer")
+    if type(app.config["MENU_SCAN_TRUST_X_REAL_IP"]) is not bool:
+        raise ValueError("AD_MENU_SCAN_TRUST_X_REAL_IP must be true or false")
     canonical_host = app.config["CANONICAL_HOST"].strip().lower()
     if canonical_host and not re.fullmatch(r"[a-z0-9-]+(?:\.[a-z0-9-]+)+", canonical_host):
         raise ValueError("CANONICAL_HOST must be a hostname without a scheme or port")

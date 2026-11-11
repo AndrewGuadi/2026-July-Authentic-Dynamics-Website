@@ -9,8 +9,12 @@
   const edit = byId('edit');
   const reset = byId('reset');
   const status = byId('status');
+  const cost = byId('cost');
   const form = byId('upload');
   let menu = structuredClone(sample);
+  const usd = new Intl.NumberFormat('en-US', {
+    style: 'currency', currency: 'USD', maximumFractionDigits: 8,
+  });
 
   function element(tag, text, className) {
     const node = document.createElement(tag);
@@ -274,6 +278,12 @@
         throw new Error(message);
       }
       const result = await response.json();
+      if (Object.hasOwn(result, 'estimated_cost_usd')) {
+        const estimate = result.estimated_cost_usd;
+        cost.textContent = estimate === null ? 'OpenAI cost estimate unavailable for the last scan.' :
+          `Estimated OpenAI cost for the last scan · ${usd.format(Number(estimate))}`;
+        cost.hidden = false;
+      }
       if (!response.ok) throw new Error(result.error || 'The menu could not be read. Try another photo.');
 
       menu = result.menu;

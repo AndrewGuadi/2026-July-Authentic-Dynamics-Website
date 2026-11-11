@@ -174,6 +174,24 @@ to make corrections. The preview stays in the tab and resets when reloaded.
 The server sends the normalized photo to the OpenAI Responses API using
 `gpt-6.1-terra`. Scanning requires a configured key and either a loopback
 request to the debug app or a valid site admin session. The public sample
-and editor work with no key. This pilot adds no database migration or
-server-side menu storage. After testing, stop Flask and run
-`unset AD_MENU_OPENAI_API_KEY` in that shell.
+and editor work with no key. The preview shows the estimated OpenAI API cost
+in USD from reported token usage and standard Terra rates. After testing,
+stop Flask and run `unset AD_MENU_OPENAI_API_KEY` in that shell.
+
+Set `AD_MENU_SCAN_MAX_TESTS=10` in your `.env` to change the total number of
+attempts allowed for each IP address and browser. The default is 10, and
+`0` removes the total cap. The rolling limit of 3 attempts per hour and
+the 5-minute cooldown still apply to both identifiers. Load your `.env`
+into the shell before starting Flask, for example with
+`set -a; . ./.env; set +a`. Apply settings in the WSGI environment on
+PythonAnywhere and reload the app. On PythonAnywhere, set
+`AD_MENU_SCAN_TRUST_X_REAL_IP=true` so the limit uses the load balancer's
+`X-Real-IP` header. Leave it off on servers where clients can set that header.
+
+A valid upload counts once it is sent for scanning, even if OpenAI cannot
+read it or the request times out. Invalid files and rate-limited requests
+do not consume attempts. The app keeps hashed identifiers, counters, and
+recent scan timestamps in `instance/photo-menu-limits.sqlite3`. It creates
+that file automatically and keeps the counters across restarts. Browser
+limits use a signed cookie. Browsers on a shared IP also share that IP's
+quota. The pilot adds no menu storage or application database migration.

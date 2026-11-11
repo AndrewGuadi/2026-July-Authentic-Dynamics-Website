@@ -49,6 +49,7 @@
   margin-bottom: .8rem;
 }
 .photo-menu-toolbar h2 { margin: 0; }
+.photo-menu-cost { margin: 0 0 .8rem; color: #475447; font-size: .88rem; font-variant-numeric: tabular-nums; }
 .photo-menu-review { margin-bottom: .85rem; padding: .8rem 1rem; background: #fff5d9; border-left: 3px solid #8a671b; overflow-wrap: anywhere; }
 .photo-menu-review p, .photo-menu-review ul { margin: 0; }
 .photo-menu-review ul { padding-left: 1.2rem; }

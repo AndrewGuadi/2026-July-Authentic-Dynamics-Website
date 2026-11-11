@@ -1,11 +1,13 @@
 """Photo to Menu demo and restricted extraction endpoint."""
 
+import sqlite3
+
 from flask import current_app, render_template, request, session
 from werkzeug.exceptions import RequestEntityTooLarge
 
 from authentic_dynamics.blueprints.admin.routes import get_session_admin
 
-from . import bp, menu_scan
+from . import bp, menu_limits, menu_scan
 
 SAMPLE_MENU = {
     "name": "Juniper & Main",
@@ -39,9 +41,14 @@ def _scan_available():
 
 @bp.get("/photo-to-menu")
 def photo_to_menu():
+    scan_available = _scan_available()
+    if scan_available:
+        menu_limits.browser_identity()
     return render_template(
         "tools/photo_to_menu.html", active_page="tools", sample=SAMPLE_MENU,
-        scan_available=_scan_available(), max_image_bytes=menu_scan.MAX_IMAGE_BYTES,
+        scan_available=scan_available, max_image_bytes=menu_scan.MAX_IMAGE_BYTES,
+        max_tests=current_app.config["MENU_SCAN_MAX_TESTS"],
+        hourly_limit=menu_limits.HOURLY_LIMIT, cooldown_minutes=menu_limits.COOLDOWN_SECONDS // 60,
     )
 
 
@@ -54,9 +61,22 @@ def scan_menu():
         if len(photos) != 1 or len(request.files) != 1 or not photos[0].filename:
             return {"error": "Choose one menu photo."}, 400
         photo = menu_scan.prepare_photo(photos[0].stream)
-        menu = menu_scan.extract_menu(photo, current_app.config["MENU_OPENAI_API_KEY"].strip())
     except RequestEntityTooLarge:
         return {"error": "Choose a photo that is 12 MB or smaller."}, 413
     except menu_scan.MenuScanError as error:
         return {"error": str(error)}, error.status
-    return {"menu": menu}
+
+    try:
+        menu_limits.reserve_scan()
+    except menu_limits.ScanLimitReached as error:
+        headers = {"Retry-After": str(error.retry_after)} if error.retry_after is not None else {}
+        return {"error": str(error)}, 429, headers
+    except (OSError, sqlite3.Error):
+        current_app.logger.exception("Photo to Menu could not reserve a scan")
+        return {"error": "The scanner is temporarily unavailable. Try again shortly."}, 503
+
+    try:
+        menu, cost = menu_scan.extract_menu(photo, current_app.config["MENU_OPENAI_API_KEY"].strip())
+    except menu_scan.MenuScanError as error:
+        return {"error": str(error), "estimated_cost_usd": error.estimated_cost_usd}, error.status
+    return {"menu": menu, "estimated_cost_usd": cost}
