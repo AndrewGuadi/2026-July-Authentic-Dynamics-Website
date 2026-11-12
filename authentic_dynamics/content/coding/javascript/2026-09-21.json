@@ -1,0 +1,49 @@
+{
+  "language": "javascript",
+  "date": "2026-09-21",
+  "method": "String.trimEnd()",
+  "syntax": "text.trimEnd()",
+  "summary": "Remove whitespace from the end while preserving indentation at the beginning.",
+  "documentation": "trimEnd returns a new string after removing trailing JavaScript whitespace and line terminators. It leaves leading and interior characters intact, which matters for indented text records.",
+  "inputs": "A string containing a single imported text record, possibly with trailing line breaks or spaces.",
+  "returns": "The same text with trailing whitespace removed.",
+  "caution": "This also removes trailing tabs, line breaks and nonbreaking spaces. It does not remove arbitrary punctuation, and it does not change the original string.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trimEnd",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Clean the end of an indented log line before displaying it.",
+    "Remove pasted line endings from an imported label while retaining its leading spaces.",
+    "Prepare fixed-layout text records where initial indentation carries meaning."
+  ],
+  "title": "Clean a record without losing indentation",
+  "problem": "Return the input with only its trailing whitespace removed. Preserve all leading indentation and interior whitespace. An all-whitespace input becomes an empty string.",
+  "hint": "Call trimEnd on the string; trimming both ends would remove meaningful indentation.",
+  "goal": "Use String.trimEnd() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  // Preserve indentation; remove only trailing whitespace.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Indentation and line ending",
+      "input": "  invoice  \r\n",
+      "expected": "  invoice"
+    },
+    {
+      "name": "Interior whitespace",
+      "input": "a \t b",
+      "expected": "a \t b"
+    },
+    {
+      "name": "Unicode trailing whitespace",
+      "input": " item ",
+      "expected": " item"
+    },
+    {
+      "name": "Only whitespace",
+      "input": " \t\n",
+      "expected": ""
+    }
+  ]
+}
