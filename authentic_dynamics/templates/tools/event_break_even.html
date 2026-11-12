@@ -18,7 +18,7 @@
   <section class="section white"><div class="wrap converter-layout">
     <div class="converter-form event-calculator">
       <h2>Event break-even calculator</h2>
-      <p class="tool-note" id="event-input-help">Use US dollars for one event. A sale means one customer transaction, not one item. Enter 0 for costs that do not apply. Your numbers stay in this page; they are not uploaded or saved.</p>
+      <p class="tool-note" id="event-input-help">Use US dollars for one event. A sale means one customer transaction, not one item. Enter 0 for costs that do not apply. Your numbers are not uploaded or automatically saved. Copy or download an estimate if you want to keep it.</p>
       <form id="event-form" aria-describedby="event-input-help">
         <fieldset><legend>Costs for the event</legend><div class="event-fields">
           <label for="booth">Booth or entry fee ($)<input id="booth" type="number" min="0" max="1000000" step="0.01" inputmode="decimal" required></label>
@@ -48,7 +48,12 @@
           <div><dt>Estimated event profit / loss</dt><dd id="profit-result"></dd></div>
         </dl>
         <p id="event-explanation"></p>
-        <button class="button black" type="button" id="download">Download estimate (.txt)</button>
+        <div class="list-actions"><button class="button black" type="button" id="copy-estimate">Copy estimate</button><button class="button black" type="button" id="download">Download estimate (.txt)</button></div>
+        <div id="copy-fallback" hidden>
+          <label for="copy-text">Estimate text for manual copying</label>
+          <p class="tool-note" id="copy-help">Use your device’s Copy command on the selected text. You can also select all the text again or download the estimate above.</p>
+          <textarea id="copy-text" rows="12" readonly aria-describedby="copy-help" spellcheck="false"></textarea>
+        </div>
       </section>
       <noscript><p>This calculator needs JavaScript. No numbers are sent to the server.</p></noscript>
     </div>
@@ -57,7 +62,7 @@
       <p><strong>Break-even transactions</strong> = fixed costs ÷ contribution per sale, rounded up. For a profit goal, add that goal to fixed costs before dividing. If contribution is zero or negative, more sales cannot produce a positive profit.</p>
       <p><strong>Try a slower day.</strong> Lower expected transactions and recalculate. Compare the required sales with how many customers you can realistically serve during the event.</p>
       <p><strong>An estimate, not a sales forecast.</strong> Results assume every transaction has the same average value and cost. Percentage fees are rounded to cents per transaction. Include spoilage or unsold stock costs where relevant. Results exclude taxes on profit and overhead you have not entered.</p>
-      <p><strong>Keep your plan.</strong> Download an estimate before changing inputs to compare events. Refreshing or clearing the page removes your entries, but does not delete downloaded files.</p>
+      <p><strong>Keep your plan.</strong> Copy an estimate into a message or note, or download it before changing inputs to compare events. Both include your assumptions and the estimate’s limitations. Clearing the page does not erase your clipboard, pasted copies or downloaded files.</p>
       <p>Ready for the event? <a href="{{ url_for('tools.qr_code_maker') }}">Make a QR code for your menu or website</a>.</p>
     </aside>
   </div></section>
