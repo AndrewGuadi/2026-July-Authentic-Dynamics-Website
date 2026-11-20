@@ -59,11 +59,11 @@ def render(name, post=None, canonical_host="www.example.org"):
     )
 
 
-def test_ten_unique_complete_articles():
-    assert len(POSTS) == 10
-    assert len({p["slug"] for p in POSTS}) == 10
-    assert len({p["title"] for p in POSTS}) == 10
-    assert len({p["description"] for p in POSTS}) == 10
+def test_unique_complete_articles():
+    assert any(p["slug"] == "web-designer-harrisburg-pa" for p in POSTS)
+    assert len({p["slug"] for p in POSTS}) == len(POSTS)
+    assert len({p["title"] for p in POSTS}) == len(POSTS)
+    assert len({p["description"] for p in POSTS}) == len(POSTS)
 
 
 @pytest.mark.parametrize("post", POSTS, ids=lambda p: p["slug"])
@@ -71,7 +71,8 @@ def test_content_is_complete_and_safe(post):
     body = post["body_html"]
     page = Page(body)
     assert len(re.sub(r"<[^>]+>", " ", body).split()) >= 500
-    assert post["demo"] in body
+    if post.get("demo"):
+        assert post["demo"] in body
     assert not any(tag in {"script", "iframe", "form", "h1"} for tag, _ in page.tags)
     assert all(not key.lower().startswith("on") for _, attrs in page.tags for key in attrs)
     assert post["reviewed"] <= post["published"] <= post["modified"]
@@ -79,8 +80,9 @@ def test_content_is_complete_and_safe(post):
     for item in post["toc"]:
         assert len(page.find("h2", id=item["id"])) == 1
     for attrs in page.find("a"):
-        assert attrs["href"].startswith("https://")
-    assert page.find("a", href=post["model_url"])
+        assert attrs["href"].startswith(("https://", "mailto:"))
+    if post.get("model_url"):
+        assert page.find("a", href=post["model_url"])
 
 
 @pytest.mark.parametrize("post", POSTS, ids=lambda p: p["slug"])
@@ -93,8 +95,8 @@ def test_article_template_metadata_and_navigation(post):
     assert page.find("meta", name="description")[0]["content"] == post["description"]
     assert page.find("meta", property="og:type")[0]["content"] == "article"
     assert len(page.find("a", href="/blog", **{"aria-current": "page"})) == 1
-    assert "Browser tool live" in html
-    assert f'data-tool="{post["slug"]}"' in html
+    assert ("Browser tool live" in html) == bool(post.get("demo"))
+    assert (f'data-tool="{post["slug"]}"' in html) == bool(post.get("demo"))
     assert "noindex" not in html
     assert "Editorial preview only" not in html
     assert "../posts/" not in html and "READ_ALL_TEN_POSTS" not in html

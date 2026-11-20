@@ -8,6 +8,8 @@ import pytest
 from authentic_dynamics import create_app
 from authentic_dynamics.blog import get_blog_posts
 
+LABS = [post for post in get_blog_posts() if post.get("demo")]
+
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "authentic_dynamics/static/js/ai-lab.js"
 
@@ -20,7 +22,7 @@ def client():
 def test_labs_link_from_blog_index_and_each_article(client):
     index = client.get("/blog")
     assert index.status_code == 200
-    for post in get_blog_posts():
+    for post in LABS:
         path = "/tools/ai-lab/" + post["slug"]
         assert path in index.get_data(as_text=True)
         article = client.get("/blog/" + post["slug"])
@@ -29,7 +31,7 @@ def test_labs_link_from_blog_index_and_each_article(client):
         assert f'data-tool="{post["slug"]}"' in article.get_data(as_text=True)
 
 
-@pytest.mark.parametrize("post", get_blog_posts(), ids=lambda p: p["slug"])
+@pytest.mark.parametrize("post", LABS, ids=lambda p: p["slug"])
 def test_every_lab_is_live_safe_and_visibly_not_model_inference(client, post):
     response = client.get("/tools/ai-lab/" + post["slug"])
     assert response.status_code == 200
@@ -52,7 +54,7 @@ def test_missing_labs_never_receive_dynamic_files(client):
 
 def test_ten_tools_are_backed_by_real_browser_functions():
     script = SCRIPT.read_text(encoding="utf-8")
-    for post in get_blog_posts():
+    for post in LABS:
         assert f"'{post['slug']}':" in script
     for name in ("homepage", "menu", "voicemail", "voice", "graphic", "video",
                  "docs", "hardware", "forecast", "cutout"):

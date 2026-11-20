@@ -94,7 +94,7 @@ def blog():
     structured_data = {
         "@context": "https://schema.org",
         "@type": "CollectionPage",
-        "name": "Practical AI Guides for Central Pennsylvania Businesses",
+        "name": "Web Design and AI Guides for Central Pennsylvania Businesses",
         "url": canonical_url,
         "mainEntity": {
             "@type": "ItemList",
