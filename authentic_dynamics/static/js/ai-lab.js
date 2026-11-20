@@ -66,7 +66,7 @@
       output(root).replaceChildren(frame);notify(root,'Preview ready. Review every claim and edit inputs before exporting.');
     };
     root.querySelector('[data-action=go]').addEventListener('click',wrap(root,build));
-    root.querySelector('[data-action=download]').addEventListener('click',wrap(root,()=>{if(!html)build();save('homepage-preview.html',html,'text/html;charset=utf-8');}));
+    root.querySelector('[data-action=download]').addEventListener('click',wrap(root,()=>{build();save('homepage-preview.html',html,'text/html;charset=utf-8');}));
   }
 
   function menu(root){
