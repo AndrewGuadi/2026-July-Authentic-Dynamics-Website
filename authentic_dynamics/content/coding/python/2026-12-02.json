@@ -1,0 +1,87 @@
+{
+  "language": "python",
+  "date": "2026-12-02",
+  "method": "urllib.parse.urlencode()",
+  "syntax": "urlencode(query, doseq=True)",
+  "summary": "Encode ordered query parameters with repeated keys and escaped values.",
+  "documentation": "urlencode accepts a mapping or a sequence of key-value pairs and builds a query string. With doseq=True, sequence values generate repeated parameters. The default quote_plus policy encodes spaces as plus signs and encodes literal plus signs separately. JSON arrays arrive as lists in this runner; convert each two-item pair to a tuple before passing the ordered sequence.",
+  "inputs": "An ordered list of [key, values] pairs; each key is a string and values is a list of strings.",
+  "returns": "A query string in pair order and value order, without a leading question mark.",
+  "caution": "This encodes query parameters, not a whole URL or path. Empty value lists emit no parameter, while an empty string value emits key=. Encoding performs no network request and does not make untrusted destinations safe.",
+  "docs_url": "https://docs.python.org/3.12/library/urllib.parse.html#urllib.parse.urlencode",
+  "docs_source": "Python",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Create a local search link with multiple category filters.",
+    "Export ordered query parameters for a report-sharing URL.",
+    "Preserve literal ampersands, slashes and plus signs inside parameter values."
+  ],
+  "title": "Encode repeated query parameters",
+  "problem": "Convert each input [key, values] pair to a tuple, then call urlencode(pairs, doseq=True). Preserve input pair order and order within each value list. Repeat keys for multiple values, omit empty lists, keep empty string values, and do not prepend a question mark.",
+  "hint": "Use [tuple(pair) for pair in value] with doseq enabled; a dictionary would lose duplicate keys.",
+  "goal": "Use urllib.parse.urlencode() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "from urllib.parse import urlencode\n\ndef solve(value):\n    # Encode the ordered pairs without sending a request.\n    return None\n",
+  "tests": [
+    {
+      "name": "Repeated filters",
+      "input": [
+        [
+          "tag",
+          [
+            "a b",
+            "x+y"
+          ]
+        ],
+        [
+          "q",
+          [
+            "a&b/"
+          ]
+        ]
+      ],
+      "expected": "tag=a+b&tag=x%2By&q=a%26b%2F"
+    },
+    {
+      "name": "Empty list and blank",
+      "input": [
+        [
+          "skip",
+          []
+        ],
+        [
+          "q",
+          [
+            ""
+          ]
+        ]
+      ],
+      "expected": "q="
+    },
+    {
+      "name": "Unicode and duplicate key",
+      "input": [
+        [
+          "city",
+          [
+            "café"
+          ]
+        ],
+        [
+          "city",
+          [
+            "東京"
+          ]
+        ]
+      ],
+      "expected": "city=caf%C3%A9&city=%E6%9D%B1%E4%BA%AC"
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": ""
+    }
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "language": "python",
+  "date": "2026-09-23",
+  "method": "bytes.hex()",
+  "syntax": "bytes(values).hex()",
+  "summary": "Represent each byte as two lowercase hexadecimal digits.",
+  "documentation": "A bytes object stores integers from 0 through 255. Its hex method returns a text representation with two digits per byte, retaining leading zeroes without interpreting the bytes as encoded text.",
+  "inputs": "A list of integers, each between 0 and 255 inclusive.",
+  "returns": "A lowercase hexadecimal string without separators or a prefix.",
+  "caution": "Hex is a reversible representation, not encryption or hashing. bytes rejects values outside its byte range; decoding text is a separate operation and may fail for arbitrary binary data.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#bytes.hex",
+  "docs_source": "Python",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Display an imported packet header as readable bytes.",
+    "Compare a small binary file signature in a browser-side diagnostic.",
+    "Log a local byte payload without attempting to decode it as text."
+  ],
+  "title": "Render a byte sequence",
+  "problem": "Convert the input list to bytes and return its lowercase hex representation. Use exactly two digits for each byte, no separators and no 0x prefix. Empty input returns an empty string.",
+  "hint": "Construct bytes(value), then call hex.",
+  "goal": "Use bytes.hex() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Convert byte values to hexadecimal text.\n    return None\n",
+  "tests": [
+    {
+      "name": "Leading zeroes",
+      "input": [
+        0,
+        1,
+        15,
+        16,
+        255
+      ],
+      "expected": "00010f10ff"
+    },
+    {
+      "name": "ASCII bytes",
+      "input": [
+        65,
+        66,
+        67
+      ],
+      "expected": "414243"
+    },
+    {
+      "name": "High bytes",
+      "input": [
+        128,
+        254
+      ],
+      "expected": "80fe"
+    },
+    {
+      "name": "Empty",
+      "input": [],
+      "expected": ""
+    }
+  ]
+}

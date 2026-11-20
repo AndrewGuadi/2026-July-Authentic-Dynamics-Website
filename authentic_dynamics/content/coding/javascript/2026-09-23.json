@@ -1,0 +1,61 @@
+{
+  "language": "javascript",
+  "date": "2026-09-23",
+  "method": "String.codePointAt()",
+  "syntax": "text.codePointAt(index)",
+  "summary": "Read a Unicode code point at a UTF-16 string index.",
+  "documentation": "codePointAt reads the code unit at the requested index. At a leading surrogate followed by a trailing surrogate it combines the pair into one code point; at a trailing surrogate it returns that code unit alone. An index outside the string produces undefined.",
+  "inputs": "An object with text and an integer index measured in UTF-16 code units.",
+  "returns": "A numeric code point or code-unit value, or null when the index is outside the string.",
+  "caution": "String indices count UTF-16 code units, not visible characters or grapheme clusters. Do not advance one index per displayed character when iterating emoji text.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/codePointAt",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Inspect an unexpected character in a pasted customer name.",
+    "Diagnose an emoji at a known JavaScript string offset.",
+    "Show numeric Unicode values in a local text-debugging tool."
+  ],
+  "title": "Inspect a Unicode position",
+  "problem": "Return text.codePointAt(index), converting only an undefined result to null. Preserve a valid zero value. A trailing-surrogate index must return that code unit rather than the whole emoji.",
+  "hint": "Use the nullish-coalescing operator to convert undefined to null without replacing zero.",
+  "goal": "Use String.codePointAt() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  const { text, index } = value;\n  // Inspect a UTF-16 index and return null when absent.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Supplementary character",
+      "input": {
+        "text": "A😀Z",
+        "index": 1
+      },
+      "expected": 128512
+    },
+    {
+      "name": "Trailing surrogate",
+      "input": {
+        "text": "A😀Z",
+        "index": 2
+      },
+      "expected": 56832
+    },
+    {
+      "name": "Out of bounds",
+      "input": {
+        "text": "",
+        "index": 0
+      },
+      "expected": null
+    },
+    {
+      "name": "Zero code point",
+      "input": {
+        "text": "\u0000",
+        "index": 0
+      },
+      "expected": 0
+    }
+  ]
+}

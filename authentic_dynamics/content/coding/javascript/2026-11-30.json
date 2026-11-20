@@ -1,0 +1,84 @@
+{
+  "language": "javascript",
+  "date": "2026-11-30",
+  "method": "Array.reduceRight()",
+  "syntax": "items.reduceRight(callback, initialValue)",
+  "summary": "Accumulate from the final array element toward the first.",
+  "documentation": "reduceRight passes the accumulator and each element to a callback in descending index order. Supplying an initial accumulator makes the empty-array result explicit. This is useful when each outer layer must wrap a result already built from the layers to its right.",
+  "inputs": "An object with layers (a list of names) and leaf (a string).",
+  "returns": "A nested object chain with each layer as {name, child}, ending in the leaf string.",
+  "caution": "Without an initial value an empty array throws and the last element becomes the accumulator. The nesting direction matters: reducing left to right would make the last name the outermost layer.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduceRight",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Build nested breadcrumb data from an ordered path.",
+    "Wrap a text node in successive layout descriptors for a preview.",
+    "Construct a nested configuration tree from outer-to-inner names."
+  ],
+  "title": "Build an outer-to-inner chain",
+  "problem": "Return layers as nested {name, child} objects in their original outer-to-inner order, with leaf as the innermost child. For no layers return leaf unchanged. Keep duplicate and empty names.",
+  "hint": "Start with value.leaf and wrap the accumulator as you visit layers from right to left.",
+  "goal": "Use Array.reduceRight() or an equivalent approach demonstrating the same premise.",
+  "category": "arrays",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  // Build the innermost layer first.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Two layers",
+      "input": {
+        "layers": [
+          "site",
+          "page"
+        ],
+        "leaf": "text"
+      },
+      "expected": {
+        "name": "site",
+        "child": {
+          "name": "page",
+          "child": "text"
+        }
+      }
+    },
+    {
+      "name": "Duplicate names",
+      "input": {
+        "layers": [
+          "x",
+          "x"
+        ],
+        "leaf": ""
+      },
+      "expected": {
+        "name": "x",
+        "child": {
+          "name": "x",
+          "child": ""
+        }
+      }
+    },
+    {
+      "name": "Empty name",
+      "input": {
+        "layers": [
+          ""
+        ],
+        "leaf": "end"
+      },
+      "expected": {
+        "name": "",
+        "child": "end"
+      }
+    },
+    {
+      "name": "No layers",
+      "input": {
+        "layers": [],
+        "leaf": "plain"
+      },
+      "expected": "plain"
+    }
+  ]
+}

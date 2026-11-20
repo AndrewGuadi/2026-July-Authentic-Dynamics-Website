@@ -1,0 +1,100 @@
+{
+  "language": "sql",
+  "date": "2026-09-23",
+  "method": "char()",
+  "syntax": "char(codepoint1, codepoint2, ...)",
+  "summary": "Construct text from Unicode code point integers.",
+  "documentation": "char returns a string whose characters correspond to its integer arguments, in argument order. It provides a direct way to construct known symbols from numeric data without confusing a Unicode value with a UTF-8 byte sequence.",
+  "inputs": "symbols(id INTEGER PRIMARY KEY, first_code INTEGER NOT NULL, second_code INTEGER NOT NULL). Codes are valid Unicode scalar values excluding zero.",
+  "returns": "id and the two-character string AS text, ordered by id.",
+  "caution": "Validate numeric codes before using arbitrary imported data. Invalid code points can produce invalid Unicode; surrogate values are excluded here. A code point is not necessarily an entire displayed grapheme.",
+  "docs_url": "https://www.sqlite.org/lang_corefunc.html#char",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Reconstruct known two-symbol labels from numeric code records.",
+    "Inspect a local table of Unicode values as readable text.",
+    "Build a report sample containing symbols that are awkward to type directly."
+  ],
+  "title": "Turn code points into labels",
+  "problem": "Return id and char(first_code, second_code) AS text for every row, ordered by id. Use the argument order as given. Inputs contain valid nonzero Unicode scalar values.",
+  "hint": "Pass both integer columns to char in one call.",
+  "goal": "Use char() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "ASCII",
+      "setup": "CREATE TABLE symbols(id INTEGER PRIMARY KEY, first_code INTEGER NOT NULL, second_code INTEGER NOT NULL);INSERT INTO symbols VALUES(2,67,68),(1,65,66);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "text"
+          ],
+          "values": [
+            [
+              1,
+              "AB"
+            ],
+            [
+              2,
+              "CD"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Non-ASCII",
+      "setup": "CREATE TABLE symbols(id INTEGER PRIMARY KEY, first_code INTEGER NOT NULL, second_code INTEGER NOT NULL);INSERT INTO symbols VALUES(1,233,29483);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "text"
+          ],
+          "values": [
+            [
+              1,
+              "é猫"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Supplementary code point",
+      "setup": "CREATE TABLE symbols(id INTEGER PRIMARY KEY, first_code INTEGER NOT NULL, second_code INTEGER NOT NULL);INSERT INTO symbols VALUES(1,128512,33);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "text"
+          ],
+          "values": [
+            [
+              1,
+              "😀!"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE symbols(id INTEGER PRIMARY KEY, first_code INTEGER NOT NULL, second_code INTEGER NOT NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "text"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

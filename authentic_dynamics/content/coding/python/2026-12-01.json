@@ -1,0 +1,60 @@
+{
+  "language": "python",
+  "date": "2026-12-01",
+  "method": "math.lcm()",
+  "syntax": "math.lcm(*integers)",
+  "summary": "Find the smallest positive common multiple of nonzero integer inputs.",
+  "documentation": "lcm computes a nonnegative common multiple without requiring the inputs to be coprime. Negative signs do not change the result, any zero argument produces zero, and an empty argument list has the identity result one.",
+  "inputs": "A list of small integers, interpreted as cycle lengths for the calculation.",
+  "returns": "The nonnegative least common multiple, including the specified zero and empty cases.",
+  "caution": "For real recurring schedules use strictly positive intervals and a shared starting point. A zero interval is not a meaningful recurrence even though the mathematical API defines its result. Expand the list with * rather than passing it as one argument.",
+  "docs_url": "https://docs.python.org/3.12/library/math.html#math.lcm",
+  "docs_source": "Python",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Find when two periodic checks started together next coincide.",
+    "Calculate a shared batch size divisible by several pack sizes.",
+    "Build a repeating animation timeline that fits whole cycles of each component."
+  ],
+  "title": "Find a shared cycle length",
+  "problem": "Return math.lcm across every input integer. Return zero if any input is zero, one for no inputs, and a nonnegative answer when negative inputs are supplied.",
+  "hint": "Unpack value as positional arguments to math.lcm.",
+  "goal": "Use math.lcm() or an equivalent approach demonstrating the same premise.",
+  "category": "numbers",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "import math\n\ndef solve(value):\n    # Combine all cycle lengths in one LCM calculation.\n    return None\n",
+  "tests": [
+    {
+      "name": "Shared factors",
+      "input": [
+        6,
+        8,
+        12
+      ],
+      "expected": 24
+    },
+    {
+      "name": "Signs",
+      "input": [
+        -4,
+        6
+      ],
+      "expected": 12
+    },
+    {
+      "name": "Zero interval",
+      "input": [
+        5,
+        0,
+        10
+      ],
+      "expected": 0
+    },
+    {
+      "name": "No cycles",
+      "input": [],
+      "expected": 1
+    }
+  ]
+}

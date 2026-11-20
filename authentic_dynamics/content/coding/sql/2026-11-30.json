@@ -1,0 +1,158 @@
+{
+  "language": "sql",
+  "date": "2026-11-30",
+  "method": "RANGE window frame",
+  "syntax": "SUM(units) OVER (PARTITION BY device ORDER BY day RANGE BETWEEN 2 PRECEDING AND CURRENT ROW)",
+  "summary": "Aggregate by distance in an ordering value rather than a number of records.",
+  "documentation": "For numeric ascending day values, a RANGE frame from 2 PRECEDING through CURRENT ROW includes records with day between current day minus two and current day, inclusive. All records sharing a day are peers and receive the same frame total within their device.",
+  "inputs": "readings(id INTEGER PRIMARY KEY, device TEXT NOT NULL, day INTEGER NOT NULL, units INTEGER).",
+  "returns": "id, device, day and recent_total, ordered by device, day, id.",
+  "caution": "An offset RANGE frame requires one ORDER BY term. Adding id inside the window changes or invalidates this frame; put id only in the final output order. SUM ignores NULL and gives NULL for an all-NULL frame.",
+  "docs_url": "https://www.sqlite.org/windowfunctions.html#frame_specifications",
+  "docs_source": "SQLite",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Total readings over the latest three numbered days despite missing days.",
+    "Include every same-day transaction in a rolling report total.",
+    "Compare recent activity separately for each device or branch."
+  ],
+  "title": "Sum a numeric day range",
+  "problem": "Return id, device, day and SUM(units) AS recent_total over each device’s rows with day in [current day - 2, current day]. Include all same-day peers. Order output by device, day, id and preserve SUM’s NULL behavior.",
+  "hint": "Use a RANGE frame ordered only by day; keep the id tie-breaker in the outer ORDER BY.",
+  "goal": "Use RANGE window frame or an equivalent approach demonstrating the same premise.",
+  "category": "aggregation",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "-- Write one SELECT or WITH query against the supplied tables.\nSELECT 1;\n",
+  "tests": [
+    {
+      "name": "Peer rows",
+      "setup": "CREATE TABLE readings(id INTEGER PRIMARY KEY, device TEXT NOT NULL, day INTEGER NOT NULL, units INTEGER);INSERT INTO readings VALUES(1,'A',1,2),(2,'A',2,3),(3,'A',2,4),(4,'A',3,5);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "day",
+            "recent_total"
+          ],
+          "values": [
+            [
+              1,
+              "A",
+              1,
+              2
+            ],
+            [
+              2,
+              "A",
+              2,
+              9
+            ],
+            [
+              3,
+              "A",
+              2,
+              9
+            ],
+            [
+              4,
+              "A",
+              3,
+              14
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Gaps and partitions",
+      "setup": "CREATE TABLE readings(id INTEGER PRIMARY KEY, device TEXT NOT NULL, day INTEGER NOT NULL, units INTEGER);INSERT INTO readings VALUES(1,'A',1,2),(2,'A',4,7),(3,'B',4,10),(4,'A',6,1);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "day",
+            "recent_total"
+          ],
+          "values": [
+            [
+              1,
+              "A",
+              1,
+              2
+            ],
+            [
+              2,
+              "A",
+              4,
+              7
+            ],
+            [
+              4,
+              "A",
+              6,
+              8
+            ],
+            [
+              3,
+              "B",
+              4,
+              10
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Null frames",
+      "setup": "CREATE TABLE readings(id INTEGER PRIMARY KEY, device TEXT NOT NULL, day INTEGER NOT NULL, units INTEGER);INSERT INTO readings VALUES(1,'A',0,NULL),(2,'A',1,4),(3,'A',5,NULL);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "day",
+            "recent_total"
+          ],
+          "values": [
+            [
+              1,
+              "A",
+              0,
+              null
+            ],
+            [
+              2,
+              "A",
+              1,
+              4
+            ],
+            [
+              3,
+              "A",
+              5,
+              null
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Empty",
+      "setup": "CREATE TABLE readings(id INTEGER PRIMARY KEY, device TEXT NOT NULL, day INTEGER NOT NULL, units INTEGER);",
+      "expected": [
+        {
+          "columns": [
+            "id",
+            "device",
+            "day",
+            "recent_total"
+          ],
+          "values": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "language": "javascript",
+  "date": "2026-12-02",
+  "method": "Array.copyWithin()",
+  "syntax": "items.copyWithin(target, start, end)",
+  "summary": "Copy a slice to another position in the same array without changing its length.",
+  "documentation": "copyWithin overwrites destination elements using the source range, with end excluded. Overlapping ranges behave as if the source values were preserved during the copy. The operation mutates its receiver and returns that same array.",
+  "inputs": "An object with items (an array of integers) and integer target, start and end indices.",
+  "returns": "An object with original (unchanged input items) and copied (the result of the internal copy).",
+  "caution": "Negative indices count from the end and out-of-range bounds are clamped. copyWithin is shallow; for objects it copies references. Clone the outer array first when preserving the original is required.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/copyWithin",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Preview an in-place buffer shift without losing the original sample.",
+    "Repeat a short region of locally loaded measurement data.",
+    "Simulate overlapping block copies in an array-based editor."
+  ],
+  "title": "Preview an overlapping block copy",
+  "problem": "Clone items and apply copyWithin(target, start, end) to the clone. Return {original: items, copied: clone}. Preserve the original array and its length. Follow native negative-index and clamping rules.",
+  "hint": "Make a shallow array clone before calling the mutating method.",
+  "goal": "Use Array.copyWithin() or an equivalent approach demonstrating the same premise.",
+  "category": "arrays",
+  "level": "intermediate",
+  "minutes": 15,
+  "starter": "function solve(value) {\n  const { items, target, start, end } = value;\n  // Copy within a clone and keep the original.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Overlapping shift",
+      "input": {
+        "items": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "target": 1,
+        "start": 0,
+        "end": 4
+      },
+      "expected": {
+        "original": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "copied": [
+          1,
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    },
+    {
+      "name": "Negative bounds",
+      "input": {
+        "items": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "target": -2,
+        "start": 0,
+        "end": 2
+      },
+      "expected": {
+        "original": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "copied": [
+          1,
+          2,
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "name": "Clamped destination",
+      "input": {
+        "items": [
+          1,
+          2
+        ],
+        "target": 9,
+        "start": 0,
+        "end": 2
+      },
+      "expected": {
+        "original": [
+          1,
+          2
+        ],
+        "copied": [
+          1,
+          2
+        ]
+      }
+    },
+    {
+      "name": "Empty",
+      "input": {
+        "items": [],
+        "target": 0,
+        "start": 0,
+        "end": 3
+      },
+      "expected": {
+        "original": [],
+        "copied": []
+      }
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "language": "python",
+  "date": "2026-09-21",
+  "method": "str.lstrip()",
+  "syntax": "text.lstrip(chars)",
+  "summary": "Remove a chosen set of characters from the beginning of a string.",
+  "documentation": "With chars supplied, lstrip repeatedly removes leading characters that belong to that set, stopping at the first other character. It returns a string and leaves the rest of the text intact.",
+  "inputs": "An object with text and chars strings, where chars is the set of removable characters.",
+  "returns": "The text after removing its maximal leading run of characters in chars.",
+  "caution": "chars is a set of individual characters, not a literal prefix. An empty chars string removes nothing; whitespace is not removed unless it is included in chars.",
+  "docs_url": "https://docs.python.org/3.12/library/stdtypes.html#str.lstrip",
+  "docs_source": "Python",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Remove combinations of leading comment markers from imported notes.",
+    "Strip specified separator characters from the start of a code field.",
+    "Clean scanner prefixes made from a known set of padding symbols."
+  ],
+  "title": "Strip marker characters, not a prefix",
+  "problem": "Return text.lstrip(chars). Remove any sequence of leading characters present in chars. Preserve the trailing text and stop as soon as a character is outside that set.",
+  "hint": "Pass chars explicitly so that default whitespace stripping is not used.",
+  "goal": "Use str.lstrip() or an equivalent approach demonstrating the same premise.",
+  "category": "strings",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "def solve(value):\n    # Remove the leading run drawn from chars.\n    return None\n",
+  "tests": [
+    {
+      "name": "Mixed leading markers",
+      "input": {
+        "text": "#-##name-#",
+        "chars": "#-"
+      },
+      "expected": "name-#"
+    },
+    {
+      "name": "Set rather than prefix",
+      "input": {
+        "text": "baabXab",
+        "chars": "ab"
+      },
+      "expected": "Xab"
+    },
+    {
+      "name": "Unlisted space stops",
+      "input": {
+        "text": " #name",
+        "chars": "#"
+      },
+      "expected": " #name"
+    },
+    {
+      "name": "Empty set",
+      "input": {
+        "text": "###",
+        "chars": ""
+      },
+      "expected": "###"
+    }
+  ]
+}

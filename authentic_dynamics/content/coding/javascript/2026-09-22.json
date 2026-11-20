@@ -1,0 +1,61 @@
+{
+  "language": "javascript",
+  "date": "2026-09-22",
+  "method": "Math.floor()",
+  "syntax": "Math.floor(number)",
+  "summary": "Round downward to the greatest integer no larger than a value.",
+  "documentation": "Math.floor returns an integer-valued number by rounding toward negative infinity. Dividing a position by a positive bucket width and flooring the quotient assigns positions on both sides of zero to equal-width intervals.",
+  "inputs": "An object with finite numeric position and a positive finite width; quotients have small magnitudes.",
+  "returns": "The integer index of the half-open bucket containing the position.",
+  "caution": "Negative fractions round to a more negative integer, unlike truncation. Binary floating-point division may approximate decimal boundaries; the supplied values avoid ambiguous boundaries.",
+  "docs_url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/floor",
+  "docs_source": "MDN",
+  "reviewed": "2026-11-03",
+  "scenarios": [
+    "Assign a point to a tile in a coordinate grid that extends left of zero.",
+    "Group signed timeline offsets into fixed-width time buckets.",
+    "Compute a histogram bin from a measurement and its bin width."
+  ],
+  "title": "Find the bucket across zero",
+  "problem": "Return Math.floor(position / width). Bucket k covers positions from k * width inclusive to (k + 1) * width exclusive. Support negative positions.",
+  "hint": "Floor the quotient, including when it lies between -1 and 0.",
+  "goal": "Use Math.floor() or an equivalent approach demonstrating the same premise.",
+  "category": "numbers",
+  "level": "beginner",
+  "minutes": 10,
+  "starter": "function solve(value) {\n  const { position, width } = value;\n  // Return the containing bucket index.\n  return null;\n}\n",
+  "tests": [
+    {
+      "name": "Positive fraction",
+      "input": {
+        "position": 14,
+        "width": 5
+      },
+      "expected": 2
+    },
+    {
+      "name": "Left of zero",
+      "input": {
+        "position": -1,
+        "width": 5
+      },
+      "expected": -1
+    },
+    {
+      "name": "Exact negative boundary",
+      "input": {
+        "position": -10,
+        "width": 5
+      },
+      "expected": -2
+    },
+    {
+      "name": "Origin",
+      "input": {
+        "position": 0,
+        "width": 5
+      },
+      "expected": 0
+    }
+  ]
+}
