@@ -8,6 +8,17 @@ const {chromium} = require('playwright');
     for (const width of [1440, 390, 360, 320]) {
       const context = await browser.newContext({viewport:{width,height:900},isMobile:width<600,hasTouch:width<600,acceptDownloads:true});
       const page = await context.newPage();
+      // Exercise success, permission denial and delayed writes deterministically.
+      await page.addInitScript(() => {
+        window.copyMode = 'success';
+        Object.defineProperty(navigator, 'clipboard', {configurable:true,value:{
+          writeText: async text => {
+            if (window.copyMode === 'deny') throw new Error('Permission denied');
+            if (window.copyMode === 'delay') await new Promise(resolve => {window.finishCopy = resolve;});
+            window.copiedEstimate = text;
+          }
+        }});
+      });
       const errors = [], requests = [];
       page.on('pageerror', e => errors.push(e.message));
       page.on('request', r => requests.push({url:r.url(),method:r.method()}));
@@ -24,14 +35,39 @@ const {chromium} = require('playwright');
       const downloading = page.waitForEvent('download');
       await page.locator('#download').click();
       const download = await downloading;
-      assert.match(await fs.readFile(await download.path(),'utf8'),/Estimated event profit \/ loss: \$555.00/);
+      const report = await fs.readFile(await download.path(),'utf8');
+      assert.match(report,/Estimated event profit \/ loss: \$555.00/);
+      await page.locator('#copy-estimate').click();
+      assert.equal(await page.evaluate(()=>window.copiedEstimate),report);
+      assert.match(await page.locator('#event-status').textContent(),/Estimate copied/);
+      assert.equal(await page.locator('#copy-fallback').isHidden(),true);
+      await page.evaluate(()=>{window.copyMode='deny';});
+      await page.locator('#copy-estimate').click();
+      await page.locator('#copy-text').waitFor({state:'visible'});
+      assert.equal(await page.locator('#copy-text').inputValue(),report);
+      assert.equal(await page.locator('#copy-text').evaluate(el=>document.activeElement===el && el.selectionStart===0 && el.selectionEnd===el.value.length),true);
+      assert.match(await page.locator('#event-status').textContent(),/Automatic copying is unavailable/);
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
       await page.screenshot({path:`/tmp/event-${width}.png`,fullPage:true});
       await page.locator('#transactions').fill('10');
+      assert.equal(await page.locator('#copy-text').inputValue(),'');
+      assert.equal(await page.locator('#copy-fallback').isHidden(),true);
       assert.equal(await page.locator('#event-result').isHidden(),true);
       await page.locator('#calculate').click();
       assert.equal(await page.locator('#profit-result').textContent(),'-$304.50');
+      // No clipboard API: still provide the complete current report.
+      await page.evaluate(()=>{window.savedClipboard=navigator.clipboard;Object.defineProperty(navigator,'clipboard',{configurable:true,value:undefined});});
+      await page.locator('#copy-estimate').click();
+      assert.match(await page.locator('#copy-text').inputValue(),/Estimated event profit \/ loss: -\$304.50/);
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+      await page.locator('#calculate').click();
+      assert.equal(await page.locator('#copy-fallback').isHidden(),true);
+      // A late clipboard promise cannot announce success over changed inputs.
+      await page.evaluate(()=>{Object.defineProperty(navigator,'clipboard',{configurable:true,value:window.savedClipboard});window.copyMode='delay';});
+      await page.locator('#copy-estimate').click();
       await page.locator('#fee').fill('101');
+      await page.evaluate(async()=>{window.finishCopy();await Promise.resolve();});
+      assert.match(await page.locator('#event-status').textContent(),/Numbers changed/);
       await page.locator('#calculate').click();
       assert.equal(await page.locator('#fee').evaluate(el=>el.validity.rangeOverflow),true);
       assert.equal(await page.locator('#event-result').isHidden(),true);
@@ -58,7 +94,17 @@ const {chromium} = require('playwright');
       await page.getByRole('link',{name:'← All tools'}).click();
       assert.ok(page.url().endsWith('/tools/'));
       await context.close();
-      console.log(`${width}px: calculations, validation, downloads, privacy, links and layout passed`);
+      console.log(`${width}px: calculations, validation, downloads, copy success/fallback/stale state, privacy, links and layout passed`);
     }
+    const clipboardContext = await browser.newContext({permissions:['clipboard-read','clipboard-write']});
+    const clipboardPage = await clipboardContext.newPage();
+    await clipboardPage.goto(base+'/tools/event-break-even');
+    await clipboardPage.locator('#example').click();
+    await clipboardPage.locator('#calculate').click();
+    await clipboardPage.locator('#copy-estimate').click();
+    await clipboardPage.waitForFunction(()=>document.getElementById('event-status').textContent.startsWith('Estimate copied'));
+    assert.match(await clipboardPage.evaluate(()=>navigator.clipboard.readText()),/Estimated event profit \/ loss: \$555.00/);
+    await clipboardContext.close();
+    console.log('Native Chromium clipboard write/read passed (permission granted).');
   } finally {await browser.close();}
 })().catch(error=>{console.error(error);process.exitCode=1;});
