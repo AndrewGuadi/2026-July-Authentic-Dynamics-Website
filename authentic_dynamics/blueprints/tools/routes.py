@@ -230,6 +230,6 @@ def ai_lab(slug):
     from authentic_dynamics.blog import get_blog_post
 
     post = get_blog_post(slug)
-    if post is None:
+    if post is None or not post.get("demo"):
         abort(404)
     return render_template("tools/ai_lab.html", post=post, active_page="tools")
