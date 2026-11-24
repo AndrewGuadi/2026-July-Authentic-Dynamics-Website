@@ -20,6 +20,7 @@
       <h2>Service job quote calculator</h2>
       <p class="tool-note" id="sq-input-help">Enter costs for one job. The suggested quote is calculated from the target profit margin you choose. Your inputs stay in this page; they are not uploaded or saved.</p>
       <form id="sq-form" aria-describedby="sq-input-help">
+        <fieldset id="sq-inputs" class="sq-inputs" disabled>
         <label class="sq-job-label" for="job-name">Job or estimate label (optional)
           <input id="job-name" type="text" maxlength="100" autocomplete="off" placeholder="e.g. Replace exterior faucet">
         </label>
@@ -41,6 +42,7 @@
           <button class="button black" type="button" id="sq-example">Load example</button>
           <button class="button black" type="reset">Clear</button>
         </div>
+        </fieldset>
       </form>
       <p class="tool-status" id="sq-status" role="status" aria-live="polite">Enter your actual costs, then calculate. Nothing is uploaded or saved.</p>
       <section id="sq-result" hidden aria-labelledby="sq-result-heading">
@@ -62,7 +64,7 @@
         <p id="sq-explanation"></p>
         <button class="button black" type="button" id="sq-download">Download worksheet (.txt)</button>
       </section>
-      <noscript><p>This calculator needs JavaScript. No job details are sent to the server.</p></noscript>
+      <noscript><p>JavaScript is required. The calculator controls remain disabled, so no job details are submitted.</p></noscript>
     </div>
     <aside class="tool-help"><p class="eyebrow">BUILD A BETTER ESTIMATE</p><h3>Price the work.<br>Not just the parts.</h3>
       <p><strong>Count your own time.</strong> A job can look profitable when you leave out the hours you spend on it. Enter a realistic loaded labor cost, even when you are the person doing the work.</p>

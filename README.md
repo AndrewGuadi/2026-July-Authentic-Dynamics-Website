@@ -176,7 +176,7 @@ activate the project's virtual environment and run the following in Bash:
 
 ```bash
 read -rsp 'OpenAI API key: ' AD_MENU_OPENAI_API_KEY
-printf '\\n'
+printf '\n'
 export AD_MENU_OPENAI_API_KEY
 flask --app wsgi run --debug --no-debugger --no-reload
 ```
@@ -231,13 +231,11 @@ quota.
 
    Load the environment before the WSGI file imports `wsgi.app`. The IP setting uses
    the load balancer's `X-Real-IP` header. [PythonAnywhere environment setup](https://help.pythonanywhere.com/pages/EnvironmentVariables) · [Client IP addresses](https://help.pythonanywhere.com/pages/WebAppClientIPAddresses)
-
 3. In **Web**, confirm the site uses the existing project virtualenv and
    its WSGI file points to the same checkout. The repository entry point
    is `from wsgi import app as application`. Click **Reload** for the
    Authentic Dynamics web app.
    [Flask setup](https://help.pythonanywhere.com/pages/Flask) · [Reloading](https://help.pythonanywhere.com/pages/ReloadWebApp/)
-
 4. On the live domain, open `/tools/photo-to-menu` in a private browser window.
    Confirm the sample menu and top section selector appear, then scan a small
    JPEG. Confirm the imported section

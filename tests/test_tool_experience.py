@@ -67,9 +67,8 @@ def test_tool_catalog_retains_all_links_without_javascript(client):
     assert page.count('data-tool-job="') == 14
     assert 'data-tool-filters hidden' in page
     for slug in ["csv-converter", "pdf-to-image", "json-converter", "video-converter",
-                 "list-cleaner", "free-invoice-maker", "local-ai", "qr-code-maker",
-                 "service-quote"]:
-        assert f'href="/tools/{slug}' in page
+                 "list-cleaner", "free-invoice-maker", "local-ai", "qr-code-maker", "service-quote"]:
+        assert f'href="/tools/{slug}"' in page
     assert 'href="/browser-xray"' in page
 
     assert 'href="/coding-calendar/"' in page

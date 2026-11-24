@@ -1,3 +1,4 @@
+.service-quote-calculator > form > .sq-inputs{border:0;padding:0;margin:0;min-width:0}
 .service-quote-calculator fieldset{min-width:0;border:0;border-top:1px solid var(--border);padding:24px 0 0;margin:26px 0}
 .service-quote-calculator legend{font-size:18px;font-weight:700;padding-right:12px}
 .sq-job-label{display:block;font-size:14px;font-weight:650;line-height:1.5}

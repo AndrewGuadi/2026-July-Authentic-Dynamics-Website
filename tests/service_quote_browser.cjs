@@ -15,6 +15,7 @@ const {chromium} = require("playwright");
       page.on("pageerror", error => errors.push(error.message));
       await page.goto(base + "/tools/");
       await page.getByRole("link", {name:"Price a job"}).click();
+      assert.equal(await page.locator("#sq-inputs").isDisabled(), false);
       assert.equal(await page.locator("#sq-result").isHidden(), true);
       await page.locator("#sq-example").click();
       await page.locator("#sq-calculate").click();

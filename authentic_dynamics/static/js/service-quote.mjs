@@ -3,6 +3,7 @@ import {estimateServiceQuote} from "./service-quote-core.mjs";
 const form = document.getElementById("sq-form");
 const result = document.getElementById("sq-result");
 const status = document.getElementById("sq-status");
+const inputs = document.getElementById("sq-inputs");
 const keys = ["hours", "laborRate", "materials", "subcontractors", "travel", "overhead", "margin"];
 const fieldIds = ["hours", "labor-rate", "materials", "subcontractors", "travel", "overhead", "margin"];
 const money = cents => (cents / 100).toLocaleString("en-US", {style: "currency", currency: "USD"});
@@ -101,3 +102,6 @@ document.getElementById("sq-download").addEventListener("click", () => {
   setTimeout(() => URL.revokeObjectURL(url), 1000);
   status.textContent = "Worksheet download requested. Your browser controls where it is saved.";
 });
+
+inputs.disabled = false;
+status.textContent = "Enter your actual costs, then calculate. Nothing is uploaded or saved.";

@@ -17,6 +17,7 @@ def test_service_quote_page_and_local_assets(client):
     assert "Price the job." in page
     assert "Protect the margin." in page
     assert "Your inputs stay in this page" in page
+    assert 'id="sq-inputs" class="sq-inputs" disabled' in page
     assert 'type="module" src="/static/js/service-quote.mjs"' in page
     assert client.get("/static/css/tools.css").status_code == 200
     assert client.get("/static/css/service-quote.css").status_code == 200
