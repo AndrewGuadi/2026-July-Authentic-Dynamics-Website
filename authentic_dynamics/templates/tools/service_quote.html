@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block title %}Service Job Quote Calculator | Authentic Dynamics{% endblock %}
+{% block description %}Estimate a service job's costs and a suggested price at your target profit margin. A free, local-only calculator for Central Pennsylvania small businesses.{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tools.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/service-quote.css') }}">
+{% endblock %}
+{% block content %}
+<a class="skip" href="#main">Skip to content</a>
+{% include 'partials/header.html' %}
+<main id="main">
+  <section id="top" class="page-hero dark tool-hero"><div class="wrap">
+    <a class="tool-back" href="{{ url_for('tools.catalog') }}">← All tools</a>
+    <p class="eyebrow">CONTRACTORS &amp; SERVICE BUSINESSES / FREE PLANNING TOOL</p>
+    <h1>Price the job.<br><em>Protect the margin.</em></h1>
+    <p class="intro">Build a starting quote from your actual labor, materials, subcontractors, travel and overhead. Built for Central Pennsylvania trades and service businesses, from plumbing and electrical work to cleaning, painting, landscaping and repairs. No local price assumptions.</p>
+  </div></section>
+  <section class="section white"><div class="wrap converter-layout">
+    <div class="converter-form service-quote-calculator">
+      <h2>Service job quote calculator</h2>
+      <p class="tool-note" id="sq-input-help">Enter costs for one job. The suggested quote is calculated from the target profit margin you choose. Your inputs stay in this page; they are not uploaded or saved.</p>
+      <form id="sq-form" aria-describedby="sq-input-help">
+        <fieldset id="sq-inputs" class="sq-inputs" disabled>
+        <label class="sq-job-label" for="job-name">Job or estimate label (optional)
+          <input id="job-name" type="text" maxlength="100" autocomplete="off" placeholder="e.g. Replace exterior faucet">
+        </label>
+        <fieldset><legend>Time &amp; labor</legend><div class="sq-fields">
+          <label for="hours">Estimated labor hours<input id="hours" type="number" min="0" max="10000" step="0.25" inputmode="decimal" value="0" required></label>
+          <label for="labor-rate">Loaded labor cost per hour ($)<input id="labor-rate" type="number" min="0" max="10000" step="0.01" inputmode="decimal" value="0.00" required></label>
+        </div><p class="tool-note">For employees, include wages plus payroll taxes and benefits. For your own time, enter the hourly amount you intend to earn. Leaving labor at $0 treats it as free.</p></fieldset>
+        <fieldset><legend>Other job costs</legend><div class="sq-fields">
+          <label for="materials">Materials &amp; supplies ($)<input id="materials" type="number" min="0" max="1000000" step="0.01" inputmode="decimal" value="0.00" required></label>
+          <label for="subcontractors">Subcontractors ($)<input id="subcontractors" type="number" min="0" max="1000000" step="0.01" inputmode="decimal" value="0.00" required></label>
+          <label for="travel">Travel, equipment &amp; disposal ($)<input id="travel" type="number" min="0" max="1000000" step="0.01" inputmode="decimal" value="0.00" required></label>
+          <label for="overhead">Allocated overhead ($)<input id="overhead" type="number" min="0" max="1000000" step="0.01" inputmode="decimal" value="0.00" required></label>
+        </div><p class="tool-note">Include job-specific travel, rentals or disposal in the travel field. Overhead is your share of recurring costs such as insurance, software, rent or vehicle expenses. Count each cost only once.</p></fieldset>
+        <fieldset><legend>Your target</legend><div class="sq-fields">
+          <label for="margin">Target profit margin (%)<input id="margin" type="number" min="0" max="90" step="0.1" inputmode="decimal" value="35" required aria-describedby="sq-margin-help"></label>
+        </div><p class="tool-note" id="sq-margin-help">Margin is profit as a share of the selling price, not a markup on cost. This calculator applies your target to all entered costs, including allocated overhead. Use 0% to cover costs without adding profit.</p></fieldset>
+        <div class="list-actions">
+          <button class="button black" type="submit" id="sq-calculate">Calculate quote</button>
+          <button class="button black" type="button" id="sq-example">Load example</button>
+          <button class="button black" type="reset">Clear</button>
+        </div>
+        </fieldset>
+      </form>
+      <p class="tool-status" id="sq-status" role="status" aria-live="polite">Loading the local calculator…</p>
+      <section id="sq-result" hidden aria-labelledby="sq-result-heading">
+        <h3 id="sq-result-heading" tabindex="-1">Your planning estimate</h3>
+        <dl class="sq-metrics">
+          <div><dt>Total entered job costs</dt><dd id="sq-cost-result"></dd></div>
+          <div><dt>Suggested quote before tax</dt><dd id="sq-quote-result"></dd></div>
+          <div><dt>Estimated profit after entered costs</dt><dd id="sq-profit-result"></dd></div>
+          <div><dt>Margin after cent rounding</dt><dd id="sq-margin-result"></dd></div>
+        </dl>
+        <h4>Cost breakdown</h4>
+        <dl class="sq-breakdown">
+          <div><dt>Labor</dt><dd id="sq-labor-result"></dd></div>
+          <div><dt>Materials &amp; supplies</dt><dd id="sq-materials-result"></dd></div>
+          <div><dt>Subcontractors</dt><dd id="sq-subcontractors-result"></dd></div>
+          <div><dt>Travel, equipment &amp; disposal</dt><dd id="sq-travel-result"></dd></div>
+          <div><dt>Allocated overhead</dt><dd id="sq-overhead-result"></dd></div>
+        </dl>
+        <p id="sq-explanation"></p>
+        <button class="button black" type="button" id="sq-download">Download worksheet (.txt)</button>
+      </section>
+      <noscript><p>JavaScript is required. The calculator controls remain disabled, so no job details are submitted.</p></noscript>
+    </div>
+    <aside class="tool-help"><p class="eyebrow">BUILD A BETTER ESTIMATE</p><h3>Price the work.<br>Not just the parts.</h3>
+      <p><strong>Count your own time.</strong> A job can look profitable when you leave out the hours you spend on it. Enter a realistic loaded labor cost, even when you are the person doing the work.</p>
+      <p><strong>Margin is not markup.</strong> If your entered costs are $650 and your target margin is 35%, the price is $1,000: $350 remains after those costs. Adding 35% to $650 would produce a different result.</p>
+      <p><strong>Make overhead visible.</strong> Allocate a fair share of recurring business costs to the job. The calculator applies your target margin after that allocation, so avoid counting the same cost twice.</p>
+      <p><strong>No local price guesswork.</strong> Sample numbers are illustrative, not Central PA market rates. Replace them with your actual costs, scope and experience.</p>
+      <p><strong>Know what is outside the estimate.</strong> Sales tax, income tax, permit fees and costs you do not enter are not calculated. Verify which charges apply before sending a customer a final price.</p>
+      <p>When the scope and price are agreed, <a href="{{ url_for('tools.free_invoice_maker') }}">create an invoice</a> with your business details and payment terms.</p>
+    </aside>
+  </div></section>
+</main>
+{% include 'partials/footer.html' %}
+{% endblock %}
+{% block scripts %}<script type="module" src="{{ url_for('static', filename='js/service-quote.mjs') }}"></script>{% endblock %}

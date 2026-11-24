@@ -154,6 +154,21 @@ Run `node tests/event_break_even_core.mjs` for arithmetic checks. Optional brows
 checks: `NODE_PATH=/path/to/node_modules node tests/event_break_even_browser.cjs`
 with Flask running at `http://127.0.0.1:5055` (`EVENT_BASE_URL` overrides it).
 
+## Service job quote calculator
+
+`/tools/service-quote` helps contractors and other service businesses build a
+starting price from labor, materials, subcontractors, travel/equipment and an
+allocated overhead amount. It calculates a suggested quote at a user-selected
+profit margin; the margin applies to all entered costs, including overhead, and
+is not a markup. It makes no local rate assumptions, does not calculate tax, and
+keeps all inputs in the browser. Users can download a plain-text worksheet to
+compare jobs or retain their assumptions. No account, upload, database or browser
+storage is used.
+
+Run `node tests/service_quote_core.mjs` for arithmetic and input-bound checks.
+Optional browser checks: `NODE_PATH=/path/to/node_modules node tests/service_quote_browser.cjs`
+with Flask running at `http://127.0.0.1:5055` (`SERVICE_QUOTE_BASE_URL` overrides it).
+
 ## Photo to Menu
 
 Open `/tools/photo-to-menu` to view and edit the sample. To test scanning locally,
