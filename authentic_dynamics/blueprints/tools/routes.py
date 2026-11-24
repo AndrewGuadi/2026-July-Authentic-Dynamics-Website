@@ -94,6 +94,11 @@ def event_break_even():
     return render_template("tools/event_break_even.html", active_page="tools")
 
 
+@bp.get("/service-quote")
+def service_quote():
+    return render_template("tools/service_quote.html", active_page="tools")
+
+
 @bp.get("/list-cleaner")
 def list_cleaner():
     return render_template("tools/list_cleaner.html", active_page="tools")

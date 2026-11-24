@@ -154,6 +154,21 @@ Run `node tests/event_break_even_core.mjs` for arithmetic checks. Optional brows
 checks: `NODE_PATH=/path/to/node_modules node tests/event_break_even_browser.cjs`
 with Flask running at `http://127.0.0.1:5055` (`EVENT_BASE_URL` overrides it).
 
+## Service job quote calculator
+
+`/tools/service-quote` helps contractors and other service businesses build a
+starting price from labor, materials, subcontractors, travel/equipment and an
+allocated overhead amount. It calculates a suggested quote at a user-selected
+profit margin; the margin applies to all entered costs, including overhead, and
+is not a markup. It makes no local rate assumptions, does not calculate tax, and
+keeps all inputs in the browser. Users can download a plain-text worksheet to
+compare jobs or retain their assumptions. No account, upload, database or browser
+storage is used.
+
+Run `node tests/service_quote_core.mjs` for arithmetic and input-bound checks.
+Optional browser checks: `NODE_PATH=/path/to/node_modules node tests/service_quote_browser.cjs`
+with Flask running at `http://127.0.0.1:5055` (`SERVICE_QUOTE_BASE_URL` overrides it).
+
 ## Photo to Menu
 
 Open `/tools/photo-to-menu` to view and edit the sample. To test scanning locally,
@@ -161,7 +176,7 @@ activate the project's virtual environment and run the following in Bash:
 
 ```bash
 read -rsp 'OpenAI API key: ' AD_MENU_OPENAI_API_KEY
-printf '\n'
+printf '\\n'
 export AD_MENU_OPENAI_API_KEY
 flask --app wsgi run --debug --no-debugger --no-reload
 ```
@@ -216,11 +231,13 @@ quota.
 
    Load the environment before the WSGI file imports `wsgi.app`. The IP setting uses
    the load balancer's `X-Real-IP` header. [PythonAnywhere environment setup](https://help.pythonanywhere.com/pages/EnvironmentVariables) · [Client IP addresses](https://help.pythonanywhere.com/pages/WebAppClientIPAddresses)
+
 3. In **Web**, confirm the site uses the existing project virtualenv and
    its WSGI file points to the same checkout. The repository entry point
    is `from wsgi import app as application`. Click **Reload** for the
    Authentic Dynamics web app.
    [Flask setup](https://help.pythonanywhere.com/pages/Flask) · [Reloading](https://help.pythonanywhere.com/pages/ReloadWebApp/)
+
 4. On the live domain, open `/tools/photo-to-menu` in a private browser window.
    Confirm the sample menu and top section selector appear, then scan a small
    JPEG. Confirm the imported section

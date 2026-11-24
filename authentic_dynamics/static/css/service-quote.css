@@ -1,0 +1,21 @@
+.service-quote-calculator fieldset{min-width:0;border:0;border-top:1px solid var(--border);padding:24px 0 0;margin:26px 0}
+.service-quote-calculator legend{font-size:18px;font-weight:700;padding-right:12px}
+.sq-job-label{display:block;font-size:14px;font-weight:650;line-height:1.5}
+.sq-job-label input,.sq-fields input{display:block;width:100%;min-width:0;min-height:48px;margin-top:8px;padding:12px;border:1px solid #7b896d;border-radius:8px;background:white;color:var(--ink);font:inherit;font-size:16px}
+.sq-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.sq-fields label{font-size:14px;font-weight:650;line-height:1.5;min-width:0}
+.service-quote-calculator :is(input,button,a):focus-visible{outline:3px solid #526d35;outline-offset:3px}
+.service-quote-calculator .list-actions button{width:auto;flex:1;min-width:145px;min-height:44px;justify-content:center}
+.service-quote-calculator h3{font-size:26px;margin:28px 0 20px}
+.service-quote-calculator h4{font-size:18px;margin:28px 0 12px}
+.service-quote-calculator #sq-result[hidden]{display:none}
+.sq-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:20px 0}
+.sq-metrics>div{border:1px solid var(--border);border-radius:10px;padding:16px;background:white;min-width:0}
+.sq-metrics dt{font-size:13px;line-height:1.5}
+.sq-metrics dd{font-size:clamp(21px,2.3vw,27px);font-weight:700;line-height:1.3;margin:10px 0 0;overflow-wrap:anywhere}
+.sq-breakdown{margin:12px 0 20px}
+.sq-breakdown>div{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid var(--border);font-size:14px}
+.sq-breakdown dt{min-width:0}
+.sq-breakdown dd{margin:0;font-weight:700;text-align:right;white-space:nowrap}
+#sq-explanation{font-size:15px;line-height:1.7;margin:20px 0}
+@media(max-width:540px){.sq-fields,.sq-metrics{grid-template-columns:1fr}.service-quote-calculator .list-actions{flex-direction:column}.service-quote-calculator .list-actions button{width:100%;min-width:0}}
