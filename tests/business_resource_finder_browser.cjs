@@ -17,8 +17,8 @@ const { chromium } = require('playwright');
     await page.locator('a[href="#business-resources"]').click();
     assert.equal(await page.evaluate(() => location.hash), '#business-resources');
     await page.locator('#resource-county').selectOption('dauphin');
-    assert.match(await page.locator('[data-result-count]').textContent(), /4 trusted starting points.*Dauphin County/);
-    assert.equal(await page.locator('.resource-card').count(), 4);
+    assert.match(await page.locator('[data-result-count]').textContent(), /5 trusted starting points.*Dauphin County/);
+    assert.equal(await page.locator('.resource-card').count(), 5);
     assert.equal(await page.locator('.resource-card').first().locator('h3').textContent(), 'Dauphin County Community & Economic Development');
     assert.equal(await page.locator('.resource-card').nth(1).locator('h3').textContent(), 'Pennsylvania Business One-Stop Shop');
     assert.equal(await page.locator('.resource-card').nth(2).locator('h3').textContent(), 'Kutztown University SBDC');
@@ -30,6 +30,14 @@ const { chromium } = require('playwright');
     await page.locator('#resource-county').selectOption('perry');
     assert.equal(await page.locator('.resource-card').count(), 2);
     assert.equal(await page.locator('.resource-card').first().locator('h3').textContent(), 'Perry County Economic Development Authority');
+
+    await page.locator('#resource-county').selectOption('dauphin');
+    await page.locator('#resource-need').selectOption('workforce');
+    assert.equal(await page.locator('.resource-card').count(), 1);
+    const employerCard = page.locator('.resource-card').first();
+    assert.equal(await employerCard.locator('h3').textContent(), 'PA Business One-Stop Shop — Employer Services');
+    assert.match(await employerCard.locator('p').textContent(), /free job postings, candidate search, recruitment assistance/i);
+    assert.equal(await employerCard.locator('a').getAttribute('href'), 'https://business.pa.gov/operate/hiring-workers/employer-services/');
 
     const externalLinks = page.locator('.resource-card a');
     for (let index = 0; index < await externalLinks.count(); index += 1) {

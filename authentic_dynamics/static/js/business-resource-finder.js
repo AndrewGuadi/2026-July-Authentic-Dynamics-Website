@@ -78,6 +78,13 @@ if (finder) {
       needs: ['start', 'advice', 'funding', 'location', 'permits', 'training']
     },
     {
+      title: 'PA Business One-Stop Shop — Employer Services',
+      scope: 'Commonwealth of Pennsylvania',
+      description: 'Explore PA CareerLink for free job postings, candidate search, recruitment assistance and local-office help; the page also links to state employee-training resources.',
+      url: 'https://business.pa.gov/operate/hiring-workers/employer-services/',
+      needs: ['workforce']
+    },
+    {
       title: 'Pennsylvania Department of State — Business',
       scope: 'Commonwealth of Pennsylvania',
       description: 'Official business filing, registration and record information from Pennsylvania’s state record keeper.',
