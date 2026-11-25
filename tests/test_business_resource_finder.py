@@ -17,6 +17,7 @@ def test_about_page_includes_resource_finder_and_assets(client):
     assert response.status_code == 200
     assert 'id="business-resources"' in page
     assert 'data-resource-finder' in page
+    assert 'value="workforce"' in page
     assert 'id="resource-county"' in page
     assert 'id="resource-need"' in page
     assert 'aria-live="polite"' in page
@@ -45,6 +46,7 @@ def test_finder_uses_verified_sources_and_safe_external_links(client):
         "lvedc.org",
         "perrycountyeda.com",
         "yceapa.org",
+        "business.pa.gov/operate/hiring-workers/employer-services",
     ):
         assert domain in script
     assert "link.target = '_blank'" in script
