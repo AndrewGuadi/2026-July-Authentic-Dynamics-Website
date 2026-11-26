@@ -19,6 +19,7 @@ def test_growth_page_includes_local_presence_checkup():
     assert "official_gbp_best_practices_playbook_2026.pdf" in page
     assert 'id="presence-remember"' in page
     assert "stores only your selected business type and checkboxes" in page
+    assert 'href="#local-presence-checkup">Run a local presence check' in page
     assert 'href="#review-request"' in page
     assert "/about-community?interest=growth#contact" in page
 

@@ -34,6 +34,10 @@ const sizes = [
       assert.equal(await page.locator('[data-presence-check]').count(), 10);
       assert.equal(await page.locator('[data-presence-enhanced]').isVisible(), true);
       assert.equal(await page.locator('[data-presence-fallback]').isVisible(), false);
+      const cardLink = page.locator('a[href="#local-presence-checkup"]');
+      assert.equal(await cardLink.count(), 1);
+      await cardLink.click();
+      assert.equal(new URL(page.url()).hash, '#local-presence-checkup');
 
       const type = page.locator('#presence-business-type');
       await type.selectOption('service-area');
