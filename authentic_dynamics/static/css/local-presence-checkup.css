@@ -48,6 +48,7 @@
   #local-presence-checkup .local-presence-layout{display:block}
   #local-presence-checkup .local-presence-panel,#local-presence-checkup .local-presence-summary{position:static;margin:12px 0;padding:14px;background:white;color:black;border:1px solid #777;break-inside:avoid}
   #local-presence-checkup .local-presence-summary p,#local-presence-checkup .local-presence-summary .textlink,#local-presence-checkup .presence-actions-list,#local-presence-checkup .local-presence-sources{color:black}
+  #local-presence-checkup .local-presence-summary .card-index,#local-presence-checkup .presence-actions-list strong{color:black}
   #local-presence-checkup .presence-enhanced,#local-presence-checkup .presence-status{display:none!important}
   #local-presence-checkup .presence-check{break-inside:avoid}
 }
