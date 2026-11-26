@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Website Analytics &amp; Growth Services in Central PA | Authentic Dynamics{% endblock %}
 {% block description %}Website analytics services for Central PA small businesses: Search Console, GA4 setup, inquiry tracking and practical reporting alongside local marketing and automation.{% endblock %}
-{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/review-request-builder.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/service-experiences.css') }}">{% endblock %}
+{% block head %}<link rel="stylesheet" href="{{ url_for('static', filename='css/review-request-builder.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/service-experiences.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/local-presence-checkup.css') }}">{% endblock %}
 {% block content %}
 <a class="skip" href="#main">Skip to content</a>
 {% include 'partials/header.html' %}
@@ -35,12 +35,98 @@
 
   <section class="section" id="services"><div class="wrap"><div class="section-head"><div><p class="eyebrow">A CONNECTED PRACTICE</p><h2>Find the next useful move.</h2></div><p>Start with the bottleneck you can feel. We connect the work across visibility, conversion and operations so one improvement supports the next.</p></div><div class="page-card-grid three">
     <article class="page-card"><span class="card-index">01 / LOCAL SEARCH</span><h3>Show up for the right searches.</h3><p>Improve the pages, structure and technical basics that help customers understand where you work and what you do.</p><ul><li>Local and technical SEO</li><li>Service and location content</li><li>Useful measurement</li></ul></article>
-    <article class="page-card"><span class="card-index">02 / BUSINESS PROFILE</span><h3>Make your local details useful.</h3><p>Keep your Google Business Profile accurate and connected to your website, hours, services and real service area.</p><ul><li>Profile setup and review</li><li>Photos, services and updates</li><li>Review response workflow</li></ul><a class="textlink review-builder-link" href="#review-request">Build a review request <span>↓</span></a></article>
+    <article class="page-card"><span class="card-index">02 / BUSINESS PROFILE</span><h3>Make your local details useful.</h3><p>Keep your Google Business Profile accurate and connected to your website, hours, services and real service area.</p><ul><li>Profile setup and review</li><li>Photos, services and updates</li><li>Review response workflow</li></ul><a class="textlink review-builder-link" href="#local-presence-checkup">Run a local presence check <span>↓</span></a></article>
     <article class="page-card"><span class="card-index">03 / PAID REACH</span><h3>Make every click count.</h3><p>Connect Google Ads with clear offers, relevant landing pages and conversion tracking so the campaign can be evaluated.</p><ul><li>Search campaign planning</li><li>Landing pages and messages</li><li>Conversion measurement</li></ul></article>
     <article class="page-card"><span class="card-index">04 / FOLLOW-UP</span><h3>Keep the conversation moving.</h3><p>Turn an inquiry into a manageable next step with practical workflows that reduce manual follow-up.</p><ul><li>Inquiry routing</li><li>CRM and email connections</li><li>Simple dashboards</li></ul></article>
     <article class="page-card"><span class="card-index">05 / PRACTICAL AI</span><h3>Use AI where it helps.</h3><p>Explore focused assistants and internal workflows with the right data, human review and clear limits.</p><ul><li>Use-case discovery</li><li>Knowledge-grounded tools</li><li>Documentation and training</li></ul></article>
     <article class="page-card"><span class="card-index">06 / CUSTOM SYSTEMS</span><h3>Build around your operation.</h3><p>When existing tools do not fit, we can scope a custom integration, dashboard or application around the real work.</p><ul><li>Technical discovery</li><li>Connected platforms</li><li>Maintainable handoff</li></ul></article>
   </div></div></section>
+
+<section class="section white local-presence-section" id="local-presence-checkup">
+  <div class="wrap">
+    <div class="section-head">
+      <div><p class="eyebrow">A PRACTICAL LOCAL SEARCH CHECK</p><h2>Make the next<br>customer decision easier.</h2></div>
+      <p>Review the details people see in your Google Business Profile and on your website. This is a working checklist—not a Google score, ranking test or promise of more calls.</p>
+    </div>
+    <div class="local-presence-layout" data-local-presence-checkup>
+      <div class="local-presence-panel">
+        <div class="local-presence-type">
+          <label for="presence-business-type">How do customers work with you?</label>
+          <select id="presence-business-type" name="business_type">
+            <option value="storefront">Customers visit my location</option>
+            <option value="service-area">I travel to customers</option>
+            <option value="hybrid">Both</option>
+          </select>
+          <p id="presence-type-guidance" aria-live="polite">If customers visit a staffed location, show its real address and keep any customer-facing hours accurate.</p>
+        </div>
+        <fieldset class="presence-checklist">
+          <legend>Mark an item ready only after you have checked it.</legend>
+          <label class="presence-check" data-presence-item data-action="Compare the real-world business name, direct phone number and website on your profile with your own site and customer-facing materials. Remove added keywords or unrelated location terms.">
+            <input type="checkbox" data-presence-check value="identity">
+            <span><strong>Your real business name and direct contact details are accurate.</strong><small>Check the name customers know, the phone number you control and the correct website.</small></span>
+          </label>
+          <label class="presence-check" data-presence-item data-action="Choose the most specific category that describes the core business. Keep additional categories limited to other genuine business activities.">
+            <input type="checkbox" data-presence-check value="category">
+            <span><strong>Your primary category describes what the business is.</strong><small>Use the closest accurate category—not a list of keywords or every service you offer.</small></span>
+          </label>
+          <label class="presence-check" data-presence-item data-action="Compare regular hours with the hours customers can actually reach or visit you. Add holiday, seasonal and temporary changes where appropriate.">
+            <input type="checkbox" data-presence-check value="hours">
+            <span><strong>Your hours match how customers can reach you.</strong><small>Include regular hours and the special or seasonal changes customers need to know.</small></span>
+          </label>
+          <label class="presence-check" data-presence-item data-action="Confirm that the address and service area follow Google's rules for your business type. If customers do not visit your base, hide that address and list only areas you genuinely serve.">
+            <input type="checkbox" data-presence-check value="location">
+            <span><strong>Your address and service area match the way you work.</strong><small data-presence-location-copy>If customers visit a staffed location, show its real address and keep any customer-facing hours accurate.</small></span>
+          </label>
+          <label class="presence-check" data-presence-item data-action="Update the services, products or menu customers can actually choose. Remove outdated offerings and explain what happens after a customer contacts you.">
+            <input type="checkbox" data-presence-check value="offerings">
+            <span><strong>Your services or products explain what customers can choose.</strong><small>Keep the offering list current, specific and easy to understand.</small></span>
+          </label>
+          <label class="presence-check" data-presence-item data-action="Add recent, genuine photos of the storefront, team, products or completed work. Do not present stock imagery as a photo of your business.">
+            <input type="checkbox" data-presence-check value="photos">
+            <span><strong>Your photos show the real business today.</strong><small>Use genuine images of the place, people, products or work customers can expect.</small></span>
+          </label>
+          <label class="presence-check" data-presence-item data-action="Invite customers who had a genuine experience to leave an honest review. Do not offer rewards or ask only customers you expect to be satisfied.">
+            <input type="checkbox" data-presence-check value="reviews">
+            <span><strong>Your review process is genuine and policy-safe.</strong><small>Invite honest feedback without incentives or selective review requests.</small></span>
+          </label>
+          <label class="presence-check" data-presence-item data-action="Open your website on a phone-sized screen. Test the call button, estimate form, booking link, menu or directions from the first click to the expected confirmation.">
+            <input type="checkbox" data-presence-check value="mobile">
+            <span><strong>Your website works on a phone from search to contact.</strong><small>Test the actual call, inquiry, booking, menu or directions path—not just the homepage.</small></span>
+          </label>
+          <label class="presence-check" data-presence-item data-action="Give each core service a clear explanation and name the communities you genuinely serve. Avoid duplicate location pages that only swap a town name.">
+            <input type="checkbox" data-presence-check value="service-pages">
+            <span><strong>Your main services and service area are easy to understand.</strong><small>Make the work you do and the Central PA communities you actually serve clear.</small></span>
+          </label>
+          <label class="presence-check" data-presence-item data-action="Record a baseline for calls, forms, bookings or quote requests. Separate real inquiries from general page views so you can judge whether the customer path works.">
+            <input type="checkbox" data-presence-check value="measurement">
+            <span><strong>You can tell which inquiries become real conversations.</strong><small>Measure calls, forms, bookings or quote requests—not page views alone.</small></span>
+          </label>
+        </fieldset>
+      </div>
+      <aside class="local-presence-summary" aria-labelledby="presence-summary-heading">
+        <p class="card-index">YOUR CHECKUP</p>
+        <h3 id="presence-summary-heading">0 of 10 checks marked ready</h3>
+        <p id="presence-progress-copy">Mark an item after you have verified it. Start with the details that affect whether a customer can reach you.</p>
+        <div class="presence-progress" role="progressbar" aria-label="Checks marked ready" aria-valuemin="0" aria-valuemax="10" aria-valuenow="0"><span data-presence-progress-bar></span></div>
+        <h4>Next actions</h4>
+        <ol class="presence-actions-list" data-presence-actions><li>Enable the optional checklist controls to build an action list. The checks above are available without JavaScript.</li></ol>
+        <div class="presence-enhanced" data-presence-enhanced hidden>
+          <div class="presence-button-row">
+            <button class="button black" id="presence-download" type="button">Download action list</button>
+            <button class="textlink" id="presence-print" type="button">Print checkup</button>
+          </div>
+          <label class="presence-remember"><input id="presence-remember" type="checkbox"> Remember my progress on this device</label>
+          <button class="presence-reset" id="presence-reset" type="button">Reset checkup</button>
+        </div>
+        <p class="presence-status" id="presence-status" role="status" aria-live="polite">Your choices stay in this page unless you opt in to saving them on this device.</p>
+        <a class="textlink light" href="#review-request">Need a review request? Use the builder below <span aria-hidden="true">↓</span></a>
+        <a class="textlink light" href="{{ url_for('main.about_community', interest='growth') }}#contact">Talk through a local presence review <span aria-hidden="true">↗</span></a>
+      </aside>
+    </div>
+    <p class="local-presence-sources">For the rules behind these checks, see <a href="https://support.google.com/business/answer/3038177?hl=en" target="_blank" rel="noopener noreferrer">Google's Business Profile guidelines</a> and its <a href="https://services.google.com/fh/files/helpcenter/official_gbp_best_practices_playbook_2026.pdf" target="_blank" rel="noopener noreferrer">2026 best-practices playbook (PDF)</a>. The checkup does not connect to your profile, request a login or predict rankings. Saving is optional and stores only your selected business type and checkboxes in this browser.</p>
+    <p class="presence-fallback" data-presence-fallback>Check each item manually. JavaScript adds a progress summary, a downloadable action list and optional on-device saving; nothing is submitted to Authentic Dynamics or Google.</p>
+  </div>
+</section>
 
   {% include 'partials/website_analytics.html' %}
   <section class="section white review-builder-section" id="review-request"><div class="wrap">
@@ -78,4 +164,4 @@
 </main>
 {% include 'partials/footer.html' %}
 {% endblock %}
-{% block scripts %}<script src="{{ url_for('static', filename='js/service-experiences.js') }}" defer></script><script src="{{ url_for('static', filename='js/review-request-builder.js') }}" defer></script>{% endblock %}
+{% block scripts %}<script src="{{ url_for('static', filename='js/service-experiences.js') }}" defer></script><script src="{{ url_for('static', filename='js/review-request-builder.js') }}" defer></script><script src="{{ url_for('static', filename='js/local-presence-checkup.js') }}" defer></script>{% endblock %}
